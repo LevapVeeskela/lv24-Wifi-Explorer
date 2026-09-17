@@ -17,6 +17,14 @@ export const enMessages = {
   'scan.filter.secure': 'Secure',
   'scan.filter.minRssi': 'Min RSSI',
 
+  'scan.settings.title': 'Scan settings',
+  'scan.settings.open': 'Scan settings',
+  'scan.settings.signalUnit': 'Signal display',
+  'scan.settings.signalUnit.dbm': 'dBm',
+  'scan.settings.signalUnit.percent': 'Percent',
+  'scan.settings.scanInterval': 'Scan interval',
+  'scan.settings.scanIntervalSec': '{sec}s',
+
   'scan.search.placeholder': 'Filter networks',
   'scan.search.clear': 'Clear search',
 
@@ -106,6 +114,8 @@ export const enMessages = {
   'scan.status.selected': 'Selected: {count}',
   'scan.status.timescaleHint':
     'Signal · use ↑ or ↓ to change timescale when a chart is focused',
+  'scan.status.shortcutsHint':
+    '⌘F search · ⌘P pause scan · ⌘1–4 details · ⌘C BSSID when grid focused',
   'scan.status.scanCore': 'ScanCore: {state}',
   'scan.status.location': 'Location: {state}',
   'scan.status.lastScan': 'Last scan: {time}',
@@ -129,13 +139,16 @@ export const enMessages = {
   'scan.quality.weak': 'Weak',
   'scan.quality.none': 'None',
 
-  'scan.issue.overlap': 'Overlap',
+  'scan.issue.width40on24': '40 MHz or wider on 2.4 GHz',
+  'scan.issue.overlap24': 'Non-standard 2.4 GHz channel',
+  'scan.issue.crowdedChannel': 'Crowded channel',
+  'scan.issue.lowSignal': 'Low signal',
+  'scan.issue.lowSnr': 'Low SNR',
   'scan.issue.weakSecurity': 'Weak security',
-  'scan.issue.lowRssi': 'Low RSSI',
-  'scan.issue.crowded': 'Crowded channel',
-  'scan.issue.width40on24': '40 MHz on 2.4 GHz',
-  'scan.issue.hidden': 'Hidden SSID',
-  'scan.issue.band24only': '2.4 GHz only',
+  'scan.issue.hiddenSsid': 'Hidden network name',
+  'scan.issue.legacyOnly': 'Legacy Wi‑Fi only (a/b/g)',
+  'scan.issue.highUtil': 'High channel utilization',
+  'scan.issue.dfs': 'DFS channel',
 
   'scan.grid.emptyFilter': 'No networks match filters',
 

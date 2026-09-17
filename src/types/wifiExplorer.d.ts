@@ -1,3 +1,4 @@
+import type { MenuIpcAction } from '@/shared/ipc/menuIpc';
 import type {
   PermissionsStatusIpcPayload,
   ScanSnapshotIpcPayload,
@@ -12,6 +13,7 @@ export interface WifiExplorerBridge {
   demoEnable: () => Promise<{ ok: boolean; demoMode: boolean }>;
   onScanSnapshot: (listener: (payload: ScanSnapshotIpcPayload) => void) => () => void;
   onPermissionsStatus: (listener: (payload: PermissionsStatusIpcPayload) => void) => () => void;
+  onMenuAction: (listener: (action: MenuIpcAction) => void) => () => void;
 }
 
 declare global {

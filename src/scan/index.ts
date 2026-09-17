@@ -39,4 +39,5 @@ export {
   type MapObservedBssOptions,
 } from './mapObservedBss';
 export { mergeSnapshots } from './mergeSnapshots';
+export { SHARED_OUI_LOOKUP } from './sharedOuiLookup';
 export { STUB_OUI_LOOKUP, resolveVendorView, type OuiLookup } from './vendorStub';

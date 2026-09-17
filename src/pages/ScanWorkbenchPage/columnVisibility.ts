@@ -14,6 +14,7 @@ export const DEFAULT_VISIBLE_FIELDS = [
 ] as const;
 
 export const DEFAULT_HIDDEN_FIELDS = [
+  'issueFlags',
   'security',
   'rssiDbm',
   'noiseDbm',

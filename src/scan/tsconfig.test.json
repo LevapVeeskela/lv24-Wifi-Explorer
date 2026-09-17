@@ -10,8 +10,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["node"],
+    "resolveJsonModule": true,
     "declaration": false,
     "sourceMap": false
   },
-  "include": ["./**/*.ts", "../domain/**/*.ts"]
+  "include": ["./**/*.ts", "../domain/**/*.ts", "../shared/lib/oui/**/*.ts"]
 }

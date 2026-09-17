@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
-import { Avatar, Box, LinearProgress, Stack, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Chip, LinearProgress, Stack, Tooltip, Typography } from '@mui/material';
 import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
 import Wifi from '@mui/icons-material/Wifi';
 import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { SignalDisplayUnit } from '@/features/scan-settings';
 import {
   formatBandLabel,
   formatChannelWidth,
@@ -14,8 +15,11 @@ import {
   truncateBssidMiddle,
   vendorInitials,
 } from '@/entities/bss/formatters';
+import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
 import { signalPercentFromRssi } from './signalPercent';
 import {
+  issueCountChipSx,
+  issueFlagsCellSx,
   monoCellSx,
   seriesSwatchSx,
   signalBarTrackSx,
@@ -49,7 +53,9 @@ function signalTooltip(row: ScanGridRow, pct: number): string {
   return `RSSI ${formatDbm(row.rssiDbm)} · SNR ${snr} · ${quality} · ${pct}%`;
 }
 
-export function useScanGridColumns(): GridColDef<ScanGridRow>[] {
+export function useScanGridColumns(signalUnit: SignalDisplayUnit = 'percent'): GridColDef<ScanGridRow>[] {
+  const { formatMessage } = useScanIntl();
+
   return useMemo(
     (): GridColDef<ScanGridRow>[] => [
       {
@@ -137,6 +143,46 @@ export function useScanGridColumns(): GridColDef<ScanGridRow>[] {
         ),
       },
       {
+        field: 'issueFlags',
+        headerName: t('scan.col.issues'),
+        width: 72,
+        sortable: true,
+        valueGetter: (_, row) => row.issueKeys.length,
+        renderCell: (params: GridRenderCellParams<ScanGridRow>) => {
+          const keys = params.row.issueKeys;
+          if (keys.length === 0) {
+            return (
+              <Typography color="text.secondary" variant="body2">
+                —
+              </Typography>
+            );
+          }
+          const title = (
+            <Stack spacing={0.25}>
+              {keys.map((key) => (
+                <Box key={key} component="span" sx={{ display: 'block', typography: 'caption' }}>
+                  {formatMessage(key)}
+                </Box>
+              ))}
+            </Stack>
+          );
+          return (
+            <Tooltip title={title}>
+              <Box sx={issueFlagsCellSx}>
+                <Chip
+                  aria-label={formatMessage('scan.col.issues')}
+                  color="warning"
+                  label={keys.length}
+                  size="small"
+                  sx={issueCountChipSx}
+                  variant="outlined"
+                />
+              </Box>
+            </Tooltip>
+          );
+        },
+      },
+      {
         field: 'signal',
         headerName: t('scan.col.signal'),
         width: 140,
@@ -144,11 +190,13 @@ export function useScanGridColumns(): GridColDef<ScanGridRow>[] {
         valueGetter: (_, row) => row.rssiDbm,
         renderCell: (params) => {
           const pct = signalPercentFromRssi(params.row.rssiDbm);
+          const label =
+            signalUnit === 'dbm' ? formatDbm(params.row.rssiDbm) : `${pct}%`;
           return (
             <Tooltip title={signalTooltip(params.row, pct)}>
               <Stack direction="row" spacing={1} sx={signalCellSx}>
                 <Typography sx={signalPctSx} variant="caption">
-                  {pct}%
+                  {label}
                 </Typography>
                 <LinearProgress
                   color={qualityColor(params.row.signalQuality)}
@@ -222,6 +270,6 @@ export function useScanGridColumns(): GridColDef<ScanGridRow>[] {
           row.networkType === 'ibss' ? t('scan.type.ibss') : t('scan.type.infrastructure'),
       },
     ],
-    [],
+    [formatMessage, signalUnit],
   );
 }

@@ -1,5 +1,4 @@
 import type { BrowserWindow } from 'electron';
-import { attachOuiByPrefix } from '../attachOui';
 import { buildDemoSnapshotPayload } from './demoFallback';
 import { MIN_SCAN_INTERVAL_MS, SCAN_IPC_EVENTS } from './ipcChannels';
 import { startScanCoreProcess, type ScanCoreSession } from './scanCoreClient';
@@ -109,13 +108,10 @@ export function startScanLoop(
 
       if (type === 'scan:snapshot') {
         const normalized = ensureSnapshotNetworks(payload);
-        void attachOuiByPrefix(normalized.networks).then((ouiByPrefix) => {
-          emitSnapshot(getWindow(), {
-            ...normalized,
-            demo: false,
-            source: 'scancore',
-            ouiByPrefix,
-          });
+        emitSnapshot(getWindow(), {
+          ...normalized,
+          demo: false,
+          source: 'scancore',
         });
       }
     },

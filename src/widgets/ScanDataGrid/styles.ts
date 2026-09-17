@@ -109,3 +109,18 @@ export const monoCellSx: SxProps<Theme> = {
   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
   fontSize: '0.75rem',
 };
+
+export const issueFlagsCellSx: SxProps<Theme> = {
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+};
+
+export const issueCountChipSx: SxProps<Theme> = {
+  height: 20,
+  minWidth: 24,
+  fontVariantNumeric: 'tabular-nums',
+  '& .MuiChip-label': {
+    px: 0.75,
+  },
+};

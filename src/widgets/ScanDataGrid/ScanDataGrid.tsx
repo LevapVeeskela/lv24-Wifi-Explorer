@@ -5,21 +5,14 @@ import {
   type GridRowClassNameParams,
   type GridRowSelectionModel,
 } from '@mui/x-data-grid-pro';
-import { LicenseInfo } from '@mui/x-license';
 import { Box } from '@mui/material';
 import type { ScanGridRow } from '@/entities/bss/scanGridRow';
 import { isRowIdSelected } from '@/features/scan-selection';
+import type { SignalDisplayUnit } from '@/features/scan-settings';
 import { getDataGridLocaleText } from '@/shared/lib/mui/dataGridLocale';
-import { applyMuiXLicense } from '@/shared/lib/mui/license';
 import { ScanGridOverlay, type ScanGridOverlayKind } from './ScanGridOverlay';
 import { scanDataGridProSx, scanDataGridRootSx } from './styles';
 import { useScanGridColumns } from './useScanGridColumns';
-
-applyMuiXLicense();
-const muiLicenseKey = String(import.meta.env.VITE_MUI_LICENSE_KEY ?? '').trim();
-if (muiLicenseKey) {
-  LicenseInfo.setLicenseKey(muiLicenseKey);
-}
 
 export type ScanDataGridApiRef = RefObject<GridApiPro | null>;
 
@@ -33,6 +26,7 @@ export type ScanDataGridProps = {
   apiRef?: ScanDataGridApiRef;
   overlayKind?: ScanGridOverlayKind | null;
   locale?: string;
+  signalUnit?: SignalDisplayUnit;
 };
 
 export function ScanDataGrid({
@@ -45,8 +39,9 @@ export function ScanDataGrid({
   apiRef,
   overlayKind = 'empty',
   locale = 'ru',
+  signalUnit = 'percent',
 }: ScanDataGridProps) {
-  const columns = useScanGridColumns();
+  const columns = useScanGridColumns(signalUnit);
   const localeText = useMemo(() => getDataGridLocaleText(locale), [locale]);
   const kind = overlayKind ?? 'empty';
 

@@ -23,6 +23,19 @@ import { persistThemePreference } from '@/shared/ui/ThemePreferenceSync';
 import { fileMenuButtonSx, fileMenuSubheaderSx, titleBarSx, titleClusterSx, titleLabelSx } from './styles';
 import { t } from './t';
 
+/** Electron native menu: File ⌘O/⌘S, Scan ⌘⇧S/⌘⇧T — hide duplicate TitleBar File when `window.wifiExplorer` is set. */
+function hasNativeAppMenu(): boolean {
+  return typeof window !== 'undefined' && window.wifiExplorer != null;
+}
+
+function fileShortcutSuffix(key: 'O' | 'S'): string {
+  const mod =
+    typeof navigator !== 'undefined' && /Mac|iPhone|iPod|iPad/i.test(navigator.platform)
+      ? '⌘'
+      : 'Ctrl+';
+  return `${mod}${key}`;
+}
+
 export type TitleBarProps = {
   scanning: boolean;
   demoMode: boolean;
@@ -74,6 +87,7 @@ export function TitleBar({
   };
 
   const closeFileMenu = () => setFileMenuEl(null);
+  const showTitleBarFileMenu = !hasNativeAppMenu();
 
   return (
     <Stack direction="row" sx={titleBarSx}>
@@ -94,78 +108,96 @@ export function TitleBar({
             <Divider flexItem orientation="vertical" />
           </>
         ) : null}
-        <Button
-          aria-controls={fileMenuOpen ? 'scan-file-menu' : undefined}
-          aria-expanded={fileMenuOpen}
-          aria-haspopup="true"
-          aria-label={t('scan.file.menu')}
-          size="small"
-          sx={fileMenuButtonSx}
-          onClick={(event) => setFileMenuEl(event.currentTarget)}
-        >
-          {t('scan.file.menu')}
-        </Button>
-        <Menu
-          anchorEl={fileMenuEl}
-          id="scan-file-menu"
-          open={fileMenuOpen}
-          onClose={closeFileMenu}
-        >
-          <MenuItem
-            onClick={() => {
-              closeFileMenu();
-              onOpenSnapshot();
-            }}
-          >
-            {t('scan.file.open')}
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              closeFileMenu();
-              onSaveSnapshot();
-            }}
-          >
-            {t('scan.file.save')}
-          </MenuItem>
-          <Divider />
-          <ListSubheader disableSticky sx={fileMenuSubheaderSx}>
-            {t('scan.export.csv')}
-          </ListSubheader>
-          <MenuItem
-            onClick={() => {
-              closeFileMenu();
-              onExportCsv('visible');
-            }}
-          >
-            {t('scan.export.visible')}
-          </MenuItem>
-          <MenuItem
-            disabled={exportSelectedDisabled}
-            onClick={() => {
-              closeFileMenu();
-              onExportCsv('selected');
-            }}
-          >
-            {t('scan.export.selected')}
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              closeFileMenu();
-              onExportCsv('all');
-            }}
-          >
-            {t('scan.export.all')}
-          </MenuItem>
-          <Divider />
-          <MenuItem
-            onClick={() => {
-              closeFileMenu();
-              onAbout();
-            }}
-          >
-            {t('scan.status.about')}
-          </MenuItem>
-        </Menu>
+        {showTitleBarFileMenu ? (
+          <>
+            <Button
+              aria-controls={fileMenuOpen ? 'scan-file-menu' : undefined}
+              aria-expanded={fileMenuOpen}
+              aria-haspopup="true"
+              aria-label={t('scan.file.menu')}
+              size="small"
+              sx={fileMenuButtonSx}
+              onClick={(event) => setFileMenuEl(event.currentTarget)}
+            >
+              {t('scan.file.menu')}
+            </Button>
+            <Menu
+              anchorEl={fileMenuEl}
+              id="scan-file-menu"
+              open={fileMenuOpen}
+              onClose={closeFileMenu}
+            >
+              <MenuItem
+                onClick={() => {
+                  closeFileMenu();
+                  onOpenSnapshot();
+                }}
+              >
+                <Stack direction="row" spacing={2} sx={{ alignItems: 'center', width: '100%' }}>
+                  <Typography component="span" variant="inherit">
+                    {t('scan.file.open')}
+                  </Typography>
+                  <Typography color="text.secondary" component="span" sx={{ ml: 'auto' }} variant="body2">
+                    {fileShortcutSuffix('O')}
+                  </Typography>
+                </Stack>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  closeFileMenu();
+                  onSaveSnapshot();
+                }}
+              >
+                <Stack direction="row" spacing={2} sx={{ alignItems: 'center', width: '100%' }}>
+                  <Typography component="span" variant="inherit">
+                    {t('scan.file.save')}
+                  </Typography>
+                  <Typography color="text.secondary" component="span" sx={{ ml: 'auto' }} variant="body2">
+                    {fileShortcutSuffix('S')}
+                  </Typography>
+                </Stack>
+              </MenuItem>
+              <Divider />
+              <ListSubheader disableSticky sx={fileMenuSubheaderSx}>
+                {t('scan.export.csv')}
+              </ListSubheader>
+              <MenuItem
+                onClick={() => {
+                  closeFileMenu();
+                  onExportCsv('visible');
+                }}
+              >
+                {t('scan.export.visible')}
+              </MenuItem>
+              <MenuItem
+                disabled={exportSelectedDisabled}
+                onClick={() => {
+                  closeFileMenu();
+                  onExportCsv('selected');
+                }}
+              >
+                {t('scan.export.selected')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  closeFileMenu();
+                  onExportCsv('all');
+                }}
+              >
+                {t('scan.export.all')}
+              </MenuItem>
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  closeFileMenu();
+                  onAbout();
+                }}
+              >
+                {t('scan.status.about')}
+              </MenuItem>
+            </Menu>
+          </>
+        ) : null}
         <Tooltip title={scanning ? t('scan.title.paused') : t('scan.title.scanning')}>
           <IconButton aria-label={t('scan.a11y.scanToggle')} size="small" onClick={onToggleScan}>
             {scanning ? <Pause fontSize="small" /> : <PlayArrow fontSize="small" />}

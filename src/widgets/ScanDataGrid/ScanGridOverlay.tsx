@@ -1,4 +1,5 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
 import { overlayRootSx } from './styles';
 import { t } from './t';
 
@@ -16,20 +17,39 @@ const KIND_KEY: Record<ScanGridOverlayKind, string> = {
 };
 
 export function ScanGridOverlay({ kind }: ScanGridOverlayProps) {
+  const { formatMessage } = useScanIntl();
+
   const openSettings = () => {
-    void window.wifiExplorer?.permissionsOpenSettings();
+    void window.wifiExplorer?.permissionsOpenSettings?.();
   };
+
+  const canOpenSettings = typeof window.wifiExplorer?.permissionsOpenSettings === 'function';
+
+  if (kind === 'location-denied') {
+    return (
+      <Box sx={overlayRootSx}>
+        <Stack spacing={1} sx={{ maxWidth: 420, textAlign: 'center' }}>
+          <Typography component="p" fontWeight={600} variant="body2">
+            {formatMessage('permissions.denied.title')}
+          </Typography>
+          <Typography color="text.secondary" variant="body2">
+            {formatMessage('permissions.denied.body')}
+          </Typography>
+          {canOpenSettings ? (
+            <Button size="small" variant="outlined" onClick={openSettings}>
+              {formatMessage('permissions.openSettings')}
+            </Button>
+          ) : null}
+        </Stack>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={overlayRootSx}>
       <Typography color="text.secondary" variant="body2">
         {t(KIND_KEY[kind])}
       </Typography>
-      {kind === 'location-denied' ? (
-        <Button size="small" variant="outlined" onClick={openSettings}>
-          {t('scan.grid.openLocationSettings')}
-        </Button>
-      ) : null}
     </Box>
   );
 }

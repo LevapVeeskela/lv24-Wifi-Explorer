@@ -77,9 +77,7 @@ Preload: `electron/preload.ts` exposes `window.wifiExplorer`.
 |-------|------|
 | `source` | `'scancore'` \| `'fixtures'` |
 | `demo` | `true` in fixture / demo mode |
-| `ouiByPrefix` | Map built in main from bundled IEEE data |
-
-Renderer ingests via `ingestScanPayload` → `ScanViewModel` → grid.
+Renderer resolves vendor via `resources/oui/registry.json` (`@/shared/lib/oui`) in `ingestScanPayload` → `ScanViewModel` → grid.
 
 ### 3.4 ScanCore ↔ main (JSON Lines)
 

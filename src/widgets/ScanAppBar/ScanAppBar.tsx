@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import {
   AppBar,
+  FormControl,
   IconButton,
   InputAdornment,
   Menu,
   MenuItem,
+  Select,
   Slider,
   Stack,
   TextField,
@@ -14,11 +16,13 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import Settings from '@mui/icons-material/Settings';
 import Search from '@mui/icons-material/Search';
 import Clear from '@mui/icons-material/Clear';
 import FileDownload from '@mui/icons-material/FileDownload';
 import ViewColumn from '@mui/icons-material/ViewColumn';
 import type { CsvExportScope } from '@/features/export';
+import { SCAN_INTERVAL_SEC_OPTIONS } from '@/features/scan-settings';
 import {
   SEARCH_DEBOUNCE_MS,
   type ScanWorkbenchFilters,
@@ -41,6 +45,9 @@ export type ScanAppBarProps = {
   onExportCsv: (scope: CsvExportScope) => void;
   exportSelectedDisabled?: boolean;
   searchInputRef?: RefObject<HTMLInputElement | null>;
+  scanIntervalSec: number;
+  onScanIntervalSecChange: (sec: number) => void;
+  onOpenSettings: () => void;
 };
 
 export function ScanAppBar({
@@ -50,6 +57,9 @@ export function ScanAppBar({
   onExportCsv,
   exportSelectedDisabled = false,
   searchInputRef,
+  scanIntervalSec,
+  onScanIntervalSecChange,
+  onOpenSettings,
 }: ScanAppBarProps) {
   const [localSearch, setLocalSearch] = useState(filters.searchQuery);
   const [exportMenuEl, setExportMenuEl] = useState<null | HTMLElement>(null);
@@ -144,6 +154,21 @@ export function ScanAppBar({
           onChange={(event) => onFiltersChange({ ...filters, vendorQuery: event.target.value })}
         />
 
+        <FormControl size="small" sx={{ minWidth: 88 }}>
+          <Select
+            aria-label={t('scan.settings.scanInterval')}
+            displayEmpty
+            value={scanIntervalSec}
+            onChange={(event) => onScanIntervalSecChange(Number(event.target.value))}
+          >
+            {SCAN_INTERVAL_SEC_OPTIONS.map((sec) => (
+              <MenuItem key={sec} value={sec}>
+                {t('scan.settings.scanIntervalSec', { sec })}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <Stack direction="row" spacing={1} sx={rssiFilterSx}>
           <Typography color="text.secondary" variant="caption">
             {t('scan.filter.minRssi')}
@@ -189,6 +214,11 @@ export function ScanAppBar({
           </MenuItem>
           <MenuItem onClick={() => exportScope('all')}>{t('scan.export.all')}</MenuItem>
         </Menu>
+        <Tooltip title={t('scan.settings.open')}>
+          <IconButton aria-label={t('scan.settings.open')} onClick={onOpenSettings}>
+            <Settings />
+          </IconButton>
+        </Tooltip>
         <Tooltip title={t('scan.columns.manage')}>
           <IconButton aria-label={t('scan.columns.manage')} onClick={onOpenColumnsPanel}>
             <ViewColumn />

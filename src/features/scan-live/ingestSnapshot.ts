@@ -4,7 +4,7 @@ import type { ScanSnapshot, ScanViewModel } from '@/domain/scan';
 import { asIsoTime } from '@/scan/identity';
 import { mapCoreWlanRecordsToObservedBss } from '@/scan/mapObservedBss';
 import { mergeSnapshots } from '@/scan/mergeSnapshots';
-import type { OuiLookup } from '@/scan/vendorStub';
+import { SHARED_OUI_LOOKUP } from '@/scan/sharedOuiLookup';
 import { buildDemoView } from '@/scan';
 
 const LOCATION: readonly LocationAuthorization[] = [
@@ -28,14 +28,6 @@ function isCoreRecord(value: unknown): value is CoreWlanNetworkRecord {
     typeof row.channelBand === 'string' &&
     Array.isArray(row.supportedSecurity)
   );
-}
-
-function lookupFromPrefixMap(ouiByPrefix: Record<string, string> | undefined): OuiLookup {
-  return (oui) => {
-    const organization = ouiByPrefix?.[oui];
-    if (!organization) return null;
-    return { organization, registryFile: 'oui/ieee-mal.csv' };
-  };
 }
 
 export function connectedBssidFromPayload(payload: Record<string, unknown>): string | null {
@@ -68,16 +60,12 @@ export function ingestScanPayload(
     typeof payload.capturedAt === 'string' ? payload.capturedAt : new Date().toISOString(),
   );
   const location = asLocation(payload.location);
-  const ouiByPrefix =
-    payload.ouiByPrefix && typeof payload.ouiByPrefix === 'object'
-      ? (payload.ouiByPrefix as Record<string, string>)
-      : undefined;
 
   const mapped = mapCoreWlanRecordsToObservedBss(
     networksRaw,
     prev?.bssRows,
     capturedAt,
-    { location, ouiLookup: lookupFromPrefixMap(ouiByPrefix) },
+    { location, ouiLookup: SHARED_OUI_LOOKUP },
   );
 
   const snapshot: ScanSnapshot = {

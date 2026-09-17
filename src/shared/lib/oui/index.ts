@@ -23,6 +23,18 @@ type RegistryPayload = {
 const registry = registryFile as RegistryPayload;
 const datasetSource = registry.meta.source;
 
+const PREFIX_RE = /^[0-9a-f]{2}(:[0-9a-f]{2}){2}$/;
+
+/** IEEE MA-L organization for a normalized 24-bit prefix (`aa:bb:cc`). */
+export function lookupOrganizationByPrefix(oui: string): string | null {
+  const key = oui.trim().toLowerCase();
+  if (!PREFIX_RE.test(key)) {
+    return null;
+  }
+  const vendor = registry.byPrefix[key];
+  return vendor != null && vendor !== '' ? vendor : null;
+}
+
 function parseBssid(raw: string): { oui: string; locallyAdministered: boolean } | null {
   const hex = raw.trim().toLowerCase().replace(/[:\-.]/g, '');
   if (!/^[0-9a-f]{12}$/.test(hex)) {
@@ -66,8 +78,8 @@ export function lookup(bssid: string): OuiLookupResult {
     };
   }
 
-  const vendor = registry.byPrefix[oui] ?? null;
-  if (vendor === null || vendor === '') {
+  const vendor = lookupOrganizationByPrefix(oui);
+  if (vendor === null) {
     return {
       oui,
       vendor: null,

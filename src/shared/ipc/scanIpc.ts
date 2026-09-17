@@ -113,7 +113,6 @@ export interface ScanSnapshotIpcPayload
   demo?: boolean;
   /** Electron transport origin (not ScanCore `source` field). */
   source?: 'scancore' | 'fixtures';
-  ouiByPrefix?: Record<string, string>;
 }
 
 export interface PermissionsStatusIpcPayload {

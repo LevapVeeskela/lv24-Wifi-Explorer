@@ -1,5 +1,7 @@
 /** BrowserWindow options — pure module (no Electron import) for headless tests. */
 
+export const MAIN_WINDOW_TITLE = 'LV24 WiFi Explorer';
+
 export interface MainWindowConfig {
   title: string;
   width: number;
@@ -18,10 +20,10 @@ export interface MainWindowConfig {
 
 export function createMainWindowConfig(input: {
   preloadPath: string;
-  title: string;
+  title?: string;
 }): MainWindowConfig {
   return {
-    title: input.title,
+    title: input.title ?? MAIN_WINDOW_TITLE,
     width: 1280,
     height: 860,
     minWidth: 960,

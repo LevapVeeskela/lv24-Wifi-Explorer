@@ -12,3 +12,7 @@ coverage/
 *.log
 yarn-error.log
 native/ScanCore/.build/
+
+# Prefer resources/oui/registry.json; avoid duplicate full IEEE CSV copies
+data/oui/ieee-mal.csv
+resources/oui/ieee-mal.csv

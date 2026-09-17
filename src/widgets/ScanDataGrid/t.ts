@@ -7,6 +7,7 @@ const RU: Record<string, string> = {
   'scan.col.ssid': 'Имя сети',
   'scan.col.vendor': 'Производитель',
   'scan.col.annotation': 'Пометки',
+  'scan.col.issues': 'Проблемы',
   'scan.col.signal': 'Сигнал',
   'scan.col.channel': 'Канал',
   'scan.col.channelWidth': 'Ширина канала',

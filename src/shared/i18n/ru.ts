@@ -16,6 +16,14 @@ export const ruMessages: Record<MessageKey, string> = {
   'scan.filter.secure': 'Защищённые',
   'scan.filter.minRssi': 'Мин. RSSI',
 
+  'scan.settings.title': 'Настройки сканирования',
+  'scan.settings.open': 'Настройки сканирования',
+  'scan.settings.signalUnit': 'Отображение сигнала',
+  'scan.settings.signalUnit.dbm': 'dBm',
+  'scan.settings.signalUnit.percent': 'Проценты',
+  'scan.settings.scanInterval': 'Интервал сканирования',
+  'scan.settings.scanIntervalSec': '{sec} с',
+
   'scan.search.placeholder': 'Фильтр сетей',
   'scan.search.clear': 'Очистить поиск',
 
@@ -105,6 +113,8 @@ export const ruMessages: Record<MessageKey, string> = {
   'scan.status.selected': 'Выбрано: {count}',
   'scan.status.timescaleHint':
     'Сигнал · ↑/↓ меняют шкалу времени, когда фокус на графике',
+  'scan.status.shortcutsHint':
+    '⌘F поиск · ⌘P пауза скана · ⌘1–4 сведения · ⌘C BSSID при фокусе в таблице',
   'scan.status.scanCore': 'ScanCore: {state}',
   'scan.status.location': 'Геолокация: {state}',
   'scan.status.lastScan': 'Последнее: {time}',
@@ -128,13 +138,16 @@ export const ruMessages: Record<MessageKey, string> = {
   'scan.quality.weak': 'Слабое',
   'scan.quality.none': 'Нет',
 
-  'scan.issue.overlap': 'Перекрытие',
+  'scan.issue.width40on24': '40 МГц и шире на 2,4 ГГц',
+  'scan.issue.overlap24': 'Нестандартный канал 2,4 ГГц',
+  'scan.issue.crowdedChannel': 'Загруженный канал',
+  'scan.issue.lowSignal': 'Слабый сигнал',
+  'scan.issue.lowSnr': 'Низкий SNR',
   'scan.issue.weakSecurity': 'Слабая защита',
-  'scan.issue.lowRssi': 'Низкий RSSI',
-  'scan.issue.crowded': 'Загруженный канал',
-  'scan.issue.width40on24': '40 МГц на 2,4 ГГц',
-  'scan.issue.hidden': 'Скрытый SSID',
-  'scan.issue.band24only': 'Только 2,4 ГГц',
+  'scan.issue.hiddenSsid': 'Скрытое имя сети',
+  'scan.issue.legacyOnly': 'Только legacy Wi‑Fi (a/b/g)',
+  'scan.issue.highUtil': 'Высокая загрузка канала',
+  'scan.issue.dfs': 'Канал DFS',
 
   'scan.grid.emptyFilter': 'Нет сетей по фильтрам',
 

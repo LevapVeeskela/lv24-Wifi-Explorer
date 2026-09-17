@@ -6,9 +6,11 @@ import {
   createInitialScanState,
   emitBootDemoPermissions,
   registerScanIpc,
+  startScanLoop,
   stopScanTimer,
   type ScanRuntimeState,
 } from './scan/registerIpc';
+import { installApplicationMenu } from './menu';
 import { createMainWindowConfig } from './window';
 
 const RENDERER_DEV_URL =
@@ -60,6 +62,13 @@ app.whenReady().then(() => {
   registerScanIpc({
     getMainWindow: () => mainWindow,
     getState: () => scanState,
+  });
+  installApplicationMenu({
+    getMainWindow: () => mainWindow,
+    productTitle: PRODUCT_TITLE,
+    appVersion: app.getVersion(),
+    onScanStart: () => startScanLoop(scanState, () => mainWindow),
+    onScanStop: () => stopScanTimer(scanState),
   });
   mainWindow = createMainWindow();
 

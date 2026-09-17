@@ -6,5 +6,3 @@ export function applyMuiXLicense(): void {
     LicenseInfo.setLicenseKey(key);
   }
 }
-
-applyMuiXLicense();

@@ -16,6 +16,7 @@ import {
 import { DEMO_CONNECTED_BSSID, DEMO_OBSERVED_BSS } from '@/entities/scan/demoNetworks';
 import { observedBssToGridRow } from '@/entities/bss/scanGridRow';
 import { useAnnotations } from '@/features/annotations';
+import { useNativeMenuBridge } from '@/features/menu-bridge/useNativeMenuBridge';
 import { computeIssueKeys } from '@/features/issues/computeIssueKeys';
 import type { CsvExportScope } from '@/features/export';
 import {
@@ -32,15 +33,27 @@ import {
   connectedBssidFromPayload,
   ingestScanPayload,
 } from '@/features/scan-live/ingestSnapshot';
+import type { ScanSnapshotIpcPayload } from '@/shared/ipc/scanIpc';
 import type { ScanViewModel } from '@/domain/scan';
 import type { ObservedBss } from '@/domain/bss';
+import {
+  ScanSettingsDialog,
+  chartUnitToSignalDisplay,
+  loadScanSettings,
+  signalDisplayToChartUnit,
+  useScanSettings,
+} from '@/features/scan-settings';
 import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history/types';
+import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
 import { ScanAppBar } from '@/widgets/ScanAppBar';
 import { resolveScanGridOverlay, ScanDataGrid } from '@/widgets/ScanDataGrid';
 import { TitleBar } from '@/widgets/TitleBar';
 import { BottomDock, type DetailsTab } from '@/widgets/BottomDock';
 import { StatusBar } from '@/widgets/StatusBar';
 import { AboutDialog } from '@/widgets/AboutDialog';
+import { LocationBanner } from '@/widgets/LocationBanner';
+import { normalizeLocationAuthorization } from '@/widgets/LocationBanner/normalizeLocationAuthorization';
+import type { LocationAuthorization } from '@/domain/identity';
 import { DEFAULT_COLUMN_VISIBILITY } from './columnVisibility';
 import {
   scanDockRegionSx,
@@ -97,23 +110,46 @@ function ScanWorkbenchInner({
     DEFAULT_COLUMN_VISIBILITY,
   );
 
+  const { formatMessage } = useScanIntl();
+  const scanSettings = useScanSettings();
+  const [scanSettingsOpen, setScanSettingsOpen] = useState(false);
   const [scanning, setScanning] = useState(true);
-  const [filters, setFilters] = useState(FILTER_DEFAULTS);
+  const [filters, setFilters] = useState(() => ({
+    ...FILTER_DEFAULTS,
+    minRssiDbm: loadScanSettings().minRssiDbm,
+  }));
   const scanSearch = useScanSearch(filters.searchQuery);
   const [selectedBssid, setSelectedBssid] = useState<string | null>(null);
   const [detailsTab, setDetailsTab] = useState<DetailsTab>('details');
-  const [chartUnit, setChartUnit] = useState<SignalChartUnit>('pct');
+  const chartUnit = signalDisplayToChartUnit(scanSettings.settings.signalUnit);
+  const onChartUnitChange = useCallback(
+    (unit: SignalChartUnit) => {
+      scanSettings.patchSettings({ signalUnit: chartUnitToSignalDisplay(unit) });
+    },
+    [scanSettings],
+  );
   const [timescale, setTimescale] = useState<ChartTimescale>('1m');
   const [aboutOpen, setAboutOpen] = useState(false);
   const [fileError, setFileError] = useState<string | null>(null);
   const [bssList, setBssList] = useState<readonly ObservedBss[]>(DEMO_OBSERVED_BSS);
   const [connectedBssid, setConnectedBssid] = useState(DEMO_CONNECTED_BSSID);
-  const [locationState, setLocationState] = useState<'granted' | 'denied'>('granted');
+  const [locationState, setLocationState] = useState<LocationAuthorization>('granted');
   const [scanCoreState, setScanCoreState] = useState<'ok' | 'error' | 'demo'>(
     demoMode ? 'demo' : 'ok',
   );
+  const [lastCapturedAt, setLastCapturedAt] = useState<string | null>(null);
+  const [statusTick, setStatusTick] = useState(0);
   const annotations = useAnnotations();
   const viewRef = useRef<ScanViewModel | null>(null);
+
+  useEffect(() => {
+    if (demoMode) setScanCoreState('demo');
+  }, [demoMode]);
+
+  useEffect(() => {
+    const id = window.setInterval(() => setStatusTick((value) => value + 1), 5000);
+    return () => window.clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const bridge = window.wifiExplorer;
@@ -124,25 +160,35 @@ function ScanWorkbenchInner({
       viewRef.current = view;
       setBssList(view.bssRows);
       const liveConnected = connectedBssidFromPayload(payload);
+      const snapLocation = locationStateFromSnapshot(payload.location);
+      if (snapLocation) setLocationState(snapLocation);
+      setScanCoreState(scanCoreStateFromSnapshot(payload, demoMode));
+      if (typeof payload.capturedAt === 'string') {
+        setLastCapturedAt(payload.capturedAt);
+      }
       if (payload.demo === true || payload.source === 'fixtures') {
-        setScanCoreState('demo');
         setConnectedBssid(DEMO_CONNECTED_BSSID);
-      } else {
-        setScanCoreState('ok');
-        if (liveConnected) setConnectedBssid(liveConnected);
+      } else if (liveConnected) {
+        setConnectedBssid(liveConnected);
       }
     });
 
     return () => {
       offSnap();
     };
-  }, []);
+  }, [demoMode]);
 
   useEffect(() => {
     const bridge = window.wifiExplorer;
     if (!bridge) return;
+
+    void bridge.permissionsQuery().then((status) => {
+      setLocationState(normalizeLocationAuthorization(status.location));
+      if (status.demoMode) setScanCoreState('demo');
+    });
+
     const off = bridge.onPermissionsStatus((status) => {
-      setLocationState(status.location === 'granted' ? 'granted' : 'denied');
+      setLocationState(normalizeLocationAuthorization(status.location));
       if (status.demoMode) setScanCoreState('demo');
     });
     return () => off();
@@ -189,18 +235,23 @@ function ScanWorkbenchInner({
   const overlayKind = resolveScanGridOverlay({
     visibleCount: filteredRows.length,
     totalCount: baseRows.length,
-    locationDenied: locationState === 'denied',
+    locationDenied:
+      locationState === 'denied' ||
+      locationState === 'restricted' ||
+      locationState === 'not-determined',
     demo: scanCoreState === 'demo',
     filtersActive: hasActiveFilters(filters),
   });
 
   const lastScanLabel = useMemo(() => {
+    void statusTick;
+    if (lastCapturedAt) return formatLastScanLabel(lastCapturedAt);
     let latest: string | null = null;
     for (const row of baseRows) {
       if (!latest || row.lastSeenAt > latest) latest = row.lastSeenAt;
     }
     return formatLastScanLabel(latest);
-  }, [baseRows]);
+  }, [baseRows, lastCapturedAt, statusTick]);
 
   const paneFractions: VerticalPaneFractions = useMemo(
     () => ({
@@ -236,6 +287,31 @@ function ScanWorkbenchInner({
   const openColumnsPanel = useCallback(() => {
     apiRef.current?.showPreferences?.(GridPreferencePanelsValue.columns);
   }, [apiRef]);
+
+  const onFiltersChange = useCallback(
+    (next: typeof filters) => {
+      setFilters(next);
+      if (next.minRssiDbm !== scanSettings.settings.minRssiDbm) {
+        scanSettings.patchSettings({ minRssiDbm: next.minRssiDbm });
+      }
+    },
+    [scanSettings],
+  );
+
+  const onScanIntervalSecChange = useCallback(
+    (sec: number) => {
+      scanSettings.patchSettings({ scanIntervalSec: sec });
+    },
+    [scanSettings],
+  );
+
+  const onScanSettingsChange = useCallback(
+    (next: typeof scanSettings.settings) => {
+      scanSettings.setSettings(next);
+      setFilters((prev) => ({ ...prev, minRssiDbm: next.minRssiDbm }));
+    },
+    [scanSettings],
+  );
 
   const toggleScan = useCallback(() => {
     setScanning((value) => {
@@ -320,50 +396,35 @@ function ScanWorkbenchInner({
     if (snapLocation === 'granted' || snapLocation === 'denied') {
       setLocationState(snapLocation);
     }
+    setLastCapturedAt(parsed.document.metadata.capturedAt);
+    setScanCoreState('ok');
     setScanning(false);
     viewRef.current = null;
     const bridge = window.wifiExplorer;
     if (bridge) void bridge.scanStop();
   }, [annotations]);
 
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      const mod = event.metaKey || event.ctrlKey;
-      if (mod && event.key.toLowerCase() === 'f') {
-        event.preventDefault();
-        searchRef.current?.focus();
-      }
-      if (event.key === 'Escape' && document.activeElement === searchRef.current) {
-        setFilters((prev) => ({ ...prev, searchQuery: '' }));
-      }
-      if (mod && event.key === 'p') {
-        event.preventDefault();
-        toggleScan();
-      }
-      if (mod && event.key.toLowerCase() === 's') {
-        event.preventDefault();
-        saveSnapshot();
-      }
-      if (mod && event.key.toLowerCase() === 'o') {
-        event.preventDefault();
-        void openSnapshot();
-      }
-      if (mod && event.key === 'c') {
-        const active = document.activeElement;
-        if (active && searchRef.current && searchRef.current.contains(active)) return;
-        if (selectedRow?.bssid) {
-          event.preventDefault();
-          void navigator.clipboard?.writeText(selectedRow.bssid);
-        }
-      }
-      if (mod && event.key === '1') setDetailsTab('details');
-      if (mod && event.key === '2') setDetailsTab('signal');
-      if (mod && event.key === '3') setDetailsTab('occupancy');
-      if (mod && event.key === '4') setDetailsTab('advanced');
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [openSnapshot, saveSnapshot, selectedRow, toggleScan]);
+  const clearSearch = useCallback(() => {
+    setFilters((prev) => ({ ...prev, searchQuery: '' }));
+  }, []);
+
+  useScanShortcuts({
+    searchInputRef: searchRef,
+    gridContainerRef,
+    selectedBssid: selectedRow?.bssid ?? null,
+    onClearSearch: clearSearch,
+    onToggleScan: toggleScan,
+    onDetailsTabChange: setDetailsTab,
+    onSaveSnapshot: saveSnapshot,
+    onOpenSnapshot: openSnapshot,
+  });
+
+  useNativeMenuBridge({
+    onOpenSnapshot: () => void openSnapshot(),
+    onSaveSnapshot: saveSnapshot,
+    onExportCsv: exportCsv,
+    onAbout: openAbout,
+  });
 
   return (
     <Box sx={scanShellSx}>
@@ -388,13 +449,17 @@ function ScanWorkbenchInner({
       <ScanAppBar
         exportSelectedDisabled={!selectedBssid}
         filters={filters}
+        scanIntervalSec={scanSettings.settings.scanIntervalSec}
         searchInputRef={searchRef}
         onExportCsv={exportCsv}
-        onFiltersChange={setFilters}
+        onFiltersChange={onFiltersChange}
         onOpenColumnsPanel={openColumnsPanel}
+        onOpenSettings={() => setScanSettingsOpen(true)}
+        onScanIntervalSecChange={onScanIntervalSecChange}
       />
+      <LocationBanner demoMode={scanCoreState === 'demo'} location={locationState} />
       <Box sx={scanMainSplitSx}>
-        <Box id="scan-grid" sx={scanGridRegionSx(paneFractions.top)}>
+        <Box ref={gridContainerRef} id="scan-grid" sx={scanGridRegionSx(paneFractions.top)}>
           <ScanDataGrid
             apiRef={apiRef}
             columnVisibilityModel={columnVisibility}
@@ -402,6 +467,7 @@ function ScanWorkbenchInner({
             overlayKind={overlayKind}
             rows={filteredRows}
             selectionModel={selectionModel}
+            signalUnit={scanSettings.settings.signalUnit}
             onAnnotationChange={commitAnnotation}
             onColumnVisibilityModelChange={setColumnVisibility}
             onSelectionModelChange={(model) => setSelectedBssid(selectedBssidFromModel(model))}
@@ -422,7 +488,7 @@ function ScanWorkbenchInner({
             selectedRow={selectedRow}
             tab={detailsTab}
             timescale={timescale}
-            onChartUnitChange={setChartUnit}
+            onChartUnitChange={onChartUnitChange}
             onTabChange={setDetailsTab}
             onTimescaleChange={setTimescale}
           />
@@ -431,13 +497,28 @@ function ScanWorkbenchInner({
       <StatusBar
         lastScanLabel={lastScanLabel}
         locationState={locationState}
-        networksFound={filteredRows.length}
+        networksFound={baseRows.length}
         scanCoreState={scanCoreState}
         selectedCount={selectedBssid ? 1 : 0}
         version={APP_VERSION}
         onAbout={openAbout}
       />
       <AboutDialog open={aboutOpen} version={APP_VERSION} onClose={() => setAboutOpen(false)} />
+      <ScanSettingsDialog
+        open={scanSettingsOpen}
+        settings={scanSettings.settings}
+        labels={{
+          title: formatMessage('scan.settings.title'),
+          signalUnit: formatMessage('scan.settings.signalUnit'),
+          signalUnitDbm: formatMessage('scan.settings.signalUnit.dbm'),
+          signalUnitPercent: formatMessage('scan.settings.signalUnit.percent'),
+          minRssi: formatMessage('scan.filter.minRssi'),
+          scanInterval: formatMessage('scan.settings.scanInterval'),
+          scanIntervalSec: (sec) => formatMessage('scan.settings.scanIntervalSec', { sec }),
+        }}
+        onChange={onScanSettingsChange}
+        onClose={() => setScanSettingsOpen(false)}
+      />
       <Snackbar
         autoHideDuration={6000}
         message={fileError ?? ''}

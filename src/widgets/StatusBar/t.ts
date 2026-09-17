@@ -3,6 +3,8 @@ type Values = Record<string, string | number>;
 const RU: Record<string, string> = {
   'scan.status.timescaleHint':
     'Сигнал · ↑/↓ меняют шкалу времени, когда фокус на графике',
+  'scan.status.shortcutsHint':
+    '⌘F поиск · ⌘P пауза скана · ⌘1–4 сведения · ⌘C BSSID при фокусе в таблице',
   'scan.status.found': 'Сетей: {count}',
   'scan.status.selected': 'Выбрано: {count}',
   'scan.status.scanCore': 'ScanCore: {state}',

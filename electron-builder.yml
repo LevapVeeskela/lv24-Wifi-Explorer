@@ -12,6 +12,7 @@ files:
   - dist-electron/**
   - package.json
 mac:
+  icon: resources/icons/icon.icns
   target:
     - target: dmg
       arch: [x64, arm64]
@@ -26,10 +27,13 @@ mac:
       LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks
       scanned on this Mac (Apple requirement for Wi‑Fi scan APIs).
 win:
+  icon: resources/icons/icon.png
   target:
     - target: nsis
       arch: [x64]
   signAndEditExecutable: false
+linux:
+  icon: resources/icons/icon.svg
 nsis:
   oneClick: false
   perMachine: false
