@@ -176,12 +176,12 @@ Open thresholds; keys map to i18n (`scan.issue.*`):
 
 | key | Trigger |
 |-----|---------|
-| `scan.issue.hidden` | SSID available and `hidden` |
+| `scan.issue.hiddenSsid` | SSID available and `hidden` |
 | `scan.issue.weakSecurity` | `primary` is `open` or `wep` |
-| `scan.issue.lowRssi` | `rssiDbm ≤ −85` |
+| `scan.issue.lowSignal` | `rssiDbm ≤ −85` |
 | `scan.issue.width40on24` | band 2.4 and width 40 MHz |
 | `scan.issue.crowded` | ≥ 4 other BSS same primary channel + band |
-| `scan.issue.overlap` | another BSS same band with overlapping channel width (20 MHz default if unknown) |
+| `scan.issue.overlap24` | another BSS same band with overlapping channel width (20 MHz default if unknown) |
 | `scan.issue.band24only` | same SSID (octet match) only on 2.4 GHz, not hidden |
 
 ---

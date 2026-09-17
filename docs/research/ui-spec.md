@@ -597,7 +597,7 @@ Prefix `scan.`.
 **Status:** `scan.status.found` `scan.status.selected` `scan.status.timescaleHint` `scan.status.scanCore` `scan.status.location` `scan.status.lastScan` `scan.about.title`  
 **A11y:** `scan.a11y.skipToGrid` `scan.a11y.skipToDetails` `scan.a11y.rowSelected` `scan.a11y.connected` `scan.a11y.splitterMain`  
 **Quality:** `scan.quality.excellent` `scan.quality.good` `scan.quality.fair` `scan.quality.weak` `scan.quality.none`  
-**Issues (heuristics):** `scan.issue.overlap` `scan.issue.weakSecurity` `scan.issue.lowRssi` `scan.issue.crowded` `scan.issue.width40on24` `scan.issue.hidden` `scan.issue.band24only`
+**Issues (heuristics):** `scan.issue.overlap24` `scan.issue.weakSecurity` `scan.issue.lowSignal` `scan.issue.crowded` `scan.issue.width40on24` `scan.issue.hiddenSsid` `scan.issue.band24only`
 
 Hidden SSID display: `scan.ssid.hidden`.
 
