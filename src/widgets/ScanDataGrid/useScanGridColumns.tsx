@@ -4,7 +4,7 @@ import { Avatar, Box, Chip, LinearProgress, Stack, Tooltip, Typography } from '@
 import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
 import Wifi from '@mui/icons-material/Wifi';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import { ssidGridLabel, type ScanGridRow } from '@/entities/bss/scanGridRow';
 import type { SignalDisplayUnit } from '@/features/scan-settings';
 import {
   formatBandLabel,
@@ -87,13 +87,21 @@ export function useScanGridColumns(signalUnit: SignalDisplayUnit = 'percent'): G
         headerName: t('scan.col.ssid'),
         flex: 1.2,
         minWidth: 140,
+        valueGetter: (_, row) => ssidGridLabel(row, t('scan.ssid.hidden')),
         renderCell: (params) => {
           const hidden = params.row.ssidHidden;
           const connected = params.row.connected;
-          const label = hidden ? t('scan.ssid.hidden') : params.row.ssid || '—';
+          const label = ssidGridLabel(params.row, t('scan.ssid.hidden'));
           return (
-            <Stack direction="row" spacing={0.5} sx={ssidCellSx}>
-              {connected ? <Wifi aria-label={t('scan.a11y.connected')} fontSize="inherit" /> : null}
+            <Stack
+              className={connected ? 'scan-grid-ssid--connected' : undefined}
+              direction="row"
+              spacing={0.5}
+              sx={ssidCellSx}
+            >
+              {connected ? (
+                <Wifi aria-label={t('scan.a11y.connected')} fontSize="inherit" />
+              ) : null}
               <Typography sx={ssidTextSx({ connected, hidden })} variant="body2">
                 {label}
               </Typography>

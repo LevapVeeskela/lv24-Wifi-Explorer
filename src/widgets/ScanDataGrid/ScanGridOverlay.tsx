@@ -29,7 +29,7 @@ export function ScanGridOverlay({ kind }: ScanGridOverlayProps) {
     return (
       <Box sx={overlayRootSx}>
         <Stack spacing={1} sx={{ maxWidth: 420, textAlign: 'center' }}>
-          <Typography component="p" fontWeight={600} variant="body2">
+          <Typography sx={{ fontWeight: 600 }} variant="body2">
             {formatMessage('permissions.denied.title')}
           </Typography>
           <Typography color="text.secondary" variant="body2">

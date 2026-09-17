@@ -25,6 +25,15 @@ export const scanDataGridRootSx: SxProps<Theme> = {
   '& .scan-grid-row--stale': {
     opacity: 0.45,
   },
+  '& .scan-grid-row--stale.Mui-selected, & .scan-grid-row--stale.scan-grid-row--selected': {
+    opacity: 0.45,
+  },
+  '& .scan-grid-ssid--connected .MuiTypography-root': {
+    fontWeight: 600,
+  },
+  '& .MuiDataGrid-row.Mui-selected .scan-grid-ssid--connected .MuiTypography-root': {
+    fontWeight: 600,
+  },
   '& .scan-grid-row--selected, & .MuiDataGrid-row.Mui-selected': {
     backgroundColor: (theme) => theme.palette.action.selected,
   },

@@ -25,6 +25,7 @@ import {
   hasActiveFilters,
 } from '@/features/scan-filters';
 import { useScanSearch } from '@/features/scan-search';
+import { useScanShortcuts } from '@/features/scan-shortcuts';
 import {
   rowSelectionModelFromBssid,
   selectedBssidFromModel,
@@ -75,6 +76,7 @@ import {
   LV24_SCAN_MIME,
   parseWorkbenchSnapshot,
 } from './workbenchIo';
+import { locationStateFromSnapshot, scanCoreStateFromSnapshot } from './scanSnapshotLive';
 
 const APP_VERSION = '0.1.0';
 const DOCK_COLLAPSED_FRACTION = 0.92;
@@ -104,6 +106,7 @@ function ScanWorkbenchInner({
 }) {
   const apiRef = useGridApiRef<GridApiPro>();
   const searchRef = useRef<HTMLInputElement | null>(null);
+  const gridContainerRef = useRef<HTMLDivElement | null>(null);
   const shellHeight = useShellHeight();
   const [paneLayout, setPaneLayout] = usePersistedPaneLayout();
   const [columnVisibility, setColumnVisibility] = usePersistedColumnVisibility(
@@ -235,10 +238,7 @@ function ScanWorkbenchInner({
   const overlayKind = resolveScanGridOverlay({
     visibleCount: filteredRows.length,
     totalCount: baseRows.length,
-    locationDenied:
-      locationState === 'denied' ||
-      locationState === 'restricted' ||
-      locationState === 'not-determined',
+    locationDenied: locationState === 'denied' || locationState === 'restricted',
     demo: scanCoreState === 'demo',
     filtersActive: hasActiveFilters(filters),
   });
@@ -393,8 +393,8 @@ function ScanWorkbenchInner({
     setBssList(parsed.document.networks);
     annotations.setRules(parsed.document.annotations);
     const snapLocation = parsed.document.metadata.location;
-    if (snapLocation === 'granted' || snapLocation === 'denied') {
-      setLocationState(snapLocation);
+    if (snapLocation) {
+      setLocationState(normalizeLocationAuthorization(snapLocation));
     }
     setLastCapturedAt(parsed.document.metadata.capturedAt);
     setScanCoreState('ok');

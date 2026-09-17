@@ -35,6 +35,23 @@ function rssiBar(rssiDbm: number): number {
   return Math.round(((clamped + 100) / 70) * 100);
 }
 
+/** Grid + filters: hidden SSID rows (empty octets or explicit hidden flag). */
+export function ssidHiddenFromBss(bss: ObservedBss): boolean {
+  if (bss.identity.ssid.status !== 'available') return false;
+  const id = bss.identity.ssid.value;
+  return id.hidden || id.octets.length === 0;
+}
+
+/** SSID column label: hidden placeholder or visible name (em dash if empty). */
+export function ssidGridLabel(
+  row: Pick<ScanGridRow, 'ssidHidden' | 'ssid'>,
+  hiddenPlaceholder: string,
+): string {
+  if (row.ssidHidden) return hiddenPlaceholder;
+  const text = row.ssid.trim();
+  return text || '—';
+}
+
 export function observedBssToGridRow(
   bss: ObservedBss,
   options: {
@@ -49,8 +66,10 @@ export function observedBssToGridRow(
 
   const ssidIdentity =
     bss.identity.ssid.status === 'available' ? bss.identity.ssid.value : null;
-  const hidden = ssidIdentity?.hidden ?? false;
-  const ssid = hidden ? '' : (ssidIdentity?.displayName ?? ssidIdentity?.utf8 ?? '');
+  const hidden = ssidHiddenFromBss(bss);
+  const ssid = hidden
+    ? ''
+    : (ssidIdentity?.utf8 ?? ssidIdentity?.displayName ?? '').trim();
 
   return {
     id: bssidRowId(bssid),

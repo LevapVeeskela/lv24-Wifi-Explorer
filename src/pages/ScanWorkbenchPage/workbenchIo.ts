@@ -1,6 +1,7 @@
 import type { GridApiPro } from '@mui/x-data-grid-pro';
 import type { ScanGridRow } from '@/entities/bss/scanGridRow';
 import type { ObservedBss } from '@/domain/bss';
+import type { LocationAuthorization } from '@/domain/identity';
 import type { AnnotationRule } from '@/features/annotations';
 import { buildCsv, type CsvBuildResult, type CsvExportRow, type CsvExportScope } from '@/features/export';
 import {
@@ -70,7 +71,7 @@ export function buildWorkbenchSnapshot(input: {
   networks: readonly ObservedBss[];
   annotations: readonly AnnotationRule[];
   appVersion: string;
-  location: 'granted' | 'denied';
+  location: LocationAuthorization;
 }): { fileName: string; text: string; document: Lv24ScanDocument } {
   const document = createLv24ScanDocument({
     networks: input.networks,
