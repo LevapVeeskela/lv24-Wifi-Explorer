@@ -1,0 +1,743 @@
+{
+  "capturedAt": "2026-09-17T16:45:00.000Z",
+  "interfaceName": "en0",
+  "location": "granted",
+  "networks": [
+    {
+      "identity": {
+        "bssid": {
+          "status": "available",
+          "value": "3c:5a:b4:10:01:01"
+        },
+        "ssid": {
+          "status": "available",
+          "value": {
+            "utf8": "Meridia-Office",
+            "octets": [
+              77,
+              101,
+              114,
+              105,
+              100,
+              105,
+              97,
+              45,
+              79,
+              102,
+              102,
+              105,
+              99,
+              101
+            ],
+            "octetHex": "4d6572696469612d4f6666696365",
+            "hidden": false,
+            "displayName": "Meridia-Office"
+          }
+        }
+      },
+      "ibss": false,
+      "countryCode": {
+        "status": "available",
+        "value": "FI"
+      },
+      "beaconIntervalMs": 100,
+      "signal": {
+        "rssiDbm": -61,
+        "noiseDbm": -93,
+        "snrDb": 32,
+        "quality": "good",
+        "qualityBasis": "snr"
+      },
+      "channel": {
+        "number": 1,
+        "band": 2.4,
+        "widthMhz": 20,
+        "primaryCenterMhz": 2412,
+        "occupyingCenterMhz": 2412,
+        "occupyingSpanMhz": {
+          "from": 2402,
+          "to": 2422
+        },
+        "centerConfidence": "ieee-primary-20"
+      },
+      "security": {
+        "flags": [
+          "wpa2-personal"
+        ],
+        "primary": "wpa2-personal",
+        "authClass": "personal",
+        "isOpen": false,
+        "isSecure": true,
+        "ieHint": "rsn-ie"
+      },
+      "phy": {
+        "supported": [
+          "b",
+          "g",
+          "n"
+        ],
+        "highest": "n",
+        "display": "b/g/n",
+        "source": "api-supportsPHYMode"
+      },
+      "maxRate": {
+        "mbpsLow": 65,
+        "mbpsHigh": 65,
+        "basis": "ie-nss-mcs",
+        "nssUsed": 1,
+        "disclaimer": "not-a-link-speed"
+      },
+      "vendor": {
+        "oui": "3c:5a:b4",
+        "locallyAdministered": false,
+        "multicast": false,
+        "organization": null,
+        "match": "unknown",
+        "registryFile": null
+      },
+      "ie": {
+        "level": "shallow-tags",
+        "byteLength": 30,
+        "presentIds": [
+          7,
+          48,
+          45
+        ],
+        "wpaVendorIe": false,
+        "rsnIe": true,
+        "htCapabilities": true,
+        "vhtCapabilities": false,
+        "heCapabilities": false,
+        "ehtCapabilities": false,
+        "countryFromIe": "FI",
+        "nssHint": 1,
+        "htPrimaryChannel": null,
+        "htSecondaryOffset": null,
+        "ccfs0": null
+      },
+      "presence": {
+        "firstSeenAt": "2026-09-17T16:45:00.000Z",
+        "lastSeenAt": "2026-09-17T16:45:00.000Z",
+        "lastMissingAt": null,
+        "consecutiveMisses": 0,
+        "presence": "current"
+      },
+      "rssiHistory": [
+        {
+          "at": "2026-09-17T16:45:00.000Z",
+          "rssiDbm": -61,
+          "noiseDbm": -93,
+          "snrDb": 32,
+          "channelNumber": 1
+        }
+      ],
+      "lastRaw": {
+        "ssid": "Meridia-Office",
+        "ssidData": [
+          77,
+          101,
+          114,
+          105,
+          100,
+          105,
+          97,
+          45,
+          79,
+          102,
+          102,
+          105,
+          99,
+          101
+        ],
+        "bssid": "3c:5a:b4:10:01:01",
+        "rssiDbm": -61,
+        "noiseDbm": -93,
+        "channelNumber": 1,
+        "channelBand": "2ghz",
+        "channelWidth": "20mhz",
+        "countryCode": "FI",
+        "beaconIntervalMs": 100,
+        "ibss": false,
+        "informationElementData": [
+          7,
+          3,
+          70,
+          73,
+          32,
+          48,
+          2,
+          1,
+          0,
+          45,
+          19,
+          0,
+          0,
+          0,
+          255,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "supportedSecurity": [
+          "wpa2-personal"
+        ],
+        "supportedPhyModes": [
+          "b",
+          "g",
+          "n"
+        ]
+      }
+    },
+    {
+      "identity": {
+        "bssid": {
+          "status": "available",
+          "value": "3c:5a:b4:10:01:03"
+        },
+        "ssid": {
+          "status": "available",
+          "value": {
+            "utf8": "Meridia-Office",
+            "octets": [
+              77,
+              101,
+              114,
+              105,
+              100,
+              105,
+              97,
+              45,
+              79,
+              102,
+              102,
+              105,
+              99,
+              101
+            ],
+            "octetHex": "4d6572696469612d4f6666696365",
+            "hidden": false,
+            "displayName": "Meridia-Office"
+          }
+        }
+      },
+      "ibss": false,
+      "countryCode": {
+        "status": "available",
+        "value": "FI"
+      },
+      "beaconIntervalMs": 100,
+      "signal": {
+        "rssiDbm": -47,
+        "noiseDbm": -94,
+        "snrDb": 47,
+        "quality": "excellent",
+        "qualityBasis": "snr"
+      },
+      "channel": {
+        "number": 36,
+        "band": 5,
+        "widthMhz": 80,
+        "primaryCenterMhz": 5180,
+        "occupyingCenterMhz": 5210,
+        "occupyingSpanMhz": {
+          "from": 5170,
+          "to": 5250
+        },
+        "centerConfidence": "ie-operation"
+      },
+      "security": {
+        "flags": [
+          "wpa2-personal",
+          "wpa3-transition"
+        ],
+        "primary": "wpa3-transition",
+        "authClass": "personal",
+        "isOpen": false,
+        "isSecure": true,
+        "ieHint": "rsn-ie"
+      },
+      "phy": {
+        "supported": [
+          "a",
+          "n",
+          "ac",
+          "ax"
+        ],
+        "highest": "ax",
+        "display": "a/n/ac/ax",
+        "source": "api-supportsPHYMode"
+      },
+      "maxRate": {
+        "mbpsLow": 480,
+        "mbpsHigh": 960,
+        "basis": "ie-nss-mcs",
+        "nssUsed": 2,
+        "disclaimer": "not-a-link-speed"
+      },
+      "vendor": {
+        "oui": "3c:5a:b4",
+        "locallyAdministered": false,
+        "multicast": false,
+        "organization": null,
+        "match": "unknown",
+        "registryFile": null
+      },
+      "ie": {
+        "level": "shallow-tags",
+        "byteLength": 53,
+        "presentIds": [
+          7,
+          48,
+          45,
+          61,
+          191,
+          192
+        ],
+        "wpaVendorIe": false,
+        "rsnIe": true,
+        "htCapabilities": true,
+        "vhtCapabilities": true,
+        "heCapabilities": false,
+        "ehtCapabilities": false,
+        "countryFromIe": "FI",
+        "nssHint": 2,
+        "htPrimaryChannel": 36,
+        "htSecondaryOffset": 1,
+        "ccfs0": 42
+      },
+      "presence": {
+        "firstSeenAt": "2026-09-17T16:45:00.000Z",
+        "lastSeenAt": "2026-09-17T16:45:00.000Z",
+        "lastMissingAt": null,
+        "consecutiveMisses": 0,
+        "presence": "current"
+      },
+      "rssiHistory": [
+        {
+          "at": "2026-09-17T16:45:00.000Z",
+          "rssiDbm": -47,
+          "noiseDbm": -94,
+          "snrDb": 47,
+          "channelNumber": 36
+        }
+      ],
+      "lastRaw": {
+        "ssid": "Meridia-Office",
+        "ssidData": [
+          77,
+          101,
+          114,
+          105,
+          100,
+          105,
+          97,
+          45,
+          79,
+          102,
+          102,
+          105,
+          99,
+          101
+        ],
+        "bssid": "3c:5a:b4:10:01:03",
+        "rssiDbm": -47,
+        "noiseDbm": -94,
+        "channelNumber": 36,
+        "channelBand": "5ghz",
+        "channelWidth": "80mhz",
+        "countryCode": "FI",
+        "beaconIntervalMs": 100,
+        "ibss": false,
+        "informationElementData": [
+          7,
+          3,
+          70,
+          73,
+          32,
+          48,
+          2,
+          1,
+          0,
+          45,
+          19,
+          0,
+          0,
+          0,
+          255,
+          255,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          61,
+          2,
+          36,
+          1,
+          191,
+          12,
+          0,
+          0,
+          0,
+          0,
+          250,
+          255,
+          0,
+          0,
+          250,
+          255,
+          0,
+          0,
+          192,
+          3,
+          1,
+          42,
+          0
+        ],
+        "supportedSecurity": [
+          "wpa2-personal",
+          "wpa3-transition"
+        ],
+        "supportedPhyModes": [
+          "a",
+          "n",
+          "ac",
+          "ax"
+        ]
+      }
+    },
+    {
+      "identity": {
+        "bssid": {
+          "status": "available",
+          "value": "3c:5a:b4:20:01:01"
+        },
+        "ssid": {
+          "status": "available",
+          "value": {
+            "utf8": "GuestPortal",
+            "octets": [
+              71,
+              117,
+              101,
+              115,
+              116,
+              80,
+              111,
+              114,
+              116,
+              97,
+              108
+            ],
+            "octetHex": "4775657374506f7274616c",
+            "hidden": false,
+            "displayName": "GuestPortal"
+          }
+        }
+      },
+      "ibss": false,
+      "countryCode": {
+        "status": "available",
+        "value": "FI"
+      },
+      "beaconIntervalMs": 100,
+      "signal": {
+        "rssiDbm": -68,
+        "noiseDbm": -92,
+        "snrDb": 24,
+        "quality": "fair",
+        "qualityBasis": "snr"
+      },
+      "channel": {
+        "number": 6,
+        "band": 2.4,
+        "widthMhz": 20,
+        "primaryCenterMhz": 2437,
+        "occupyingCenterMhz": 2437,
+        "occupyingSpanMhz": {
+          "from": 2427,
+          "to": 2447
+        },
+        "centerConfidence": "ieee-primary-20"
+      },
+      "security": {
+        "flags": [
+          "open"
+        ],
+        "primary": "open",
+        "authClass": "open",
+        "isOpen": true,
+        "isSecure": false,
+        "ieHint": "none"
+      },
+      "phy": {
+        "supported": [
+          "b",
+          "g",
+          "n"
+        ],
+        "highest": "n",
+        "display": "b/g/n",
+        "source": "api-supportsPHYMode"
+      },
+      "maxRate": {
+        "mbpsLow": 65,
+        "mbpsHigh": null,
+        "basis": "phy-width-1ss-long-gi",
+        "nssUsed": 1,
+        "disclaimer": "not-a-link-speed"
+      },
+      "vendor": {
+        "oui": "3c:5a:b4",
+        "locallyAdministered": false,
+        "multicast": false,
+        "organization": null,
+        "match": "unknown",
+        "registryFile": null
+      },
+      "ie": {
+        "level": "absent",
+        "byteLength": 0,
+        "presentIds": [],
+        "wpaVendorIe": null,
+        "rsnIe": null,
+        "htCapabilities": null,
+        "vhtCapabilities": null,
+        "heCapabilities": null,
+        "ehtCapabilities": null,
+        "countryFromIe": null,
+        "nssHint": null,
+        "htPrimaryChannel": null,
+        "htSecondaryOffset": null,
+        "ccfs0": null
+      },
+      "presence": {
+        "firstSeenAt": "2026-09-17T16:45:00.000Z",
+        "lastSeenAt": "2026-09-17T16:45:00.000Z",
+        "lastMissingAt": null,
+        "consecutiveMisses": 0,
+        "presence": "current"
+      },
+      "rssiHistory": [
+        {
+          "at": "2026-09-17T16:45:00.000Z",
+          "rssiDbm": -68,
+          "noiseDbm": -92,
+          "snrDb": 24,
+          "channelNumber": 6
+        }
+      ],
+      "lastRaw": {
+        "ssid": "GuestPortal",
+        "ssidData": [
+          71,
+          117,
+          101,
+          115,
+          116,
+          80,
+          111,
+          114,
+          116,
+          97,
+          108
+        ],
+        "bssid": "3c:5a:b4:20:01:01",
+        "rssiDbm": -68,
+        "noiseDbm": -92,
+        "channelNumber": 6,
+        "channelBand": "2ghz",
+        "channelWidth": "20mhz",
+        "countryCode": "FI",
+        "beaconIntervalMs": 100,
+        "ibss": false,
+        "informationElementData": null,
+        "supportedSecurity": [
+          "open"
+        ],
+        "supportedPhyModes": [
+          "b",
+          "g",
+          "n"
+        ]
+      }
+    },
+    {
+      "identity": {
+        "bssid": {
+          "status": "available",
+          "value": "3c:5a:b4:99:01:01"
+        },
+        "ssid": {
+          "status": "available",
+          "value": {
+            "utf8": "",
+            "octets": [],
+            "octetHex": "",
+            "hidden": true,
+            "displayName": "<hidden>"
+          }
+        }
+      },
+      "ibss": false,
+      "countryCode": {
+        "status": "available",
+        "value": "FI"
+      },
+      "beaconIntervalMs": 100,
+      "signal": {
+        "rssiDbm": -72,
+        "noiseDbm": -90,
+        "snrDb": 18,
+        "quality": "fair",
+        "qualityBasis": "snr"
+      },
+      "channel": {
+        "number": 11,
+        "band": 2.4,
+        "widthMhz": 20,
+        "primaryCenterMhz": 2462,
+        "occupyingCenterMhz": 2462,
+        "occupyingSpanMhz": {
+          "from": 2452,
+          "to": 2472
+        },
+        "centerConfidence": "ieee-primary-20"
+      },
+      "security": {
+        "flags": [
+          "wpa2-personal"
+        ],
+        "primary": "wpa2-personal",
+        "authClass": "personal",
+        "isOpen": false,
+        "isSecure": true,
+        "ieHint": "none"
+      },
+      "phy": {
+        "supported": [
+          "b",
+          "g",
+          "n"
+        ],
+        "highest": "n",
+        "display": "b/g/n",
+        "source": "api-supportsPHYMode"
+      },
+      "maxRate": {
+        "mbpsLow": 65,
+        "mbpsHigh": null,
+        "basis": "phy-width-1ss-long-gi",
+        "nssUsed": 1,
+        "disclaimer": "not-a-link-speed"
+      },
+      "vendor": {
+        "oui": "3c:5a:b4",
+        "locallyAdministered": false,
+        "multicast": false,
+        "organization": null,
+        "match": "unknown",
+        "registryFile": null
+      },
+      "ie": {
+        "level": "absent",
+        "byteLength": 0,
+        "presentIds": [],
+        "wpaVendorIe": null,
+        "rsnIe": null,
+        "htCapabilities": null,
+        "vhtCapabilities": null,
+        "heCapabilities": null,
+        "ehtCapabilities": null,
+        "countryFromIe": null,
+        "nssHint": null,
+        "htPrimaryChannel": null,
+        "htSecondaryOffset": null,
+        "ccfs0": null
+      },
+      "presence": {
+        "firstSeenAt": "2026-09-17T16:45:00.000Z",
+        "lastSeenAt": "2026-09-17T16:45:00.000Z",
+        "lastMissingAt": null,
+        "consecutiveMisses": 0,
+        "presence": "current"
+      },
+      "rssiHistory": [
+        {
+          "at": "2026-09-17T16:45:00.000Z",
+          "rssiDbm": -72,
+          "noiseDbm": -90,
+          "snrDb": 18,
+          "channelNumber": 11
+        }
+      ],
+      "lastRaw": {
+        "ssid": "",
+        "ssidData": [],
+        "bssid": "3c:5a:b4:99:01:01",
+        "rssiDbm": -72,
+        "noiseDbm": -90,
+        "channelNumber": 11,
+        "channelBand": "2ghz",
+        "channelWidth": "20mhz",
+        "countryCode": "FI",
+        "beaconIntervalMs": 100,
+        "ibss": false,
+        "informationElementData": null,
+        "supportedSecurity": [
+          "wpa2-personal"
+        ],
+        "supportedPhyModes": [
+          "b",
+          "g",
+          "n"
+        ]
+      }
+    }
+  ],
+  "associated": {
+    "interfaceName": "en0",
+    "capturedAt": "2026-09-17T16:45:00.000Z",
+    "ssid": {
+      "status": "available",
+      "value": "Meridia-Office"
+    },
+    "bssid": {
+      "status": "available",
+      "value": "3c:5a:b4:10:01:03"
+    },
+    "rssiDbm": -47,
+    "noiseDbm": -94,
+    "transmitRateMbps": 780,
+    "activePhy": "ac",
+    "security": "wpa2-personal",
+    "transmitPowerMw": 25,
+    "hardwareAddress": "a4:83:e7:12:34:56",
+    "countryCode": {
+      "status": "available",
+      "value": "FI"
+    }
+  },
+  "includeHiddenRequested": true
+}

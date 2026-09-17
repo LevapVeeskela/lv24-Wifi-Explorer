@@ -1,0 +1,16 @@
+export const STORAGE_THEME = 'lv24.wifi-explorer.theme';
+export const STORAGE_COLUMNS = 'lv24.wifi-explorer.columns';
+export const STORAGE_PANES = 'lv24.wifi-explorer.panes';
+export const STORAGE_ANNOTATIONS = 'lv24.wifi-explorer.annotations';
+
+export type ThemePreference = 'light' | 'dark' | 'system';
+
+export type StoredPaneLayout = {
+  mainGridFraction: number;
+  dockDetailsFraction: number;
+};
+
+export const PANE_LAYOUT_DEFAULT: StoredPaneLayout = {
+  mainGridFraction: 0.58,
+  dockDetailsFraction: 0.45,
+};

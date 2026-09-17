@@ -1,0 +1,37 @@
+appId: by.lv24.wifi.explorer
+productName: LV24 WiFi Explorer
+directories:
+  output: release
+extraResources:
+  - from: native/ScanCore/.build/ScanCore.app
+    to: ScanCore.app
+    filter:
+      - '**/*'
+files:
+  - dist/**
+  - dist-electron/**
+  - package.json
+mac:
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+  hardenedRuntime: true
+  entitlements: entitlements.mac.plist
+  entitlementsInherit: entitlements.mac.plist
+  extendInfo:
+    NSLocationWhenInUseUsageDescription: >-
+      LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks
+      scanned on this Mac (Apple requirement for Wi‑Fi scan APIs).
+    NSLocationUsageDescription: >-
+      LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks
+      scanned on this Mac (Apple requirement for Wi‑Fi scan APIs).
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  signAndEditExecutable: false
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true

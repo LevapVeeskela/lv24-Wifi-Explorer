@@ -1,0 +1,4 @@
+# OUI build (scripts/build-oui.mjs)
+#
+# No npm packages required — uses Node.js built-ins only.
+# Minimum Node: 20 (project engines.node).

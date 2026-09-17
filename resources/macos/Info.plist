@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Reference snippet for macOS privacy strings (Wi‑Fi scan / CoreWLAN).
+
+  Packaging does NOT read this file directly. electron-builder.yml merges
+  mac.extendInfo into the app Info.plist at build time. Keep the live strings
+  in sync with electron-builder.yml → mac.extendInfo.
+
+  NSLocationWhenInUseUsageDescription — Required on modern macOS when the app
+  requests “When In Use” location authorization. Apple treats Wi‑Fi BSSID/SSID
+  access as location-sensitive; ScanCore and CoreWLAN need this before scan APIs
+  return useful results. Shown in System Settings → Privacy & Security → Location
+  Services when the user is prompted.
+
+  NSLocationUsageDescription — Legacy key; still merged for older macOS builds.
+-->
+<plist version="1.0">
+<dict>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks scanned on this Mac (Apple requirement for Wi‑Fi scan APIs).</string>
+  <key>NSLocationUsageDescription</key>
+  <string>LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks scanned on this Mac (Apple requirement for Wi‑Fi scan APIs).</string>
+</dict>
+</plist>

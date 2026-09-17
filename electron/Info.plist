@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Reference strings — electron-builder merges via mac.extendInfo in electron-builder.yml.
+-->
+<plist version="1.0">
+<dict>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>
+    LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks scanned on this Mac
+    (Apple requirement for Wi‑Fi scan APIs).
+  </string>
+  <key>NSLocationUsageDescription</key>
+  <string>
+    LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks scanned on this Mac
+    (Apple requirement for Wi‑Fi scan APIs).
+  </string>
+</dict>
+</plist>

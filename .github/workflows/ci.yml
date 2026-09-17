@@ -1,0 +1,62 @@
+# JS/TS verify for LV24 WiFi Explorer (Node 20 + pnpm).
+# Optional (local macOS): unaccepted Xcode license can block git hooks and
+# native tooling until you run `sudo xcodebuild -license`.
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect package manifest
+        id: pkg
+        run: |
+          if [ ! -f package.json ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::No package.json yet — skipping install/lint/test until it exists."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.pkg.outputs.skip != 'true'
+        with:
+          node-version: "20"
+          cache: pnpm
+
+      - name: Enable pnpm
+        if: steps.pkg.outputs.skip != 'true'
+        run: corepack enable && corepack prepare pnpm@9.15.0 --activate
+
+      - name: Install (frozen lockfile)
+        if: steps.pkg.outputs.skip != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        if: steps.pkg.outputs.skip != 'true'
+        run: pnpm run typecheck
+
+      - name: Project node tests
+        if: steps.pkg.outputs.skip != 'true'
+        run: |
+          pnpm run test:scan
+          pnpm run test:oui
+
+      - name: Oxlint
+        if: steps.pkg.outputs.skip != 'true'
+        run: pnpm dlx oxlint@latest ./src ./electron
+
+      - name: Vitest
+        if: steps.pkg.outputs.skip != 'true'
+        run: pnpm dlx vitest@3 run
+        env:
+          CI: true
+          # Intentionally no VITE_MUI_LICENSE_KEY — MUI license proof test skips without a local key.

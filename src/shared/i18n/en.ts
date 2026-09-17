@@ -1,0 +1,182 @@
+/**
+ * English message catalog (fallback locale).
+ * Shape matches react-intl `messages` records: id → default string with `{placeholders}`.
+ */
+export const enMessages = {
+  'scan.title.scanning': 'Scanning',
+  'scan.title.paused': 'Paused',
+  'scan.title.demo': 'Demo',
+
+  'scan.filter.band': 'Band filter',
+  'scan.filter.band.all': 'All',
+  'scan.filter.band.24': '2.4 GHz',
+  'scan.filter.band.5': '5 GHz',
+  'scan.filter.band.6': '6 GHz',
+  'scan.filter.band6.empty': 'No 6 GHz networks in this scan',
+  'scan.filter.open': 'Open',
+  'scan.filter.secure': 'Secure',
+  'scan.filter.minRssi': 'Min RSSI',
+
+  'scan.search.placeholder': 'Filter networks',
+  'scan.search.clear': 'Clear search',
+
+  'scan.col.bssid': 'BSSID',
+  'scan.col.ssid': 'Network name',
+  'scan.col.vendor': 'Vendor',
+  'scan.col.annotation': 'Notes',
+  'scan.col.signal': 'Signal',
+  'scan.col.channel': 'Channel',
+  'scan.col.channelWidth': 'Channel width',
+  'scan.col.band': 'Band',
+  'scan.col.phyMode': 'Mode',
+  'scan.col.rssi': 'RSSI',
+  'scan.col.noise': 'Noise',
+  'scan.col.snr': 'SNR',
+  'scan.col.security': 'Security',
+  'scan.col.encryption': 'Encryption',
+  'scan.col.maxRate': 'Max rate',
+  'scan.col.frequency': 'Frequency',
+  'scan.col.unii': 'UNII',
+  'scan.col.type': 'Type',
+  'scan.col.connected': 'Connected',
+  'scan.col.hidden': 'Hidden',
+  'scan.col.firstSeen': 'First seen',
+  'scan.col.lastSeen': 'Last seen',
+  'scan.col.seen': 'Seen',
+  'scan.col.country': 'Country',
+  'scan.col.favorite': 'Favorite',
+  'scan.col.iface': 'Interface',
+  'scan.col.issues': 'Issues',
+  'scan.columns.reset': 'Reset columns',
+  'scan.columns.manage': 'Columns',
+
+  'scan.file.menu': 'File',
+  'scan.file.open': 'Open snapshot…',
+  'scan.file.save': 'Save snapshot…',
+  'scan.export.csv': 'Export CSV',
+  'scan.export.visible': 'Visible rows',
+  'scan.export.selected': 'Selected rows',
+  'scan.export.all': 'All rows',
+  'scan.snapshot.openError': 'Could not open snapshot: {detail}',
+  'scan.a11y.exportCsv': 'Export CSV',
+  'scan.a11y.saveSnapshot': 'Save .lv24scan',
+  'scan.a11y.openSnapshot': 'Open .lv24scan',
+
+  'scan.details.empty': 'Select a network',
+  'scan.details.ssid': 'SSID',
+  'scan.details.bssid': 'BSSID',
+  'scan.details.vendor': 'Vendor',
+  'scan.details.signalQuality': 'Signal quality',
+  'scan.details.signalPct': 'Signal',
+  'scan.details.band': 'Band',
+  'scan.details.phyMode': 'Mode',
+  'scan.details.maxRateMbps': 'Max rate',
+  'scan.details.channel': 'Channel',
+  'scan.details.noiseDbm': 'Noise',
+  'scan.details.networkType': 'Type',
+  'scan.details.security': 'Security',
+  'scan.details.encryption': 'Encryption',
+  'scan.details.channelWidth': 'Channel width',
+  'scan.details.snrDb': 'SNR',
+  'scan.details.frequencyMHz': 'Frequency',
+  'scan.details.country': 'Country',
+  'scan.details.firstSeen': 'First seen',
+  'scan.details.lastSeen': 'Last seen',
+  'scan.details.connected': 'Connected',
+
+  'scan.field.unavailable': 'Not available from active scan',
+  'scan.copied': 'Copied to clipboard',
+
+  'scan.tab.details': 'Network details',
+  'scan.tab.signal': 'Signal strength',
+  'scan.tab.occupancy': 'Channel occupancy',
+  'scan.tab.advanced': 'Advanced',
+
+  'scan.chart.signal': 'Signal history',
+  'scan.chart.occupancy': 'Channel occupancy',
+  'scan.chart.occupancy.hint': 'From active scan, not RF spectrum',
+  'scan.chart.selected': 'Selected network',
+  'scan.chart.unit.pct': 'Percent',
+  'scan.chart.unit.dbm': 'dBm',
+  'scan.chart.empty': 'No samples yet',
+  'scan.chart.timescale': 'Timescale',
+  'scan.chart.table': 'Chart data table',
+
+  'scan.status.found': 'Networks: {count}',
+  'scan.status.selected': 'Selected: {count}',
+  'scan.status.timescaleHint':
+    'Signal · use ↑ or ↓ to change timescale when a chart is focused',
+  'scan.status.scanCore': 'ScanCore: {state}',
+  'scan.status.location': 'Location: {state}',
+  'scan.status.lastScan': 'Last scan: {time}',
+  'scan.status.version': 'v{version}',
+  'scan.status.about': 'About',
+
+  'scan.about.title': 'LV24 WiFi Explorer',
+  'scan.about.scanCore': 'ScanCore · macOS CoreWLAN active scan helper.',
+  'scan.about.location':
+    'Location Services may be required to show SSID and BSSID on modern macOS. This app does not use GPS or map tracking.',
+  'scan.about.attribution':
+    'UI: Material UI (MIT) · Data Grid Pro (commercial license) · MUI X Charts (MIT).',
+
+  'scan.ssid.hidden': '‹hidden›',
+
+  'scan.quality.excellent': 'Excellent',
+  'scan.quality.good': 'Good',
+  'scan.quality.fair': 'Fair',
+  'scan.quality.poor': 'Poor',
+  'scan.quality.unusable': 'Unusable',
+  'scan.quality.weak': 'Weak',
+  'scan.quality.none': 'None',
+
+  'scan.issue.overlap': 'Overlap',
+  'scan.issue.weakSecurity': 'Weak security',
+  'scan.issue.lowRssi': 'Low RSSI',
+  'scan.issue.crowded': 'Crowded channel',
+  'scan.issue.width40on24': '40 MHz on 2.4 GHz',
+  'scan.issue.hidden': 'Hidden SSID',
+  'scan.issue.band24only': '2.4 GHz only',
+
+  'scan.grid.emptyFilter': 'No networks match filters',
+
+  'scan.type.infrastructure': 'Infrastructure',
+  'scan.type.ibss': 'Ad-hoc',
+
+  'scan.a11y.skipToGrid': 'Skip to network table',
+  'scan.a11y.skipToDetails': 'Skip to details',
+  'scan.a11y.rowSelected': 'Row selected',
+  'scan.a11y.connected': 'Connected network',
+  'scan.a11y.splitterMain': 'Resize grid and details',
+
+  'scan.adv.radio': 'Radio',
+  'scan.adv.security': 'Security',
+  'scan.adv.ies': 'Information elements',
+  'scan.adv.issues': 'Issues',
+
+  'scan.panes.reset': 'Reset panel layout',
+
+  'scan.scanCore.ok': 'ok',
+  'scan.scanCore.error': 'error',
+  'scan.scanCore.demo': 'demo',
+
+  'scan.location.granted': 'granted',
+  'scan.location.denied': 'denied',
+  'scan.location.notDetermined': 'not asked',
+  'scan.location.restricted': 'restricted',
+
+  'permissions.location.title': 'Location Services',
+  'permissions.location.body':
+    'On macOS, Wi‑Fi network names (SSID) and hardware addresses (BSSID) are treated as location-related data. LV24 WiFi Explorer requests Location Services only to unlock those fields — not to track GPS position or show maps.',
+  'permissions.location.settingsHint':
+    'Turn on Location Services globally, then enable LV24 WiFi Explorer in System Settings → Privacy & Security → Location Services.',
+  'permissions.openSettings': 'Open Location Settings',
+  'permissions.onboarding.title': 'Wi‑Fi identity on macOS',
+  'permissions.onboarding.body':
+    'Active scanning can show signal and channels without Location. To list network names and MAC addresses, allow Location when prompted.',
+  'permissions.denied.title': 'Network names are hidden',
+  'permissions.denied.body':
+    'SSID and BSSID stay redacted until you allow Location Services for this app. RF metrics may still update.',
+  'permissions.restricted.title': 'Location restricted',
+  'permissions.restricted.body':
+    'A device policy blocks Location Services. You can still view RF-only scan data or use demo mode where available.',
+} as const;

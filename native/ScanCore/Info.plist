@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>ScanCore</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.lv24.wifi-explorer.scancore</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>ScanCore</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.5</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSLocationUsageDescription</key>
+	<string>LV24 WiFi Explorer needs Location Services because macOS treats Wi-Fi SSID and BSSID as location-class data. This helper does not use GPS and does not read, store, or display coordinates.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>LV24 WiFi Explorer uses Location (When In Use) only so CoreWLAN can return SSID and BSSID. Apple classifies those identifiers as location-class data. We do not use GPS.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>LV24 WiFi Explorer uses Location only so CoreWLAN can return SSID and BSSID (location-class data on macOS). We do not use GPS.</string>
+</dict>
+</plist>

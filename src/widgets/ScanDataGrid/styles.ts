@@ -1,0 +1,111 @@
+import type { SxProps, Theme } from '@mui/material';
+
+export const scanDataGridRootSx: SxProps<Theme> = {
+  flex: 1,
+  minHeight: 0,
+  width: '100%',
+  borderRadius: 0,
+  border: 'none',
+  '& .MuiDataGrid-root': {
+    borderRadius: 0,
+    border: 'none',
+    height: '100%',
+  },
+  '& .MuiDataGrid-columnHeaders': {
+    minHeight: 36,
+    maxHeight: 36,
+  },
+  '& .MuiDataGrid-row': {
+    maxHeight: 32,
+    minHeight: 28,
+  },
+  '& .scan-grid-row--connected': {
+    boxShadow: (theme) => `inset 3px 0 0 ${theme.palette.success.main}`,
+  },
+  '& .scan-grid-row--stale': {
+    opacity: 0.45,
+  },
+  '& .scan-grid-row--selected, & .MuiDataGrid-row.Mui-selected': {
+    backgroundColor: (theme) => theme.palette.action.selected,
+  },
+  '& .scan-grid-row--selected': {
+    boxShadow: (theme) => `inset 3px 0 0 ${theme.palette.primary.main}`,
+  },
+  '& .MuiDataGrid-row.Mui-selected:hover': {
+    backgroundColor: (theme) => theme.palette.action.selected,
+  },
+};
+
+export const scanDataGridProSx: SxProps<Theme> = {
+  height: '100%',
+  borderRadius: 0,
+  border: 'none',
+};
+
+export const overlayRootSx: SxProps<Theme> = {
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 1,
+  height: '100%',
+  justifyContent: 'center',
+  px: 2,
+  textAlign: 'center',
+};
+
+export const seriesSwatchSx = (color: string): SxProps<Theme> => ({
+  width: 8,
+  height: 8,
+  borderRadius: 0,
+  backgroundColor: color,
+  flexShrink: 0,
+});
+
+export const signalBarTrackSx: SxProps<Theme> = {
+  flex: 1,
+  minWidth: 48,
+  height: 6,
+  borderRadius: 0,
+  '& .MuiLinearProgress-bar': {
+    transition: 'none',
+  },
+};
+
+export const signalCellSx: SxProps<Theme> = {
+  alignItems: 'center',
+  width: '100%',
+};
+
+export const signalPctSx: SxProps<Theme> = {
+  minWidth: 36,
+  fontVariantNumeric: 'tabular-nums',
+};
+
+export const ssidCellSx: SxProps<Theme> = {
+  alignItems: 'center',
+  minWidth: 0,
+};
+
+export const ssidTextSx = (opts: { connected: boolean; hidden: boolean }): SxProps<Theme> => ({
+  fontWeight: opts.connected ? 600 : 400,
+  fontStyle: opts.hidden ? 'italic' : 'normal',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+});
+
+export const vendorCellSx: SxProps<Theme> = {
+  alignItems: 'center',
+  minWidth: 0,
+};
+
+export const vendorAvatarSx: SxProps<Theme> = {
+  width: 16,
+  height: 16,
+  fontSize: '0.55rem',
+};
+
+export const monoCellSx: SxProps<Theme> = {
+  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+  fontSize: '0.75rem',
+};

@@ -1,0 +1,8 @@
+{
+  "format": "ieee-mal-24",
+  "source": "ieee-mal",
+  "sourceUrl": "https://standards-oui.ieee.org/oui/oui.csv",
+  "generatedAt": "2026-09-17T19:58:53.595Z",
+  "entryCount": 40158,
+  "note": "24-bit MA-L only. MA-M (28-bit) and MA-S (36-bit) are ambiguous at this prefix length."
+}

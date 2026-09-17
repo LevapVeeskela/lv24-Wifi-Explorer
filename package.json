@@ -1,0 +1,68 @@
+{
+  "name": "lv24-wifi-explorer",
+  "productName": "LV24 WiFi Explorer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LV24 desktop WiFi exploration tool (Electron + Vite + MUI)",
+  "main": "dist-electron/main.js",
+  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently \"vite\" \"wait-on tcp:5173 && yarn run dev:electron\"",
+    "dev:renderer": "vite",
+    "dev:electron": "tsc -p tsconfig.main.json && cross-env WIFI_RENDERER_DEV_URL=http://localhost:5173 electron .",
+    "build": "tsc -p tsconfig.main.json && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.main.json",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "test": "vitest run",
+    "build:scancore": "bash native/ScanCore/scripts/build.sh",
+    "test:scan": "node src/scan/run-tests.mjs",
+    "test:oui": "node --test src/vendor/lookup.test.mjs",
+    "oui:refresh": "node src/vendor/refresh-oui.mjs",
+    "dist:mac": "yarn build && electron-builder --mac dmg --config electron-builder.yml",
+    "dist:win": "yarn build && electron-builder --win nsis --config electron-builder.yml"
+  },
+  "dependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource-variable/plus-jakarta-sans": "5.3.0",
+    "@mui/icons-material": "9.2.0",
+    "@mui/material": "9.2.0",
+    "@mui/system": "9.2.0",
+    "@mui/x-charts": "8.11.0",
+    "@mui/x-data-grid-pro": "8.11.0",
+    "@mui/x-date-pickers": "8.11.0",
+    "@mui/x-license": "8.11.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.4",
+    "concurrently": "9.1.2",
+    "cross-env": "7.0.3",
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8",
+    "jsdom": "29.1.1",
+    "oxfmt": "0.60.0",
+    "oxlint": "1.75.0",
+    "typescript": "5.9.3",
+    "vite": "8.1.5",
+    "vitest": "4.1.10",
+    "wait-on": "8.0.1"
+  },
+  "resolutions": {
+    "@mui/x-data-grid": "8.11.0",
+    "@mui/x-data-grid-pro": "8.11.0",
+    "@mui/x-license": "8.11.0"
+  }
+}

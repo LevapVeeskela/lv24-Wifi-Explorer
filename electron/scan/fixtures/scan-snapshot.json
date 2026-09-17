@@ -1,0 +1,41 @@
+{
+  "capturedAt": "2026-09-17T19:00:00.000Z",
+  "interfaceName": "en0",
+  "location": "granted",
+  "includeHiddenRequested": true,
+  "associated": null,
+  "networks": [
+    {
+      "ssid": "LV24-Campus",
+      "ssidData": [76, 86, 50, 52, 45, 67, 97, 109, 112, 117, 115],
+      "bssid": "00:11:22:01:00:01",
+      "rssiDbm": -62,
+      "noiseDbm": -92,
+      "channelNumber": 6,
+      "channelBand": "2ghz",
+      "channelWidth": "20mhz",
+      "countryCode": "RU",
+      "beaconIntervalMs": 100,
+      "ibss": false,
+      "informationElementData": null,
+      "supportedSecurity": ["wpa2-personal"],
+      "supportedPhyModes": ["b", "g", "n"]
+    },
+    {
+      "ssid": "LV24-Campus",
+      "ssidData": [76, 86, 50, 52, 45, 67, 97, 109, 112, 117, 115],
+      "bssid": "00:11:22:01:00:03",
+      "rssiDbm": -48,
+      "noiseDbm": -94,
+      "channelNumber": 36,
+      "channelBand": "5ghz",
+      "channelWidth": "80mhz",
+      "countryCode": "RU",
+      "beaconIntervalMs": 100,
+      "ibss": false,
+      "informationElementData": null,
+      "supportedSecurity": ["wpa2-personal", "wpa3-personal", "wpa3-transition"],
+      "supportedPhyModes": ["a", "n", "ac", "ax"]
+    }
+  ]
+}

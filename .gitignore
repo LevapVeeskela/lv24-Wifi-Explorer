@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-electron/
+out/
+release/
+.tmp/
+coverage/
+.env
+.env.local
+*.pem
+.DS_Store
+*.log
+yarn-error.log
+native/ScanCore/.build/

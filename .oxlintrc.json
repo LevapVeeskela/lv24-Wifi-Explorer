@@ -1,0 +1,90 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "react", "import", "jsx-a11y", "oxc", "promise", "vitest"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "off",
+    "style": "off",
+    "pedantic": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "ignorePatterns": [
+    "dist/**",
+    "dist-electron/**",
+    "release/**",
+    "node_modules/**",
+    "native/**",
+    "data/**",
+    ".tmp/**",
+    "coverage/**",
+    "*.min.js"
+  ],
+  "settings": {
+    "react": {
+      "version": "19.2.8"
+    }
+  },
+  "options": {
+    "typeAware": false
+  },
+  "rules": {
+    "typescript/no-explicit-any": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "react/only-export-components": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/display-name": "off",
+    "react/no-array-index-key": "off",
+    "import/no-cycle": "error",
+    "import/no-duplicates": "warn",
+    "import/first": "off",
+    "import/no-unassigned-import": "off",
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "jsx-a11y/alt-text": "error",
+    "jsx-a11y/aria-props": "error",
+    "jsx-a11y/aria-role": "error",
+    "jsx-a11y/heading-has-content": "error",
+    "vitest/no-focused-tests": "error",
+    "vitest/valid-expect": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.{test,spec}.{ts,tsx}", "src/test/**/*.{ts,tsx}"],
+      "rules": {
+        "typescript/no-explicit-any": "off",
+        "import/no-cycle": "off",
+        "no-console": "off"
+      }
+    },
+    {
+      "files": ["electron/**/*.ts", "vite.config.ts", "vitest.config.ts"],
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "no-console": "off"
+      }
+    },
+    {
+      "files": ["**/*.styles.ts", "**/*.styles.tsx", "**/styles.ts"],
+      "rules": {
+        "react/forbid-dom-props": "off"
+      }
+    }
+  ]
+}
