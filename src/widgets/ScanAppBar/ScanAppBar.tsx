@@ -26,7 +26,9 @@ import ViewColumn from '@mui/icons-material/ViewColumn';
 import type { CsvExportScope } from '@/features/export';
 import { SCAN_INTERVAL_SEC_OPTIONS } from '@/features/scan-settings';
 import {
+  FilterPresetsMenu,
   SEARCH_DEBOUNCE_MS,
+  useFilterPresets,
   type ScanWorkbenchFilters,
   type SecurityFilterValue,
 } from '@/features/scan-filters';
@@ -69,13 +71,18 @@ export function ScanAppBar({
 }: ScanAppBarProps) {
   const [localSearch, setLocalSearch] = useState(filters.searchQuery);
   const [exportMenuEl, setExportMenuEl] = useState<null | HTMLElement>(null);
-  const { history: searchHistory, recordCommit: recordSearchHistoryCommit } = useScanSearchHistory();
+  const { history: searchHistory, recordCommit: recordSearchHistoryCommit } =
+    useScanSearchHistory();
+  const filterPresets = useFilterPresets({
+    currentFilters: filters,
+    onApplyFilters: onFiltersChange,
+  });
   const filtersRef = useRef(filters);
   filtersRef.current = filters;
   const exportMenuOpen = Boolean(exportMenuEl);
   const searchHistoryOptions = useMemo(
     () => filterScanSearchHistoryForAutocomplete(searchHistory, localSearch),
-    [searchHistory, localSearch],
+    [searchHistory, localSearch]
   );
 
   const closeExportMenu = () => setExportMenuEl(null);
@@ -243,6 +250,8 @@ export function ScanAppBar({
             }}
           />
         </Stack>
+
+        <FilterPresetsMenu presets={filterPresets} />
 
         <Tooltip title={t('scan.export.csv')}>
           <IconButton

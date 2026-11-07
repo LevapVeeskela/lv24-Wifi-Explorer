@@ -14,3 +14,10 @@ export {
   type ScanWorkbenchFilters,
   type SecurityFilterValue,
 } from './types';
+
+export {
+  FilterPresetsMenu,
+  useFilterPresets,
+  type UseFilterPresetsOptions,
+  type UseFilterPresetsResult,
+} from './presets';

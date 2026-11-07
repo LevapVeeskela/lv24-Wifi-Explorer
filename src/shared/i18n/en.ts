@@ -17,6 +17,12 @@ export const enMessages = {
   'scan.filter.secure': 'Secure',
   'scan.filter.minRssi': 'Min RSSI',
 
+  'scan.filterPresets.title': 'Filter presets',
+  'scan.filterPresets.empty': 'No saved presets yet',
+  'scan.filterPresets.newName': 'Save current filters as…',
+  'scan.filterPresets.save': 'Save preset',
+  'scan.filterPresets.delete': 'Delete preset “{name}”',
+
   'scan.filterSidebar.title': 'Filters',
   'scan.filterSidebar.collapse': 'Collapse filter panel',
   'scan.filterSidebar.expand': 'Expand filter panel',
@@ -50,8 +56,7 @@ export const enMessages = {
   'scan.settings.columns.cellRules.enabled': 'Enable rule-based highlighting',
   'scan.settings.columns.cellRules.rssi': 'Signal quality (RSSI, SNR, noise)',
   'scan.settings.columns.cellRules.security': 'Open and weak networks (WEP)',
-  'scan.settings.columns.orderHint':
-    'Columns — order and widths: grid column menu (v1+).',
+  'scan.settings.columns.orderHint': 'Columns — order and widths: grid column menu (v1+).',
   'scan.settings.columns.profile.default': 'Default',
   'scan.settings.columns.profiles.hint':
     'Profiles save a set of visible columns. Switching applies the profile to the table.',
@@ -174,8 +179,7 @@ export const enMessages = {
 
   'scan.status.found': 'Networks: {count}',
   'scan.status.selected': 'Selected: {count}',
-  'scan.status.timescaleHint':
-    'Signal · use ↑ or ↓ to change timescale when a chart is focused',
+  'scan.status.timescaleHint': 'Signal · use ↑ or ↓ to change timescale when a chart is focused',
   'scan.status.shortcutsHint':
     '⌘F search · ⌘P pause scan · ⌘1–5 details · ⌘C BSSID when grid focused',
   'scan.status.scanCore': 'ScanCore: {state}',

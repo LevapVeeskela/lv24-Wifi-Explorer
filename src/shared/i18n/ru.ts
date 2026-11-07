@@ -16,6 +16,12 @@ export const ruMessages: Record<MessageKey, string> = {
   'scan.filter.secure': 'Защищённые',
   'scan.filter.minRssi': 'Мин. RSSI',
 
+  'scan.filterPresets.title': 'Пресеты фильтров',
+  'scan.filterPresets.empty': 'Сохранённых пресетов пока нет',
+  'scan.filterPresets.newName': 'Сохранить текущие фильтры как…',
+  'scan.filterPresets.save': 'Сохранить пресет',
+  'scan.filterPresets.delete': 'Удалить пресет «{name}»',
+
   'scan.filterSidebar.title': 'Фильтры',
   'scan.filterSidebar.collapse': 'Свернуть панель фильтров',
   'scan.filterSidebar.expand': 'Развернуть панель фильтров',
@@ -173,8 +179,7 @@ export const ruMessages: Record<MessageKey, string> = {
 
   'scan.status.found': 'Сетей: {count}',
   'scan.status.selected': 'Выбрано: {count}',
-  'scan.status.timescaleHint':
-    'Сигнал · ↑/↓ меняют шкалу времени, когда фокус на графике',
+  'scan.status.timescaleHint': 'Сигнал · ↑/↓ меняют шкалу времени, когда фокус на графике',
   'scan.status.shortcutsHint':
     '⌘F поиск · ⌘P пауза скана · ⌘1–5 сведения · ⌘C BSSID при фокусе в таблице',
   'scan.status.scanCore': 'ScanCore: {state}',
@@ -184,7 +189,8 @@ export const ruMessages: Record<MessageKey, string> = {
   'scan.status.about': 'О программе',
 
   'scan.about.title': 'LV24 WiFi Explorer',
-  'scan.about.scanCore': 'ScanCore · вспомогательный процесс активного сканирования CoreWLAN в macOS.',
+  'scan.about.scanCore':
+    'ScanCore · вспомогательный процесс активного сканирования CoreWLAN в macOS.',
   'scan.about.location':
     'На современных версиях macOS для отображения SSID и BSSID может потребоваться служба геолокации. Приложение не использует GPS и не строит карты.',
   'scan.about.attribution':
