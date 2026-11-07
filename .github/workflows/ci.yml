@@ -3,10 +3,10 @@
 # native tooling until you run `sudo xcodebuild -license`.
 name: CI
 
+# Zero-spend policy: no automatic CI on push/PR (private repo + hosted runners =
+# paid minutes). Run manually from the Actions tab when needed.
 on:
-  push:
-    branches: [main, master]
-  pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
