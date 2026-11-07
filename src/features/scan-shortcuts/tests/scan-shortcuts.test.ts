@@ -25,7 +25,7 @@ describe('resolveScanShortcutActions', () => {
   it('Mod+F focuses search', () => {
     const actions = resolveScanShortcutActions(
       { key: 'f', metaKey: true, ctrlKey: false },
-      ctx({}),
+      ctx({})
     );
     assert.deepEqual(actions, [{ type: 'focusSearch' }]);
     assert.equal(shouldPreventDefault(actions[0]!), true);
@@ -35,7 +35,7 @@ describe('resolveScanShortcutActions', () => {
     const search = { contains: () => false } as unknown as HTMLInputElement;
     const actions = resolveScanShortcutActions(
       { key: 'Escape', metaKey: false, ctrlKey: false },
-      ctx({ searchInput: search, activeElement: search }),
+      ctx({ searchInput: search, activeElement: search })
     );
     assert.deepEqual(actions, [{ type: 'clearSearch' }]);
   });
@@ -43,7 +43,7 @@ describe('resolveScanShortcutActions', () => {
   it('Mod+Shift+S starts scan (Electron menu parity)', () => {
     const actions = resolveScanShortcutActions(
       { key: 's', metaKey: true, ctrlKey: false, shiftKey: true },
-      ctx({}),
+      ctx({})
     );
     assert.deepEqual(actions, [{ type: 'startScan' }]);
     assert.equal(shouldPreventDefault(actions[0]!), true);
@@ -52,7 +52,7 @@ describe('resolveScanShortcutActions', () => {
   it('Mod+Shift+T stops scan (Electron menu parity)', () => {
     const actions = resolveScanShortcutActions(
       { key: 't', metaKey: true, ctrlKey: false, shiftKey: true },
-      ctx({}),
+      ctx({})
     );
     assert.deepEqual(actions, [{ type: 'stopScan' }]);
     assert.equal(shouldPreventDefault(actions[0]!), true);
@@ -61,7 +61,7 @@ describe('resolveScanShortcutActions', () => {
   it('Mod+S saves snapshot without shift', () => {
     const actions = resolveScanShortcutActions(
       { key: 's', metaKey: true, ctrlKey: false, shiftKey: false },
-      ctx({}),
+      ctx({})
     );
     assert.deepEqual(actions, [{ type: 'saveSnapshot' }]);
   });
@@ -69,7 +69,7 @@ describe('resolveScanShortcutActions', () => {
   it('Mod+P does not toggle scan (reserved for print)', () => {
     const actions = resolveScanShortcutActions(
       { key: 'p', metaKey: true, ctrlKey: false, shiftKey: false },
-      ctx({}),
+      ctx({})
     );
     assert.deepEqual(actions, []);
   });
@@ -77,15 +77,58 @@ describe('resolveScanShortcutActions', () => {
   it('Mod+1..5 switch details tabs', () => {
     assert.deepEqual(
       resolveScanShortcutActions({ key: '2', metaKey: true, ctrlKey: false }, ctx({})),
-      [{ type: 'setDetailsTab', tab: 'signal' }],
+      [{ type: 'setDetailsTab', tab: 'signal' }]
     );
     assert.deepEqual(
       resolveScanShortcutActions({ key: '4', metaKey: true, ctrlKey: false }, ctx({})),
-      [{ type: 'setDetailsTab', tab: 'compare' }],
+      [{ type: 'setDetailsTab', tab: 'compare' }]
     );
     assert.deepEqual(
       resolveScanShortcutActions({ key: '5', metaKey: true, ctrlKey: false }, ctx({})),
-      [{ type: 'setDetailsTab', tab: 'advanced' }],
+      [{ type: 'setDetailsTab', tab: 'advanced' }]
+    );
+  });
+
+  it('Option+0..9 sets min-RSSI floor (−95 … −50, step 5)', () => {
+    assert.deepEqual(
+      resolveScanShortcutActions(
+        { key: '0', metaKey: false, ctrlKey: false, altKey: true },
+        ctx({})
+      ),
+      [{ type: 'setMinRssi', dbm: -95 }]
+    );
+    assert.deepEqual(
+      resolveScanShortcutActions(
+        { key: '5', metaKey: false, ctrlKey: false, altKey: true },
+        ctx({})
+      ),
+      [{ type: 'setMinRssi', dbm: -70 }]
+    );
+    assert.deepEqual(
+      resolveScanShortcutActions(
+        { key: '9', metaKey: false, ctrlKey: false, altKey: true },
+        ctx({})
+      ),
+      [{ type: 'setMinRssi', dbm: -50 }]
+    );
+    assert.equal(shouldPreventDefault({ type: 'setMinRssi', dbm: -70 }), true);
+  });
+
+  it('Option+digit does not fire when a mod key is also held', () => {
+    // Alt+Meta+5 → treated as Mod+5 (details tab), not an RSSI floor.
+    assert.deepEqual(
+      resolveScanShortcutActions(
+        { key: '5', metaKey: true, ctrlKey: false, altKey: true },
+        ctx({})
+      ),
+      [{ type: 'setDetailsTab', tab: 'advanced' }]
+    );
+  });
+
+  it('bare digit (no Option) does not set RSSI floor', () => {
+    assert.deepEqual(
+      resolveScanShortcutActions({ key: '5', metaKey: false, ctrlKey: false }, ctx({})),
+      []
     );
   });
 
@@ -98,17 +141,17 @@ describe('resolveScanShortcutActions', () => {
     assert.deepEqual(
       resolveScanShortcutActions(
         { key: 'c', metaKey: true, ctrlKey: false },
-        ctx({ gridRoot: grid, activeElement: cell, selectedBssid: 'aa:bb:cc:dd:ee:ff' }),
+        ctx({ gridRoot: grid, activeElement: cell, selectedBssid: 'aa:bb:cc:dd:ee:ff' })
       ),
-      [{ type: 'copyBssid', bssid: 'aa:bb:cc:dd:ee:ff' }],
+      [{ type: 'copyBssid', bssid: 'aa:bb:cc:dd:ee:ff' }]
     );
 
     assert.deepEqual(
       resolveScanShortcutActions(
         { key: 'c', metaKey: true, ctrlKey: false },
-        ctx({ gridRoot: grid, activeElement: null, selectedBssid: 'aa:bb:cc:dd:ee:ff' }),
+        ctx({ gridRoot: grid, activeElement: null, selectedBssid: 'aa:bb:cc:dd:ee:ff' })
       ),
-      [],
+      []
     );
   });
 });

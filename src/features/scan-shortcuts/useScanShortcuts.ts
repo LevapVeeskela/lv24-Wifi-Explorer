@@ -16,6 +16,7 @@ export type UseScanShortcutsOptions = {
   onDetailsTabChange: (tab: ScanDetailsTab) => void;
   onSaveSnapshot: () => void;
   onOpenSnapshot: () => void;
+  onSetMinRssi: (dbm: number) => void;
 };
 
 export function useScanShortcuts({
@@ -28,6 +29,7 @@ export function useScanShortcuts({
   onDetailsTabChange,
   onSaveSnapshot,
   onOpenSnapshot,
+  onSetMinRssi,
 }: UseScanShortcutsOptions): void {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -67,6 +69,9 @@ export function useScanShortcuts({
           case 'openSnapshot':
             void onOpenSnapshot();
             break;
+          case 'setMinRssi':
+            onSetMinRssi(action.dbm);
+            break;
           default:
             break;
         }
@@ -81,6 +86,7 @@ export function useScanShortcuts({
     onDetailsTabChange,
     onOpenSnapshot,
     onSaveSnapshot,
+    onSetMinRssi,
     onStartScan,
     onStopScan,
     searchInputRef,

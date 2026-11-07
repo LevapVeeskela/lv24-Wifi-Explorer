@@ -483,6 +483,13 @@ function ScanWorkbenchInner({
     onFiltersChange({ ...filters, searchQuery: '' });
   }, [filters, onFiltersChange]);
 
+  const setMinRssi = useCallback(
+    (dbm: number) => {
+      onFiltersChange({ ...filters, minRssiDbm: dbm });
+    },
+    [filters, onFiltersChange]
+  );
+
   useScanShortcuts({
     searchInputRef: searchRef,
     gridContainerRef,
@@ -493,6 +500,7 @@ function ScanWorkbenchInner({
     onDetailsTabChange: setDetailsTab,
     onSaveSnapshot: saveSnapshot,
     onOpenSnapshot: openSnapshot,
+    onSetMinRssi: setMinRssi,
   });
 
   useNativeMenuBridge({

@@ -8,10 +8,11 @@ export type ScanShortcutAction =
   | { type: 'setDetailsTab'; tab: ScanDetailsTab }
   | { type: 'copyBssid'; bssid: string }
   | { type: 'saveSnapshot' }
-  | { type: 'openSnapshot' };
+  | { type: 'openSnapshot' }
+  | { type: 'setMinRssi'; dbm: number };
 
 export type ScanShortcutKeyEvent = Pick<KeyboardEvent, 'key' | 'metaKey' | 'ctrlKey'> &
-  Partial<Pick<KeyboardEvent, 'shiftKey'>>;
+  Partial<Pick<KeyboardEvent, 'shiftKey' | 'altKey'>>;
 
 export type ScanShortcutContext = {
   activeElement: Element | null;
@@ -26,6 +27,20 @@ const DETAILS_TAB_BY_DIGIT: Record<string, ScanDetailsTab> = {
   '3': 'occupancy',
   '4': 'compare',
   '5': 'advanced',
+};
+
+/** Option+0–9 → min-RSSI floor in dBm (−95 … −50, step 5). */
+const RSSI_FLOOR_BY_DIGIT: Record<string, number> = {
+  '0': -95,
+  '1': -90,
+  '2': -85,
+  '3': -80,
+  '4': -75,
+  '5': -70,
+  '6': -65,
+  '7': -60,
+  '8': -55,
+  '9': -50,
 };
 
 function modKey(event: ScanShortcutKeyEvent): boolean {
@@ -46,11 +61,16 @@ export function isSearchFocused(ctx: ScanShortcutContext): boolean {
 
 export function resolveScanShortcutActions(
   event: ScanShortcutKeyEvent,
-  ctx: ScanShortcutContext,
+  ctx: ScanShortcutContext
 ): ScanShortcutAction[] {
   const actions: ScanShortcutAction[] = [];
   const mod = modKey(event);
   const key = event.key;
+
+  if (event.altKey && !mod && key in RSSI_FLOOR_BY_DIGIT) {
+    actions.push({ type: 'setMinRssi', dbm: RSSI_FLOOR_BY_DIGIT[key]! });
+    return actions;
+  }
 
   if (mod && key.toLowerCase() === 'f') {
     actions.push({ type: 'focusSearch' });
@@ -104,6 +124,7 @@ export function shouldPreventDefault(action: ScanShortcutAction): boolean {
     case 'saveSnapshot':
     case 'openSnapshot':
     case 'copyBssid':
+    case 'setMinRssi':
       return true;
     default:
       return false;
