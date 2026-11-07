@@ -1,15 +1,17 @@
-export type ScanDetailsTab = 'details' | 'signal' | 'occupancy' | 'advanced';
+export type ScanDetailsTab = 'details' | 'signal' | 'occupancy' | 'compare' | 'advanced';
 
 export type ScanShortcutAction =
   | { type: 'focusSearch' }
   | { type: 'clearSearch' }
-  | { type: 'toggleScan' }
+  | { type: 'startScan' }
+  | { type: 'stopScan' }
   | { type: 'setDetailsTab'; tab: ScanDetailsTab }
   | { type: 'copyBssid'; bssid: string }
   | { type: 'saveSnapshot' }
   | { type: 'openSnapshot' };
 
-export type ScanShortcutKeyEvent = Pick<KeyboardEvent, 'key' | 'metaKey' | 'ctrlKey'>;
+export type ScanShortcutKeyEvent = Pick<KeyboardEvent, 'key' | 'metaKey' | 'ctrlKey'> &
+  Partial<Pick<KeyboardEvent, 'shiftKey'>>;
 
 export type ScanShortcutContext = {
   activeElement: Element | null;
@@ -22,7 +24,8 @@ const DETAILS_TAB_BY_DIGIT: Record<string, ScanDetailsTab> = {
   '1': 'details',
   '2': 'signal',
   '3': 'occupancy',
-  '4': 'advanced',
+  '4': 'compare',
+  '5': 'advanced',
 };
 
 function modKey(event: ScanShortcutKeyEvent): boolean {
@@ -59,8 +62,13 @@ export function resolveScanShortcutActions(
     return actions;
   }
 
-  if (mod && key.toLowerCase() === 'p') {
-    actions.push({ type: 'toggleScan' });
+  if (mod && event.shiftKey && key.toLowerCase() === 's') {
+    actions.push({ type: 'startScan' });
+    return actions;
+  }
+
+  if (mod && event.shiftKey && key.toLowerCase() === 't') {
+    actions.push({ type: 'stopScan' });
     return actions;
   }
 
@@ -91,7 +99,8 @@ export function resolveScanShortcutActions(
 export function shouldPreventDefault(action: ScanShortcutAction): boolean {
   switch (action.type) {
     case 'focusSearch':
-    case 'toggleScan':
+    case 'startScan':
+    case 'stopScan':
     case 'saveSnapshot':
     case 'openSnapshot':
     case 'copyBssid':

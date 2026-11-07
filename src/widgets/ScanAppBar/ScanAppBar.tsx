@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import {
   AppBar,
+  Autocomplete,
   FormControl,
   IconButton,
   InputAdornment,
@@ -19,6 +20,7 @@ import {
 import Settings from '@mui/icons-material/Settings';
 import Search from '@mui/icons-material/Search';
 import Clear from '@mui/icons-material/Clear';
+import History from '@mui/icons-material/History';
 import FileDownload from '@mui/icons-material/FileDownload';
 import ViewColumn from '@mui/icons-material/ViewColumn';
 import type { CsvExportScope } from '@/features/export';
@@ -28,6 +30,10 @@ import {
   type ScanWorkbenchFilters,
   type SecurityFilterValue,
 } from '@/features/scan-filters';
+import {
+  filterScanSearchHistoryForAutocomplete,
+  useScanSearchHistory,
+} from '@/features/scan-search';
 import {
   rssiFilterSx,
   rssiSliderSx,
@@ -63,9 +69,14 @@ export function ScanAppBar({
 }: ScanAppBarProps) {
   const [localSearch, setLocalSearch] = useState(filters.searchQuery);
   const [exportMenuEl, setExportMenuEl] = useState<null | HTMLElement>(null);
+  const { history: searchHistory, recordCommit: recordSearchHistoryCommit } = useScanSearchHistory();
   const filtersRef = useRef(filters);
   filtersRef.current = filters;
   const exportMenuOpen = Boolean(exportMenuEl);
+  const searchHistoryOptions = useMemo(
+    () => filterScanSearchHistoryForAutocomplete(searchHistory, localSearch),
+    [searchHistory, localSearch],
+  );
 
   const closeExportMenu = () => setExportMenuEl(null);
 
@@ -80,11 +91,15 @@ export function ScanAppBar({
 
   useEffect(() => {
     const handle = window.setTimeout(() => {
-      if (filtersRef.current.searchQuery === localSearch) return;
+      if (filtersRef.current.searchQuery === localSearch) {
+        recordSearchHistoryCommit(localSearch);
+        return;
+      }
       onFiltersChange({ ...filtersRef.current, searchQuery: localSearch });
+      recordSearchHistoryCommit(localSearch);
     }, SEARCH_DEBOUNCE_MS);
     return () => window.clearTimeout(handle);
-  }, [localSearch, onFiltersChange]);
+  }, [localSearch, onFiltersChange, recordSearchHistoryCommit]);
 
   return (
     <AppBar color="transparent" elevation={0} position="static" sx={scanAppBarSx}>
@@ -116,33 +131,71 @@ export function ScanAppBar({
           <ToggleButton value="secure">{t('scan.filter.secure')}</ToggleButton>
         </ToggleButtonGroup>
 
-        <TextField
-          inputRef={searchInputRef}
-          placeholder={t('scan.search.placeholder')}
-          size="small"
+        <Autocomplete
+          disableClearable
+          freeSolo
+          openOnFocus
+          filterOptions={(options) => options}
+          inputValue={localSearch}
+          options={searchHistoryOptions}
           sx={searchFieldSx}
-          value={localSearch}
-          onChange={(event) => setLocalSearch(event.target.value)}
+          onChange={(_, value) => {
+            if (typeof value === 'string') setLocalSearch(value);
+          }}
+          onInputChange={(_, value, reason) => {
+            if (reason === 'input' || reason === 'clear' || reason === 'reset') {
+              setLocalSearch(value);
+            }
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              inputRef={searchInputRef}
+              placeholder={t('scan.search.placeholder')}
+              size="small"
+              slotProps={{
+                ...params.slotProps,
+                input: {
+                  ...params.slotProps.input,
+                  startAdornment: (
+                    <>
+                      <InputAdornment position="start">
+                        <Search fontSize="small" />
+                      </InputAdornment>
+                      {params.slotProps.input.startAdornment}
+                    </>
+                  ),
+                  endAdornment: localSearch ? (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label={t('scan.search.clear')}
+                        edge="end"
+                        size="small"
+                        onClick={() => setLocalSearch('')}
+                      >
+                        <Clear fontSize="small" />
+                      </IconButton>
+                    </InputAdornment>
+                  ) : (
+                    params.slotProps.input.endAdornment
+                  ),
+                },
+              }}
+            />
+          )}
+          renderOption={(props, option) => {
+            const { key, ...optionProps } = props;
+            return (
+              <li key={key} {...optionProps}>
+                <History fontSize="small" sx={{ mr: 1, opacity: 0.6 }} />
+                <Typography noWrap component="span" variant="body2">
+                  {option}
+                </Typography>
+              </li>
+            );
+          }}
           slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search fontSize="small" />
-                </InputAdornment>
-              ),
-              endAdornment: localSearch ? (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label={t('scan.search.clear')}
-                    edge="end"
-                    size="small"
-                    onClick={() => setLocalSearch('')}
-                  >
-                    <Clear fontSize="small" />
-                  </IconButton>
-                </InputAdornment>
-              ) : null,
-            },
+            listbox: { sx: { maxHeight: 240 } },
           }}
         />
 

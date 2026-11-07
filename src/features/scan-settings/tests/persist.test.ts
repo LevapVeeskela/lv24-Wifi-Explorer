@@ -46,6 +46,7 @@ describe('scan-settings persist', () => {
     );
     expect(storage.getItem(SCAN_SETTINGS_STORAGE_KEY)).toContain('"version":1');
     expect(loadScanSettings(storage)).toEqual({
+      ...SCAN_SETTINGS_DEFAULTS,
       signalUnit: 'dbm',
       minRssiDbm: -72,
       scanIntervalSec: 10,
@@ -61,5 +62,14 @@ describe('scan-settings persist', () => {
   it('treats minRssi at or below -95 as off', () => {
     expect(normalizeScanSettings({ minRssiDbm: -95 }).minRssiDbm).toBeNull();
     expect(normalizeScanSettings({ minRssiDbm: -100 }).minRssiDbm).toBeNull();
+  });
+
+  it('fills new general/advanced fields when missing in stored JSON', () => {
+    const storage = memoryStorage();
+    storage.setItem(
+      SCAN_SETTINGS_STORAGE_KEY,
+      JSON.stringify({ version: 1, signalUnit: 'percent', scanIntervalSec: 5 })
+    );
+    expect(loadScanSettings(storage)).toEqual(SCAN_SETTINGS_DEFAULTS);
   });
 });

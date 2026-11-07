@@ -1,0 +1,1030 @@
+{
+  "@@locale": "en",
+  "permissionsDeniedBody": "SSID and BSSID stay redacted until you allow Location Services for this app. RF metrics may still update.",
+  "@permissionsDeniedBody": {
+    "description": "TS MessageKey: permissions.denied.body"
+  },
+  "permissionsDeniedTitle": "Network names are hidden",
+  "@permissionsDeniedTitle": {
+    "description": "TS MessageKey: permissions.denied.title"
+  },
+  "permissionsLocationBody": "On macOS, Wi‑Fi network names (SSID) and hardware addresses (BSSID) are treated as location-related data. LV24 WiFi Explorer requests Location Services only to unlock those fields — not to track GPS position or show maps.",
+  "@permissionsLocationBody": {
+    "description": "TS MessageKey: permissions.location.body"
+  },
+  "permissionsLocationSettingsHint": "Turn on Location Services globally, then enable LV24 WiFi Explorer in System Settings → Privacy & Security → Location Services.",
+  "@permissionsLocationSettingsHint": {
+    "description": "TS MessageKey: permissions.location.settingsHint"
+  },
+  "permissionsLocationTitle": "Location Services",
+  "@permissionsLocationTitle": {
+    "description": "TS MessageKey: permissions.location.title"
+  },
+  "permissionsOnboardingBody": "Active scanning can show signal and channels without Location. To list network names and MAC addresses, allow Location when prompted.",
+  "@permissionsOnboardingBody": {
+    "description": "TS MessageKey: permissions.onboarding.body"
+  },
+  "permissionsOnboardingTitle": "Wi‑Fi identity on macOS",
+  "@permissionsOnboardingTitle": {
+    "description": "TS MessageKey: permissions.onboarding.title"
+  },
+  "permissionsOpenSettings": "Open Location Settings",
+  "@permissionsOpenSettings": {
+    "description": "TS MessageKey: permissions.openSettings"
+  },
+  "permissionsRestrictedBody": "A device policy blocks Location Services. You can still view RF-only scan data or use demo mode where available.",
+  "@permissionsRestrictedBody": {
+    "description": "TS MessageKey: permissions.restricted.body"
+  },
+  "permissionsRestrictedTitle": "Location restricted",
+  "@permissionsRestrictedTitle": {
+    "description": "TS MessageKey: permissions.restricted.title"
+  },
+  "onboardingLocationContinue": "Continue",
+  "@onboardingLocationContinue": {
+    "description": "TS MessageKey: onboarding.location.continue"
+  },
+  "onboardingLocationLater": "Not now",
+  "@onboardingLocationLater": {
+    "description": "TS MessageKey: onboarding.location.later"
+  },
+  "onboardingLocationRetry": "Retry",
+  "@onboardingLocationRetry": {
+    "description": "TS MessageKey: onboarding.location.retry"
+  },
+  "permissionsPlatformAndroidBody": "Android treats Wi‑Fi scan results as location-related. WifiManager needs Location (and Nearby Wi‑Fi devices on Android 13+). The OS throttles startScan; this is not macOS ScanCore richness.",
+  "@permissionsPlatformAndroidBody": {
+    "description": "TS MessageKey: permissions.platform.android.body"
+  },
+  "permissionsPlatformAndroidSettingsHint": "Enable Location, grant this app, and keep Wi‑Fi on. Empty or stale rows usually mean the OS is throttling scans.",
+  "@permissionsPlatformAndroidSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.android.settingsHint"
+  },
+  "permissionsPlatformAndroidTitle": "Android location unlocks WifiManager results",
+  "@permissionsPlatformAndroidTitle": {
+    "description": "TS MessageKey: permissions.platform.android.title"
+  },
+  "permissionsPlatformIosBody": "Apple does not give third-party apps a CoreWLAN-style full scan. This client can show the connected network when Location When In Use allows Wi‑Fi identity — not a roaming site survey.",
+  "@permissionsPlatformIosBody": {
+    "description": "TS MessageKey: permissions.platform.ios.body"
+  },
+  "permissionsPlatformIosSettingsHint": "Settings → Privacy & Security → Location Services → While Using. SSID and BSSID stay redacted without that grant.",
+  "@permissionsPlatformIosSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.ios.settingsHint"
+  },
+  "permissionsPlatformIosTitle": "iOS cannot scan every nearby network",
+  "@permissionsPlatformIosTitle": {
+    "description": "TS MessageKey: permissions.platform.ios.title"
+  },
+  "permissionsPlatformLinuxBody": "Live Linux rows come from NetworkManager GetAccessPoints over the public D-Bus API — not iw, not monitor mode. Some desktops also hide SSID until a location or geoclue prompt is allowed.",
+  "@permissionsPlatformLinuxBody": {
+    "description": "TS MessageKey: permissions.platform.linux.body"
+  },
+  "permissionsPlatformLinuxSettingsHint": "Allow location or geoclue if the portal asks. Otherwise you may only see the connected network, or demo fixtures.",
+  "@permissionsPlatformLinuxSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.linux.settingsHint"
+  },
+  "permissionsPlatformLinuxTitle": "Linux NetworkManager public D-Bus",
+  "@permissionsPlatformLinuxTitle": {
+    "description": "TS MessageKey: permissions.platform.linux.title"
+  },
+  "permissionsPlatformMacosBody": "On macOS, SSID and BSSID are CoreLocation-gated. LV24 asks for Location When In Use only to unlock those fields through a live ScanCore helper — not GPS or maps.",
+  "@permissionsPlatformMacosBody": {
+    "description": "TS MessageKey: permissions.platform.macos.body"
+  },
+  "permissionsPlatformMacosSettingsHint": "Turn on Location Services, enable LV24 WiFi Explorer (and ScanCore if you run it standalone), then use a signed live ScanCore. Ad-hoc or unsigned helpers fall back to demo fixtures.",
+  "@permissionsPlatformMacosSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.macos.settingsHint"
+  },
+  "permissionsPlatformMacosTitle": "Wi‑Fi identity on macOS",
+  "@permissionsPlatformMacosTitle": {
+    "description": "TS MessageKey: permissions.platform.macos.title"
+  },
+  "permissionsPlatformOtherBody": "This build cannot promise a macOS-class active scan. SSID and BSSID may need OS location permission; otherwise you see RF-only fields, an associated link, or demo fixtures.",
+  "@permissionsPlatformOtherBody": {
+    "description": "TS MessageKey: permissions.platform.other.body"
+  },
+  "permissionsPlatformOtherSettingsHint": "Open system location settings if the OS asks. Windows v1 is associated-link plus demo fixtures, not a nearby-BSS survey.",
+  "@permissionsPlatformOtherSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.other.settingsHint"
+  },
+  "permissionsPlatformOtherTitle": "Location and scan limits",
+  "@permissionsPlatformOtherTitle": {
+    "description": "TS MessageKey: permissions.platform.other.title"
+  },
+  "permissionsPlatformWindowsBody": "Windows v1 uses Native Wifi WlanQueryInterface for the connected network. There is no public nearby-BSS survey. Location may unlock Wi‑Fi identity; it does not turn this into a site survey.",
+  "@permissionsPlatformWindowsBody": {
+    "description": "TS MessageKey: permissions.platform.windows.body"
+  },
+  "permissionsPlatformWindowsSettingsHint": "If Windows asks for location to show the current SSID or BSSID, allow it. Without an association you see demo fixtures.",
+  "@permissionsPlatformWindowsSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.windows.settingsHint"
+  },
+  "permissionsPlatformWindowsTitle": "Windows associated link only",
+  "@permissionsPlatformWindowsTitle": {
+    "description": "TS MessageKey: permissions.platform.windows.title"
+  },
+  "scanDegradedAndroidThrottledBody": "WifiManager limited this scan (OS throttle or SCAN_FAILED). Results may be stale; the next attempt backs off (30s or more).",
+  "@scanDegradedAndroidThrottledBody": {
+    "description": "TS MessageKey: scan.degraded.androidThrottled.body"
+  },
+  "scanDegradedAndroidThrottledTitle": "Android scan throttled",
+  "@scanDegradedAndroidThrottledTitle": {
+    "description": "TS MessageKey: scan.degraded.androidThrottled.title"
+  },
+  "scanDegradedDemoBody": "Live scan is not running. macOS needs Location When In Use plus a signed live ScanCore. iOS cannot full-scan; Android WifiManager is throttled; Linux uses public NetworkManager D-Bus; Windows is associated-link only.",
+  "@scanDegradedDemoBody": {
+    "description": "TS MessageKey: scan.degraded.demo.body"
+  },
+  "scanDegradedDemoTitle": "Demo data",
+  "@scanDegradedDemoTitle": {
+    "description": "TS MessageKey: scan.degraded.demo.title"
+  },
+  "scanDegradedIosConnectedOnlyBody": "There is no public iOS API for a full nearby BSS scan. Showing the associated network when identity is available.",
+  "@scanDegradedIosConnectedOnlyBody": {
+    "description": "TS MessageKey: scan.degraded.iosConnectedOnly.body"
+  },
+  "scanDegradedIosConnectedOnlyTitle": "iOS connected network only",
+  "@scanDegradedIosConnectedOnlyTitle": {
+    "description": "TS MessageKey: scan.degraded.iosConnectedOnly.title"
+  },
+  "scanDegradedLinuxNmBody": "Only public NetworkManager D-Bus data is available — often the connected network. This is not a full RF survey.",
+  "@scanDegradedLinuxNmBody": {
+    "description": "TS MessageKey: scan.degraded.linuxNm.body"
+  },
+  "scanDegradedLinuxNmTitle": "Linux NetworkManager limited",
+  "@scanDegradedLinuxNmTitle": {
+    "description": "TS MessageKey: scan.degraded.linuxNm.title"
+  },
+  "scanDegradedWindowsConnectedOnlyBody": "Native Wifi reports the connected network (SSID, BSSID, quality). Nearby BSS rows, channel, and IEs are not available in this v1 path.",
+  "@scanDegradedWindowsConnectedOnlyBody": {
+    "description": "TS MessageKey: scan.degraded.windowsConnectedOnly.body"
+  },
+  "scanDegradedWindowsConnectedOnlyTitle": "Windows associated link only",
+  "@scanDegradedWindowsConnectedOnlyTitle": {
+    "description": "TS MessageKey: scan.degraded.windowsConnectedOnly.title"
+  },
+  "scanDemoBanner": "Demo data — live scan is not running. macOS needs Location When In Use and a live ScanCore; iOS is connected-only; Android WifiManager is throttled; Linux uses public NetworkManager D-Bus; Windows is associated-link only.",
+  "@scanDemoBanner": {
+    "description": "TS MessageKey: scan.demo.banner"
+  },
+  "scanAboutAttribution": "UI: Material UI (MIT) · Data Grid Pro (commercial license) · MUI X Charts (MIT).",
+  "@scanAboutAttribution": {
+    "description": "TS MessageKey: scan.about.attribution"
+  },
+  "scanAboutLocation": "Location Services may be required to show SSID and BSSID on modern macOS. This app does not use GPS or map tracking.",
+  "@scanAboutLocation": {
+    "description": "TS MessageKey: scan.about.location"
+  },
+  "scanAboutScanCore": "ScanCore · macOS CoreWLAN active scan helper.",
+  "@scanAboutScanCore": {
+    "description": "TS MessageKey: scan.about.scanCore"
+  },
+  "scanAboutTitle": "LV24 WiFi Explorer",
+  "@scanAboutTitle": {
+    "description": "TS MessageKey: scan.about.title"
+  },
+  "scanAdvIes": "Information elements",
+  "@scanAdvIes": {
+    "description": "TS MessageKey: scan.adv.ies"
+  },
+  "scanAdvIssues": "Issues",
+  "@scanAdvIssues": {
+    "description": "TS MessageKey: scan.adv.issues"
+  },
+  "scanAdvRadio": "Radio",
+  "@scanAdvRadio": {
+    "description": "TS MessageKey: scan.adv.radio"
+  },
+  "scanAdvSecurity": "Security",
+  "@scanAdvSecurity": {
+    "description": "TS MessageKey: scan.adv.security"
+  },
+  "scanAdvIesTree": "Information elements — tree",
+  "@scanAdvIesTree": {
+    "description": "TS MessageKey: scan.adv.ies.tree"
+  },
+  "scanIeParseLevel": "Parse level",
+  "@scanIeParseLevel": { "description": "TS MessageKey: scan.ie.parseLevel" },
+  "scanIeByteLength": "Byte length",
+  "@scanIeByteLength": { "description": "TS MessageKey: scan.ie.byteLength" },
+  "scanIeElementCount": "Element count",
+  "@scanIeElementCount": { "description": "TS MessageKey: scan.ie.elementCount" },
+  "scanIeRawHex": "Raw hex",
+  "@scanIeRawHex": { "description": "TS MessageKey: scan.ie.rawHex" },
+  "scanIeYes": "yes",
+  "@scanIeYes": { "description": "TS MessageKey: scan.ie.yes" },
+  "scanIeNo": "no",
+  "@scanIeNo": { "description": "TS MessageKey: scan.ie.no" },
+  "scanIeHiddenValue": "(hidden)",
+  "@scanIeHiddenValue": { "description": "TS MessageKey: scan.ie.hiddenValue" },
+  "scanIeFlagSet": "set",
+  "@scanIeFlagSet": { "description": "TS MessageKey: scan.ie.flagSet" },
+  "scanIeWpaIe": "WPA IE",
+  "@scanIeWpaIe": { "description": "TS MessageKey: scan.ie.wpaIe" },
+  "scanIeLevelAbsent": "absent",
+  "@scanIeLevelAbsent": { "description": "TS MessageKey: scan.ie.levelAbsent" },
+  "scanIeLevelRawOnly": "raw-only",
+  "@scanIeLevelRawOnly": { "description": "TS MessageKey: scan.ie.levelRawOnly" },
+  "scanIeLevelShallowTags": "shallow-tags",
+  "@scanIeLevelShallowTags": { "description": "TS MessageKey: scan.ie.levelShallowTags" },
+  "scanIeLevelUnsupportedDeep": "unsupported-deep",
+  "@scanIeLevelUnsupportedDeep": { "description": "TS MessageKey: scan.ie.levelUnsupportedDeep" },
+  "scanIeSsid": "SSID",
+  "@scanIeSsid": { "description": "TS MessageKey: scan.ie.ssid" },
+  "scanIeHidden": "Hidden",
+  "@scanIeHidden": { "description": "TS MessageKey: scan.ie.hidden" },
+  "scanIeRates": "Rates",
+  "@scanIeRates": { "description": "TS MessageKey: scan.ie.rates" },
+  "scanIeBasicRates": "Basic rates",
+  "@scanIeBasicRates": { "description": "TS MessageKey: scan.ie.basicRates" },
+  "scanIeChannel": "Channel",
+  "@scanIeChannel": { "description": "TS MessageKey: scan.ie.channel" },
+  "scanIeCountryCode": "Country code",
+  "@scanIeCountryCode": { "description": "TS MessageKey: scan.ie.countryCode" },
+  "scanIeEnvironment": "Environment",
+  "@scanIeEnvironment": { "description": "TS MessageKey: scan.ie.environment" },
+  "scanIeRegulatoryTriplet": "Regulatory triplet {index}",
+  "@scanIeRegulatoryTriplet": {
+    "description": "TS MessageKey: scan.ie.regulatoryTriplet",
+    "placeholders": { "index": { "type": "Object" } }
+  },
+  "scanIeStationCount": "Station count",
+  "@scanIeStationCount": { "description": "TS MessageKey: scan.ie.stationCount" },
+  "scanIeChannelUtilization": "Channel utilization",
+  "@scanIeChannelUtilization": { "description": "TS MessageKey: scan.ie.channelUtilization" },
+  "scanIeAdmissionCapacity": "Available admission capacity",
+  "@scanIeAdmissionCapacity": { "description": "TS MessageKey: scan.ie.admissionCapacity" },
+  "scanIeDtimCount": "DTIM count",
+  "@scanIeDtimCount": { "description": "TS MessageKey: scan.ie.dtimCount" },
+  "scanIeDtimPeriod": "DTIM period",
+  "@scanIeDtimPeriod": { "description": "TS MessageKey: scan.ie.dtimPeriod" },
+  "scanIeBitmapControl": "Bitmap control",
+  "@scanIeBitmapControl": { "description": "TS MessageKey: scan.ie.bitmapControl" },
+  "scanIePartialBitmapLength": "Partial bitmap length",
+  "@scanIePartialBitmapLength": { "description": "TS MessageKey: scan.ie.partialBitmapLength" },
+  "scanIeLocalPowerConstraint": "Local power constraint",
+  "@scanIeLocalPowerConstraint": { "description": "TS MessageKey: scan.ie.localPowerConstraint" },
+  "scanIeSpatialStreams": "Spatial streams",
+  "@scanIeSpatialStreams": { "description": "TS MessageKey: scan.ie.spatialStreams" },
+  "scanIeFortyMhz": "40 MHz",
+  "@scanIeFortyMhz": { "description": "TS MessageKey: scan.ie.fortyMhz" },
+  "scanIeShortGi20": "Short GI 20 MHz",
+  "@scanIeShortGi20": { "description": "TS MessageKey: scan.ie.shortGi20" },
+  "scanIeShortGi40": "Short GI 40 MHz",
+  "@scanIeShortGi40": { "description": "TS MessageKey: scan.ie.shortGi40" },
+  "scanIeVersion": "Version",
+  "@scanIeVersion": { "description": "TS MessageKey: scan.ie.version" },
+  "scanIeGroupCipher": "Group cipher",
+  "@scanIeGroupCipher": { "description": "TS MessageKey: scan.ie.groupCipher" },
+  "scanIePairwise": "Pairwise {index}",
+  "@scanIePairwise": {
+    "description": "TS MessageKey: scan.ie.pairwise",
+    "placeholders": { "index": { "type": "Object" } }
+  },
+  "scanIeAkm": "AKM {index}",
+  "@scanIeAkm": {
+    "description": "TS MessageKey: scan.ie.akm",
+    "placeholders": { "index": { "type": "Object" } }
+  },
+  "scanIeMfpc": "MFPC (PMF capable)",
+  "@scanIeMfpc": { "description": "TS MessageKey: scan.ie.mfpc" },
+  "scanIeMfpr": "MFPR (PMF required)",
+  "@scanIeMfpr": { "description": "TS MessageKey: scan.ie.mfpr" },
+  "scanIePrimaryChannel": "Primary channel",
+  "@scanIePrimaryChannel": { "description": "TS MessageKey: scan.ie.primaryChannel" },
+  "scanIeSecondaryOffset": "Secondary offset",
+  "@scanIeSecondaryOffset": { "description": "TS MessageKey: scan.ie.secondaryOffset" },
+  "scanIeStaWidthAny40": "STA channel width any 40",
+  "@scanIeStaWidthAny40": { "description": "TS MessageKey: scan.ie.staWidthAny40" },
+  "scanIeMaxMcs": "Max MCS",
+  "@scanIeMaxMcs": { "description": "TS MessageKey: scan.ie.maxMcs" },
+  "scanIeShortGi80": "Short GI 80 MHz",
+  "@scanIeShortGi80": { "description": "TS MessageKey: scan.ie.shortGi80" },
+  "scanIeShortGi160": "Short GI 160 MHz",
+  "@scanIeShortGi160": { "description": "TS MessageKey: scan.ie.shortGi160" },
+  "scanIeChannelWidthSet": "Supported channel width set",
+  "@scanIeChannelWidthSet": { "description": "TS MessageKey: scan.ie.channelWidthSet" },
+  "scanIeWidthCode": "Channel width code",
+  "@scanIeWidthCode": { "description": "TS MessageKey: scan.ie.widthCode" },
+  "scanIeChannelWidth": "Channel width",
+  "@scanIeChannelWidth": { "description": "TS MessageKey: scan.ie.channelWidth" },
+  "scanIeCcfs0": "Center freq segment 0",
+  "@scanIeCcfs0": { "description": "TS MessageKey: scan.ie.ccfs0" },
+  "scanIeCcfs1": "Center freq segment 1",
+  "@scanIeCcfs1": { "description": "TS MessageKey: scan.ie.ccfs1" },
+  "scanIeLength": "Length",
+  "@scanIeLength": { "description": "TS MessageKey: scan.ie.length" },
+  "scanIeOui": "OUI",
+  "@scanIeOui": { "description": "TS MessageKey: scan.ie.oui" },
+  "scanIeVendorType": "Vendor type",
+  "@scanIeVendorType": { "description": "TS MessageKey: scan.ie.vendorType" },
+  "scanIeSaeH2e": "SAE hash-to-element",
+  "@scanIeSaeH2e": { "description": "TS MessageKey: scan.ie.saeH2e" },
+  "scanIeMaxMcs80": "Max MCS (≤80 MHz)",
+  "@scanIeMaxMcs80": { "description": "TS MessageKey: scan.ie.maxMcs80" },
+  "scanIeBssColor": "BSS color",
+  "@scanIeBssColor": { "description": "TS MessageKey: scan.ie.bssColor" },
+  "scanIeBssColorDisabled": "BSS color disabled",
+  "@scanIeBssColorDisabled": { "description": "TS MessageKey: scan.ie.bssColorDisabled" },
+  "scanIeSixGhzPrimary": "6 GHz primary channel",
+  "@scanIeSixGhzPrimary": { "description": "TS MessageKey: scan.ie.sixGhzPrimary" },
+  "scanColumnsManage": "Columns",
+  "@scanColumnsManage": {
+    "description": "TS MessageKey: scan.columns.manage"
+  },
+  "scanColumnsReset": "Reset columns",
+  "@scanColumnsReset": {
+    "description": "TS MessageKey: scan.columns.reset"
+  },
+  "scanCopied": "Copied to clipboard",
+  "@scanCopied": {
+    "description": "TS MessageKey: scan.copied"
+  },
+  "scanCompareDiffLegend": "Highlighted cells differ between selected networks.",
+  "@scanCompareDiffLegend": {
+    "description": "TS MessageKey: scan.compare.diffLegend"
+  },
+  "scanCompareField": "Field",
+  "@scanCompareField": {
+    "description": "TS MessageKey: scan.compare.field"
+  },
+  "scanCompareHint": "Select 2–3 networks in the table (checkboxes or ⌘-click), then review fields side by side.",
+  "@scanCompareHint": {
+    "description": "TS MessageKey: scan.compare.hint"
+  },
+  "scanChartEmpty": "No samples yet",
+  "@scanChartEmpty": {
+    "description": "TS MessageKey: scan.chart.empty"
+  },
+  "scanChartOccupancy": "Channel occupancy",
+  "@scanChartOccupancy": {
+    "description": "TS MessageKey: scan.chart.occupancy"
+  },
+  "scanChartOccupancyHint": "From active scan, not RF spectrum",
+  "@scanChartOccupancyHint": {
+    "description": "TS MessageKey: scan.chart.occupancy.hint"
+  },
+  "scanChartSelected": "Selected network",
+  "@scanChartSelected": {
+    "description": "TS MessageKey: scan.chart.selected"
+  },
+  "scanChartSignal": "Signal history",
+  "@scanChartSignal": {
+    "description": "TS MessageKey: scan.chart.signal"
+  },
+  "scanChartTable": "Chart data table",
+  "@scanChartTable": {
+    "description": "TS MessageKey: scan.chart.table"
+  },
+  "scanChartTimescale": "Timescale",
+  "@scanChartTimescale": {
+    "description": "TS MessageKey: scan.chart.timescale"
+  },
+  "scanChartUnitDbm": "dBm",
+  "@scanChartUnitDbm": {
+    "description": "TS MessageKey: scan.chart.unit.dbm"
+  },
+  "scanChartUnitPct": "Percent",
+  "@scanChartUnitPct": {
+    "description": "TS MessageKey: scan.chart.unit.pct"
+  },
+  "scanColBand": "Band",
+  "@scanColBand": {
+    "description": "TS MessageKey: scan.col.band"
+  },
+  "scanColBssid": "BSSID",
+  "@scanColBssid": {
+    "description": "TS MessageKey: scan.col.bssid"
+  },
+  "scanColChannel": "Channel",
+  "@scanColChannel": {
+    "description": "TS MessageKey: scan.col.channel"
+  },
+  "scanColChannelWidth": "Channel width",
+  "@scanColChannelWidth": {
+    "description": "TS MessageKey: scan.col.channelWidth"
+  },
+  "scanColIssues": "Issues",
+  "@scanColIssues": {
+    "description": "TS MessageKey: scan.col.issues"
+  },
+  "scanColPhyMode": "Mode",
+  "@scanColPhyMode": {
+    "description": "TS MessageKey: scan.col.phyMode"
+  },
+  "scanColRssi": "RSSI",
+  "@scanColRssi": {
+    "description": "TS MessageKey: scan.col.rssi"
+  },
+  "scanColSecurity": "Security",
+  "@scanColSecurity": {
+    "description": "TS MessageKey: scan.col.security"
+  },
+  "scanColSsid": "Network name",
+  "@scanColSsid": {
+    "description": "TS MessageKey: scan.col.ssid"
+  },
+  "scanColVendor": "Vendor",
+  "@scanColVendor": {
+    "description": "TS MessageKey: scan.col.vendor"
+  },
+  "scanDetailsBand": "Band",
+  "@scanDetailsBand": {
+    "description": "TS MessageKey: scan.details.band"
+  },
+  "scanDetailsBssid": "BSSID",
+  "@scanDetailsBssid": {
+    "description": "TS MessageKey: scan.details.bssid"
+  },
+  "scanDetailsChannel": "Channel",
+  "@scanDetailsChannel": {
+    "description": "TS MessageKey: scan.details.channel"
+  },
+  "scanDetailsChannelWidth": "Channel width",
+  "@scanDetailsChannelWidth": {
+    "description": "TS MessageKey: scan.details.channelWidth"
+  },
+  "scanDetailsConnected": "Connected",
+  "@scanDetailsConnected": {
+    "description": "TS MessageKey: scan.details.connected"
+  },
+  "scanDetailsCountry": "Country",
+  "@scanDetailsCountry": {
+    "description": "TS MessageKey: scan.details.country"
+  },
+  "scanDetailsEmpty": "Select a network",
+  "@scanDetailsEmpty": {
+    "description": "TS MessageKey: scan.details.empty"
+  },
+  "scanDetailsEncryption": "Encryption",
+  "@scanDetailsEncryption": {
+    "description": "TS MessageKey: scan.details.encryption"
+  },
+  "scanDetailsFirstSeen": "First seen",
+  "@scanDetailsFirstSeen": {
+    "description": "TS MessageKey: scan.details.firstSeen"
+  },
+  "scanDetailsFrequencyMHz": "Frequency",
+  "@scanDetailsFrequencyMHz": {
+    "description": "TS MessageKey: scan.details.frequencyMHz"
+  },
+  "scanDetailsLastSeen": "Last seen",
+  "@scanDetailsLastSeen": {
+    "description": "TS MessageKey: scan.details.lastSeen"
+  },
+  "scanDetailsMaxRateMbps": "Max rate",
+  "@scanDetailsMaxRateMbps": {
+    "description": "TS MessageKey: scan.details.maxRateMbps"
+  },
+  "scanDetailsNetworkType": "Type",
+  "@scanDetailsNetworkType": {
+    "description": "TS MessageKey: scan.details.networkType"
+  },
+  "scanDetailsNoiseDbm": "Noise",
+  "@scanDetailsNoiseDbm": {
+    "description": "TS MessageKey: scan.details.noiseDbm"
+  },
+  "scanDetailsPhyMode": "Mode",
+  "@scanDetailsPhyMode": {
+    "description": "TS MessageKey: scan.details.phyMode"
+  },
+  "scanDetailsSecurity": "Security",
+  "@scanDetailsSecurity": {
+    "description": "TS MessageKey: scan.details.security"
+  },
+  "scanDetailsSignalPct": "Signal",
+  "@scanDetailsSignalPct": {
+    "description": "TS MessageKey: scan.details.signalPct"
+  },
+  "scanDetailsSignalQuality": "Signal quality",
+  "@scanDetailsSignalQuality": {
+    "description": "TS MessageKey: scan.details.signalQuality"
+  },
+  "scanDetailsSnrDb": "SNR",
+  "@scanDetailsSnrDb": {
+    "description": "TS MessageKey: scan.details.snrDb"
+  },
+  "scanDetailsSsid": "SSID",
+  "@scanDetailsSsid": {
+    "description": "TS MessageKey: scan.details.ssid"
+  },
+  "scanDetailsVendor": "Vendor",
+  "@scanDetailsVendor": {
+    "description": "TS MessageKey: scan.details.vendor"
+  },
+  "scanExportAll": "All rows",
+  "@scanExportAll": {
+    "description": "TS MessageKey: scan.export.all"
+  },
+  "scanExportCsv": "Export CSV",
+  "@scanExportCsv": {
+    "description": "TS MessageKey: scan.export.csv"
+  },
+  "scanExportSelected": "Selected rows",
+  "@scanExportSelected": {
+    "description": "TS MessageKey: scan.export.selected"
+  },
+  "scanExportVisible": "Visible rows",
+  "@scanExportVisible": {
+    "description": "TS MessageKey: scan.export.visible"
+  },
+  "scanFieldUnavailable": "Not available from active scan",
+  "@scanFieldUnavailable": {
+    "description": "TS MessageKey: scan.field.unavailable"
+  },
+  "scanFileMenu": "File",
+  "@scanFileMenu": {
+    "description": "TS MessageKey: scan.file.menu"
+  },
+  "scanFileOpen": "Open snapshot…",
+  "@scanFileOpen": {
+    "description": "TS MessageKey: scan.file.open"
+  },
+  "scanFileSave": "Save snapshot…",
+  "@scanFileSave": {
+    "description": "TS MessageKey: scan.file.save"
+  },
+  "scanPrintVisible": "Print visible table…",
+  "@scanPrintVisible": {
+    "description": "TS MessageKey: scan.print.visible"
+  },
+  "scanFilterBand": "Band filter",
+  "@scanFilterBand": {
+    "description": "TS MessageKey: scan.filter.band"
+  },
+  "scanFilterBand24": "2.4 GHz",
+  "@scanFilterBand24": {
+    "description": "TS MessageKey: scan.filter.band.24"
+  },
+  "scanFilterBand5": "5 GHz",
+  "@scanFilterBand5": {
+    "description": "TS MessageKey: scan.filter.band.5"
+  },
+  "scanFilterBand6": "6 GHz",
+  "@scanFilterBand6": {
+    "description": "TS MessageKey: scan.filter.band.6"
+  },
+  "scanFilterBandAll": "All",
+  "@scanFilterBandAll": {
+    "description": "TS MessageKey: scan.filter.band.all"
+  },
+  "scanFilterBand6Empty": "No 6 GHz networks in this scan",
+  "@scanFilterBand6Empty": {
+    "description": "TS MessageKey: scan.filter.band6.empty"
+  },
+  "scanFilterMinRssi": "Min RSSI",
+  "@scanFilterMinRssi": {
+    "description": "TS MessageKey: scan.filter.minRssi"
+  },
+  "scanFilterOpen": "Open",
+  "@scanFilterOpen": {
+    "description": "TS MessageKey: scan.filter.open"
+  },
+  "scanFilterSecure": "Secure",
+  "@scanFilterSecure": {
+    "description": "TS MessageKey: scan.filter.secure"
+  },
+  "scanFilterSidebarChipCount": "{label} ({count})",
+  "@scanFilterSidebarChipCount": {
+    "description": "TS MessageKey: scan.filterSidebar.chipCount",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanFilterSidebarClear": "Clear band, security, and vendor filters",
+  "@scanFilterSidebarClear": {
+    "description": "TS MessageKey: scan.filterSidebar.clear"
+  },
+  "scanFilterSidebarCollapse": "Collapse filter panel",
+  "@scanFilterSidebarCollapse": {
+    "description": "TS MessageKey: scan.filterSidebar.collapse"
+  },
+  "scanFilterSidebarEmpty": "No networks to filter yet.",
+  "@scanFilterSidebarEmpty": {
+    "description": "TS MessageKey: scan.filterSidebar.empty"
+  },
+  "scanFilterSidebarExpand": "Expand filter panel",
+  "@scanFilterSidebarExpand": {
+    "description": "TS MessageKey: scan.filterSidebar.expand"
+  },
+  "scanFilterSidebarSectionBand": "Band",
+  "@scanFilterSidebarSectionBand": {
+    "description": "TS MessageKey: scan.filterSidebar.section.band"
+  },
+  "scanFilterSidebarSectionSecurity": "Security",
+  "@scanFilterSidebarSectionSecurity": {
+    "description": "TS MessageKey: scan.filterSidebar.section.security"
+  },
+  "scanFilterSidebarSectionVendor": "Vendor",
+  "@scanFilterSidebarSectionVendor": {
+    "description": "TS MessageKey: scan.filterSidebar.section.vendor"
+  },
+  "scanFilterSidebarTitle": "Filters",
+  "@scanFilterSidebarTitle": {
+    "description": "TS MessageKey: scan.filterSidebar.title"
+  },
+  "scanFilterSidebarVendorUnknown": "Unknown vendor",
+  "@scanFilterSidebarVendorUnknown": {
+    "description": "TS MessageKey: scan.filterSidebar.vendor.unknown"
+  },
+  "scanIssueCrowdedChannel": "Crowded channel",
+  "@scanIssueCrowdedChannel": {
+    "description": "TS MessageKey: scan.issue.crowdedChannel"
+  },
+  "scanIssueDfs": "DFS channel",
+  "@scanIssueDfs": {
+    "description": "TS MessageKey: scan.issue.dfs"
+  },
+  "scanIssueHiddenSsid": "Hidden network name",
+  "@scanIssueHiddenSsid": {
+    "description": "TS MessageKey: scan.issue.hiddenSsid"
+  },
+  "scanIssueHighUtil": "High channel utilization",
+  "@scanIssueHighUtil": {
+    "description": "TS MessageKey: scan.issue.highUtil"
+  },
+  "scanIssueLegacyOnly": "Legacy Wi‑Fi only (a/b/g)",
+  "@scanIssueLegacyOnly": {
+    "description": "TS MessageKey: scan.issue.legacyOnly"
+  },
+  "scanIssueLowSignal": "Low signal",
+  "@scanIssueLowSignal": {
+    "description": "TS MessageKey: scan.issue.lowSignal"
+  },
+  "scanIssueLowSnr": "Low SNR",
+  "@scanIssueLowSnr": {
+    "description": "TS MessageKey: scan.issue.lowSnr"
+  },
+  "scanIssueOverlap24": "Non-standard 2.4 GHz channel",
+  "@scanIssueOverlap24": {
+    "description": "TS MessageKey: scan.issue.overlap24"
+  },
+  "scanIssueWeakSecurity": "Weak security",
+  "@scanIssueWeakSecurity": {
+    "description": "TS MessageKey: scan.issue.weakSecurity"
+  },
+  "scanIssueWidth40on24": "40 MHz or wider on 2.4 GHz",
+  "@scanIssueWidth40on24": {
+    "description": "TS MessageKey: scan.issue.width40on24"
+  },
+  "scanQualityExcellent": "Excellent",
+  "@scanQualityExcellent": {
+    "description": "TS MessageKey: scan.quality.excellent"
+  },
+  "scanQualityFair": "Fair",
+  "@scanQualityFair": {
+    "description": "TS MessageKey: scan.quality.fair"
+  },
+  "scanQualityGood": "Good",
+  "@scanQualityGood": {
+    "description": "TS MessageKey: scan.quality.good"
+  },
+  "scanQualityPoor": "Poor",
+  "@scanQualityPoor": {
+    "description": "TS MessageKey: scan.quality.poor"
+  },
+  "scanQualityUnusable": "Unusable",
+  "@scanQualityUnusable": {
+    "description": "TS MessageKey: scan.quality.unusable"
+  },
+  "scanLocationDenied": "denied",
+  "@scanLocationDenied": {
+    "description": "TS MessageKey: scan.location.denied"
+  },
+  "scanLocationGranted": "granted",
+  "@scanLocationGranted": {
+    "description": "TS MessageKey: scan.location.granted"
+  },
+  "scanLocationNotDetermined": "not asked",
+  "@scanLocationNotDetermined": {
+    "description": "TS MessageKey: scan.location.notDetermined"
+  },
+  "scanLocationRestricted": "restricted",
+  "@scanLocationRestricted": {
+    "description": "TS MessageKey: scan.location.restricted"
+  },
+  "scanScanCoreDemo": "demo",
+  "@scanScanCoreDemo": {
+    "description": "TS MessageKey: scan.scanCore.demo"
+  },
+  "scanScanCoreError": "error",
+  "@scanScanCoreError": {
+    "description": "TS MessageKey: scan.scanCore.error"
+  },
+  "scanScanCoreOk": "ok",
+  "@scanScanCoreOk": {
+    "description": "TS MessageKey: scan.scanCore.ok"
+  },
+  "scanSearchClear": "Clear search",
+  "@scanSearchClear": {
+    "description": "TS MessageKey: scan.search.clear"
+  },
+  "scanSearchPlaceholder": "Filter networks",
+  "@scanSearchPlaceholder": {
+    "description": "TS MessageKey: scan.search.placeholder"
+  },
+  "scanSettingsOpen": "Scan settings",
+  "@scanSettingsOpen": {
+    "description": "TS MessageKey: scan.settings.open"
+  },
+  "scanSettingsScanInterval": "Scan interval",
+  "@scanSettingsScanInterval": {
+    "description": "TS MessageKey: scan.settings.scanInterval"
+  },
+  "scanSettingsScanIntervalSec": "{sec}s",
+  "@scanSettingsScanIntervalSec": {
+    "description": "TS MessageKey: scan.settings.scanIntervalSec",
+    "placeholders": {
+      "sec": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanSettingsSignalUnit": "Signal display",
+  "@scanSettingsSignalUnit": {
+    "description": "TS MessageKey: scan.settings.signalUnit"
+  },
+  "scanSettingsSignalUnitDbm": "dBm",
+  "@scanSettingsSignalUnitDbm": {
+    "description": "TS MessageKey: scan.settings.signalUnit.dbm"
+  },
+  "scanSettingsSignalUnitPercent": "Percent",
+  "@scanSettingsSignalUnitPercent": {
+    "description": "TS MessageKey: scan.settings.signalUnit.percent"
+  },
+  "scanSettingsAutoStart": "Start scanning on launch",
+  "@scanSettingsAutoStart": {
+    "description": "TS MessageKey: scan.settings.autoStartScan"
+  },
+  "scanSettingsColumnsCellRules": "Cell highlighting",
+  "@scanSettingsColumnsCellRules": {
+    "description": "TS MessageKey: scan.settings.columns.cellRules"
+  },
+  "scanSettingsColumnsCellRulesEnabled": "Enable rule-based highlighting",
+  "@scanSettingsColumnsCellRulesEnabled": {
+    "description": "TS MessageKey: scan.settings.columns.cellRules.enabled"
+  },
+  "scanSettingsColumnsCellRulesRssi": "Signal quality (RSSI, SNR, noise)",
+  "@scanSettingsColumnsCellRulesRssi": {
+    "description": "TS MessageKey: scan.settings.columns.cellRules.rssi"
+  },
+  "scanSettingsColumnsCellRulesSecurity": "Open and weak networks (WEP)",
+  "@scanSettingsColumnsCellRulesSecurity": {
+    "description": "TS MessageKey: scan.settings.columns.cellRules.security"
+  },
+  "scanSettingsColumnsOpenVisibility": "Manage column visibility…",
+  "@scanSettingsColumnsOpenVisibility": {
+    "description": "TS MessageKey: scan.settings.columns.openVisibility"
+  },
+  "scanSettingsTitle": "Scan settings",
+  "@scanSettingsTitle": {
+    "description": "TS MessageKey: scan.settings.title"
+  },
+  "scanSettingsWindowTitle": "LV24 WiFi Explorer settings",
+  "@scanSettingsWindowTitle": {
+    "description": "TS MessageKey: scan.settings.windowTitle"
+  },
+  "scanSettingsTabGeneral": "General",
+  "@scanSettingsTabGeneral": {
+    "description": "TS MessageKey: scan.settings.tab.general"
+  },
+  "scanSettingsTabColumns": "Columns",
+  "@scanSettingsTabColumns": {
+    "description": "TS MessageKey: scan.settings.tab.columns"
+  },
+  "scanSettingsTabAnnotations": "Annotations",
+  "@scanSettingsTabAnnotations": {
+    "description": "TS MessageKey: scan.settings.tab.annotations"
+  },
+  "scanSettingsTabVendor": "Vendor database",
+  "@scanSettingsTabVendor": {
+    "description": "TS MessageKey: scan.settings.tab.vendor"
+  },
+  "scanSettingsTabAdvanced": "Advanced",
+  "@scanSettingsTabAdvanced": {
+    "description": "TS MessageKey: scan.settings.tab.advanced"
+  },
+  "scanSettingsIncludeHiddenSsid": "Include hidden SSIDs when scanning",
+  "@scanSettingsIncludeHiddenSsid": {
+    "description": "TS MessageKey: scan.settings.includeHiddenSsid"
+  },
+  "scanSettingsDataSource": "Data source",
+  "@scanSettingsDataSource": {
+    "description": "TS MessageKey: scan.settings.dataSource"
+  },
+  "scanSettingsLiveScan": "Live scan",
+  "@scanSettingsLiveScan": {
+    "description": "TS MessageKey: scan.settings.liveScan"
+  },
+  "scanSettingsLanguage": "Interface language",
+  "@scanSettingsLanguage": {
+    "description": "TS MessageKey: scan.settings.language"
+  },
+  "scanSettingsClose": "Close",
+  "@scanSettingsClose": {
+    "description": "TS MessageKey: scan.settings.close"
+  },
+  "scanSettingsAnnotationsAdd": "Add rule",
+  "@scanSettingsAnnotationsAdd": {
+    "description": "TS MessageKey: scan.settings.annotations.add"
+  },
+  "scanSettingsAnnotationsPattern": "BSSID pattern",
+  "@scanSettingsAnnotationsPattern": {
+    "description": "TS MessageKey: scan.settings.annotations.pattern"
+  },
+  "scanSettingsAnnotationsText": "Text",
+  "@scanSettingsAnnotationsText": {
+    "description": "TS MessageKey: scan.settings.annotations.text"
+  },
+  "scanSettingsAnnotationsEmpty": "No rules yet. Add a MAC pattern or import CSV.",
+  "@scanSettingsAnnotationsEmpty": {
+    "description": "TS MessageKey: scan.settings.annotations.empty"
+  },
+  "scanSettingsAnnotationsImport": "Import CSV",
+  "@scanSettingsAnnotationsImport": {
+    "description": "TS MessageKey: scan.settings.annotations.import"
+  },
+  "scanSettingsAnnotationsExport": "Export CSV",
+  "@scanSettingsAnnotationsExport": {
+    "description": "TS MessageKey: scan.settings.annotations.export"
+  },
+  "scanSettingsAnnotationsRemove": "Remove",
+  "@scanSettingsAnnotationsRemove": {
+    "description": "TS MessageKey: scan.settings.annotations.remove"
+  },
+  "scanSettingsVendorBundled": "Bundled — local copy of IEEE MA-L (24-bit OUI).",
+  "@scanSettingsVendorBundled": {
+    "description": "TS MessageKey: scan.settings.vendor.bundled"
+  },
+  "scanSettingsVendorEntries": "Entries: {count}",
+  "@scanSettingsVendorEntries": {
+    "description": "TS MessageKey: scan.settings.vendor.entries",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanSettingsVendorUpdated": "Updated: {date}",
+  "@scanSettingsVendorUpdated": {
+    "description": "TS MessageKey: scan.settings.vendor.updated",
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanSettingsVendorRefreshHint": "Refresh: yarn oui:refresh (public IEEE registry, no third-party APIs).",
+  "@scanSettingsVendorRefreshHint": {
+    "description": "TS MessageKey: scan.settings.vendor.refreshHint"
+  },
+  "scanSettingsAdvancedHideEmptySpectrum": "Hide empty bands on spectrum",
+  "@scanSettingsAdvancedHideEmptySpectrum": {
+    "description": "TS MessageKey: scan.settings.advanced.hideEmptySpectrum"
+  },
+  "scanSettingsAdvancedGraphLabels": "Graph labels",
+  "@scanSettingsAdvancedGraphLabels": {
+    "description": "TS MessageKey: scan.settings.advanced.graphLabels"
+  },
+  "scanSettingsAdvancedGraphLabelsSsid": "Network name (SSID)",
+  "@scanSettingsAdvancedGraphLabelsSsid": {
+    "description": "TS MessageKey: scan.settings.advanced.graphLabels.ssid"
+  },
+  "scanSettingsAdvancedGraphLabelsApName": "Access point name",
+  "@scanSettingsAdvancedGraphLabelsApName": {
+    "description": "TS MessageKey: scan.settings.advanced.graphLabels.apName"
+  },
+  "scanSettingsAdvancedGraphLabelsAnnotation": "Annotation",
+  "@scanSettingsAdvancedGraphLabelsAnnotation": {
+    "description": "TS MessageKey: scan.settings.advanced.graphLabels.annotation"
+  },
+  "scanSettingsAdvancedFollowSystem": "Match system appearance",
+  "@scanSettingsAdvancedFollowSystem": {
+    "description": "TS MessageKey: scan.settings.advanced.followSystem"
+  },
+  "scanSnapshotOpenError": "Could not open snapshot: {detail}",
+  "@scanSnapshotOpenError": {
+    "description": "TS MessageKey: scan.snapshot.openError",
+    "placeholders": {
+      "detail": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanSsidHidden": "‹hidden›",
+  "@scanSsidHidden": {
+    "description": "TS MessageKey: scan.ssid.hidden"
+  },
+  "scanStatusAbout": "About",
+  "@scanStatusAbout": {
+    "description": "TS MessageKey: scan.status.about"
+  },
+  "scanStatusFound": "Networks: {count}",
+  "@scanStatusFound": {
+    "description": "TS MessageKey: scan.status.found",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusLastScan": "Last scan: {time}",
+  "@scanStatusLastScan": {
+    "description": "TS MessageKey: scan.status.lastScan",
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusLocation": "Location: {state}",
+  "@scanStatusLocation": {
+    "description": "TS MessageKey: scan.status.location",
+    "placeholders": {
+      "state": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusScanCore": "ScanCore: {state}",
+  "@scanStatusScanCore": {
+    "description": "TS MessageKey: scan.status.scanCore",
+    "placeholders": {
+      "state": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusSelected": "Selected: {count}",
+  "@scanStatusSelected": {
+    "description": "TS MessageKey: scan.status.selected",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusShortcutsHint": "⌘F search · ⌘P pause scan · ⌘1–4 details · ⌘C BSSID when grid focused",
+  "@scanStatusShortcutsHint": {
+    "description": "TS MessageKey: scan.status.shortcutsHint"
+  },
+  "scanStatusTimescaleHint": "Signal · use ↑ or ↓ to change timescale when a chart is focused",
+  "@scanStatusTimescaleHint": {
+    "description": "TS MessageKey: scan.status.timescaleHint"
+  },
+  "scanStatusVersion": "v{version}",
+  "@scanStatusVersion": {
+    "description": "TS MessageKey: scan.status.version",
+    "placeholders": {
+      "version": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanTypeIbss": "Ad-hoc",
+  "@scanTypeIbss": {
+    "description": "TS MessageKey: scan.type.ibss"
+  },
+  "scanTypeInfrastructure": "Infrastructure",
+  "@scanTypeInfrastructure": {
+    "description": "TS MessageKey: scan.type.infrastructure"
+  },
+  "scanTabAdvanced": "Advanced",
+  "@scanTabAdvanced": {
+    "description": "TS MessageKey: scan.tab.advanced"
+  },
+  "scanTabCompare": "Compare",
+  "@scanTabCompare": {
+    "description": "TS MessageKey: scan.tab.compare"
+  },
+  "scanTabDetails": "Network details",
+  "@scanTabDetails": {
+    "description": "TS MessageKey: scan.tab.details"
+  },
+  "scanTabOccupancy": "Channel occupancy",
+  "@scanTabOccupancy": {
+    "description": "TS MessageKey: scan.tab.occupancy"
+  },
+  "scanTabSignal": "Signal strength",
+  "@scanTabSignal": {
+    "description": "TS MessageKey: scan.tab.signal"
+  },
+  "scanTitleDemo": "Demo",
+  "@scanTitleDemo": {
+    "description": "TS MessageKey: scan.title.demo"
+  },
+  "scanTitlePaused": "Paused",
+  "@scanTitlePaused": {
+    "description": "TS MessageKey: scan.title.paused"
+  },
+  "scanTitleScanning": "Scanning",
+  "@scanTitleScanning": {
+    "description": "TS MessageKey: scan.title.scanning"
+  }
+}

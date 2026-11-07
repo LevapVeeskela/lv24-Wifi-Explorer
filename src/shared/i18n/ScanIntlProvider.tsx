@@ -7,7 +7,7 @@ import {
   type FormatMessageFn,
   type FormatValues,
   type MessageKey,
-} from './index';
+} from './core';
 
 type ScanIntlContextValue = {
   locale: AppLocale;

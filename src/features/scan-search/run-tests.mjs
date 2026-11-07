@@ -6,23 +6,16 @@ import { fileURLToPath } from 'node:url';
 
 const featureDir = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(featureDir, '../../..');
-const tscJs = path.join(root, 'node_modules/typescript/lib/tsc.js');
-const outTests = path.join(root, '.tmp/scan-search-tests/features/scan-search/tests');
+const vitestBin = path.join(root, 'node_modules/vitest/vitest.mjs');
 
-if (!existsSync(tscJs)) {
-  console.error('typescript not found at', tscJs);
+if (!existsSync(vitestBin)) {
+  console.error('vitest not found at', vitestBin);
   process.exit(1);
 }
 
-const compile = spawnSync(
+const run = spawnSync(
   process.execPath,
-  [tscJs, '-p', path.join(featureDir, 'tsconfig.test.json')],
+  [vitestBin, 'run', featureDir, '--config', path.join(root, 'vitest.config.ts')],
   { cwd: root, stdio: 'inherit' },
 );
-if (compile.status !== 0) process.exit(compile.status ?? 1);
-
-const test = spawnSync(process.execPath, ['--test', outTests], {
-  cwd: root,
-  stdio: 'inherit',
-});
-process.exit(test.status ?? 1);
+process.exit(run.status ?? 1);

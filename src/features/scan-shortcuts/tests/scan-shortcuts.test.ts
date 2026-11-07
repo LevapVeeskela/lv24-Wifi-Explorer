@@ -40,21 +40,51 @@ describe('resolveScanShortcutActions', () => {
     assert.deepEqual(actions, [{ type: 'clearSearch' }]);
   });
 
-  it('Mod+P toggles scan', () => {
+  it('Mod+Shift+S starts scan (Electron menu parity)', () => {
     const actions = resolveScanShortcutActions(
-      { key: 'p', metaKey: true, ctrlKey: false },
+      { key: 's', metaKey: true, ctrlKey: false, shiftKey: true },
       ctx({}),
     );
-    assert.deepEqual(actions, [{ type: 'toggleScan' }]);
+    assert.deepEqual(actions, [{ type: 'startScan' }]);
+    assert.equal(shouldPreventDefault(actions[0]!), true);
   });
 
-  it('Mod+1..4 switch details tabs', () => {
+  it('Mod+Shift+T stops scan (Electron menu parity)', () => {
+    const actions = resolveScanShortcutActions(
+      { key: 't', metaKey: true, ctrlKey: false, shiftKey: true },
+      ctx({}),
+    );
+    assert.deepEqual(actions, [{ type: 'stopScan' }]);
+    assert.equal(shouldPreventDefault(actions[0]!), true);
+  });
+
+  it('Mod+S saves snapshot without shift', () => {
+    const actions = resolveScanShortcutActions(
+      { key: 's', metaKey: true, ctrlKey: false, shiftKey: false },
+      ctx({}),
+    );
+    assert.deepEqual(actions, [{ type: 'saveSnapshot' }]);
+  });
+
+  it('Mod+P does not toggle scan (reserved for print)', () => {
+    const actions = resolveScanShortcutActions(
+      { key: 'p', metaKey: true, ctrlKey: false, shiftKey: false },
+      ctx({}),
+    );
+    assert.deepEqual(actions, []);
+  });
+
+  it('Mod+1..5 switch details tabs', () => {
     assert.deepEqual(
       resolveScanShortcutActions({ key: '2', metaKey: true, ctrlKey: false }, ctx({})),
       [{ type: 'setDetailsTab', tab: 'signal' }],
     );
     assert.deepEqual(
       resolveScanShortcutActions({ key: '4', metaKey: true, ctrlKey: false }, ctx({})),
+      [{ type: 'setDetailsTab', tab: 'compare' }],
+    );
+    assert.deepEqual(
+      resolveScanShortcutActions({ key: '5', metaKey: true, ctrlKey: false }, ctx({})),
       [{ type: 'setDetailsTab', tab: 'advanced' }],
     );
   });

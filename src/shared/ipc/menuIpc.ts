@@ -4,6 +4,8 @@ export const MENU_IPC_EVENTS = {
   openSnapshot: 'menu:openSnapshot',
   saveSnapshot: 'menu:saveSnapshot',
   exportCsv: 'menu:exportCsv',
+  printVisible: 'menu:printVisible',
+  openSettings: 'menu:openSettings',
   about: 'menu:about',
 } as const;
 
@@ -13,4 +15,6 @@ export type MenuIpcAction =
   | { type: 'openSnapshot' }
   | { type: 'saveSnapshot' }
   | { type: 'exportCsv'; scope: MenuCsvExportScope }
+  | { type: 'printVisible' }
+  | { type: 'openSettings' }
   | { type: 'about' };

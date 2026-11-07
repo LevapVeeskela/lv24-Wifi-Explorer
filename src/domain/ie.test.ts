@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { decodeInformationElements, parseShallowIe, toHex } from './ie';
+import { buildIeTree, decodeInformationElements, parseShallowIe } from './ie';
 
 function tlv(id: number, payload: readonly number[]): number[] {
   return [id, payload.length, ...payload];
@@ -120,10 +120,12 @@ describe('decodeInformationElements', () => {
       mfpc: true,
       mfpr: false,
     });
+    // oxlint-disable vitest/no-conditional-expect
     if (rsn?.kind === 'rsn') {
       expect(rsn.pairwise.map((s) => s.name)).toEqual(['ccmp-128']);
       expect(rsn.akm.map((s) => s.name)).toEqual(['psk']);
     }
+    // oxlint-enable vitest/no-conditional-expect
     expect(op).toMatchObject({ kind: 'ht-operation', primaryChannel: 36, secondaryOffset: 1 });
     expect(result.shallow.nssHint).toBe(2);
     expect(result.shallow.rsnIe).toBe(true);
@@ -132,10 +134,7 @@ describe('decodeInformationElements', () => {
   });
 
   it('decodes VHT Cap/Op 191/192', () => {
-    const result = decodeInformationElements([
-      ...vhtCapabilitiesIe(2),
-      ...vhtOperationIe(42, 1),
-    ]);
+    const result = decodeInformationElements([...vhtCapabilitiesIe(2), ...vhtOperationIe(42, 1)]);
     expect(result.elements[0]).toMatchObject({ kind: 'vht-capabilities', nss: 2, maxMcs: 9 });
     expect(result.elements[1]).toMatchObject({
       kind: 'vht-operation',
@@ -169,15 +168,65 @@ describe('decodeInformationElements', () => {
   });
 
   it('decodes vendor 221 as raw + OUI (WPA 00:50:f2)', () => {
-    const payload = [0x00, 0x50, 0xf2, 0x01, 0x01, 0x00];
-    const result = decodeInformationElements(tlv(221, payload));
+    const wpaBody = [
+      0x00, 0x50, 0xf2, 0x01, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x04, 0x01, 0x00, 0x00, 0x0f, 0xac,
+      0x04, 0x01, 0x00, 0x00, 0x0f, 0xac, 0x02,
+    ];
+    const result = decodeInformationElements(tlv(221, wpaBody));
     expect(result.elements[0]).toMatchObject({
-      kind: 'vendor',
+      kind: 'vendor-wpa',
       oui: '00:50:f2',
-      vendorType: 0x01,
-      rawHex: toHex(payload),
+      version: 1,
+      groupCipher: { name: 'ccmp-128' },
     });
     expect(result.shallow.wpaVendorIe).toBe(true);
+  });
+
+  it('decodes TIM(5), Power Constraint(32), Extended Capabilities(127)', () => {
+    const extCap = new Array(4).fill(0);
+    extCap[0] = 1 << 4;
+    const buf = [...tlv(5, [2, 3, 0x00, 0xff]), ...tlv(32, [4]), ...tlv(127, extCap)];
+    const result = decodeInformationElements(buf);
+    expect(result.elements[0]).toMatchObject({
+      kind: 'tim',
+      dtimCount: 2,
+      dtimPeriod: 3,
+      partialBitmapLength: 1,
+    });
+    expect(result.elements[1]).toMatchObject({
+      kind: 'power-constraint',
+      localPowerConstraintDb: 4,
+    });
+    const ext = result.elements[2];
+    expect(ext.kind).toBe('extended-capabilities');
+    if (ext.kind !== 'extended-capabilities') return;
+    expect(ext.setFlags.some((f) => f.name === 'BSS transition')).toBe(true);
+  });
+
+  it('decodes EHT Capabilities 255/108 when MCS map present', () => {
+    const afterExt = new Array(13).fill(0);
+    let rx = 0;
+    for (let i = 0; i < 8; i += 1) {
+      const bits = i < 2 ? 2 : 3;
+      rx |= bits << (i * 2);
+    }
+    afterExt[11] = rx & 0xff;
+    afterExt[12] = (rx >> 8) & 0xff;
+    const result = decodeInformationElements(tlv(255, [108, ...afterExt]));
+    expect(result.elements[0]).toMatchObject({
+      kind: 'eht-capabilities',
+      extId: 108,
+      nss: 2,
+      maxMcs: 13,
+    });
+    expect(result.shallow.ehtCapabilities).toBe(true);
+  });
+
+  it('buildIeTree lists meta and decoded fields', () => {
+    const result = decodeInformationElements(tlv(0, [...new TextEncoder().encode('x')]));
+    const tree = buildIeTree(result);
+    expect(tree[0]?.label).toBe('Parse level');
+    expect(tree.some((n) => n.label.startsWith('SSID'))).toBe(true);
   });
 
   it('unknown IE is id + hex, no invented name', () => {
@@ -194,14 +243,13 @@ describe('decodeInformationElements', () => {
   });
 
   it('unknown extension IE keeps extId + hex', () => {
-    const payload = [108, 0xaa];
+    const payload = [99, 0xaa];
     const result = decodeInformationElements(tlv(255, payload));
     expect(result.elements[0]).toMatchObject({
       kind: 'unknown',
       id: 255,
-      extId: 108,
-      rawHex: '6caa',
+      extId: 99,
+      rawHex: '63aa',
     });
-    expect(result.shallow.ehtCapabilities).toBe(true);
   });
 });

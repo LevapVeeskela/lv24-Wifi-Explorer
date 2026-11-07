@@ -4,12 +4,25 @@ import {
   SCAN_SETTINGS_DEFAULTS,
   SCAN_SETTINGS_STORAGE_KEY,
 } from './constants';
-import type { ScanSettings, ScanSettingsStoreV1, SignalDisplayUnit } from './types';
+import type {
+  GraphLabelMode,
+  ScanSettings,
+  ScanSettingsStoreV1,
+  SignalDisplayUnit,
+} from './types';
 
 export { SCAN_SETTINGS_STORAGE_KEY };
 
 function isSignalUnit(value: unknown): value is SignalDisplayUnit {
   return value === 'dbm' || value === 'percent';
+}
+
+function isGraphLabelMode(value: unknown): value is GraphLabelMode {
+  return value === 'ssid' || value === 'apName' || value === 'annotation';
+}
+
+function normalizeBool(value: unknown, fallback: boolean): boolean {
+  return typeof value === 'boolean' ? value : fallback;
 }
 
 function snapIntervalSec(raw: number): number {
@@ -43,7 +56,29 @@ export function normalizeScanSettings(partial: Partial<ScanSettings> | null | un
     typeof partial?.scanIntervalSec === 'number'
       ? snapIntervalSec(partial.scanIntervalSec)
       : base.scanIntervalSec;
-  return { signalUnit, minRssiDbm, scanIntervalSec };
+  const autoStartScanOnLaunch = normalizeBool(partial?.autoStartScanOnLaunch, base.autoStartScanOnLaunch);
+  const includeHiddenSsid = normalizeBool(partial?.includeHiddenSsid, base.includeHiddenSsid);
+  const hideEmptySpectrumBand = normalizeBool(
+    partial?.hideEmptySpectrumBand,
+    base.hideEmptySpectrumBand
+  );
+  const graphLabelMode = isGraphLabelMode(partial?.graphLabelMode)
+    ? partial.graphLabelMode
+    : base.graphLabelMode;
+  const appearanceFollowSystem = normalizeBool(
+    partial?.appearanceFollowSystem,
+    base.appearanceFollowSystem
+  );
+  return {
+    signalUnit,
+    minRssiDbm,
+    scanIntervalSec,
+    autoStartScanOnLaunch,
+    includeHiddenSsid,
+    hideEmptySpectrumBand,
+    graphLabelMode,
+    appearanceFollowSystem,
+  };
 }
 
 function parseStore(raw: string | null): ScanSettings {
@@ -89,6 +124,9 @@ export function saveScanSettings(
   const payload: ScanSettingsStoreV1 = { version: 1, ...normalized };
   try {
     storage.setItem(SCAN_SETTINGS_STORAGE_KEY, JSON.stringify(payload));
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('lv24-scan-settings-changed'));
+    }
   } catch {
     // quota / private mode
   }

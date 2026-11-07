@@ -33,6 +33,16 @@ Plist sources: `electron-builder.yml`, ScanCore bundle.
 
 In-app: IPC `permissions:openSettings` opens `Privacy_LocationServices`.
 
+Flutter denied-sheet **Open Settings** (best-effort, fail soft):
+
+| Host | Command / API |
+|------|----------------|
+| macOS | `x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices` |
+| iOS | `AppSettings.openAppSettings(type: settings)` |
+| Android | `AppSettings.openAppSettings(type: location)` |
+| Linux | `gnome-control-center wifi` → `gnome-control-center privacy` → `systemsettings` → `nm-connection-editor` → `xdg-open settings://` |
+| Windows | `ms-settings:network-wifi` → `ms-settings:privacy-location` |
+
 ### 1.4 Authorization states
 
 | `location` | UI expectation |
@@ -53,7 +63,7 @@ In-app: IPC `permissions:openSettings` opens `Privacy_LocationServices`.
 | `com.apple.security.personal-information.location` | Location for SSID/BSSID (sandbox / hardened builds) |
 
 ScanCore bundle id: `com.lv24.wifi-explorer.scancore`  
-App id: `com.lv24.wifi-explorer`
+App id: `by.lv24.wifi.explorer`
 
 **Not in v1:** monitor mode, packet capture, private Wi‑Fi entitlements, `NSLocalNetworkUsageDescription` (reserved for future sensors).
 
@@ -113,3 +123,21 @@ pnpm run dev:electron -- --live
 - Scan runs in **logged-in Aqua session** (not headless daemon).
 - Minimum macOS: **13.5+** recommended (Ventura); test Location on target OS.
 - Wi‑Fi must be powered; external USB NICs out of scope v1.
+
+---
+
+## 7. Flutter Windows (Native Wifi)
+
+Windows Flutter v1 is **connected-network + demo fixtures**, not a nearby-BSS survey. Public **Native Wifi** (`wlanapi`) only. This path is **unpackaged Flutter** — no MSIX **`wifiControl`**.
+
+| Data | No association / access denied | Associated via `WlanQueryInterface` |
+|------|--------------------------------|-------------------------------------|
+| SSID, BSSID, PHY, security | **Demo fixtures** (same honesty as iOS) | Emitted when Native Wifi provides them |
+| RSSI | Demo fixtures | Documented quality→RSSI (0 → −100 dBm, 100 → −50 dBm), not a radio-measured RSSI |
+| Channel, IEs, nearby BSS rows | Not available | Still not available — `WlanGetAvailableNetworkList` is SSID-aggregated and is **not** promoted to workbench rows |
+
+**Location:** the OS may still prompt for Wi‑Fi identity. Granting it does **not** unlock a nearby-BSS survey.
+
+**Not in v1:** MSIX packaging / `wifiControl`, WinRT `WiFiAdapter`, monitor mode, NDIS, private APIs.
+
+Factory: `createScanWorkbenchSession` routes `Platform.isWindows` to [`flutter/lib/features/windows_scan/`](../flutter/lib/features/windows_scan/).

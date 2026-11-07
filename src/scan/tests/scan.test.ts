@@ -10,7 +10,6 @@ import {
   computeSignalView,
   estimateMaxRate,
   mapCoreWlanRecordToObservedBss,
-  mapCoreWlanRecordsToObservedBss,
 } from '../mapObservedBss';
 import { mergeSnapshots } from '../mergeSnapshots';
 import { primaryCenterMhz } from '../channelMath';
@@ -209,7 +208,9 @@ describe('IE shallow', () => {
 describe('groupEss', () => {
   it('merges same visible SSID; never merges hidden; isolates IBSS', () => {
     const view = buildDemoView();
-    const campus = view.essGroups.filter((g) => g.kind === 'infrastructure' && g.ssid.utf8 === 'LV24-Campus');
+    const campus = view.essGroups.filter(
+      (g) => g.kind === 'infrastructure' && g.ssid.utf8 === 'LV24-Campus'
+    );
     assert.equal(campus.length, 1);
     assert.equal(campus[0].bssCount, 3);
     assert.equal(campus[0].bandMix.length, 2);
@@ -224,7 +225,11 @@ describe('groupEss', () => {
     assert.equal(ibss.length, 1);
     assert.ok(String(ibss[0].key).startsWith('ibss:'));
 
-    const sameNameIbss = map({ ...DEMO_IBSS, ssid: 'LV24-Campus', ssidData: [...new TextEncoder().encode('LV24-Campus')] });
+    const sameNameIbss = map({
+      ...DEMO_IBSS,
+      ssid: 'LV24-Campus',
+      ssidData: [...new TextEncoder().encode('LV24-Campus')],
+    });
     const mixed = groupEss([...campus[0].members, sameNameIbss]);
     assert.equal(mixed.filter((g) => g.kind === 'ibss').length, 1);
     assert.equal(mixed.filter((g) => g.kind === 'infrastructure').length, 1);
@@ -239,7 +244,11 @@ describe('applyScanFilter', () => {
 
     const open = applyScanFilter(rows, { ...SCAN_FILTER_DEFAULTS, security: 'open' });
     assert.ok(open.every((r) => r.security.isOpen));
-    assert.ok(open.some((r) => r.identity.ssid.status === 'available' && r.identity.ssid.value.utf8 === 'Cafe-Free'));
+    assert.ok(
+      open.some(
+        (r) => r.identity.ssid.status === 'available' && r.identity.ssid.value.utf8 === 'Cafe-Free'
+      )
+    );
     assert.ok(!open.some((r) => r.security.primary === 'owe' || r.security.primary === 'wep'));
 
     const secure = applyScanFilter(rows, { ...SCAN_FILTER_DEFAULTS, security: 'secure' });
@@ -259,7 +268,9 @@ describe('applyScanFilter', () => {
     assert.ok(!minSnr.some((r) => r.lastRaw.bssid === DEMO_MISSING_NOISE.bssid));
 
     const noHidden = applyScanFilter(rows, { ...SCAN_FILTER_DEFAULTS, includeHiddenSsid: false });
-    assert.ok(!noHidden.some((r) => r.identity.ssid.status === 'available' && r.identity.ssid.value.hidden));
+    assert.ok(
+      !noHidden.some((r) => r.identity.ssid.status === 'available' && r.identity.ssid.value.hidden)
+    );
 
     const noIbss = applyScanFilter(rows, { ...SCAN_FILTER_DEFAULTS, includeIbss: false });
     assert.ok(!noIbss.some((r) => r.ibss));
@@ -271,7 +282,10 @@ describe('presence and mergeSnapshots', () => {
     const first = buildDemoSnapshot([DEMO_OPEN, DEMO_CAMPUS_24], T0);
     let view = mergeSnapshots(null, first);
     const openKey = '00:11:22:0e:00:01';
-    assert.equal(view.bssRows.find((r) => r.lastRaw.bssid === openKey)?.presence.presence, 'current');
+    assert.equal(
+      view.bssRows.find((r) => r.lastRaw.bssid === openKey)?.presence.presence,
+      'current'
+    );
 
     const t1 = asIsoTime('2026-09-17T19:00:08.000Z');
     view = mergeSnapshots(view, { ...buildDemoSnapshot([DEMO_CAMPUS_24], t1), capturedAt: t1 });
@@ -281,7 +295,10 @@ describe('presence and mergeSnapshots', () => {
 
     const t2 = asIsoTime('2026-09-17T19:00:16.000Z');
     view = mergeSnapshots(view, { ...buildDemoSnapshot([DEMO_CAMPUS_24], t2), capturedAt: t2 });
-    assert.equal(view.bssRows.find((r) => r.lastRaw.bssid === openKey)?.presence.consecutiveMisses, 2);
+    assert.equal(
+      view.bssRows.find((r) => r.lastRaw.bssid === openKey)?.presence.consecutiveMisses,
+      2
+    );
     assert.equal(view.bssRows.find((r) => r.lastRaw.bssid === openKey)?.presence.presence, 'stale');
 
     const t3 = asIsoTime('2026-09-17T19:00:24.000Z');
@@ -291,7 +308,10 @@ describe('presence and mergeSnapshots', () => {
     assert.equal(gone.presence.consecutiveMisses, 3);
 
     const t4 = asIsoTime('2026-09-17T19:00:32.000Z');
-    view = mergeSnapshots(view, { ...buildDemoSnapshot([DEMO_OPEN, DEMO_CAMPUS_24], t4), capturedAt: t4 });
+    view = mergeSnapshots(view, {
+      ...buildDemoSnapshot([DEMO_OPEN, DEMO_CAMPUS_24], t4),
+      capturedAt: t4,
+    });
     const back = view.bssRows.find((r) => r.lastRaw.bssid === openKey)!;
     assert.equal(back.presence.presence, 'current');
     assert.equal(back.presence.consecutiveMisses, 0);
@@ -334,7 +354,11 @@ describe('demo fixtures', () => {
     assert.ok(view.bssRows.some((r) => r.security.isOpen));
     assert.ok(view.bssRows.some((r) => r.vendor.match === 'randomized'));
     assert.ok(view.bssRows.some((r) => r.signal.snrDb == null));
-    assert.ok(view.bssRows.some((r) => r.identity.ssid.status === 'available' && r.identity.ssid.value.hidden));
+    assert.ok(
+      view.bssRows.some(
+        (r) => r.identity.ssid.status === 'available' && r.identity.ssid.value.hidden
+      )
+    );
     assert.equal(map(DEMO_MISSING_NOISE).signal.qualityBasis, 'rssi-fallback');
     assert.ok(view.essGroups.length >= 8);
   });

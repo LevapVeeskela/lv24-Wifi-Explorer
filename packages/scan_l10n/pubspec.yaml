@@ -1,0 +1,25 @@
+name: scan_l10n
+description: Scan UI strings (ru default, en) for LV24 WiFi Explorer Flutter clients.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+  flutter: ">=3.24.0 <4.0.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  test: ^1.25.0
+
+flutter:
+  generate: true

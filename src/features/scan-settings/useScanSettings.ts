@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { applyScanIntervalMs } from './applyScanInterval';
+import { applyScanSettingsEffects } from './applyScanSettingsEffects';
+import { SCAN_SETTINGS_STORAGE_KEY } from './constants';
 import { loadScanSettings, normalizeScanSettings, saveScanSettings } from './persist';
 import type { ScanSettings } from './types';
 
@@ -14,7 +15,7 @@ export function useScanSettings(): {
     const normalized = normalizeScanSettings(next);
     setSettingsState(normalized);
     saveScanSettings(normalized);
-    applyScanIntervalMs(normalized.scanIntervalSec);
+    applyScanSettingsEffects(normalized);
   }, []);
 
   const setSettings = commit;
@@ -24,7 +25,7 @@ export function useScanSettings(): {
       setSettingsState((prev) => {
         const normalized = normalizeScanSettings({ ...prev, ...partial });
         saveScanSettings(normalized);
-        applyScanIntervalMs(normalized.scanIntervalSec);
+        applyScanSettingsEffects(normalized);
         return normalized;
       });
     },
@@ -32,7 +33,24 @@ export function useScanSettings(): {
   );
 
   useEffect(() => {
-    applyScanIntervalMs(settings.scanIntervalSec);
+    applyScanSettingsEffects(settings);
+  }, []);
+
+  useEffect(() => {
+    const reload = () => {
+      const loaded = loadScanSettings();
+      setSettingsState(loaded);
+      applyScanSettingsEffects(loaded);
+    };
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === SCAN_SETTINGS_STORAGE_KEY) reload();
+    };
+    window.addEventListener('lv24-scan-settings-changed', reload);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener('lv24-scan-settings-changed', reload);
+      window.removeEventListener('storage', onStorage);
+    };
   }, []);
 
   return { settings, setSettings, patchSettings };

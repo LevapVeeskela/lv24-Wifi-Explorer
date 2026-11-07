@@ -16,6 +16,8 @@ export type OccupancyChartProps = {
   selectedBssid?: string | null;
   selectedColor?: string;
   height?: number;
+  /** When false, title omits band (band is shown on strip tabs). */
+  showBandInTitle?: boolean;
 };
 
 const OTHERS_COLOR = '#8A8178';
@@ -27,6 +29,7 @@ export function OccupancyChart({
   selectedBssid = null,
   selectedColor = '#FB6E4A',
   height = 160,
+  showBandInTitle = true,
 }: OccupancyChartProps) {
   const { locale } = useScanIntl();
   const formatMessage = useMemo(() => createFormatMessage(locale), [locale]);
@@ -36,16 +39,17 @@ export function OccupancyChart({
   );
 
   const tickEvery = band === 6 ? 8 : band === 5 ? 2 : 1;
+  const title = showBandInTitle
+    ? `${band} GHz · ${formatMessage('scan.chart.occupancy')}`
+    : formatMessage('scan.chart.occupancy');
 
   return (
     <Paper aria-label={formatMessage('scan.chart.occupancy')} sx={chartPaperSx} variant="outlined">
-      <Typography variant="subtitle2">
-        {`${band} GHz`} · {formatMessage('scan.chart.occupancy')}
-      </Typography>
+      <Typography variant="subtitle2">{title}</Typography>
       <BarChart
         height={Math.max(80, height - 56)}
         hideLegend
-        margin={{ top: 8, right: 8, bottom: 24, left: 36 }}
+        margin={{ top: 8, right: 8, bottom: band === 6 ? 28 : 24, left: 36 }}
         series={[
           {
             data: bars.map((bar) => bar.others),

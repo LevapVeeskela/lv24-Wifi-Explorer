@@ -8,6 +8,8 @@ export type ScanWorkbenchFilters = {
   searchQuery: string;
   vendorQuery: string;
   minRssiDbm: number | null;
+  /** When false, omit hidden SSID rows (same as scan settings). */
+  includeHiddenSsid: boolean;
 };
 
 export const FILTER_DEFAULTS: ScanWorkbenchFilters = {
@@ -16,6 +18,7 @@ export const FILTER_DEFAULTS: ScanWorkbenchFilters = {
   searchQuery: '',
   vendorQuery: '',
   minRssiDbm: null,
+  includeHiddenSsid: true,
 };
 
 /** Search box debounce — AppBar writes `searchQuery` after this delay. */

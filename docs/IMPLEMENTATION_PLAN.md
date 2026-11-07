@@ -18,7 +18,7 @@
 
 1. **Presence:** `PRESENCE_POLICY` в домене — stale после 1 пропуска, disappeared после 3. Не «missCount 2».
 2. **Снимок файла:** `.lv24scan` (не `.wifiexplorer`, не `.lv24wifi`).
-3. **Bundle / appId:** `com.lv24.wifi-explorer`.
+3. **Bundle / appId:** `by.lv24.wifi.explorer`.
 4. **Имя пакета:** `lv24-wifi-explorer`. **productName:** `LV24 WiFi Explorer`. Папка репо: `lv24-Wifi-Explorer`.
 5. **Качество сигнала:** ярлыки `excellent|good|fair|poor|unusable`, **не процент**. RSSI/noise в dBm.
 6. **Issues:** маленькая своя эвристика в v1 (overlap, weak security, low RSSI, crowded, 40 MHz on 2.4, hidden, 2.4-only). Не клонировать чужой engine.

@@ -7,6 +7,7 @@ import {
 } from '@mui/x-data-grid-pro';
 import { Box } from '@mui/material';
 import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import { columnRuleClassNameForCell, useColumnRules } from '@/features/column-rules';
 import { isRowIdSelected } from '@/features/scan-selection';
 import type { SignalDisplayUnit } from '@/features/scan-settings';
 import { getDataGridLocaleText } from '@/shared/lib/mui/dataGridLocale';
@@ -42,6 +43,7 @@ export function ScanDataGrid({
   signalUnit = 'percent',
 }: ScanDataGridProps) {
   const columns = useScanGridColumns(signalUnit);
+  const { config: columnRules } = useColumnRules();
   const localeText = useMemo(() => getDataGridLocaleText(locale), [locale]);
   const kind = overlayKind ?? 'empty';
 
@@ -49,7 +51,7 @@ export function ScanDataGrid({
     <Box sx={scanDataGridRootSx}>
       <DataGridPro
         apiRef={apiRef}
-        checkboxSelection={false}
+        checkboxSelection
         columnHeaderHeight={36}
         columnVisibilityModel={columnVisibilityModel}
         columns={columns}
@@ -58,10 +60,13 @@ export function ScanDataGrid({
         disableColumnMenu={false}
         disableColumnReorder={false}
         disableColumnResize={false}
-        disableMultipleRowSelection
+        disableMultipleRowSelection={false}
         disableRowSelectionOnClick={false}
         editMode="cell"
         isCellEditable={(params) => params.field === 'annotation'}
+        getCellClassName={(params) =>
+          columnRuleClassNameForCell(params.row, params.field, columnRules)
+        }
         getRowClassName={(params: GridRowClassNameParams<ScanGridRow>) => {
           const classes: string[] = [];
           if (params.row.connected) classes.push('scan-grid-row--connected');

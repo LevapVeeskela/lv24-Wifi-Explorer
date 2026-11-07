@@ -1,0 +1,136 @@
+/**
+ * Публичные имена Information Element ID / Extension ID (IEEE 802.11).
+ * Неизвестные — только числовой id, без выдуманных «человеческих» ярлыков.
+ */
+
+const STANDARD_IE_NAMES: Readonly<Record<number, string>> = {
+  0: 'SSID',
+  1: 'Supported Rates',
+  2: 'FH Parameter Set',
+  3: 'DS Parameter Set',
+  4: 'CF Parameter Set',
+  5: 'TIM',
+  6: 'IBSS Parameter Set',
+  7: 'Country',
+  8: 'Hopping Pattern Parameters',
+  9: 'Hopping Pattern Table',
+  10: 'Request',
+  11: 'BSS Load',
+  12: 'EDCA Parameter Set',
+  13: 'TSPEC',
+  14: 'TCLAS',
+  15: 'Schedule',
+  16: 'Challenge text',
+  32: 'Power Constraint',
+  33: 'Power Capability',
+  34: 'TPC Request',
+  35: 'TPC Report',
+  36: 'Supported Channels',
+  37: 'Channel Switch Announcement',
+  38: 'Measurement Request',
+  39: 'Measurement Report',
+  40: 'Quiet',
+  41: 'IBSS DFS',
+  42: 'ERP Information',
+  45: 'HT Capabilities',
+  48: 'RSN',
+  50: 'Extended Supported Rates',
+  51: 'AP Channel Report',
+  52: 'Neighbor Report',
+  54: 'Mobility Domain',
+  55: 'DSE registered location',
+  56: 'Supported Operating Classes',
+  57: 'Extended Channel Switch Announcement',
+  58: 'HT Information',
+  59: 'Secondary Channel Offset',
+  60: 'BSS Average Access Delay',
+  61: 'HT Operation',
+  62: 'BSS Available Admission Capacity',
+  63: 'Antenna',
+  64: 'RSNI',
+  65: 'Measurement Pilot Transmission',
+  66: 'BSS AC Access Delay',
+  67: 'Time Advertisement',
+  68: 'RM Enabled Capabilities',
+  69: 'Multiple BSSID',
+  70: 'BSS Coexistence',
+  71: 'BSS Intolerant Channel Report',
+  72: 'Overlapping BSS Scan Parameters',
+  73: 'RIC Descriptor',
+  74: 'Management MIC',
+  75: 'Event Request',
+  76: 'Event Report',
+  77: 'Diagnostic Request',
+  78: 'Diagnostic Report',
+  79: 'Location Parameters',
+  80: 'Nontransmitted BSSID Capability',
+  81: 'SSID List',
+  82: 'Multiple BSSID Index',
+  83: 'FMS Descriptor',
+  84: 'FMS Request',
+  85: 'FMS Response',
+  86: 'QoS Traffic Capability',
+  87: 'BSS Max Idle Period',
+  88: 'TFS Request',
+  89: 'TFS Response',
+  90: 'WNM-Sleep Mode',
+  91: 'TIM Broadcast Request',
+  92: 'TIM Broadcast Response',
+  93: 'Collocated Interference Report',
+  94: 'Channel Usage',
+  95: 'Time Zone',
+  96: 'DMS Request',
+  97: 'DMS Response',
+  98: 'Link Identifier',
+  99: 'Wakeup Schedule',
+  100: 'Channel Switch Timing',
+  101: 'PTI Control',
+  102: 'PU Buffer Status',
+  103: 'Interworking',
+  104: 'Advertisement Protocol',
+  105: 'Expedited Bandwidth Request',
+  106: 'QoS Map Set',
+  107: 'Roaming Consortium',
+  108: 'Emergency Alert Identifier',
+  109: 'Supported Operating Classes',
+  110: 'Extended Capabilities',
+  127: 'Extended Capabilities',
+  191: 'VHT Capabilities',
+  192: 'VHT Operation',
+  196: 'Operating Mode Notification',
+  221: 'Vendor Specific',
+  244: 'RSN Extension',
+  255: 'Extension',
+};
+
+const EXTENSION_IE_NAMES: Readonly<Record<number, string>> = {
+  35: 'HE Capabilities',
+  36: 'HE Operation',
+  37: 'UORA Parameter Set',
+  38: 'MU EDCA Parameter Set',
+  39: 'Spatial Reuse Parameter Set',
+  52: 'NSTR Indication',
+  59: 'HE 6 GHz Band Capabilities',
+  106: 'EHT Operation',
+  107: 'Multi-Link',
+  108: 'EHT Capabilities',
+  109: 'EHT Operation (alt)',
+};
+
+export function standardIeName(id: number): string | null {
+  return STANDARD_IE_NAMES[id] ?? null;
+}
+
+export function extensionIeName(extId: number): string | null {
+  return EXTENSION_IE_NAMES[extId] ?? null;
+}
+
+/** Заголовок узла дерева: «RSN (48)» или «HE Capabilities (255/35)». */
+export function ieTreeTitle(id: number, extId: number | null): string {
+  if (id === 255 && extId != null) {
+    const extName = extensionIeName(extId);
+    return extName ? `${extName} (255/${extId})` : `Extension (255/${extId})`;
+  }
+  const name = standardIeName(id);
+  return name ? `${name} (${id})` : `Element (${id})`;
+}

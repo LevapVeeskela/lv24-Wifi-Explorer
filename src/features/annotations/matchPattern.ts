@@ -6,7 +6,7 @@
 const HEX = '[0-9a-f]';
 
 export function compactHex(value: string): string {
-  return value.toLowerCase().replace(/[:\-]/g, '');
+  return value.toLowerCase().replace(/[:-]/g, '');
 }
 
 export function patternHasWildcard(pattern: string): boolean {
@@ -14,7 +14,7 @@ export function patternHasWildcard(pattern: string): boolean {
 }
 
 export function compactPattern(pattern: string): string {
-  return pattern.trim().toLowerCase().replace(/[:\-]/g, '');
+  return pattern.trim().toLowerCase().replace(/[:-]/g, '');
 }
 
 export function patternSpecificity(pattern: string): number {

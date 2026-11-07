@@ -18,8 +18,8 @@ import LightMode from '@mui/icons-material/LightMode';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import { useColorScheme } from '@mui/material/styles';
 import type { CsvExportScope } from '@/features/export';
-import { STORAGE_THEME, type ThemePreference } from '@/shared/lib/persistence/keys';
-import { persistThemePreference } from '@/shared/ui/ThemePreferenceSync';
+import type { ThemePreference } from '@/shared/lib/persistence/keys';
+import { markManualThemePreference } from '@/features/scan-settings';
 import { fileMenuButtonSx, fileMenuSubheaderSx, titleBarSx, titleClusterSx, titleLabelSx } from './styles';
 import { t } from './t';
 
@@ -28,7 +28,7 @@ function hasNativeAppMenu(): boolean {
   return typeof window !== 'undefined' && window.wifiExplorer != null;
 }
 
-function fileShortcutSuffix(key: 'O' | 'S'): string {
+function fileShortcutSuffix(key: 'O' | 'P' | 'S'): string {
   const mod =
     typeof navigator !== 'undefined' && /Mac|iPhone|iPod|iPad/i.test(navigator.platform)
       ? '⌘'
@@ -45,18 +45,10 @@ export type TitleBarProps = {
   onToggleScan: () => void;
   onAbout: () => void;
   onExportCsv: (scope: CsvExportScope) => void;
+  onPrintVisible: () => void;
   onSaveSnapshot: () => void;
   onOpenSnapshot: () => void;
 };
-
-function persistTheme(mode: ThemePreference): void {
-  persistThemePreference(mode);
-  try {
-    localStorage.setItem(STORAGE_THEME, mode);
-  } catch {
-    // ignore quota / private mode
-  }
-}
 
 export function TitleBar({
   scanning,
@@ -67,6 +59,7 @@ export function TitleBar({
   onToggleScan,
   onAbout,
   onExportCsv,
+  onPrintVisible,
   onSaveSnapshot,
   onOpenSnapshot,
 }: TitleBarProps) {
@@ -83,7 +76,7 @@ export function TitleBar({
   const toggleTheme = () => {
     const next: ThemePreference = mode === 'dark' ? 'light' : 'dark';
     setMode(next);
-    persistTheme(next);
+    markManualThemePreference(next);
   };
 
   const closeFileMenu = () => setFileMenuEl(null);
@@ -185,6 +178,22 @@ export function TitleBar({
                 }}
               >
                 {t('scan.export.all')}
+              </MenuItem>
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  closeFileMenu();
+                  onPrintVisible();
+                }}
+              >
+                <Stack direction="row" spacing={2} sx={{ alignItems: 'center', width: '100%' }}>
+                  <Typography component="span" variant="inherit">
+                    {t('scan.print.visible')}
+                  </Typography>
+                  <Typography color="text.secondary" component="span" sx={{ ml: 'auto' }} variant="body2">
+                    {fileShortcutSuffix('P')}
+                  </Typography>
+                </Stack>
               </MenuItem>
               <Divider />
               <MenuItem

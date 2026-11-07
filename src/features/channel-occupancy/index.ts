@@ -1,4 +1,10 @@
 export {
+  OCCUPANCY_BANDS,
+  bandHasBss,
+  pickOccupancyBand,
+  visibleOccupancyBands,
+} from './bandVisibility';
+export {
   bssOccupiesChannel,
   channelsForBand,
   computeBandOccupancy,

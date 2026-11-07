@@ -63,6 +63,7 @@ export function applyAllFilters(
   const searchQ = filters.searchQuery.trim();
 
   return rows.filter((row) => {
+    if (!filters.includeHiddenSsid && row.ssidHidden) return false;
     if (bandGhz != null && row.band !== bandGhz) return false;
     if (!matchesSecurity(row, filters.security)) return false;
     if (filters.minRssiDbm != null && row.rssiDbm < filters.minRssiDbm) return false;

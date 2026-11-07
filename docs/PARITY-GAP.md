@@ -63,6 +63,24 @@ These are platform limits, not LV24 bugs.
 - Passive/monitor where Apple allows on specific hardware
 - pcap import, remote sensors, client analytics
 - UNII/DFS/PSC badges, directed scan polish
-- Windows port (separate stack; not macOS ScanCore)
+- Electron Windows / Linux live scan — **still demo-only** (no WLAN adapter in Electron; not macOS ScanCore). Flutter already has Linux NM `GetAccessPoints` and Windows associated-link; those do **not** apply to Electron.
+- Flutter Windows nearby-BSS / MSIX `wifiControl` (out of v1; associated-link only today)
 
 For architecture fallbacks when live data is partial, see `docs/ARCHITECTURE.md` §5 (tiers A–F).
+
+---
+
+## 6. Flutter Windows — not a site survey
+
+Flutter Windows v1 is a **connected-network inspector + demo**, not macOS ScanCore and not a nearby-BSS survey.
+
+| Capability | Status | Notes |
+|------------|--------|--------|
+| Nearby BSS list with BSSID/channel/IEs | ❌ | `WlanGetAvailableNetworkList` is SSID-aggregated; **not** workbench rows |
+| Associated SSID, BSSID, PHY, security | ✓ | `WlanQueryInterface` current connection |
+| RSSI | ⚠ | Documented quality→RSSI only (0 → −100 dBm, 100 → −50 dBm) |
+| Channel | ❌ | Unknown on the associated link |
+| WinRT `WiFiAdapter` / MSIX `wifiControl` | ❌ | Unpackaged Flutter; typically denied; still no IEs |
+| Monitor mode / NDIS / private APIs | ❌ | Clean room |
+
+No association → **demo fixtures** (same honesty as iOS). Factory routes `Platform.isWindows` to [`flutter/lib/features/windows_scan/`](../flutter/lib/features/windows_scan/). These are platform limits, not LV24 bugs.

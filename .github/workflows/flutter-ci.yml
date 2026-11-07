@@ -1,0 +1,30 @@
+# Dart / Flutter verify for packages/ and flutter/ (independent of Electron JS CI).
+name: Flutter CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: flutter-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Toolchain versions
+        run: |
+          dart --version
+          flutter --version
+
+      - name: Analyze and test (packages + flutter/)
+        run: bash .github/scripts/flutter-verify.sh

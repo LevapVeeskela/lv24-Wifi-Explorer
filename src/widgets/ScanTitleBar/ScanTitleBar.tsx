@@ -6,7 +6,7 @@ import LightMode from '@mui/icons-material/LightMode';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import { useColorScheme } from '@mui/material/styles';
 import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
-import { persistThemePreference } from '@/shared/ui/ThemePreferenceSync';
+import { markManualThemePreference } from '@/features/scan-settings';
 import { scanTitleBarSx } from './styles';
 
 export type ScanTitleBarProps = {
@@ -38,7 +38,7 @@ export function ScanTitleBar({
   const toggleTheme = () => {
     const next = mode === 'dark' ? 'light' : 'dark';
     setMode(next);
-    persistThemePreference(next);
+    markManualThemePreference(next);
   };
 
   return (

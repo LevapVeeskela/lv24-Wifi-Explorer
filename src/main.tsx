@@ -1,3 +1,4 @@
+// oxlint-disable typescript/triple-slash-reference
 /// <reference path="./shared/types/wifiExplorer.d.ts" />
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

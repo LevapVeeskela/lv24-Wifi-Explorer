@@ -1,0 +1,11 @@
+# Flutter gen-l10n (aligned with lv24/main/mobile/app/l10n.yaml; scan-only, ru+en).
+# Requires `flutter: generate: true` in pubspec.yaml.
+arb-dir: lib/core/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+output-dir: lib/core/l10n/generated
+nullable-getter: false
+preferred-supported-locales:
+  - ru
+  - en

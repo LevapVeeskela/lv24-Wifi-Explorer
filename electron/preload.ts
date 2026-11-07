@@ -5,6 +5,8 @@ export type MenuIpcAction =
   | { type: 'openSnapshot' }
   | { type: 'saveSnapshot' }
   | { type: 'exportCsv'; scope: MenuCsvExportScope }
+  | { type: 'printVisible' }
+  | { type: 'openSettings' }
   | { type: 'about' };
 
 export interface WifiExplorerBridge {
@@ -48,7 +50,9 @@ const wifiExplorer: WifiExplorerBridge = {
   onMenuAction: (listener) => {
     const onOpenSnapshot = () => listener({ type: 'openSnapshot' });
     const onSaveSnapshot = () => listener({ type: 'saveSnapshot' });
+    const onOpenSettings = () => listener({ type: 'openSettings' });
     const onAbout = () => listener({ type: 'about' });
+    const onPrintVisible = () => listener({ type: 'printVisible' });
     const onExportCsv = (
       _event: Electron.IpcRendererEvent,
       payload: { scope: MenuCsvExportScope }
@@ -59,12 +63,16 @@ const wifiExplorer: WifiExplorerBridge = {
     ipcRenderer.on(MENU_IPC_EVENTS.openSnapshot, onOpenSnapshot);
     ipcRenderer.on(MENU_IPC_EVENTS.saveSnapshot, onSaveSnapshot);
     ipcRenderer.on(MENU_IPC_EVENTS.exportCsv, onExportCsv);
+    ipcRenderer.on(MENU_IPC_EVENTS.printVisible, onPrintVisible);
+    ipcRenderer.on(MENU_IPC_EVENTS.openSettings, onOpenSettings);
     ipcRenderer.on(MENU_IPC_EVENTS.about, onAbout);
 
     return () => {
       ipcRenderer.removeListener(MENU_IPC_EVENTS.openSnapshot, onOpenSnapshot);
       ipcRenderer.removeListener(MENU_IPC_EVENTS.saveSnapshot, onSaveSnapshot);
       ipcRenderer.removeListener(MENU_IPC_EVENTS.exportCsv, onExportCsv);
+      ipcRenderer.removeListener(MENU_IPC_EVENTS.printVisible, onPrintVisible);
+      ipcRenderer.removeListener(MENU_IPC_EVENTS.openSettings, onOpenSettings);
       ipcRenderer.removeListener(MENU_IPC_EVENTS.about, onAbout);
     };
   },

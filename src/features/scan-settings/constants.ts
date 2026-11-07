@@ -13,4 +13,9 @@ export const SCAN_SETTINGS_DEFAULTS: ScanSettings = {
   signalUnit: 'percent',
   minRssiDbm: null,
   scanIntervalSec: 5,
+  autoStartScanOnLaunch: false,
+  includeHiddenSsid: true,
+  hideEmptySpectrumBand: true,
+  graphLabelMode: 'ssid',
+  appearanceFollowSystem: true,
 };

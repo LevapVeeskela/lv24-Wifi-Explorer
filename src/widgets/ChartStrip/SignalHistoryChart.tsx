@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState, type KeyboardEvent } from 'react';
 import { Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
 import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import { graphLabelForRow } from '@/features/scan-settings/graphLabelForRow';
+import type { GraphLabelMode } from '@/features/scan-settings/types';
 import { buildSignalSeries } from '@/features/signal-history/buildSignalSeries';
 import { stepTimescale, TIMESCALE_MS } from '@/features/signal-history/timescale';
 import { TIMESCALE_ORDER, type ChartTimescale, type SignalChartUnit } from '@/features/signal-history/types';
@@ -23,6 +25,7 @@ export type SignalHistoryChartProps = {
   timescale: ChartTimescale;
   onTimescaleChange?: (timescale: ChartTimescale) => void;
   height?: number;
+  graphLabelMode?: GraphLabelMode;
 };
 
 const TABLE_POINTS = 24;
@@ -34,9 +37,13 @@ export function SignalHistoryChart({
   timescale: timescaleProp,
   onTimescaleChange,
   height = 160,
+  graphLabelMode = 'ssid',
 }: SignalHistoryChartProps) {
   const { locale } = useScanIntl();
   const formatMessage = useMemo(() => createFormatMessage(locale), [locale]);
+  const seriesLabel =
+    graphLabelForRow(row, graphLabelMode, formatMessage('scan.ssid.hidden')) ||
+    formatMessage('scan.chart.signal');
   const [localTimescale, setLocalTimescale] = useState(timescaleProp);
   const [sampleIndex, setSampleIndex] = useState(0);
 
@@ -131,7 +138,7 @@ export function SignalHistoryChart({
               data: series.map((point) => point.y),
               color,
               showMark: false,
-              label: row?.ssid || row?.bssid || formatMessage('scan.chart.signal'),
+              label: seriesLabel,
             },
           ]}
           skipAnimation

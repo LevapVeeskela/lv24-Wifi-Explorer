@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { Paper, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import { graphLabelForRow } from '@/features/scan-settings/graphLabelForRow';
+import type { GraphLabelMode } from '@/features/scan-settings/types';
 import { createFormatMessage } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
 import { ChartA11yTable } from './ChartA11yTable';
@@ -10,16 +12,17 @@ import { chartCaptionSx, chartEmptySx, chartPaperSx } from './styles';
 export type SelectedChannelChartProps = {
   row: ScanGridRow | null;
   height?: number;
+  graphLabelMode?: GraphLabelMode;
 };
 
-export function SelectedChannelChart({ row, height = 160 }: SelectedChannelChartProps) {
+export function SelectedChannelChart({
+  row,
+  height = 160,
+  graphLabelMode = 'ssid',
+}: SelectedChannelChartProps) {
   const { locale } = useScanIntl();
   const formatMessage = useMemo(() => createFormatMessage(locale), [locale]);
-  const ssid = row
-    ? row.ssidHidden
-      ? formatMessage('scan.ssid.hidden')
-      : row.ssid || row.bssid
-    : '';
+  const label = graphLabelForRow(row, graphLabelMode, formatMessage('scan.ssid.hidden'));
 
   return (
     <Paper aria-label={formatMessage('scan.chart.selected')} sx={chartPaperSx} variant="outlined">
@@ -37,13 +40,13 @@ export function SelectedChannelChart({ row, height = 160 }: SelectedChannelChart
             {
               data: [row.signalBarPct],
               color: row.seriesColor,
-              label: ssid,
+              label: label,
             },
           ]}
           skipAnimation
           xAxis={[
             {
-              data: [ssid],
+              data: [label],
               scaleType: 'band',
             },
           ]}
@@ -61,7 +64,7 @@ export function SelectedChannelChart({ row, height = 160 }: SelectedChannelChart
           caption={formatMessage('scan.chart.table')}
           labelX={formatMessage('scan.chart.selected')}
           labelY={formatMessage('scan.chart.unit.pct')}
-          rows={[{ x: ssid, y: `${row.signalBarPct}%` }]}
+          rows={[{ x: label, y: `${row.signalBarPct}%` }]}
         />
       ) : null}
     </Paper>

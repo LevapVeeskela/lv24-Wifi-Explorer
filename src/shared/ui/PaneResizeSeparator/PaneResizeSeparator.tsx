@@ -6,10 +6,7 @@ import {
   type VerticalPaneBounds,
   type VerticalPaneFractions,
 } from '@/shared/lib/paneLayout/verticalPaneLayout';
-import {
-  paneResizeSeparatorHorizontalSx,
-  paneResizeSeparatorVerticalSx,
-} from './styles';
+import { paneResizeSeparatorHorizontalSx, paneResizeSeparatorVerticalSx } from './styles';
 
 export type PaneResizeSeparatorProps = {
   orientation: 'horizontal' | 'vertical';
@@ -88,6 +85,7 @@ export function PaneResizeSeparator({
       }}
       onPointerUp={(event) => finishPointer(event.pointerId, true)}
       ref={separatorRef}
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
       role="separator"
       sx={isHorizontal ? paneResizeSeparatorHorizontalSx : paneResizeSeparatorVerticalSx}
       tabIndex={0}

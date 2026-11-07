@@ -12,6 +12,7 @@ const RU: Record<string, string> = {
   'scan.export.visible': 'Видимые строки',
   'scan.export.selected': 'Выделенные строки',
   'scan.export.all': 'Все строки',
+  'scan.print.visible': 'Печать видимой таблицы…',
   'scan.a11y.theme': 'Тема',
   'scan.a11y.scanToggle': 'Запуск и пауза сканирования',
 };

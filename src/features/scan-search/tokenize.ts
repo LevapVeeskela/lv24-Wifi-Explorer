@@ -1,3 +1,5 @@
+import { isBssidOctetToken } from './classifyToken';
+
 export type TokenKind =
   | 'word'
   | 'quoted'
@@ -25,6 +27,13 @@ function readSpecialWord(input: string, start: number): { value: string; end: nu
   const band24 = rest.match(/^(2\.4ghz|2\.4)/i);
   if (band24) {
     return { value: band24[1], end: start + band24[1].length };
+  }
+  // Digit-leading BSSID / prefix MAC (`3c:5a`, `3c-5a`, full 6 octets).
+  // Before channel ranges so `11-22-33-44-55-66` is not eaten as `11-22`.
+  // `isBssidOctetToken` rejects two all-digit hyphen parts (`36-48`).
+  const macRun = rest.match(/^[0-9a-f:-]+/i);
+  if (macRun && isBssidOctetToken(macRun[0])) {
+    return { value: macRun[0], end: start + macRun[0].length };
   }
   const range = rest.match(/^(\d+)\s*-\s*(\d+)/);
   if (range) {

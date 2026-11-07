@@ -263,7 +263,8 @@ function matchPredicate(bss: ObservedBss, pred: ScanPredicate, ctx: ScanSearchMa
     case 'bssidOctet': {
       const mac = bssidNormalized(bss);
       if (!mac) return false;
-      return mac.includes(pred.fragment);
+      const fragment = pred.fragment.replace(/-/g, ':');
+      return mac.replace(/-/g, ':').includes(fragment);
     }
     case 'signal':
       return compareNum(pred.op, bss.signal.rssiDbm, pred.valueDbm);

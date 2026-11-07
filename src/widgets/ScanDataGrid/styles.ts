@@ -1,4 +1,5 @@
 import type { SxProps, Theme } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 
 export const scanDataGridRootSx: SxProps<Theme> = {
   flex: 1,
@@ -42,6 +43,31 @@ export const scanDataGridRootSx: SxProps<Theme> = {
   },
   '& .MuiDataGrid-row.Mui-selected:hover': {
     backgroundColor: (theme) => theme.palette.action.selected,
+  },
+  '& .MuiDataGrid-cell.scan-grid-cell--quality-excellent': {
+    backgroundColor: (theme) => alpha(theme.palette.success.main, 0.14),
+  },
+  '& .MuiDataGrid-cell.scan-grid-cell--quality-good': {
+    backgroundColor: (theme) => alpha(theme.palette.success.main, 0.1),
+  },
+  '& .MuiDataGrid-cell.scan-grid-cell--quality-fair': {
+    backgroundColor: (theme) => alpha(theme.palette.warning.main, 0.12),
+  },
+  '& .MuiDataGrid-cell.scan-grid-cell--quality-poor': {
+    backgroundColor: (theme) => alpha(theme.palette.warning.main, 0.18),
+  },
+  '& .MuiDataGrid-cell.scan-grid-cell--quality-unusable': {
+    backgroundColor: (theme) => alpha(theme.palette.error.main, 0.16),
+  },
+  '& .MuiDataGrid-cell.scan-grid-cell--security-open': {
+    backgroundColor: (theme) => alpha(theme.palette.warning.main, 0.22),
+  },
+  '& .MuiDataGrid-cell.scan-grid-cell--security-weak': {
+    backgroundColor: (theme) => alpha(theme.palette.error.main, 0.14),
+  },
+  '& .MuiDataGrid-row.Mui-selected .MuiDataGrid-cell[class*="scan-grid-cell--"]': {
+    backgroundColor: (theme) => theme.palette.action.selected,
+    boxShadow: (theme) => `inset 0 0 0 9999px ${alpha(theme.palette.primary.main, 0.08)}`,
   },
 };
 

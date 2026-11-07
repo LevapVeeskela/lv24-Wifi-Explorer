@@ -9,7 +9,7 @@ export interface WifiExplorerBridge {
   demoEnable: () => Promise<{ ok: boolean; demoMode: boolean }>;
   onScanSnapshot: (listener: (payload: Record<string, unknown>) => void) => () => void;
   onPermissionsStatus: (
-    listener: (payload: { location: string; demoMode: boolean }) => void,
+    listener: (payload: { location: string; demoMode: boolean }) => void
   ) => () => void;
   onMenuAction: (listener: (action: MenuIpcAction) => void) => () => void;
 }
@@ -19,5 +19,3 @@ declare global {
     wifiExplorer?: WifiExplorerBridge;
   }
 }
-
-export {};

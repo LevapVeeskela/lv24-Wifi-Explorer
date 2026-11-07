@@ -140,3 +140,9 @@ Electron wiring today: **E** via `demoMode` / argv (`--live` opts out), helper e
 - Crash/analytics: avoid raw BSSID logging (hash or strip).
 
 See also `docs/PERMISSIONS.md`.
+
+---
+
+## 8. Flutter client (second UI)
+
+A **Flutter** app under [`flutter/`](../flutter/) shares **`packages/scan_domain`**, **`packages/scan_core_client`**, and **`native/ScanCore`** on macOS with this Electron stack. Mobile and non-macOS desktop builds start in **demo fixtures** until platform adapters exist; capability limits (especially **iOS** vs CoreWLAN) are documented in [`docs/FLUTTER.md`](FLUTTER.md).

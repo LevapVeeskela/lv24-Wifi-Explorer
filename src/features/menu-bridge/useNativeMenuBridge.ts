@@ -6,6 +6,8 @@ export type UseNativeMenuBridgeOptions = {
   onOpenSnapshot: () => void;
   onSaveSnapshot: () => void;
   onExportCsv: (scope: CsvExportScope) => void;
+  onPrintVisible: () => void;
+  onOpenSettings: () => void;
   onAbout: () => void;
 };
 
@@ -20,6 +22,12 @@ function dispatchMenuAction(action: MenuIpcAction, handlers: UseNativeMenuBridge
     case 'exportCsv':
       handlers.onExportCsv(action.scope);
       break;
+    case 'printVisible':
+      handlers.onPrintVisible();
+      break;
+    case 'openSettings':
+      handlers.onOpenSettings();
+      break;
     case 'about':
       handlers.onAbout();
       break;
@@ -31,7 +39,8 @@ function dispatchMenuAction(action: MenuIpcAction, handlers: UseNativeMenuBridge
 }
 
 export function useNativeMenuBridge(handlers: UseNativeMenuBridgeOptions): void {
-  const { onOpenSnapshot, onSaveSnapshot, onExportCsv, onAbout } = handlers;
+  const { onOpenSnapshot, onSaveSnapshot, onExportCsv, onPrintVisible, onOpenSettings, onAbout } =
+    handlers;
 
   useEffect(() => {
     const bridge = window.wifiExplorer;
@@ -43,8 +52,10 @@ export function useNativeMenuBridge(handlers: UseNativeMenuBridgeOptions): void 
         onOpenSnapshot,
         onSaveSnapshot,
         onExportCsv,
+        onPrintVisible,
+        onOpenSettings,
         onAbout,
       });
     });
-  }, [onAbout, onExportCsv, onOpenSnapshot, onSaveSnapshot]);
+  }, [onAbout, onExportCsv, onOpenSettings, onOpenSnapshot, onPrintVisible, onSaveSnapshot]);
 }

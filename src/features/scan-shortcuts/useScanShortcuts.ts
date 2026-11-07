@@ -11,7 +11,8 @@ export type UseScanShortcutsOptions = {
   gridContainerRef: RefObject<HTMLElement | null>;
   selectedBssid: string | null;
   onClearSearch: () => void;
-  onToggleScan: () => void;
+  onStartScan: () => void;
+  onStopScan: () => void;
   onDetailsTabChange: (tab: ScanDetailsTab) => void;
   onSaveSnapshot: () => void;
   onOpenSnapshot: () => void;
@@ -22,7 +23,8 @@ export function useScanShortcuts({
   gridContainerRef,
   selectedBssid,
   onClearSearch,
-  onToggleScan,
+  onStartScan,
+  onStopScan,
   onDetailsTabChange,
   onSaveSnapshot,
   onOpenSnapshot,
@@ -47,8 +49,11 @@ export function useScanShortcuts({
           case 'clearSearch':
             onClearSearch();
             break;
-          case 'toggleScan':
-            onToggleScan();
+          case 'startScan':
+            onStartScan();
+            break;
+          case 'stopScan':
+            onStopScan();
             break;
           case 'setDetailsTab':
             onDetailsTabChange(action.tab);
@@ -76,7 +81,8 @@ export function useScanShortcuts({
     onDetailsTabChange,
     onOpenSnapshot,
     onSaveSnapshot,
-    onToggleScan,
+    onStartScan,
+    onStopScan,
     searchInputRef,
     selectedBssid,
   ]);

@@ -182,6 +182,25 @@ export type DecodedIe =
       availableAdmissionCapacity: number | null;
     })
   | (IeCommon & {
+      id: 5;
+      kind: 'tim';
+      dtimCount: number | null;
+      dtimPeriod: number | null;
+      bitmapControl: number | null;
+      partialBitmapLength: number;
+    })
+  | (IeCommon & {
+      id: 32;
+      kind: 'power-constraint';
+      localPowerConstraintDb: number | null;
+    })
+  | (IeCommon & {
+      id: 127;
+      kind: 'extended-capabilities';
+      octetCount: number;
+      setFlags: readonly { octet: number; bit: number; name: string }[];
+    })
+  | (IeCommon & {
       id: 45;
       kind: 'ht-capabilities';
       fortyMhz: boolean | null;
@@ -232,6 +251,15 @@ export type DecodedIe =
       vendorType: number | null;
     })
   | (IeCommon & {
+      id: 221;
+      kind: 'vendor-wpa';
+      oui: string | null;
+      version: number | null;
+      groupCipher: CipherSuite | null;
+      pairwise: readonly CipherSuite[];
+      akm: readonly AkmSuite[];
+    })
+  | (IeCommon & {
       id: 244;
       kind: 'rsnx';
       saeHashToElement: boolean | null;
@@ -252,6 +280,13 @@ export type DecodedIe =
       bssColorDisabled: boolean | null;
       sixGhzPrimaryChannel: number | null;
       ccfs0: number | null;
+    })
+  | (IeCommon & {
+      id: 255;
+      extId: 108;
+      kind: 'eht-capabilities';
+      nss: SpatialStreamHint | null;
+      maxMcs: 7 | 9 | 11 | 13 | null;
     })
   | (IeCommon & {
       kind: 'unknown';

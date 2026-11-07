@@ -16,3 +16,18 @@ native/ScanCore/.build/
 # Prefer resources/oui/registry.json; avoid duplicate full IEEE CSV copies
 data/oui/ieee-mal.csv
 resources/oui/ieee-mal.csv
+
+# Flutter / Dart build artifacts (flutter/, packages/*)
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+pubspec_overrides.yaml
+
+# Local agent / MCP config (machine-specific, not for the repo)
+.mcp.json
+.mcp.json.bak-ctx7
+opencode.json
+opencode.json.bak-ctx7
+.vscode/

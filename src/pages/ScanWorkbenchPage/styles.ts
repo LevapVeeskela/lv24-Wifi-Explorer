@@ -10,9 +10,19 @@ export const scanShellSx: SxProps<Theme> = {
   backgroundColor: 'background.default',
 };
 
+export const scanWorkbenchBodySx: SxProps<Theme> = {
+  flex: 1,
+  minHeight: 0,
+  minWidth: 0,
+  display: 'flex',
+  flexDirection: 'row',
+  overflow: 'hidden',
+};
+
 export const scanMainSplitSx: SxProps<Theme> = {
   flex: 1,
   minHeight: 0,
+  minWidth: 0,
   display: 'flex',
   flexDirection: 'column',
 };

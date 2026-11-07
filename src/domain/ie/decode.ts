@@ -19,15 +19,18 @@ import type {
 
 const ID_SSID = 0;
 const ID_RATES = 1;
+const ID_TIM = 5;
 const ID_DS = 3;
 const ID_COUNTRY = 7;
 const ID_BSS_LOAD = 11;
+const ID_PWR_CONSTRAINT = 32;
 const ID_HT_CAP = 45;
 const ID_RSN = 48;
 const ID_EXT_RATES = 50;
 const ID_HT_OP = 61;
 const ID_VHT_CAP = 191;
 const ID_VHT_OP = 192;
+const ID_EXT_CAP = 127;
 const ID_VENDOR = 221;
 const ID_RSNX = 244;
 const ID_EXT = 255;
@@ -150,6 +153,43 @@ export function maxMcsFromHeMap(lo: number, hi: number): 7 | 9 | 11 | null {
   return max;
 }
 
+/** EHT Rx MCS map (≤80 MHz): 0=0–7, 1=0–9, 2=0–11, 3=0–13. */
+export function maxMcsFromEhtMap(lo: number, hi: number): 7 | 9 | 11 | 13 | null {
+  const map = (lo & 0xff) | ((hi & 0xff) << 8);
+  let max: 7 | 9 | 11 | 13 | null = null;
+  for (let i = 0; i < 8; i += 1) {
+    const bits = (map >> (i * 2)) & 0b11;
+    if (bits === 0) max = max == null || max < 7 ? 7 : max;
+    else if (bits === 1) max = max == null || max < 9 ? 9 : max;
+    else if (bits === 2) max = max == null || max < 11 ? 11 : max;
+    else if (bits === 3) max = 13;
+  }
+  return max;
+}
+
+/** IEEE 802.11 Extended Capabilities — выборочные именованные биты (octet 0–3). */
+const EXT_CAP_NAMED_BITS: readonly { octet: number; bit: number; name: string }[] = [
+  { octet: 0, bit: 0, name: '20/40 BSS coexistence management' },
+  { octet: 0, bit: 1, name: 'Generalized link' },
+  { octet: 0, bit: 2, name: 'Extended channel switching' },
+  { octet: 0, bit: 4, name: 'BSS transition' },
+  { octet: 0, bit: 5, name: 'SSID list' },
+  { octet: 0, bit: 6, name: 'Operating mode notification' },
+  { octet: 1, bit: 0, name: 'UTF-8 SSID' },
+  { octet: 1, bit: 2, name: 'TDLS peer U-APSD buffer STA support' },
+  { octet: 1, bit: 3, name: 'TDLS peer PSM support' },
+  { octet: 1, bit: 4, name: 'TDLS channel switching' },
+  { octet: 2, bit: 0, name: 'Interworking' },
+  { octet: 2, bit: 2, name: 'QoS map' },
+  { octet: 2, bit: 3, name: 'EBR' },
+  { octet: 2, bit: 4, name: 'SSPN interface' },
+  { octet: 3, bit: 0, name: 'MSGCF capability' },
+  { octet: 3, bit: 2, name: 'TDLS support' },
+  { octet: 3, bit: 3, name: 'TDLS prohibited' },
+  { octet: 3, bit: 4, name: 'TDLS channel switching prohibited' },
+  { octet: 3, bit: 7, name: 'Extended spectrum management' },
+];
+
 function maxNss(
   a: SpatialStreamHint | null,
   b: SpatialStreamHint | null,
@@ -208,6 +248,48 @@ function decodeCountry(payload: readonly number[]): DecodedIe {
     countryCode,
     environment,
     triplets,
+  };
+}
+
+function decodeTim(payload: readonly number[]): DecodedIe {
+  const dtimCount = payload.length >= 1 ? payload[0] & 0xff : null;
+  const dtimPeriod = payload.length >= 2 ? payload[1] & 0xff : null;
+  const bitmapControl = payload.length >= 3 ? payload[2] & 0xff : null;
+  const partialBitmapLength = Math.max(0, payload.length - 3);
+  return {
+    ...common(ID_TIM, payload),
+    id: 5,
+    kind: 'tim',
+    dtimCount,
+    dtimPeriod,
+    bitmapControl,
+    partialBitmapLength,
+  };
+}
+
+function decodePowerConstraint(payload: readonly number[]): DecodedIe {
+  return {
+    ...common(ID_PWR_CONSTRAINT, payload),
+    id: 32,
+    kind: 'power-constraint',
+    localPowerConstraintDb: payload.length >= 1 ? payload[0] & 0xff : null,
+  };
+}
+
+function decodeExtendedCapabilities(payload: readonly number[]): DecodedIe {
+  const setFlags: { octet: number; bit: number; name: string }[] = [];
+  for (const def of EXT_CAP_NAMED_BITS) {
+    if (def.octet >= payload.length) continue;
+    if (payload[def.octet] & (1 << def.bit)) {
+      setFlags.push(def);
+    }
+  }
+  return {
+    ...common(ID_EXT_CAP, payload),
+    id: 127,
+    kind: 'extended-capabilities',
+    octetCount: payload.length,
+    setFlags,
   };
 }
 
@@ -363,7 +445,48 @@ function decodeVhtOp(payload: readonly number[]): DecodedIe {
   };
 }
 
+function decodeWpaVendor(payload: readonly number[]): DecodedIe {
+  const oui = formatOui(payload);
+  const version = u16le(payload, 4);
+  let offset = 6;
+  const groupCipher = readCipher(payload, offset);
+  if (groupCipher) offset += 4;
+  const pairwise: CipherSuite[] = [];
+  const pairwiseCount = u16le(payload, offset);
+  if (pairwiseCount != null) {
+    offset += 2;
+    for (let i = 0; i < pairwiseCount; i += 1) {
+      const suite = readCipher(payload, offset);
+      if (!suite) break;
+      pairwise.push(suite);
+      offset += 4;
+    }
+  }
+  const akm: AkmSuite[] = [];
+  const akmCount = u16le(payload, offset);
+  if (akmCount != null) {
+    offset += 2;
+    for (let i = 0; i < akmCount; i += 1) {
+      const suite = readAkm(payload, offset);
+      if (!suite) break;
+      akm.push(suite);
+      offset += 4;
+    }
+  }
+  return {
+    ...common(ID_VENDOR, payload),
+    id: 221,
+    kind: 'vendor-wpa',
+    oui,
+    version,
+    groupCipher,
+    pairwise,
+    akm,
+  };
+}
+
 function decodeVendor(payload: readonly number[]): DecodedIe {
+  if (isWpaVendor(payload)) return decodeWpaVendor(payload);
   return {
     ...common(ID_VENDOR, payload),
     id: 221,
@@ -393,6 +516,24 @@ function decodeHeCap(afterExt: readonly number[], fullPayload: readonly number[]
     id: 255,
     extId: 35,
     kind: 'he-capabilities',
+    nss,
+    maxMcs,
+  };
+}
+
+/** EHT Rx map: NSS — как HE (3 = stream absent); max MCS — 3 = up to MCS 13. */
+export function nssFromEhtMcsMap(lo: number, hi: number): SpatialStreamHint | null {
+  return nssFromMcsMap(lo, hi);
+}
+
+function decodeEhtCap(afterExt: readonly number[], fullPayload: readonly number[]): DecodedIe {
+  const nss = afterExt.length >= 13 ? nssFromEhtMcsMap(afterExt[11], afterExt[12]) : null;
+  const maxMcs = afterExt.length >= 13 ? maxMcsFromEhtMap(afterExt[11], afterExt[12]) : null;
+  return {
+    ...common(ID_EXT, fullPayload, EXT_EHT_CAP),
+    id: 255,
+    extId: EXT_EHT_CAP,
+    kind: 'eht-capabilities',
     nss,
     maxMcs,
   };
@@ -435,15 +576,18 @@ function decodeUnknown(id: number, payload: readonly number[], extId: number | n
 function decodeOne(id: number, payload: readonly number[]): DecodedIe {
   if (id === ID_SSID) return decodeSsid(payload);
   if (id === ID_RATES) return decodeRates(1, payload);
+  if (id === ID_TIM) return decodeTim(payload);
   if (id === ID_DS) return decodeDs(payload);
   if (id === ID_COUNTRY) return decodeCountry(payload);
   if (id === ID_BSS_LOAD) return decodeBssLoad(payload);
+  if (id === ID_PWR_CONSTRAINT) return decodePowerConstraint(payload);
   if (id === ID_HT_CAP) return decodeHtCap(payload);
   if (id === ID_RSN) return decodeRsn(payload);
   if (id === ID_EXT_RATES) return decodeRates(50, payload);
   if (id === ID_HT_OP) return decodeHtOp(payload);
   if (id === ID_VHT_CAP) return decodeVhtCap(payload);
   if (id === ID_VHT_OP) return decodeVhtOp(payload);
+  if (id === ID_EXT_CAP) return decodeExtendedCapabilities(payload);
   if (id === ID_VENDOR) return decodeVendor(payload);
   if (id === ID_RSNX) return decodeRsnx(payload);
   if (id === ID_EXT) {
@@ -451,6 +595,7 @@ function decodeOne(id: number, payload: readonly number[]): DecodedIe {
     const rest = payload.slice(1);
     if (extId === EXT_HE_CAP) return decodeHeCap(rest, payload);
     if (extId === EXT_HE_OP) return decodeHeOp(rest, payload);
+    if (extId === EXT_EHT_CAP) return decodeEhtCap(rest, payload);
     return decodeUnknown(ID_EXT, payload, extId);
   }
   return decodeUnknown(id, payload, null);
@@ -495,6 +640,8 @@ function buildShallow(byteLength: number, elements: readonly DecodedIe[], presen
       nssHint = maxNss(nssHint, el.nss);
     } else if (el.kind === 'vht-operation') {
       if (el.ccfs0 != null) ccfs0 = el.ccfs0;
+    } else if (el.kind === 'vendor-wpa') {
+      wpaVendorIe = true;
     } else if (el.kind === 'vendor') {
       if (isWpaVendor(el.raw)) wpaVendorIe = true;
     } else if (el.kind === 'he-capabilities') {
@@ -502,6 +649,9 @@ function buildShallow(byteLength: number, elements: readonly DecodedIe[], presen
       nssHint = maxNss(nssHint, el.nss);
     } else if (el.kind === 'he-operation') {
       if (el.ccfs0 != null) ccfs0 = el.ccfs0;
+    } else if (el.kind === 'eht-capabilities') {
+      ehtCapabilities = true;
+      nssHint = maxNss(nssHint, el.nss);
     } else if (el.kind === 'unknown' && el.id === ID_EXT && el.extId === EXT_EHT_CAP) {
       ehtCapabilities = true;
     }

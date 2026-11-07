@@ -8,6 +8,8 @@
  * | `menu:openSnapshot`  | —                                |
  * | `menu:saveSnapshot`  | —                                |
  * | `menu:exportCsv`     | `{ scope: 'visible' \| 'selected' \| 'all' }` |
+ * | `menu:printVisible`  | —                                |
+ * | `menu:openSettings`  | —                                |
  * | `menu:about`         | —                                |
  *
  * Scan start/stop run in the main process (same as `scan:start` / `scan:stop` handlers).
@@ -20,6 +22,8 @@ export const MENU_IPC_EVENTS = {
   openSnapshot: 'menu:openSnapshot',
   saveSnapshot: 'menu:saveSnapshot',
   exportCsv: 'menu:exportCsv',
+  printVisible: 'menu:printVisible',
+  openSettings: 'menu:openSettings',
   about: 'menu:about',
 } as const;
 
@@ -89,6 +93,12 @@ function buildTemplate(deps: ApplicationMenuDeps): MenuItemConstructorOptions[] 
         },
       ],
     },
+    { type: 'separator' },
+    {
+      label: 'Print Visible Table…',
+      accelerator: 'CmdOrCtrl+P',
+      click: () => sendToRenderer(getMainWindow, MENU_IPC_EVENTS.printVisible),
+    },
   ];
 
   if (isMac) {
@@ -107,6 +117,12 @@ function buildTemplate(deps: ApplicationMenuDeps): MenuItemConstructorOptions[] 
       label: 'Stop Scan',
       accelerator: 'CmdOrCtrl+Shift+T',
       click: () => onScanStop(),
+    },
+    { type: 'separator' },
+    {
+      label: 'Settings…',
+      accelerator: 'CmdOrCtrl+,',
+      click: () => sendToRenderer(getMainWindow, MENU_IPC_EVENTS.openSettings),
     },
   ];
 

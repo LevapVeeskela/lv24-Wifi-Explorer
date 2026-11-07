@@ -1,0 +1,16 @@
+name: lv24_wifi_explorer_workspace
+description: >-
+  Dart/Flutter workspace root for LV24 WiFi Explorer — shared packages under
+  packages/ and the flutter/ app. Run `dart pub get` here to resolve all members.
+publish_to: none
+
+environment:
+  sdk: ^3.13.3
+
+workspace:
+  - packages/scan_domain
+  - packages/scan_core_client
+  - packages/scan_l10n
+  - packages/scan_oui
+  - packages/lv24_sunset_theme
+  - flutter

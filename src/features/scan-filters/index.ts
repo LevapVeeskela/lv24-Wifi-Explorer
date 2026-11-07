@@ -1,6 +1,11 @@
 export { applyAllFilters } from './applyAllFilters';
 export { applyScanFilters } from './applyScanFilters';
 export {
+  useScanWorkbenchFilters,
+  workbenchFiltersFromScanSettings,
+  type ScanSettingsFilterFields,
+} from './useScanWorkbenchFilters';
+export {
   FILTER_DEFAULTS,
   SEARCH_DEBOUNCE_MS,
   bandFilterToGhz,

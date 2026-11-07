@@ -50,13 +50,25 @@ function fold(word: string): string {
   return word.trim().toLowerCase();
 }
 
-function isBssidOctetToken(raw: string): boolean {
+/**
+ * Colon or hyphen IEEE MAC / prefix (`3c:5a`, `3c-5a-b0-11-22-33`).
+ * Two all-digit hyphen parts (`36-48`) stay a channel range, not a BSSID.
+ * Bare hex without a separator (`3c`) is not a BSSID (ambiguous with channel).
+ */
+export function isBssidOctetToken(raw: string): boolean {
   const w = raw.toLowerCase();
-  if (!w.includes(':')) return false;
-  if (!/^[0-9a-f:]+$/i.test(w)) return false;
-  const parts = w.split(':').filter((p) => p.length > 0);
+  const hasColon = w.includes(':');
+  const hasHyphen = w.includes('-');
+  if (hasColon === hasHyphen) return false;
+  const sep = hasColon ? ':' : '-';
+  if (!(hasColon ? /^[0-9a-f:]+$/i : /^[0-9a-f-]+$/i).test(w)) return false;
+  const parts = w.split(sep).filter((p) => p.length > 0);
   if (parts.length === 0) return true;
-  return parts.every((p) => p.length <= 2 && /^[0-9a-f]*$/i.test(p));
+  if (!parts.every((p) => p.length <= 2 && /^[0-9a-f]*$/i.test(p))) return false;
+  if (hasHyphen && parts.length === 2 && parts.every((p) => /^\d+$/.test(p))) {
+    return false;
+  }
+  return true;
 }
 
 function parseBandWord(raw: string): ScanPredicate | null {

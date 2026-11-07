@@ -2,6 +2,12 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'vitest';
 import { parseScanQuery } from '../parseScanQuery';
 import { matchBss } from '../matchBss';
+import {
+  SCAN_SEARCH_HISTORY_MAX_ENTRIES,
+  filterScanSearchHistoryForAutocomplete,
+  parseScanSearchHistoryFromJson,
+  pushScanSearchHistory,
+} from '../searchHistory';
 import { mockBss } from './mockBss';
 
 function mustParse(q: string) {
@@ -30,6 +36,93 @@ describe('parseScanQuery', () => {
   it('parses boolean combinators with implicit AND', () => {
     const r = parseScanQuery('hidden 5ghz');
     assert.equal(r.ok, true);
+  });
+
+  it('bare digit-leading MAC prefix is a single bssid token', () => {
+    const prefix = parseScanQuery('3c:5a');
+    assert.equal(prefix.ok, true);
+    if (prefix.ok) {
+      assert.equal(prefix.ast.type, 'pred');
+      if (prefix.ast.type === 'pred') {
+        assert.equal(prefix.ast.pred.kind, 'bssidOctet');
+        if (prefix.ast.pred.kind === 'bssidOctet') {
+          assert.equal(prefix.ast.pred.fragment, '3c:5a');
+        }
+      }
+    }
+
+    const full = parseScanQuery('3c:5a:b0:11:22:33');
+    assert.equal(full.ok, true);
+    if (full.ok) {
+      assert.equal(full.ast.type, 'pred');
+      if (full.ast.type === 'pred') {
+        assert.equal(full.ast.pred.kind, 'bssidOctet');
+        if (full.ast.pred.kind === 'bssidOctet') {
+          assert.equal(full.ast.pred.fragment, '3c:5a:b0:11:22:33');
+        }
+      }
+    }
+  });
+
+  it('hyphenated IEEE MAC is a single bssid token; digit ranges stay channels', () => {
+    const prefix = parseScanQuery('3c-5a');
+    assert.equal(prefix.ok, true);
+    if (prefix.ok) {
+      assert.equal(prefix.ast.type, 'pred');
+      if (prefix.ast.type === 'pred') {
+        assert.equal(prefix.ast.pred.kind, 'bssidOctet');
+        if (prefix.ast.pred.kind === 'bssidOctet') {
+          assert.equal(prefix.ast.pred.fragment, '3c-5a');
+        }
+      }
+    }
+
+    const full = parseScanQuery('3c-5a-b0-11-22-33');
+    assert.equal(full.ok, true);
+    if (full.ok) {
+      assert.equal(full.ast.type, 'pred');
+      if (full.ast.type === 'pred') {
+        assert.equal(full.ast.pred.kind, 'bssidOctet');
+        if (full.ast.pred.kind === 'bssidOctet') {
+          assert.equal(full.ast.pred.fragment, '3c-5a-b0-11-22-33');
+        }
+      }
+    }
+
+    const range = parseScanQuery('36-48');
+    assert.equal(range.ok, true);
+    if (range.ok) {
+      assert.equal(range.ast.type, 'pred');
+      if (range.ast.type === 'pred') {
+        assert.equal(range.ast.pred.kind, 'channelRange');
+        if (range.ast.pred.kind === 'channelRange') {
+          assert.equal(range.ast.pred.from, 36);
+          assert.equal(range.ast.pred.to, 48);
+        }
+      }
+    }
+  });
+
+  it('bare digits stay channel queries', () => {
+    const ch3 = parseScanQuery('3');
+    assert.equal(ch3.ok, true);
+    if (ch3.ok) {
+      assert.equal(ch3.ast.type, 'pred');
+      if (ch3.ast.type === 'pred') {
+        assert.equal(ch3.ast.pred.kind, 'channel');
+        if (ch3.ast.pred.kind === 'channel') assert.equal(ch3.ast.pred.channel, 3);
+      }
+    }
+
+    const ch36 = parseScanQuery('36');
+    assert.equal(ch36.ok, true);
+    if (ch36.ok) {
+      assert.equal(ch36.ast.type, 'pred');
+      if (ch36.ast.type === 'pred') {
+        assert.equal(ch36.ast.pred.kind, 'channel');
+        if (ch36.ast.pred.kind === 'channel') assert.equal(ch36.ast.pred.channel, 36);
+      }
+    }
   });
 });
 
@@ -89,6 +182,30 @@ describe('shortcuts', () => {
     assert.equal(matches('aa:', ap24), true);
     assert.equal(matches('aa:bb:', ap24), true);
     assert.equal(matches(':01', ap24), true);
+  });
+
+  it('digit-leading bare MAC matches without bssid:', () => {
+    const lab = mockBss({ bssid: '3c:5a:b4:10:01:01', channel: 36 });
+    assert.equal(matches('3c:5a', lab), true);
+    assert.equal(matches('3c:5a:b4:10:01:01', lab), true);
+    assert.equal(matches('3c:5a:b0:11:22:33', lab), false);
+    assert.equal(matches('3c:5a', ap24), false);
+  });
+
+  it('hyphenated IEEE MAC matches colon BSSID; 36-48 stays a channel range', () => {
+    const lab = mockBss({ bssid: '3c:5a:b4:10:01:01', channel: 36 });
+    assert.equal(matches('3c-5a', lab), true);
+    assert.equal(matches('3c-5a-b4-10-01-01', lab), true);
+    assert.equal(matches('3c-5a-b0-11-22-33', lab), false);
+    assert.equal(matches('3c-5a', ap24), false);
+    assert.equal(matches('36-48', lab), true);
+    assert.equal(matches('36-48', mockBss({ bssid: 'y', channel: 60 })), false);
+  });
+
+  it('bare channel digits still match channel', () => {
+    assert.equal(matches('36', ap5), true);
+    assert.equal(matches('3', ap5), false);
+    assert.equal(matches('3', mockBss({ bssid: 'x', channel: 3 })), true);
   });
 
   it('RSSI comparison without key', () => {
@@ -175,5 +292,45 @@ describe('phy and generation', () => {
   it('generation', () => {
     assert.equal(matches('wifi6', ax5), true);
     assert.equal(matches('wifi6e', ax6), true);
+  });
+});
+
+describe('pushScanSearchHistory', () => {
+  it('ignores blank queries', () => {
+    const history = ['LV24'];
+    assert.deepEqual(pushScanSearchHistory(history, '   '), history);
+  });
+
+  it('prepends and dedupes', () => {
+    assert.deepEqual(pushScanSearchHistory(['b', 'a'], 'c'), ['c', 'b', 'a']);
+    assert.deepEqual(pushScanSearchHistory(['b', 'a'], 'a'), ['a', 'b']);
+  });
+
+  it('caps at max entries', () => {
+    const seed = Array.from({ length: SCAN_SEARCH_HISTORY_MAX_ENTRIES }, (_, i) => `q${i}`);
+    const next = pushScanSearchHistory(seed, 'new');
+    assert.equal(next.length, SCAN_SEARCH_HISTORY_MAX_ENTRIES);
+    assert.equal(next[0], 'new');
+    assert.equal(next[next.length - 1], `q${SCAN_SEARCH_HISTORY_MAX_ENTRIES - 2}`);
+  });
+});
+
+describe('filterScanSearchHistoryForAutocomplete', () => {
+  const history = ['LV24-Lab', 'open OR 5ghz', 'bssid:aa:bb'];
+
+  it('returns full history when field is empty', () => {
+    assert.deepEqual(filterScanSearchHistoryForAutocomplete(history, ''), history);
+    assert.deepEqual(filterScanSearchHistoryForAutocomplete(history, '  '), history);
+  });
+
+  it('filters case-insensitively by substring', () => {
+    assert.deepEqual(filterScanSearchHistoryForAutocomplete(history, 'lv24'), ['LV24-Lab']);
+    assert.deepEqual(filterScanSearchHistoryForAutocomplete(history, '5ghz'), ['open OR 5ghz']);
+  });
+});
+
+describe('parseScanSearchHistoryFromJson', () => {
+  it('parses string list and skips invalid rows', () => {
+    assert.deepEqual(parseScanSearchHistoryFromJson([' a ', '', 3, 'b']), ['a', 'b']);
   });
 });

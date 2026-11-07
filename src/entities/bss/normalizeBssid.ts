@@ -2,7 +2,7 @@
 export function normalizeBssid(raw: string | null | undefined): string | null {
   if (!raw) return null;
   const trimmed = raw.trim().toLowerCase();
-  const parts = trimmed.split(/[:\-]/).filter(Boolean);
+  const parts = trimmed.split(/[:-]/).filter(Boolean);
   if (parts.length !== 6) return trimmed;
   return parts.map((p) => p.padStart(2, '0')).join(':');
 }

@@ -1,3 +1,4 @@
+// oxlint-disable typescript/triple-slash-reference
 /// <reference path="./muiXThemeAugmentation.d.ts" />
 import { createTheme, alpha, type Theme } from '@mui/material/styles';
 // MUI X palette/component keys: type-only via muiXThemeAugmentation.d.ts

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Access WiFi Information + location (When In Use) are required for SSID/BSSID
+  on iOS using public NEHotspotNetwork / Captive Network APIs only.
+  No NEHotspotHelper or private Wi‑Fi stacks.
+-->
+<plist version="1.0">
+<dict>
+	<key>com.apple.developer.networking.wifi-info</key>
+	<true/>
+</dict>
+</plist>

@@ -38,7 +38,9 @@ export function StatusBar({
         <Typography color="text.secondary" variant="caption">
           {t('scan.status.shortcutsHint')}
         </Typography>
-        <Typography variant="caption">{t('scan.status.found', { count: networksFound })}</Typography>
+        <Typography variant="caption">
+          {t('scan.status.found', { count: networksFound })}
+        </Typography>
         <Typography variant="caption">
           {t('scan.status.selected', { count: selectedCount })}
         </Typography>
