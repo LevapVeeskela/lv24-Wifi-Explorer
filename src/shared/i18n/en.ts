@@ -23,6 +23,12 @@ export const enMessages = {
   'scan.filterPresets.save': 'Save preset',
   'scan.filterPresets.delete': 'Delete preset “{name}”',
 
+  'scan.organizeBy.label': 'Group by',
+  'scan.organizeBy.none': 'None',
+  'scan.organizeBy.ssid': 'SSID',
+  'scan.organizeBy.ap': 'AP (BSSID)',
+  'scan.organizeBy.vendor': 'Vendor',
+
   'scan.filterSidebar.title': 'Filters',
   'scan.filterSidebar.collapse': 'Collapse filter panel',
   'scan.filterSidebar.expand': 'Expand filter panel',

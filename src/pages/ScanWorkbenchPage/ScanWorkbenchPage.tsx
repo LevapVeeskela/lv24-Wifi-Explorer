@@ -31,6 +31,7 @@ import {
   hasActiveFilters,
   useScanWorkbenchFilters,
 } from '@/features/scan-filters';
+import { treeDataPathForOrganize, useScanOrganize } from '@/features/scan-organize';
 import { useScanSearch } from '@/features/scan-search';
 import { useScanShortcuts } from '@/features/scan-shortcuts';
 import {
@@ -141,6 +142,7 @@ function ScanWorkbenchInner({
     scanSettings.patchSettings
   );
   const scanSearch = useScanSearch(filters.searchQuery);
+  const { organizeBy, setOrganizeBy } = useScanOrganize();
   const [selectionModel, setSelectionModel] = useState(emptyRowSelectionModel);
   const [detailsTab, setDetailsTab] = useState<DetailsTab>('details');
   const chartUnit = signalDisplayToChartUnit(scanSettings.settings.signalUnit);
@@ -542,7 +544,9 @@ function ScanWorkbenchInner({
         onFiltersChange={onFiltersChange}
         onOpenColumnsPanel={openColumnsPanel}
         onOpenSettings={() => setScanSettingsOpen(true)}
+        onOrganizeByChange={setOrganizeBy}
         onScanIntervalSecChange={onScanIntervalSecChange}
+        organizeBy={organizeBy}
       />
       <LocationOnboarding
         demoMode={scanCoreState === 'demo'}
@@ -563,6 +567,7 @@ function ScanWorkbenchInner({
               overlayKind={overlayKind}
               rows={filteredRows}
               selectionModel={selectionModel}
+              getTreeDataPath={treeDataPathForOrganize(organizeBy)}
               signalUnit={scanSettings.settings.signalUnit}
               onAnnotationChange={commitAnnotation}
               onColumnVisibilityModelChange={setColumnVisibility}

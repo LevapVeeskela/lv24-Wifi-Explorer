@@ -53,7 +53,9 @@ function signalTooltip(row: ScanGridRow, pct: number): string {
   return `RSSI ${formatDbm(row.rssiDbm)} · SNR ${snr} · ${quality} · ${pct}%`;
 }
 
-export function useScanGridColumns(signalUnit: SignalDisplayUnit = 'percent'): GridColDef<ScanGridRow>[] {
+export function useScanGridColumns(
+  signalUnit: SignalDisplayUnit = 'percent'
+): GridColDef<ScanGridRow>[] {
   const { formatMessage } = useScanIntl();
 
   return useMemo(
@@ -99,9 +101,7 @@ export function useScanGridColumns(signalUnit: SignalDisplayUnit = 'percent'): G
               spacing={0.5}
               sx={ssidCellSx}
             >
-              {connected ? (
-                <Wifi aria-label={t('scan.a11y.connected')} fontSize="inherit" />
-              ) : null}
+              {connected ? <Wifi aria-label={t('scan.a11y.connected')} fontSize="inherit" /> : null}
               <Typography sx={ssidTextSx({ connected, hidden })} variant="body2">
                 {label}
               </Typography>
@@ -130,6 +130,7 @@ export function useScanGridColumns(signalUnit: SignalDisplayUnit = 'percent'): G
         field: 'vendor',
         headerName: t('scan.col.vendor'),
         width: 160,
+        valueGetter: (_, row) => row.vendor ?? '—',
         renderCell: (params) => (
           <Stack direction="row" spacing={1} sx={vendorCellSx}>
             <Avatar sx={vendorAvatarSx}>{vendorInitials(params.row.vendor)}</Avatar>
@@ -198,8 +199,7 @@ export function useScanGridColumns(signalUnit: SignalDisplayUnit = 'percent'): G
         valueGetter: (_, row) => row.rssiDbm,
         renderCell: (params) => {
           const pct = signalPercentFromRssi(params.row.rssiDbm);
-          const label =
-            signalUnit === 'dbm' ? formatDbm(params.row.rssiDbm) : `${pct}%`;
+          const label = signalUnit === 'dbm' ? formatDbm(params.row.rssiDbm) : `${pct}%`;
           return (
             <Tooltip title={signalTooltip(params.row, pct)}>
               <Stack direction="row" spacing={1} sx={signalCellSx}>
@@ -278,6 +278,6 @@ export function useScanGridColumns(signalUnit: SignalDisplayUnit = 'percent'): G
           row.networkType === 'ibss' ? t('scan.type.ibss') : t('scan.type.infrastructure'),
       },
     ],
-    [formatMessage, signalUnit],
+    [formatMessage, signalUnit]
   );
 }

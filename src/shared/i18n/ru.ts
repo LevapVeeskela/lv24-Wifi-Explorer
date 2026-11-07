@@ -22,6 +22,12 @@ export const ruMessages: Record<MessageKey, string> = {
   'scan.filterPresets.save': 'Сохранить пресет',
   'scan.filterPresets.delete': 'Удалить пресет «{name}»',
 
+  'scan.organizeBy.label': 'Группировать по',
+  'scan.organizeBy.none': 'Без групп',
+  'scan.organizeBy.ssid': 'SSID',
+  'scan.organizeBy.ap': 'AP (BSSID)',
+  'scan.organizeBy.vendor': 'Производитель',
+
   'scan.filterSidebar.title': 'Фильтры',
   'scan.filterSidebar.collapse': 'Свернуть панель фильтров',
   'scan.filterSidebar.expand': 'Развернуть панель фильтров',

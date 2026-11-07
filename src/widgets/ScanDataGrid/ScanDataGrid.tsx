@@ -28,6 +28,7 @@ export type ScanDataGridProps = {
   overlayKind?: ScanGridOverlayKind | null;
   locale?: string;
   signalUnit?: SignalDisplayUnit;
+  getTreeDataPath?: ((row: ScanGridRow) => readonly string[]) | null;
 };
 
 export function ScanDataGrid({
@@ -41,6 +42,7 @@ export function ScanDataGrid({
   overlayKind = 'empty',
   locale = 'ru',
   signalUnit = 'percent',
+  getTreeDataPath,
 }: ScanDataGridProps) {
   const columns = useScanGridColumns(signalUnit);
   const { config: columnRules } = useColumnRules();
@@ -75,7 +77,10 @@ export function ScanDataGrid({
           return classes.join(' ');
         }}
         getRowId={(row) => row.id}
+        getTreeDataPath={getTreeDataPath ?? undefined}
+        defaultGroupingExpansionDepth={-1}
         hideFooter
+        treeData={Boolean(getTreeDataPath)}
         initialState={{
           pinnedColumns: { left: ['seriesColor'] },
           sorting: {

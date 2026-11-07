@@ -24,6 +24,7 @@ import History from '@mui/icons-material/History';
 import FileDownload from '@mui/icons-material/FileDownload';
 import ViewColumn from '@mui/icons-material/ViewColumn';
 import type { CsvExportScope } from '@/features/export';
+import type { OrganizeByValue } from '@/features/scan-organize';
 import { SCAN_INTERVAL_SEC_OPTIONS } from '@/features/scan-settings';
 import {
   FilterPresetsMenu,
@@ -44,6 +45,7 @@ import {
   searchFieldSx,
   vendorFieldSx,
 } from './styles';
+import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
 import { t } from './t';
 
 export type ScanAppBarProps = {
@@ -56,6 +58,8 @@ export type ScanAppBarProps = {
   scanIntervalSec: number;
   onScanIntervalSecChange: (sec: number) => void;
   onOpenSettings: () => void;
+  organizeBy: OrganizeByValue;
+  onOrganizeByChange: (value: OrganizeByValue) => void;
 };
 
 export function ScanAppBar({
@@ -68,7 +72,10 @@ export function ScanAppBar({
   scanIntervalSec,
   onScanIntervalSecChange,
   onOpenSettings,
+  organizeBy,
+  onOrganizeByChange,
 }: ScanAppBarProps) {
+  const { formatMessage } = useScanIntl();
   const [localSearch, setLocalSearch] = useState(filters.searchQuery);
   const [exportMenuEl, setExportMenuEl] = useState<null | HTMLElement>(null);
   const { history: searchHistory, recordCommit: recordSearchHistoryCommit } =
@@ -224,6 +231,27 @@ export function ScanAppBar({
             {SCAN_INTERVAL_SEC_OPTIONS.map((sec) => (
               <MenuItem key={sec} value={sec}>
                 {t('scan.settings.scanIntervalSec', { sec })}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl size="small" sx={{ minWidth: 120 }}>
+          <Select
+            aria-label={formatMessage('scan.organizeBy.label')}
+            value={organizeBy}
+            onChange={(event) => onOrganizeByChange(event.target.value as OrganizeByValue)}
+          >
+            {(
+              [
+                ['none', 'scan.organizeBy.none'],
+                ['ssid', 'scan.organizeBy.ssid'],
+                ['ap', 'scan.organizeBy.ap'],
+                ['vendor', 'scan.organizeBy.vendor'],
+              ] as const
+            ).map(([value, key]) => (
+              <MenuItem key={value} value={value}>
+                {formatMessage(key)}
               </MenuItem>
             ))}
           </Select>

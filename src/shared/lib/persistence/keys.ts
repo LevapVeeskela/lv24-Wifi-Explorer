@@ -7,6 +7,7 @@ export const STORAGE_LOCATION_ONBOARDING_DISMISSED =
   'lv24.wifi-explorer.location-onboarding-dismissed';
 export const STORAGE_SETTINGS = 'lv24.wifi-explorer.settings';
 export const STORAGE_FILTER_PRESETS = 'lv24.wifi-explorer.filter-presets';
+export const STORAGE_ORGANIZE_BY = 'lv24.wifi-explorer.organize-by';
 
 export type ThemePreference = 'light' | 'dark' | 'system';
 
