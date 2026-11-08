@@ -19,11 +19,11 @@ export {
   DEFAULT_BEACON_BYTES,
   FALLBACK_BEACON_INTERVAL_SEC,
   FALLBACK_BEACON_RATE_MBPS,
+  primaryChannelsOverlap,
   type BeaconOverheadEstimate,
   type ChannelUtilization,
   type ComputeUtilizationOptions,
   type UtilizationReport,
   type UtilizationTotals,
-} from './computeUtilization';
-export { primaryChannelsOverlap } from './overlap';
+} from '@/domain';
 export { formatBandWithUnii, uniiSubband, type UniiLabel } from './unii';

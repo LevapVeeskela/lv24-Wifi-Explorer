@@ -1,4 +1,4 @@
-import type { ObservedBss } from '@/domain/bss';
+import type { ObservedBss } from '../bss';
 import type { ScanIssueBss } from './types';
 
 function hiddenFromIdentity(bss: ObservedBss): boolean {

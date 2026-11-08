@@ -1,8 +1,13 @@
 import { SCAN_ISSUE_IDS } from './types';
-import type { ScanIssueId } from './types';
+import type { ScanIssueId, ScanIssueMessageKey } from './types';
 
 const ISSUE_KEY_PREFIX = 'scan.issue.';
 const ISSUE_ID_SET: ReadonlySet<string> = new Set(SCAN_ISSUE_IDS);
+
+/** Shared-catalog key for an issue id (`scan.issue.*`). */
+export function scanIssueMessageKey(id: ScanIssueId): ScanIssueMessageKey {
+  return `scan.issue.${id}`;
+}
 
 /**
  * Narrow a row's `issueKeys` entry back to a {@link ScanIssueId}.

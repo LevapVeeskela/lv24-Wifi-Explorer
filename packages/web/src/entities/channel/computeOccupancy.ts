@@ -1,7 +1,7 @@
 import type { ObservedBss } from '@/domain/bss';
 import type { BandGhz } from '@/domain/channel';
 import { rssiToBarPercent } from '../bss/formatters';
-import { primaryChannelsOverlap } from './overlap';
+import { primaryChannelsOverlap } from '@/domain';
 import { primaryCenterMhz } from '@/scan/channelMath';
 
 export type OccupancyBar = {

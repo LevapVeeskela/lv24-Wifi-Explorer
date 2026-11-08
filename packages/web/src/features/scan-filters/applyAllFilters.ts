@@ -1,6 +1,6 @@
 import type { ScanGridRow } from '@/entities/bss';
 import type { ParseScanQueryResult } from '@/features/scan-search';
-import { scanIssueMessageKey, type ScanIssueId } from '@/features/scan-issues';
+import { scanIssueMessageKey, type ScanIssueId } from '@/domain';
 import { matchBss, parseScanQuery } from '@/features/scan-search';
 import { bandFilterToGhz, type ScanWorkbenchFilters } from './types';
 

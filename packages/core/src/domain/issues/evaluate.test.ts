@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { evaluateIssues } from './evaluateIssues';
+import { evaluateIssues } from './evaluate';
 import { SCAN_ISSUE_THRESHOLDS } from './thresholds';
 import type { ScanIssueBss } from './types';
 

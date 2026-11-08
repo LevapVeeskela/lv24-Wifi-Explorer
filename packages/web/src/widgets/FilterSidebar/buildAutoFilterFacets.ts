@@ -5,7 +5,7 @@ import {
   scanIssueIdFromMessageKey,
   type IssueSeverity,
   type ScanIssueId,
-} from '@/features/scan-issues';
+} from '@/domain';
 import type {
   BandFilterValue,
   NetworkTypeFilterValue,

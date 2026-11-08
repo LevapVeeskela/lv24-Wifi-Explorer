@@ -1,4 +1,4 @@
-import type { ScanIssueId } from '@/features/scan-issues';
+import type { ScanIssueId } from '@/domain';
 
 export type BandFilterValue = 'all' | '24' | '5' | '6';
 

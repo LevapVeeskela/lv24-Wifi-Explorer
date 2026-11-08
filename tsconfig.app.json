@@ -19,6 +19,7 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
+      "@/domain": ["packages/core/src/domain/index.ts"],
       "@/domain/*": ["packages/core/src/domain/*"],
       "@/scan": ["packages/core/src/scan/index.ts"],
       "@/scan/*": ["packages/core/src/scan/*"],

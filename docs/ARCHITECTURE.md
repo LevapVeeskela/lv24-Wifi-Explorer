@@ -161,6 +161,16 @@ See also `docs/PERMISSIONS.md`.
 
 ---
 
-## 8. Flutter client (second UI)
+## 8. MCP server (agents)
+
+`@lv24/wifi-mcp` exposes the scan pipeline to MCP clients over stdio. It imports
+only `@lv24/wifi-backend` (providers) and `@lv24/wifi-core` (domain, issues,
+utilization) — never the web renderer. Tools: `wifi_providers`, `wifi_scan`,
+`wifi_network`, `wifi_summary`, `wifi_channels`, `wifi_issues`. See
+[`docs/MCP.md`](MCP.md).
+
+---
+
+## 9. Flutter client (second UI)
 
 A **Flutter** app under [`flutter/`](../flutter/) shares **`packages/scan_domain`**, **`packages/scan_core_client`**, and **`native/ScanCore`** on macOS with this Electron stack. Mobile and non-macOS desktop builds start in **demo fixtures** until platform adapters exist; capability limits (especially **iOS** vs CoreWLAN) are documented in [`docs/FLUTTER.md`](FLUTTER.md).

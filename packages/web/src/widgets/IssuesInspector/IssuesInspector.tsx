@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
 import { Box, Chip, List, ListItemButton, Stack, Typography } from '@mui/material';
 import type { ScanGridRow } from '@/entities/bss';
-import {
-  buildIssueInspectorGroups,
-  rowsWithIssues,
-  scanIssueIdsFromMessageKeys,
-} from '@/features/scan-issues';
-import type { IssueInspectorRow, IssueSeverity, ScanIssueId } from '@/features/scan-issues';
+import { scanIssueIdsFromMessageKeys } from '@/domain';
+import type { IssueSeverity, ScanIssueId } from '@/domain';
+import { buildIssueInspectorGroups, rowsWithIssues } from '@/features/issues';
+import type { IssueInspectorRow } from '@/features/issues';
 import { isSelectedRow } from '@/features/scan-selection';
 import type { MessageKey } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n';

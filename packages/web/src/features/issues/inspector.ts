@@ -1,6 +1,5 @@
-import { scanIssueMessageKey } from './scanIssueKey';
-import { SCAN_ISSUE_IDS, SCAN_ISSUE_SEVERITY } from './types';
-import type { IssueSeverity, ScanIssueId, ScanIssueMessageKey } from './types';
+import { SCAN_ISSUE_IDS, SCAN_ISSUE_SEVERITY, scanIssueMessageKey } from '@/domain';
+import type { IssueSeverity, ScanIssueId, ScanIssueMessageKey } from '@/domain';
 
 /** One BSS as shown in the issues inspector. */
 export type IssueInspectorRow = {

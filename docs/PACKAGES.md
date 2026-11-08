@@ -8,6 +8,7 @@ packages/
   core/       @lv24/wifi-core       pure domain + scan mapping (no DOM/Node/Electron)
   backend/    @lv24/wifi-backend    provider API + macOS/Linux/Windows/demo providers
   cli/        @lv24/wifi-cli        `lv24-wifi` binary (Node 20+, all OS)
+  mcp/        @lv24/wifi-mcp        MCP stdio server for AI agents (Node 20+)
   web/        @lv24/wifi-web        React + MUI renderer (Vite)
   desktop/    @lv24/wifi-desktop    Electron main/preload + provider lifecycle
 native/ScanCore                     universal Swift helper (macOS 13.5+)
@@ -15,7 +16,7 @@ flutter/ + packages/scan_*          Flutter client + Dart packages
 ```
 
 Dependency direction: `core ← backend ← cli`; `core ← web`;
-`backend + core ← desktop`. No reverse imports.
+`backend + core ← desktop`; `backend + core ← mcp`. No reverse imports.
 
 ## Cross-platform scan sources
 
@@ -32,14 +33,15 @@ an explicit badge, the CLI prints the error and exits non-zero.
 ## Build & publish
 
 ```bash
-yarn build:packages            # core → backend → cli
+yarn build:packages            # core → backend → cli → mcp
 cd packages/core && npm publish --access public
 cd packages/backend && npm publish --access public
 cd packages/cli && npm publish --access public
+cd packages/mcp && npm publish --access public
 ```
 
 Each package has `files: ["dist"]`, `license: MIT`, `engines.node >= 20`, and
-CJS output for maximum consumer compatibility. The web/desktop apps are MIT
+CJS output for maximum consumer compatibility (`packages/mcp` is ESM because the MCP SDK is ESM-only). The web/desktop apps are MIT
 code but the desktop UI depends on commercial MUI X Pro (see `CONTRIBUTING.md`).
 
 ## Desktop packaging

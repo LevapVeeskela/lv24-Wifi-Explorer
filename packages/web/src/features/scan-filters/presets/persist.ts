@@ -1,5 +1,5 @@
 import { STORAGE_FILTER_PRESETS } from '@/shared/lib/persistence/keys';
-import { SCAN_ISSUE_IDS, type ScanIssueId } from '@/features/scan-issues';
+import { SCAN_ISSUE_IDS, type ScanIssueId } from '@/domain';
 import { FILTER_DEFAULTS, type ScanWorkbenchFilters } from '../types';
 import type { FilterPreset, FilterPresetsStoreV1, FilterPresetsStorage } from './types';
 

@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'vitest';
-import type { ObservedBss } from '@/domain/bss';
+import type { ObservedBss } from './bss';
 import {
   computeUtilization,
   DEFAULT_BEACON_BYTES,
   FALLBACK_BEACON_INTERVAL_SEC,
   FALLBACK_BEACON_RATE_MBPS,
-} from './computeUtilization';
+} from './utilization';
 
 function mockBss(partial: {
   bssid: string;

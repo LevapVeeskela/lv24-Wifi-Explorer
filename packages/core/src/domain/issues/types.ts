@@ -1,6 +1,7 @@
-import type { BandGhz, ChannelWidthMhz } from '@/domain/channel';
-import type { PhyLetter } from '@/domain/phy';
-import type { SecurityKind } from '@/domain/security';
+import type { BandGhz, ChannelWidthMhz } from '../channel';
+import type { PhyLetter } from '../phy';
+import type { SecurityKind } from '../security';
+
 export type ScanIssueId =
   | 'width40on24'
   | 'overlap24'

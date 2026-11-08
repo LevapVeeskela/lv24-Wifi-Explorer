@@ -1,5 +1,5 @@
 import { Chip } from '@mui/material';
-import type { ScanIssueId } from '@/features/scan-issues';
+import type { ScanIssueId } from '@/domain';
 import { useScanIntl } from '@/shared/i18n';
 import type { IssueFacet as IssueFacetItem } from './buildAutoFilterFacets';
 import { FacetSection } from './FacetSection';

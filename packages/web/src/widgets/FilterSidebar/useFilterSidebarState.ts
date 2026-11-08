@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { ScanGridRow } from '@/entities/bss';
-import type { ScanIssueId } from '@/features/scan-issues';
+import type { ScanIssueId } from '@/domain';
 import {
   FILTER_DEFAULTS,
   type BandFilterValue,

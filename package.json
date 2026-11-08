@@ -14,7 +14,8 @@
     "packages/backend",
     "packages/cli",
     "packages/web",
-    "packages/desktop"
+    "packages/desktop",
+    "packages/mcp"
   ],
   "main": "dist-electron/main.js",
   "scripts": {
@@ -38,8 +39,8 @@
     "build:core": "yarn workspace @lv24/wifi-core build",
     "build:backend": "yarn workspace @lv24/wifi-backend build",
     "build:cli": "yarn workspace @lv24/wifi-cli build",
-    "build:packages": "yarn build:core && yarn build:backend && yarn build:cli",
-    "typecheck:packages": "yarn workspace @lv24/wifi-backend typecheck && yarn workspace @lv24/wifi-cli typecheck",
+    "build:packages": "yarn build:core && yarn build:backend && yarn build:cli && yarn build:mcp",
+    "typecheck:packages": "yarn workspace @lv24/wifi-backend typecheck && yarn workspace @lv24/wifi-cli typecheck && yarn workspace @lv24/wifi-mcp typecheck",
     "cli": "node packages/cli/dist/main.js",
     "build:desktop": "node scripts/build-desktop.mjs",
     "dist:linux": "yarn build && electron-builder --linux AppImage --config electron-builder.yml",
@@ -49,7 +50,9 @@
     "dist:mac:dir": "yarn build:scancore && yarn check:scancore && yarn build && electron-builder --mac dir --config electron-builder.yml",
     "check:boundaries": "node scripts/check-boundaries.mjs",
     "check:public-bundle": "node scripts/check-public-bundle.mjs",
-    "dist:mac:public": "yarn build:scancore && yarn check:scancore && cross-env VITE_MUI_LICENSE_KEY= yarn build && yarn check:public-bundle && electron-builder --mac dmg --config electron-builder.yml -c.mac.notarize=false -c.artifactName=\"LV24 WiFi Explorer-\\${version}-\\${arch}-public.\\${ext}\""
+    "dist:mac:public": "yarn build:scancore && yarn check:scancore && cross-env VITE_MUI_LICENSE_KEY= yarn build && yarn check:public-bundle && electron-builder --mac dmg --config electron-builder.yml -c.mac.notarize=false -c.artifactName=\"LV24 WiFi Explorer-\\${version}-\\${arch}-public.\\${ext}\"",
+    "build:mcp": "yarn workspace @lv24/wifi-mcp build",
+    "mcp": "node packages/mcp/dist/main.js"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

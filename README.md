@@ -52,6 +52,7 @@ one domain model.
 | [`@lv24/wifi-core`](packages/core)       | platform-agnostic domain, IE decode, merge, filters, issues   | npm (MIT)      |
 | [`@lv24/wifi-backend`](packages/backend) | macOS ScanCore / Linux nmcli / Windows netsh / demo providers | npm (MIT)      |
 | [`@lv24/wifi-cli`](packages/cli)         | `lv24-wifi scan` CLI on every OS                              | npm (MIT)      |
+| [`@lv24/wifi-mcp`](packages/mcp)         | MCP server: Wi-Fi scan data for AI agents                     | npm (MIT)      |
 | [`@lv24/wifi-web`](packages/web)         | React + MUI UI                                                | app (MIT code) |
 | [`@lv24/wifi-desktop`](packages/desktop) | Electron host (Windows/Linux/macOS)                           | app (MIT code) |
 | `flutter/` + `packages/scan_*`           | mobile/desktop Flutter client and Dart packages               | pub.dev-ready  |
@@ -62,6 +63,19 @@ packages/backend   ← depends on core
 packages/cli       ← depends on backend
 packages/web       ← depends on core
 packages/desktop   ← depends on backend + core
+```
+
+## MCP for agents
+
+[`@lv24/wifi-mcp`](packages/mcp) exposes live scan data over MCP (stdio):
+`wifi_scan`, `wifi_network`, `wifi_summary`, `wifi_channels` (utilization +
+beacon estimate), `wifi_issues` and `wifi_providers`. It reuses the same
+`@lv24/wifi-backend` + `@lv24/wifi-core` stack as the app, so agents see the
+same networks, channels and issue heuristics. See [`docs/MCP.md`](docs/MCP.md)
+for client configs (Claude Desktop, Cursor, OpenCode) and data-honesty notes.
+
+```bash
+yarn build:mcp && node packages/mcp/dist/main.js
 ```
 
 ## Cross-platform scan sources
@@ -161,7 +175,9 @@ Demo fixtures by default. **Android:** live `WifiManager` via [`flutter/lib/feat
 | `yarn dev:renderer`          | Vite only                                           |
 | `yarn dev:electron`          | Electron only (after Vite up)                       |
 | `yarn build`                 | Packages + main/preload + renderer production build |
-| `yarn build:packages`        | Build `core`, `backend`, `cli`                      |
+| `yarn build:packages`        | Build `core`, `backend`, `cli`, `mcp`               |
+| `yarn build:mcp`             | Build the MCP server                                |
+| `yarn mcp`                   | Run the MCP server (stdio)                          |
 | `yarn cli`                   | Run the cross-platform CLI (`lv24-wifi`)            |
 | `yarn typecheck`             | TypeScript (app + electron)                         |
 | `yarn build:scancore`        | Build `native/ScanCore` Swift helper                |

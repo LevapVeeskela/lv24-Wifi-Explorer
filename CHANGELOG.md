@@ -17,6 +17,16 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Workbench profiles and column profiles can be exported/imported as JSON; coloring rules already supported it.
 - Filter sidebar has locale render tests (ru/en/zh) and the empty-state copy is covered.
 
+### MCP server
+
+- New `@lv24/wifi-mcp` package: stdio MCP server with `wifi_providers`,
+  `wifi_scan`, `wifi_network`, `wifi_summary`, `wifi_channels` and `wifi_issues`.
+- Reuses `@lv24/wifi-backend` providers and the shared domain; issue heuristics
+  and channel utilization moved into `@lv24/wifi-core` so the app and agents run
+  the same logic.
+- 30 s snapshot cache, serialized scans, compact field selection, optional IEEE
+  MA-L vendor lookup, demo provider for CI. Docs: `docs/MCP.md`.
+
 ### Packaging
 
 - All publishable packages are versioned `1.0.0` (matching the app).

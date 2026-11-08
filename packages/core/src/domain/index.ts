@@ -102,6 +102,33 @@ export {
   octetsFromSsidFields,
 } from './identity';
 
+export type {
+  EvaluateIssuesOptions,
+  EvaluateScanIssuesResult,
+  IssueFlag,
+  IssueSeverity,
+  ScanIssueBss,
+  ScanIssueContext,
+  ScanIssueId,
+  ScanIssueMessageKey,
+  ScanIssueRow,
+} from './issues';
+export {
+  NON_OVERLAPPING_24_CHANNELS,
+  SCAN_ISSUE_IDS,
+  SCAN_ISSUE_SEVERITY,
+  SCAN_ISSUE_THRESHOLDS,
+  buildScanContext,
+  evaluateIssues,
+  evaluateScanIssues,
+  inferDfsChannel,
+  normalizeBssidKey,
+  scanIssueBssFromObserved,
+  scanIssueIdFromMessageKey,
+  scanIssueIdsFromMessageKeys,
+  scanIssueMessageKey,
+} from './issues';
+
 export { MERGE_POLICY, mergeObservedBssRows, mergeSnapshots, presenceFromMisses } from './merge';
 
 export type { OccupancyBar, OccupancyKind } from './occupancy';
@@ -160,6 +187,21 @@ export {
   pruneRssiHistory,
   stitchRssiHistory,
 } from './timeseries';
+
+export type {
+  BeaconOverheadEstimate,
+  ChannelUtilization,
+  ComputeUtilizationOptions,
+  UtilizationReport,
+  UtilizationTotals,
+} from './utilization';
+export {
+  DEFAULT_BEACON_BYTES,
+  FALLBACK_BEACON_INTERVAL_SEC,
+  FALLBACK_BEACON_RATE_MBPS,
+  computeUtilization,
+  primaryChannelsOverlap,
+} from './utilization';
 
 export type { OuiRegistry, OuiRegistryRecord, VendorMatch, VendorView } from './vendor';
 export {

@@ -1,4 +1,4 @@
-import type { BandGhz } from '@/domain/channel';
+import type { BandGhz } from '../channel';
 
 /** Common 5 GHz DFS primary channels (weather radar bands). */
 const DFS_5GHZ_CHANNELS = new Set([

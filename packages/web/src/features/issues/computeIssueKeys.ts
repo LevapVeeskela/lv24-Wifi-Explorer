@@ -1,11 +1,7 @@
 import type { ObservedBss } from '@/domain/bss';
 import type { MessageKey } from '@/shared/i18n';
-import {
-  evaluateIssues,
-  evaluateScanIssues,
-  scanIssueBssFromObserved,
-} from '@/features/scan-issues';
-import type { EvaluateIssuesOptions } from '@/features/scan-issues';
+import { evaluateIssues, evaluateScanIssues, scanIssueBssFromObserved } from '@/domain';
+import type { EvaluateIssuesOptions } from '@/domain';
 
 export function computeIssueKeys(
   bss: ObservedBss,

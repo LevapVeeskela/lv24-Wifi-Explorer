@@ -1,0 +1,45 @@
+{
+  "name": "@lv24/wifi-mcp",
+  "version": "1.0.0",
+  "description": "MCP server exposing live Wi-Fi scan data (BSS, channels, issues) to AI agents.",
+  "homepage": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer#readme",
+  "bugs": {
+    "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues"
+  },
+  "license": "MIT",
+  "author": "LV24",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer.git",
+    "directory": "packages/mcp"
+  },
+  "bin": {
+    "lv24-wifi-mcp": "./dist/main.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@lv24/wifi-backend": "1.0.0",
+    "@lv24/wifi-core": "1.0.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^3.25.76"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

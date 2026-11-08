@@ -6,7 +6,7 @@ import { pinnedColorFor } from '@/features/annotations';
 import { resolveColoringColorFromStore, type ColoringRulesConfig } from '@/features/coloring-rules';
 import { computeIssueKeysForScan } from '@/features/issues';
 import { resolveCompareRows, selectedRowIdsFromModel } from '@/features/bss-compare';
-import { scanIssueIdsFromMessageKeys } from '@/features/scan-issues';
+import { scanIssueIdsFromMessageKeys } from '@/domain';
 import {
   applyAllFilters,
   hasActiveFilters,
