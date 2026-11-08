@@ -1,0 +1,173 @@
+# Release / distribution
+
+Production packaging for LV24 WiFi Explorer (Electron desktop) plus the
+Flutter/Dart side artifacts. Nothing here spends money: CI stays manual-only
+and releases are manual uploads.
+
+Canonical version lives in the root `package.json` (`version`). The Flutter app
+has its own `flutter/pubspec.yaml` version (`1.0.0+1`).
+
+---
+
+## 0. Preconditions (one-time per machine)
+
+> No Apple Developer account yet? Build a signed local artifact with
+> `yarn dist:mac:dir` and distribute it as a **pre-release**. Gatekeeper will
+> require the user to allow the app manually; public production distribution
+> must wait for notarization credentials.
+
+| Item            | Requirement                                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------------- |
+| Node / Yarn     | Node ≥ 20, Yarn 1.22.22 (`packageManager`)                                                        |
+| macOS toolchain | Xcode **or** Command Line Tools; `lipo`, `codesign`, `xcrun`, `notarytool`                        |
+| ScanCore        | universal binary ([`native/ScanCore`](../native/ScanCore))                                        |
+| Signing         | `Developer ID Application: … (TEAMID)` in the login keychain, or `CSC_LINK` + `CSC_KEY_PASSWORD`  |
+| Notarization    | `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID` in the environment (never in the repo) |
+| MUI X Pro       | `VITE_MUI_LICENSE_KEY` in `.env.local` only (needed for the watermark-free grid)                  |
+| Windows         | Windows host (or a runner with wine) for `dist:win` — `signAndEditExecutable` needs rcedit        |
+
+Verify identities:
+
+```bash
+security find-identity -v -p codesigning
+```
+
+---
+
+## 1. Version bump
+
+1. Root `package.json` → `"version": "X.Y.Z"`.
+2. `flutter/pubspec.yaml` → `version: X.Y.Z+N` (build number increments).
+3. Add a `## [X.Y.Z] — YYYY-MM-DD` section to [`CHANGELOG.md`](../CHANGELOG.md).
+4. Commit: `[Wifi](release) X.Y.Z`.
+
+---
+
+## 2. Build all packages and artifacts
+
+```bash
+yarn install --frozen-lockfile
+yarn format:check && yarn typecheck && yarn lint && yarn test
+yarn build          # packages + desktop main/preload + renderer
+yarn smoke:dist     # CSP + bundles + preload isolation
+```
+
+ScanCore must be universal (`arm64` + `x86_64`) before packaging:
+
+```bash
+yarn build:scancore     # Swift helper, ad-hoc/Developer ID signed
+yarn check:scancore     # fails unless lipo reports arm64 AND x86_64
+```
+
+If `check:scancore` fails, the machine is on the host-arch `swiftc` fallback:
+accept the Xcode license (`sudo xcodebuild -license accept`) or build both
+architectures and `lipo -create` them. `dist:mac` runs this preflight
+automatically — a broken helper cannot ship silently.
+
+Flutter (optional per release): `dart pub get` at the repo root, then
+`cd flutter && flutter build macos|apk|ios`.
+
+---
+
+## 3. Package (macOS)
+
+Local packaging smoke (no DMG, fast, no notarization):
+
+```bash
+yarn dist:mac:dir
+open release/mac*/LV24\ WiFi\ Explorer.app   # Gatekeeper check below
+```
+
+Distributable:
+
+```bash
+export APPLE_ID="release@example.com"          # Apple ID, not a secret
+export APPLE_APP_SPECIFIC_PASSWORD="xxxx-xxxx-xxxx-xxxx"
+export APPLE_TEAM_ID="TEAMID1234"
+yarn dist:mac                                  # DMG for x64 + arm64
+```
+
+- `mac.notarize: true` in `electron-builder.yml`; credentials come only from
+  the env vars above. Without them electron-builder logs
+  `skipped macOS notarization` and the build is simply unsigned/unnotarized.
+- Hardened runtime stays on; the app and the `ScanCore` helper are signed with
+  their own entitlements (`entitlements.mac.plist`,
+  `native/ScanCore/ScanCore.entitlements`).
+- Apple may need a few minutes to publish the ticket; `xcrun stapler validate`
+  on the DMG catches a missing ticket.
+- Disable notarization for one run with `... electron-builder --mac dmg -c.mac.notarize=false`.
+
+Other targets:
+
+```bash
+yarn dist:win     # NSIS x64, run on Windows; unsigned works, no cert = no signature
+yarn dist:linux   # AppImage x64 + arm64
+```
+
+---
+
+## 4. Verify the artifact (Gatekeeper + smoke)
+
+```bash
+APP="release/mac-arm64/LV24 WiFi Explorer.app"
+
+# 1. Signature, hardened runtime, entitlements
+codesign --verify --deep --strict --verbose=2 "$APP"
+codesign -dv --entitlements :- "$APP" 2>&1 | head -30
+spctl -a -vvv -t exec "$APP"           # expect "accepted, source=Notarized Developer ID"
+
+# 2. Helper signature and universal arch
+lipo -info "$APP/Contents/Resources/ScanCore.app/Contents/MacOS/ScanCore"
+codesign --verify --deep --strict --verbose=2 "$APP/Contents/Resources/ScanCore.app"
+
+# 3. Notarization ticket (DMG)
+xcrun stapler validate release/*.dmg
+
+# 4. Real launch on a clean macOS 13.5+ account/machine
+open "$APP"
+```
+
+Manual acceptance checks on the packaged app:
+
+- [ ] Live scan works after granting **Location** to `ScanCore` (no demo badge).
+- [ ] Deny Location → demo fixtures + visible badge, no crash.
+- [ ] Snapshot open/save (`.lv24scan`), CSV export, print.
+- [ ] Grid has no MUI watermark (license key baked into the renderer build).
+- [ ] Quit/relaunch is clean; app bundle is not in a quarantine-bypass path.
+
+Windows/Linux artifacts: install, launch, `yarn cli providers`, verify live scan
+or documented demo fallback on real hardware.
+
+---
+
+## 5. CI
+
+`.github/workflows/ci.yml` is **manual-only** (`workflow_dispatch`) on a
+standard GitHub-hosted runner: install, typecheck, lint, format check, tests,
+CLI smoke, `yarn build`. It does not publish artifacts, sign, or notarize —
+releases are produced on a trusted local machine. Do not add paid runners,
+larger runners, or automatic push/PR triggers (zero-spend policy).
+
+---
+
+## 6. Publish
+
+1. Tag: `git tag vX.Y.Z && git push origin vX.Y.Z` (no CI cost — the workflow
+   is manual and uploads nothing).
+2. Attach `release/*.dmg` (and `*.exe`/`*.AppImage`) to the GitHub Release,
+   with the `CHANGELOG.md` section as notes.
+3. Note the absence of an auto-updater: users re-download manually.
+4. Record a `brain handoff` with the shipped version and hashes.
+
+---
+
+## Troubleshooting
+
+| Symptom                                              | Fix                                                                                       |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `[check-scancore] ScanCore is not universal`         | Xcode license not accepted → universal `swift build`; see §2                              |
+| `skipped macOS notarization`                         | env vars missing (expected for unsigned builds)                                           |
+| Notarization `invalid` — unsigned                    | set a Developer ID identity (`CSC_LINK` or keychain)                                      |
+| App launches with demo badge                         | Location denied for `ScanCore`, or helper not signed/embedded — see `docs/PERMISSIONS.md` |
+| `spctl` rejects                                      | ticket not stapled yet, or signature broken — re-run §3/§4                                |
+| Windows build fails on macOS with rcedit/wine errors | build `dist:win` on Windows (`signAndEditExecutable: true` needs rcedit)                  |

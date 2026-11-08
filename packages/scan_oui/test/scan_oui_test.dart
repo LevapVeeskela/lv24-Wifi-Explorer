@@ -29,14 +29,14 @@ void main() {
           'entryCount': 1,
         },
         'byPrefix': {
-          'aa:bb:cc': 'Example Corp',
+          '00:11:22': 'Example Corp',
         },
       });
     });
 
     test('returns vendor for universal MAC', () {
-      final result = registry.lookup('AA-BB-CC-11-22-33');
-      expect(result.oui, 'aa:bb:cc');
+      final result = registry.lookup('00-11-22-11-22-33');
+      expect(result.oui, '00:11:22');
       expect(result.vendor, 'Example Corp');
       expect(result.source, OuiSource.curatedFallback);
       expect(result.randomized, isFalse);
@@ -51,8 +51,8 @@ void main() {
     });
 
     test('unknown prefix yields unknown source', () {
-      final result = registry.lookup('ff:ff:ff:00:00:01');
-      expect(result.oui, 'ff:ff:ff');
+      final result = registry.lookup('ac:de:48:00:00:01');
+      expect(result.oui, 'ac:de:48');
       expect(result.vendor, isNull);
       expect(result.randomized, isFalse);
     });

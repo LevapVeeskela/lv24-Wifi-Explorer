@@ -77,11 +77,11 @@ Do **not** turn off the sandbox or add Hardened Runtime exceptions just to debug
 
 ## Signing blockers
 
-| Situation | What you get |
-|-----------|----------------|
-| Xcode license not accepted | `flutter` / `xcodebuild` / `/usr/bin/git` exit 69 |
-| No Apple Developer ID | macOS/iOS debug may be ad-hoc; TCC treats a new signature as a new app; BSSID often stays redacted → demo |
-| ScanCore missing / unsigned | Demo fixtures (`source: fixtures`) — expected |
+| Situation                   | What you get                                                                                              |
+| --------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Xcode license not accepted  | `flutter` / `xcodebuild` / `/usr/bin/git` exit 69                                                         |
+| No Apple Developer ID       | macOS/iOS debug may be ad-hoc; TCC treats a new signature as a new app; BSSID often stays redacted → demo |
+| ScanCore missing / unsigned | Demo fixtures (`source: fixtures`) — expected                                                             |
 
 ## Layout
 

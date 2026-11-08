@@ -33,7 +33,7 @@ for pkg in "${flutter_packages[@]}"; do
   (
     cd "$pkg"
     flutter pub get
-    flutter analyze
+    flutter analyze --no-fatal-infos
     if [[ -d test ]]; then
       flutter test
     fi

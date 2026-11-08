@@ -1,18 +1,18 @@
 # lv24-Wifi-Explorer — план реализации
 
-Анализ завершён. Исходники домена уже лежат в `src/domain`. Это **оригинальное** приложение: clean-room, без копирования Wi‑Fi Explorer.app / nibs / VendorDatabase / `.wifiexplorer`.
+Анализ завершён. Исходники домена лежат в `packages/core/src/domain`. Это **оригинальное** приложение: clean-room, без копирования Wi‑Fi Explorer.app / nibs / VendorDatabase / `.wifiexplorer`.
 
 ## Источник правды
 
-| Слой | Источник |
-|---|---|
-| Типы данных, derived, unsupported | `src/domain/**` |
-| Продукт v1 | `docs/research/product-spec.md` |
-| UI | `docs/research/ui-spec.md` |
-| Возможности | `docs/research/capability-matrix.md` |
-| ScanCore | `docs/research/scancore-architecture.md` |
-| MUI / тема | `docs/research/mui-playbook.md` |
-| Electron-донор | `docs/research/electron-donor.md` |
+| Слой                              | Источник                                 |
+| --------------------------------- | ---------------------------------------- |
+| Типы данных, derived, unsupported | `packages/core/src/domain/**`            |
+| Продукт v1                        | `docs/research/product-spec.md`          |
+| UI                                | `docs/research/ui-spec.md`               |
+| Возможности                       | `docs/research/capability-matrix.md`     |
+| ScanCore                          | `docs/research/scancore-architecture.md` |
+| MUI / тема                        | `docs/research/mui-playbook.md`          |
+| Electron-донор                    | `docs/research/electron-donor.md`        |
 
 ## Разрешённые конфликты спеки
 
@@ -26,7 +26,7 @@
 8. **MUI:** Material 9.2.0; paid X = Data Grid Pro + `@mui/x-license` **8.11.0 only**. Charts/date-pickers/tree — Community. Не bump paid X до 9.
 9. **Лицензия MUI:** `VITE_MUI_LICENSE_KEY` из city `lv24/main/frontend/.env.local` → локальный `.env.local` (gitignore). Не печатать и не коммитить ключ.
 10. **GitHub:** не создавать remote, пока нет рабочего каркаса. `git init` может упасть из‑за Xcode license.
-11. **Off-limits:** `/Applications/WiFi Explorer.app`, DMG, `~/Library/Application Support/WiFi Explorer`, prefs, decompile.
+11. **Reference analysis:** static REA inspection of the shipped app is allowed for capability/UI inventory; never copy code, nibs, assets, strings, vendor DB, or proprietary formats.
 
 ## Стек
 
@@ -40,12 +40,12 @@
 
 ## Карта файлов (не пересекаться)
 
-| Владелец | Пути |
-|---|---|
-| Scaffold | `package.json`, lockfile, `electron/`, `vite.config.*`, корневые `tsconfig*`, `index.html`, `src/main.tsx`, `src/app/`, entitlements, `electron-builder*`, `.gitignore`, `.env.example`, `README.md` |
-| ScanCore | `native/ScanCore/**` |
-| Mappers | `src/scan/**` (+ тесты). Доменные **типы** не ломать |
-| OUI | `data/oui/**`, `src/vendor/**` |
-| UI | `src/pages/**`, `src/widgets/**`, `src/features/**`, `src/entities/**`, `src/shared/ui/**` |
+| Владелец | Пути                                                                                                                                                                                                                                                   |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Scaffold | `package.json`, lockfile, `packages/desktop/src`, `vite.config.*`, корневые `tsconfig*`, `packages/web/index.html`, `packages/web/src/main.tsx`, `packages/web/src/app/`, entitlements, `electron-builder*`, `.gitignore`, `.env.example`, `README.md` |
+| ScanCore | `native/ScanCore/**`, `packages/backend/**`                                                                                                                                                                                                            |
+| Mappers  | `packages/core/src/scan/**` (+ тесты). Доменные **типы** не ломать                                                                                                                                                                                     |
+| OUI      | `data/oui/**`, `src/vendor/**`                                                                                                                                                                                                                         |
+| UI       | `src/pages/**`, `src/widgets/**`, `src/features/**`, `src/entities/**`, `src/shared/ui/**`                                                                                                                                                             |
 
-Не переписывать `src/domain/*.ts` без согласования. Добавлять реализации рядом.
+Не переписывать `packages/core/src/domain/*.ts` без согласования. Добавлять реализации рядом.

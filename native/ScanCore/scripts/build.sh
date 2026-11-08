@@ -33,12 +33,21 @@ try_swift_build() {
   if ! swift --version >/dev/null 2>&1; then
     return 1
   fi
-  log "swift build -c release"
+  log "swift build -c release (arm64 + x86_64 universal when supported)"
+  if swift build -c release --package-path "$ROOT" --product ScanCore --arch arm64 --arch x86_64; then
+    local built
+    built="$(swift build -c release --package-path "$ROOT" --arch arm64 --arch x86_64 --show-bin-path)/ScanCore"
+    if [[ -x "$built" ]]; then
+      BIN="$built"
+      return 0
+    fi
+  fi
+  log "universal build unavailable; falling back to host architecture"
   swift build -c release --package-path "$ROOT" --product ScanCore
-  local built
-  built="$(swift build -c release --package-path "$ROOT" --show-bin-path)/ScanCore"
-  if [[ -x "$built" ]]; then
-    BIN="$built"
+  local hostBuilt
+  hostBuilt="$(swift build -c release --package-path "$ROOT" --show-bin-path)/ScanCore"
+  if [[ -x "$hostBuilt" ]]; then
+    BIN="$hostBuilt"
     return 0
   fi
   return 1
@@ -86,12 +95,19 @@ bundle_app() {
   fi
   cp "$BIN" "$MACOS/ScanCore"
   chmod +x "$MACOS/ScanCore"
-  local identity="${CODESIGN_IDENTITY:--}"
+  local identity="${CODESIGN_IDENTITY:-}"
+  if [[ -z "$identity" ]] && command -v security >/dev/null 2>&1; then
+    # Prefer a stable Apple Development / Developer ID identity: ad-hoc
+    # signatures cannot be granted Location Services (CoreWLAN redacts SSID).
+    identity="$(security find-identity -v -p codesigning 2>/dev/null | awk -F'"' 'NR==1 { print $2 }')"
+  fi
+  identity="${identity:--}"
   if command -v codesign >/dev/null 2>&1; then
-    codesign --force --sign "$identity" \
+    codesign --force --deep --options runtime --sign "$identity" \
       --entitlements "$ROOT/ScanCore.entitlements" \
       --identifier com.lv24.wifi-explorer.scancore \
       "$APP" || log "codesign skipped/failed (ok for unsigned fixtures path)"
+    log "signed with: $identity"
   fi
   log "app $APP"
 }
@@ -104,4 +120,10 @@ if ! try_swift_build; then
 fi
 
 bundle_app
+if command -v lipo >/dev/null 2>&1; then
+  log "architectures: $(lipo -info "$MACOS/ScanCore" 2>/dev/null || echo unknown)"
+  if ! lipo -info "$MACOS/ScanCore" 2>/dev/null | grep -q 'x86_64'; then
+    log "WARNING: host-arch-only ScanCore; distribution requires a universal binary"
+  fi
+fi
 log "ok"

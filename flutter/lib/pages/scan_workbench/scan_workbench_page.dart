@@ -11,8 +11,13 @@ import '../../features/scan_columns/scan_columns.dart';
 import '../../features/snapshot/snapshot.dart';
 import '../../features/bss_compare/bss_compare.dart';
 import '../../features/scan_filters/apply_scan_filters.dart';
+import '../../features/scan_filters/filter_presets/filter_presets.dart';
 import '../../features/scan_filters/scan_workbench_filters.dart';
+import '../../features/scan_organize/group_scan_rows.dart';
+import '../../features/scan_organize/organize_by.dart';
+import '../../features/scan_organize/organize_persist.dart';
 import '../../features/scan_search/scan_search.dart';
+import '../../features/scan_sort/scan_sort.dart';
 import '../../features/scan_filters/workbench_filters_from_scan_settings.dart';
 import '../../features/scan_settings/persist.dart';
 import '../../features/scan_shortcuts/scan_shortcuts.dart';
@@ -59,6 +64,11 @@ class _ScanWorkbenchPageState extends State<ScanWorkbenchPage> {
   String? _snapshotSelectedKey;
   final ScanWorkbenchCompareSelection _compareSelection =
       ScanWorkbenchCompareSelection();
+  final OrganizePersist _organizePersist = const OrganizePersist();
+  final FilterPresetsStore _presetsStore = const FilterPresetsStore();
+  ScanSortState _sort = ScanSortState.defaults;
+  OrganizeByValue _organizeBy = OrganizeByValue.none;
+  FilterPresetsStoreV1 _presets = FilterPresetsStoreV1.empty;
 
   @override
   void initState() {
@@ -68,6 +78,41 @@ class _ScanWorkbenchPageState extends State<ScanWorkbenchPage> {
     _session.addListener(_onSession);
     _compareSelection.addListener(_onCompareSelection);
     _annotations.addListener(_onAnnotationsChanged);
+    unawaited(_hydrateWorkbenchPrefs());
+  }
+
+  Future<void> _hydrateWorkbenchPrefs() async {
+    final organizeBy = await _organizePersist.load();
+    final presets = await _presetsStore.load();
+    if (!mounted) return;
+    setState(() {
+      _organizeBy = organizeBy;
+      _presets = presets;
+    });
+  }
+
+  void _setOrganizeBy(OrganizeByValue value) {
+    if (value == _organizeBy) return;
+    setState(() => _organizeBy = value);
+    unawaited(_organizePersist.save(value));
+  }
+
+  void _onSortChange(ScanSortField field) {
+    setState(() => _sort = _sort.toggle(field));
+  }
+
+  Future<void> _savePreset(String name) async {
+    final next = createFilterPreset(_presets, name, _filters);
+    if (identical(next, _presets)) return;
+    setState(() => _presets = next);
+    await _presetsStore.save(next);
+  }
+
+  Future<void> _deletePreset(String id) async {
+    final next = deleteFilterPreset(_presets, id);
+    if (identical(next, _presets)) return;
+    setState(() => _presets = next);
+    await _presetsStore.save(next);
   }
 
   @override
@@ -259,6 +304,56 @@ class _ScanWorkbenchPageState extends State<ScanWorkbenchPage> {
   SignalDisplayUnit get _signalUnit =>
       _scanSettingsListen?.settings.signalUnit ?? SignalDisplayUnit.percent;
 
+  Widget _workbenchToolbar(AppLocalizations l10n) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: scheme.outline)),
+      ),
+      child: Row(
+        children: [
+          Text(l10n.organizeBy, style: theme.textTheme.bodySmall),
+          const SizedBox(width: 8),
+          DropdownButtonHideUnderline(
+            child: DropdownButton<OrganizeByValue>(
+              value: _organizeBy,
+              isDense: true,
+              style: theme.textTheme.bodySmall,
+              onChanged: (value) {
+                if (value != null) _setOrganizeBy(value);
+              },
+              items: [
+                for (final value in OrganizeByValue.values)
+                  DropdownMenuItem(
+                    value: value,
+                    child: Text(_organizeLabel(l10n, value)),
+                  ),
+              ],
+            ),
+          ),
+          const Spacer(),
+          FilterPresetsMenu(
+            presets: _presets.presets,
+            onApply: (preset) => _onFiltersChange(preset.filters),
+            onDelete: (id) => unawaited(_deletePreset(id)),
+            onSave: (name) => unawaited(_savePreset(name)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _organizeLabel(AppLocalizations l10n, OrganizeByValue value) {
+    return switch (value) {
+      OrganizeByValue.none => l10n.organizeNone,
+      OrganizeByValue.ssid => l10n.organizeSsid,
+      OrganizeByValue.ap => l10n.organizeAp,
+      OrganizeByValue.vendor => l10n.organizeVendor,
+    };
+  }
+
   Future<void> _printVisible() async {
     final l10n = AppLocalizations.of(context);
     await printVisibleTable(
@@ -316,9 +411,24 @@ class _ScanWorkbenchPageState extends State<ScanWorkbenchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final wide = MediaQuery.sizeOf(context).width >= 900;
     final visibleRows = _filteredRows();
-    final selectedVisible = _selectedVisible(visibleRows);
+    final sortedRows = sortScanRows(visibleRows, _sort);
+    final groups = _organizeBy == OrganizeByValue.none
+        ? null
+        : groupScanRows(
+            sortedRows,
+            _organizeBy,
+            labelFor: (row) => organizeGroupLabel(
+              row,
+              _organizeBy,
+              hiddenSsid: l10n.hiddenSsid,
+              redacted: l10n.redacted,
+              unknown: l10n.emDash,
+            ),
+          );
+    final selectedVisible = _selectedVisible(sortedRows);
     final compareNetworks = resolveCompareNetworks(
       _activeRows,
       _compareSelection.keysInOrder,
@@ -327,15 +437,25 @@ class _ScanWorkbenchPageState extends State<ScanWorkbenchPage> {
     final compareKeys = _compareSelection.keysInOrder.toSet();
     final table = ColoredBox(
       color: Theme.of(context).colorScheme.surface,
-      child: ScanDataTable(
-        rows: visibleRows,
-        selected: selectedVisible,
-        connectedBssid: _session.connectedBssid,
-        columnVisibility: ScanColumnsScope.visibilityOf(context),
-        pinnedColors: _annotations.pinnedColors,
-        compareRowKeys: compareKeys,
-        signalUnit: _signalUnit,
-        onSelect: _selectRow,
+      child: Column(
+        children: [
+          _workbenchToolbar(l10n),
+          Expanded(
+            child: ScanDataTable(
+              rows: sortedRows,
+              sort: _sort,
+              onSort: _onSortChange,
+              groups: groups,
+              selected: selectedVisible,
+              connectedBssid: _session.connectedBssid,
+              columnVisibility: ScanColumnsScope.visibilityOf(context),
+              pinnedColors: _annotations.pinnedColors,
+              compareRowKeys: compareKeys,
+              signalUnit: _signalUnit,
+              onSelect: _selectRow,
+            ),
+          ),
+        ],
       ),
     );
     final details = ColoredBox(
@@ -358,105 +478,104 @@ class _ScanWorkbenchPageState extends State<ScanWorkbenchPage> {
 
     return AnnotationsScope(
       controller: _annotations,
-      child: PersistedScanColumns(
-        child: PersistedColumnRules(
-          child: ScanWorkbenchShortcuts(
-            onToggleScan: _toggleScan,
-            onDetailsTabIndex: (index) =>
-                setState(() => _detailsTab = ScanDetailsTab.values[index]),
-            child: Scaffold(
-              appBar: ScanAppBar(
-                running: _session.isRunning,
-                demo: _snapshotDemo,
-                filters: _filters,
-                onFiltersChange: _onFiltersChange,
-                onStart: () {
-                  setState(() => _clearSnapshotOverride());
-                  unawaited(_startScan());
-                },
-                onStop: _session.stop,
-                onOpenSnapshot: _openSnapshot,
-                onSaveSnapshot: _saveSnapshot,
-                onExportCsv: _exportCsv,
-                onPrintVisible: printExportSupported ? _printVisible : null,
-                exportSelectedEnabled: _selectedExportIds().isNotEmpty,
-              ),
-              body: Column(
-                children: [
-                  LocationOnboarding(
-                    location: _activeLocation,
+      child: PersistedColumnRules(
+        child: ScanWorkbenchShortcuts(
+          onToggleScan: _toggleScan,
+          onDetailsTabIndex: (index) =>
+              setState(() => _detailsTab = ScanDetailsTab.values[index]),
+          child: Scaffold(
+            appBar: ScanAppBar(
+              running: _session.isRunning,
+              demo: _snapshotDemo,
+              filters: _filters,
+              onFiltersChange: _onFiltersChange,
+              onStart: () {
+                setState(() => _clearSnapshotOverride());
+                unawaited(_startScan());
+              },
+              onStop: _session.stop,
+              onOpenSnapshot: _openSnapshot,
+              onSaveSnapshot: _saveSnapshot,
+              onExportCsv: _exportCsv,
+              onPrintVisible: printExportSupported ? _printVisible : null,
+              exportSelectedEnabled: _selectedExportIds().isNotEmpty,
+            ),
+            body: Column(
+              children: [
+                LocationOnboarding(
+                  location: _activeLocation,
+                  viewingSnapshot: _snapshotRows != null,
+                  onContinue: () {
+                    setState(() => _clearSnapshotOverride());
+                    unawaited(_startScan());
+                  },
+                  onRetry: () {
+                    setState(() => _clearSnapshotOverride());
+                    unawaited(_startScan());
+                  },
+                ),
+                LocationBanner(
+                  location: _activeLocation,
+                  degradation: scanDegradationForWorkbench(
+                    session: _session,
                     viewingSnapshot: _snapshotRows != null,
-                    onContinue: () {
-                      setState(() => _clearSnapshotOverride());
-                      unawaited(_startScan());
-                    },
-                    onRetry: () {
-                      setState(() => _clearSnapshotOverride());
-                      unawaited(_startScan());
-                    },
                   ),
-                  LocationBanner(
-                    location: _activeLocation,
-                    degradation: scanDegradationForWorkbench(
-                      session: _session,
-                      viewingSnapshot: _snapshotRows != null,
-                    ),
-                    onRetry: () {
-                      setState(() => _clearSnapshotOverride());
-                      unawaited(_startScan());
-                    },
+                  onRetry: () {
+                    setState(() => _clearSnapshotOverride());
+                    unawaited(_startScan());
+                  },
+                ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      FilterSidebar(
+                        rows: _activeRows,
+                        filters: _filters,
+                        onFiltersChange: _onFiltersChange,
+                      ),
+                      Expanded(
+                        child: wide
+                            ? Row(
+                                children: [
+                                  Expanded(flex: 3, child: table),
+                                  VerticalDivider(
+                                    width: 1,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .outline,
+                                  ),
+                                  Expanded(flex: 2, child: details),
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  Expanded(flex: 3, child: table),
+                                  Divider(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .outline,
+                                  ),
+                                  Expanded(flex: 2, child: details),
+                                ],
+                              ),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        FilterSidebar(
-                          rows: _activeRows,
-                          filters: _filters,
-                          onFiltersChange: _onFiltersChange,
-                        ),
-                        Expanded(
-                          child: wide
-                              ? Row(
-                                  children: [
-                                    Expanded(flex: 3, child: table),
-                                    VerticalDivider(
-                                      width: 1,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .outline,
-                                    ),
-                                    Expanded(flex: 2, child: details),
-                                  ],
-                                )
-                              : Column(
-                                  children: [
-                                    Expanded(flex: 3, child: table),
-                                    Divider(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .outline,
-                                    ),
-                                    Expanded(flex: 2, child: details),
-                                  ],
-                                ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ScanStatusBar(
-                    networkCount: visibleRows.length,
-                    selectedCount: showCompare
-                        ? compareNetworks.length
-                        : (selectedVisible == null ? 0 : 1),
-                    running: _session.isRunning,
-                    demo: _snapshotDemo,
-                    scanCoreError: _session.scanCoreError,
-                    location: _activeLocation,
-                    lastSnapshotAt: _activeCapturedAt,
-                    latestRowLastSeenAt: _activeLatestRowLastSeenAt,
-                  ),
-                ],
-              ),
+                ),
+                ScanStatusBar(
+                  networkCount: _activeRows.length,
+                  displayedCount: visibleRows.length,
+                  selectedCount: showCompare
+                      ? compareNetworks.length
+                      : (selectedVisible == null ? 0 : 1),
+                  running: _session.isRunning,
+                  demo: _snapshotDemo,
+                  scanCoreError: _session.scanCoreError,
+                  location: _activeLocation,
+                  lastSnapshotAt: _activeCapturedAt,
+                  latestRowLastSeenAt: _activeLatestRowLastSeenAt,
+                ),
+              ],
             ),
           ),
         ),

@@ -13,6 +13,7 @@ class ScanStatusBar extends StatefulWidget {
   const ScanStatusBar({
     super.key,
     required this.networkCount,
+    this.displayedCount,
     required this.selectedCount,
     required this.demo,
     required this.location,
@@ -23,13 +24,18 @@ class ScanStatusBar extends StatefulWidget {
   });
 
   final int networkCount;
+
+  /// Rows visible after filters/sort; `null` hides the displayed count.
+  final int? displayedCount;
   final int selectedCount;
   final bool demo;
   final bool scanCoreError;
+
   /// Kept for call-site compatibility; scan line uses [ScanCoreState], not running.
   final bool running;
   final LocationAuthorization location;
   final DateTime? lastSnapshotAt;
+
   /// Fallback when [lastSnapshotAt] is null (Electron `baseRows` max `lastSeenAt`).
   final DateTime? latestRowLastSeenAt;
 
@@ -93,11 +99,17 @@ class _ScanStatusBarState extends State<ScanStatusBar> {
             Expanded(
               child: Semantics(
                 liveRegion: true,
-                child: Row(
+                child: Wrap(
+                  spacing: 16,
                   children: [
                     StatusBarCaption(l10n.scanStatusFound(widget.networkCount)),
-                    const SizedBox(width: 16),
-                    StatusBarCaption(l10n.scanStatusSelected(widget.selectedCount)),
+                    if (widget.displayedCount != null)
+                      StatusBarCaption(
+                        l10n.scanStatusDisplayed(widget.displayedCount!),
+                      ),
+                    StatusBarCaption(
+                      l10n.scanStatusSelected(widget.selectedCount),
+                    ),
                   ],
                 ),
               ),
@@ -111,15 +123,21 @@ class _ScanStatusBarState extends State<ScanStatusBar> {
                     const SizedBox(width: 8),
                   ],
                   Flexible(
-                    child: StatusBarCaption(l10n.scanStatusScanCore(scanCoreStateLabel)),
+                    child: StatusBarCaption(
+                      l10n.scanStatusScanCore(scanCoreStateLabel),
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Flexible(
-                    child: StatusBarCaption(l10n.scanStatusLocation(locationLabel)),
+                    child: StatusBarCaption(
+                      l10n.scanStatusLocation(locationLabel),
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Flexible(
-                    child: StatusBarCaption(l10n.scanStatusLastScan(lastRelative)),
+                    child: StatusBarCaption(
+                      l10n.scanStatusLastScan(lastRelative),
+                    ),
                   ),
                 ],
               ),

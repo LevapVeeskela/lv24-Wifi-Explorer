@@ -54,8 +54,7 @@ Map<ShortcutActivator, Intent> buildScanWorkbenchShortcutBindings() {
 
   for (var i = 0; i < 4; i++) {
     final intent = SetScanDetailsTabShortcutIntent(i);
-    bindings[LogicalKeySet(_digitKeys[i])] = intent;
-    bindings[LogicalKeySet(_numpadKeys[i])] = intent;
+    // Digits without a modifier belong to text fields (search, notes).
     if (scanShortcutUseDesktopTabDigits) {
       bindings[LogicalKeySet(mod, _digitKeys[i])] = intent;
       bindings[LogicalKeySet(mod, _numpadKeys[i])] = intent;

@@ -7,16 +7,16 @@
 
 Under `/Users/veeskela/Projects`, only these git roots exist today:
 
-| Local path | GitHub `origin` (from `.git/config`; equivalent to `remote -v`) |
-|---|---|
-| `/Users/veeskela/Projects/lv24-identity` | `git@github.com:LevapVeeskela/lv24-identity.git` |
-| `/Users/veeskela/Projects/lv24/main` | `git@github.com:LevapVeeskela/lv24.git` **+** `git@gitlab.com:lv24-company/lv24.git` (`gitlab`) |
-| `/Users/veeskela/Projects/IMS/main` | `git@github.com:LevapVeeskela/IMS.git` |
-| `/Users/veeskela/Projects/ferrum-enterprise` | `git@github.com:LevapVeeskela/ferrum-enterprise.git` |
+| Local path                                   | GitHub `origin` (from `.git/config`; equivalent to `remote -v`)                                 |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `/Users/veeskela/Projects/lv24-identity`     | `git@github.com:LevapVeeskela/lv24-identity.git`                                                |
+| `/Users/veeskela/Projects/lv24/main`         | `git@github.com:LevapVeeskela/lv24.git` **+** `git@gitlab.com:lv24-company/lv24.git` (`gitlab`) |
+| `/Users/veeskela/Projects/IMS/main`          | `git@github.com:LevapVeeskela/IMS.git`                                                          |
+| `/Users/veeskela/Projects/ferrum-enterprise` | `git@github.com:LevapVeeskela/ferrum-enterprise.git`                                            |
 
 Sibling ecosystem repos (`lv24-code`, `lv24-ytk`, etc.) are referenced in docs but **not cloned** here. `/Users/veeskela/Projects/lv24-Wifi-Explorer` does **not** exist yet.
 
-**Note:** `git -C … remote -v` currently fails on this machine with *“You have not agreed to the Xcode license agreements”*; remotes above were read from `.git/config`. After `sudo xcodebuild -license`, `git remote -v` should match.
+**Note:** `git -C … remote -v` currently fails on this machine with _“You have not agreed to the Xcode license agreements”_; remotes above were read from `.git/config`. After `sudo xcodebuild -license`, `git remote -v` should match.
 
 ---
 
@@ -56,25 +56,25 @@ From `gh repo view` / `gh repo list LevapVeeskela`:
 
 ## Topics, descriptions, licenses
 
-| Pattern | Observation |
-|---|---|
-| **Topics** | `repositoryTopics`: **null** on sampled LV24 repos (none set). |
-| **Descriptions** | Often empty; when set, short English (`IMS - individual medical support`, `LV24 CV desktop Electron app`). |
-| **README** | `lv24-identity`: Russian product README, states **“Private commercial (закрытый репозиторий)”**; no root `LICENSE`. |
+| Pattern                     | Observation                                                                                                                                         |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Topics**                  | `repositoryTopics`: **null** on sampled LV24 repos (none set).                                                                                      |
+| **Descriptions**            | Often empty; when set, short English (`IMS - individual medical support`, `LV24 CV desktop Electron app`).                                          |
+| **README**                  | `lv24-identity`: Russian product README, states **“Private commercial (закрытый репозиторий)”**; no root `LICENSE`.                                 |
 | **GitHub license metadata** | Inconsistent vs files: e.g. `ferrum-enterprise` → MPL-2.0 on GitHub; `lv24-insta` / `lv24-agent` → MIT; many LV24 repos → **no license** on GitHub. |
-| **Local LICENSE files** | Not at repo root for `lv24-identity`; `ferrum-enterprise` documents MPL-2.0 in README. |
+| **Local LICENSE files**     | Not at repo root for `lv24-identity`; `ferrum-enterprise` documents MPL-2.0 in README.                                                              |
 
 ---
 
 ## GitHub Actions
 
-| Repo | Workflows |
-|---|---|
-| `LevapVeeskela/lv24-identity` | `.github/workflows/ci.yml` (push/PR → Node 20, compose Postgres, `npm run ci`) — also present locally at `/Users/veeskela/Projects/lv24-identity/.github/workflows/ci.yml` |
-| `LevapVeeskela/lv24-code` | `verify.yml`, `release.yml` |
-| `LevapVeeskela/lv24-desktop-cv` | `.github/workflows/` directory (on **`main`**) |
-| `LevapVeeskela/lv24` | `.github/` has agent instruction markdown/skills — **no** `workflows/` on GitHub |
-| `LevapVeeskela/IMS` | No `.github` on GitHub |
+| Repo                            | Workflows                                                                                                                                                                  |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `LevapVeeskela/lv24-identity`   | `.github/workflows/ci.yml` (push/PR → Node 20, compose Postgres, `npm run ci`) — also present locally at `/Users/veeskela/Projects/lv24-identity/.github/workflows/ci.yml` |
+| `LevapVeeskela/lv24-code`       | `verify.yml`, `release.yml`                                                                                                                                                |
+| `LevapVeeskela/lv24-desktop-cv` | `.github/workflows/` directory (on **`main`**)                                                                                                                             |
+| `LevapVeeskela/lv24`            | `.github/` has agent instruction markdown/skills — **no** `workflows/` on GitHub                                                                                           |
+| `LevapVeeskela/IMS`             | No `.github` on GitHub                                                                                                                                                     |
 
 CI is **optional per repo**; identity/code/desktop apps use it; city monorepo does not (deploy/docs emphasize VPS/GitLab bake, not GHA).
 

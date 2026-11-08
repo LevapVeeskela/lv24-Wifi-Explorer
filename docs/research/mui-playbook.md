@@ -11,15 +11,15 @@ There is **no existing Electron, Tauri, or Wi‑Fi/network-scanner app** under `
 
 ## 1. Top-level inventory
 
-| Path | What it is | LV24-related? |
-|------|------------|----------------|
-| `/Users/veeskela/Projects/lv24` | Workspace wrapper (`AGENTS.md`, ideas, parsers) | **Yes — ecosystem root** |
-| `/Users/veeskela/Projects/lv24/main` | City product monorepo (Vite SPA + Nest mesh + Flutter) | **Yes — canonical city** |
-| `/Users/veeskela/Projects/lv24-identity` | Shared IdP (Nest, npm workspaces) | **Yes** |
-| `/Users/veeskela/Projects/IMS` | Workspace (`ideas/`, `workspace-analysis/`) | Family sibling, not named `lv24-*` |
-| `/Users/veeskela/Projects/IMS/main` | Staff medical product cloned from LV24 form | **Yes — closest new-app clone** |
-| `/Users/veeskela/Projects/ferrum-enterprise` | Rust language/compiler workspace | No |
-| `/Users/veeskela/Projects/run-ios.sh` + iOS launcher | Flutter/iOS helper, not a repo | No |
+| Path                                                 | What it is                                             | LV24-related?                      |
+| ---------------------------------------------------- | ------------------------------------------------------ | ---------------------------------- |
+| `/Users/veeskela/Projects/lv24`                      | Workspace wrapper (`AGENTS.md`, ideas, parsers)        | **Yes — ecosystem root**           |
+| `/Users/veeskela/Projects/lv24/main`                 | City product monorepo (Vite SPA + Nest mesh + Flutter) | **Yes — canonical city**           |
+| `/Users/veeskela/Projects/lv24-identity`             | Shared IdP (Nest, npm workspaces)                      | **Yes**                            |
+| `/Users/veeskela/Projects/IMS`                       | Workspace (`ideas/`, `workspace-analysis/`)            | Family sibling, not named `lv24-*` |
+| `/Users/veeskela/Projects/IMS/main`                  | Staff medical product cloned from LV24 form            | **Yes — closest new-app clone**    |
+| `/Users/veeskela/Projects/ferrum-enterprise`         | Rust language/compiler workspace                       | No                                 |
+| `/Users/veeskela/Projects/run-ios.sh` + iOS launcher | Flutter/iOS helper, not a repo                         | No                                 |
 
 **Referenced in docs but not present on this Mac:**
 
@@ -41,21 +41,21 @@ Reason: it is the last greenfield LV24-family **standalone UI product** — FSD,
 - Admin grid policy: `/Users/veeskela/Projects/lv24/main/frontend/src/shared/ui/AdminDataGridPro/`
 - Charts / live utility desk: `/Users/veeskela/Projects/lv24/main/frontend/src/pages/admin/HostMonitorPage/`
 
-| Layer | Pin | Source |
-|-------|-----|--------|
-| Runtime | **Vite SPA in the browser** (not Electron/Tauri/Next) | All LV24 UIs |
-| Bundler | Vite **8.1.5**, `@vitejs/plugin-react` **6.0.4** | IMS + city |
-| UI | React **19.2.8**, react-router-dom **7.18.1** | IMS + city |
-| Language | TypeScript **5.9.3**, `strict`, path alias `@/*` | IMS `tsconfig.app.json` |
-| State | MobX **6.16.1** + `mobx-react-lite` **4.1.1** | Both |
-| i18n | `react-intl` **8.1.3** — default **ru**, add **en** (city also has **zh**) | City if bilingual; IMS is ru-only |
-| UI kit | `@mui/material` / `icons-material` / `system` **9.2.0** + Emotion **11.14.x** | Org policy |
-| Paid MUI X | `@mui/x-data-grid-pro` + `@mui/x-license` **8.11.0** only | Org key = X **8** |
-| Community X | `@mui/x-charts` **8.11.0** (Host Monitor). Date pickers: city community **9.10.0**; IMS uses pickers-**pro** 8.11 | Prefer city community pickers unless you need range-pro |
-| Lint / format | **oxlint 1.75.0** + **oxfmt 0.60.0** — do **not** resurrect ESLint/Prettier | City + IMS. `/Users/veeskela/Projects/lv24/main/docs/docs-app` is stale (MUI 7 + ESLint) |
-| Package manager | **Yarn Classic 1.22.22**, exact versions, **no `^`/`~`** | IMS / city backend. City **frontend** is Yarn Berry **4.17.1** — only needed if you copy that lockfile |
-| Node | **20** (identity, IMS, most APIs). City FE Docker is **22** only because of MapLibre | Skip 22 unless you add MapLibre |
-| Electron | **None in this workspace** | Greenfield if you wrap the SPA |
+| Layer           | Pin                                                                                                               | Source                                                                                                 |
+| --------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Runtime         | **Vite SPA in the browser** (not Electron/Tauri/Next)                                                             | All LV24 UIs                                                                                           |
+| Bundler         | Vite **8.1.5**, `@vitejs/plugin-react` **6.0.4**                                                                  | IMS + city                                                                                             |
+| UI              | React **19.2.8**, react-router-dom **7.18.1**                                                                     | IMS + city                                                                                             |
+| Language        | TypeScript **5.9.3**, `strict`, path alias `@/*`                                                                  | IMS `tsconfig.app.json`                                                                                |
+| State           | MobX **6.16.1** + `mobx-react-lite` **4.1.1**                                                                     | Both                                                                                                   |
+| i18n            | `react-intl` **8.1.3** — default **ru**, add **en** (city also has **zh**)                                        | City if bilingual; IMS is ru-only                                                                      |
+| UI kit          | `@mui/material` / `icons-material` / `system` **9.2.0** + Emotion **11.14.x**                                     | Org policy                                                                                             |
+| Paid MUI X      | `@mui/x-data-grid-pro` + `@mui/x-license` **8.11.0** only                                                         | Org key = X **8**                                                                                      |
+| Community X     | `@mui/x-charts` **8.11.0** (Host Monitor). Date pickers: city community **9.10.0**; IMS uses pickers-**pro** 8.11 | Prefer city community pickers unless you need range-pro                                                |
+| Lint / format   | **oxlint 1.75.0** + **oxfmt 0.60.0** — do **not** resurrect ESLint/Prettier                                       | City + IMS. `/Users/veeskela/Projects/lv24/main/docs/docs-app` is stale (MUI 7 + ESLint)               |
+| Package manager | **Yarn Classic 1.22.22**, exact versions, **no `^`/`~`**                                                          | IMS / city backend. City **frontend** is Yarn Berry **4.17.1** — only needed if you copy that lockfile |
+| Node            | **20** (identity, IMS, most APIs). City FE Docker is **22** only because of MapLibre                              | Skip 22 unless you add MapLibre                                                                        |
+| Electron        | **None in this workspace**                                                                                        | Greenfield if you wrap the SPA                                                                         |
 
 **Do not copy:** deck.gl, MapLibre, Sentry/GA/Metrika, city IdP OIDC, `@lv24/*` city contracts, IMS clinical APIs.
 
@@ -69,14 +69,14 @@ Org rule (city `AGENTS.md` §5g): commercial key is **MUI X major 8 only** (`pla
 
 ### Where the key lives (local, gitignored — do not commit)
 
-| File | Role |
-|------|------|
-| `/Users/veeskela/Projects/lv24/main/frontend/.env` | Host Vite |
-| `/Users/veeskela/Projects/lv24/main/frontend/.env.local` | Host Vite (preferred) |
-| `/Users/veeskela/Projects/lv24/main/infra/.env` | Docker bake |
-| `/Users/veeskela/Projects/IMS/main/frontend/.env` | Same org key, copied locally |
-| `/Users/veeskela/Projects/IMS/main/frontend/.env.local` | Same |
-| `/Users/veeskela/Projects/IMS/main/infra/.env` | IMS frontend image bake |
+| File                                                     | Role                         |
+| -------------------------------------------------------- | ---------------------------- |
+| `/Users/veeskela/Projects/lv24/main/frontend/.env`       | Host Vite                    |
+| `/Users/veeskela/Projects/lv24/main/frontend/.env.local` | Host Vite (preferred)        |
+| `/Users/veeskela/Projects/lv24/main/infra/.env`          | Docker bake                  |
+| `/Users/veeskela/Projects/IMS/main/frontend/.env`        | Same org key, copied locally |
+| `/Users/veeskela/Projects/IMS/main/frontend/.env.local`  | Same                         |
+| `/Users/veeskela/Projects/IMS/main/infra/.env`           | IMS frontend image bake      |
 
 Placeholders (safe to copy):
 
@@ -152,13 +152,13 @@ For Wifi Explorer: city Sunset + either city 4-way toggle or IMS 2-way. Storage 
 
 ### Layout
 
-| Pattern | Path | Use |
-|---------|------|-----|
-| Simple AppBar + Container | `/Users/veeskela/Projects/IMS/main/frontend/src/widgets/layout/StaffShell/` | Best day-1 shell |
-| Staff drawer + AppBar + `md` fence | `/Users/veeskela/Projects/lv24/main/frontend/src/widgets/AdminLayout/` | Only if many desks |
-| Fill-height grid desk | `/Users/veeskela/Projects/lv24/main/frontend/src/shared/ui/adminFillLayout/index.tsx` | Scanner table |
-| Canonical grid page | `/Users/veeskela/Projects/lv24/main/frontend/src/pages/admin/NewsListPage/index.tsx` | Copy this, not a raw `DataGridPro` |
-| Live gauges + `LineChart` | `/Users/veeskela/Projects/lv24/main/frontend/src/pages/admin/HostMonitorPage/` | Closest “utility/scanner” UI |
+| Pattern                            | Path                                                                                  | Use                                |
+| ---------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------- |
+| Simple AppBar + Container          | `/Users/veeskela/Projects/IMS/main/frontend/src/widgets/layout/StaffShell/`           | Best day-1 shell                   |
+| Staff drawer + AppBar + `md` fence | `/Users/veeskela/Projects/lv24/main/frontend/src/widgets/AdminLayout/`                | Only if many desks                 |
+| Fill-height grid desk              | `/Users/veeskela/Projects/lv24/main/frontend/src/shared/ui/adminFillLayout/index.tsx` | Scanner table                      |
+| Canonical grid page                | `/Users/veeskela/Projects/lv24/main/frontend/src/pages/admin/NewsListPage/index.tsx`  | Copy this, not a raw `DataGridPro` |
+| Live gauges + `LineChart`          | `/Users/veeskela/Projects/lv24/main/frontend/src/pages/admin/HostMonitorPage/`        | Closest “utility/scanner” UI       |
 
 Density: default comfortable; `AdminDataGridPro` `responsive` → compact below `md`, hide inline search below `sm`. Touch targets stay 44px.
 
@@ -242,12 +242,12 @@ For a small tool: copy identity’s GitHub Actions shape, but run **yarn** + `ox
 
 **Nothing to clone for main/renderer/IPC/native addons.**
 
-| Candidate | Why it is not a shell |
-|-----------|------------------------|
-| City + IMS frontends | Browser Vite SPAs behind nginx |
-| Flutter `/Users/veeskela/Projects/lv24/main/mobile` | iOS/Android product; Windows runner is dogfood only; **no macOS desktop** |
-| YTK desktop | Only an OAuth `ytk-desktop` loopback client in `/Users/veeskela/Projects/lv24-identity/docs/PRODUCTS.md` — **repo missing here** |
-| Host Monitor | Staff **web** desk: poll + `LineChart` + MUI Table — closest **UX**, still HTTP |
+| Candidate                                           | Why it is not a shell                                                                                                            |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| City + IMS frontends                                | Browser Vite SPAs behind nginx                                                                                                   |
+| Flutter `/Users/veeskela/Projects/lv24/main/mobile` | iOS/Android product; Windows runner is dogfood only; **no macOS desktop**                                                        |
+| YTK desktop                                         | Only an OAuth `ytk-desktop` loopback client in `/Users/veeskela/Projects/lv24-identity/docs/PRODUCTS.md` — **repo missing here** |
+| Host Monitor                                        | Staff **web** desk: poll + `LineChart` + MUI Table — closest **UX**, still HTTP                                                  |
 
 **Practical architecture for Wifi Explorer:**
 
@@ -261,11 +261,11 @@ For a small tool: copy identity’s GitHub Actions shape, but run **yarn** + `ox
 
 From `.git/config` (git CLI is broken on this Mac due to Xcode license; remotes still readable):
 
-| Repo | `origin` | Extra |
-|------|----------|--------|
-| City | `git@github.com:LevapVeeskela/lv24.git` | `gitlab` = `git@gitlab.com:lv24-company/lv24.git` |
+| Repo     | `origin`                                         | Extra                                                |
+| -------- | ------------------------------------------------ | ---------------------------------------------------- |
+| City     | `git@github.com:LevapVeeskela/lv24.git`          | `gitlab` = `git@gitlab.com:lv24-company/lv24.git`    |
 | Identity | `git@github.com:LevapVeeskela/lv24-identity.git` | GitLab deploy exists; no second remote in this clone |
-| IMS | `git@github.com:LevapVeeskela/IMS.git` | GitHub only |
+| IMS      | `git@github.com:LevapVeeskela/IMS.git`           | GitHub only                                          |
 
 `package.json` `repository` fields are **not** used for first-party apps (only a vendored MCP). Flutter packages incorrectly say `https://github.com/lv24/lv24` — ignore that; real GitHub user is **`LevapVeeskela`**.
 
@@ -273,13 +273,13 @@ From `.git/config` (git CLI is broken on this Mac due to Xcode license; remotes 
 
 **Recommended names:**
 
-| Surface | Name |
-|---------|------|
-| Disk folder | `/Users/veeskela/Projects/lv24-wifi-explorer` (kebab, like `lv24-identity`) |
-| Git repo | `lv24-wifi-explorer` (user-typed `lv24-Wifi-Explorer` will fight GitHub) |
-| GitHub | `git@github.com:LevapVeeskela/lv24-wifi-explorer.git` |
-| GitLab (optional) | `git@gitlab.com:lv24-company/lv24-wifi-explorer.git` |
-| `package.json` `name` | `lv24-wifi-explorer` |
+| Surface                                             | Name                                                                         |
+| --------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Disk folder                                         | `/Users/veeskela/Projects/lv24-wifi-explorer` (kebab, like `lv24-identity`)  |
+| Git repo                                            | `lv24-wifi-explorer` (user-typed `lv24-Wifi-Explorer` will fight GitHub)     |
+| GitHub                                              | `git@github.com:LevapVeeskela/lv24-wifi-explorer.git`                        |
+| GitLab (optional)                                   | `git@gitlab.com:lv24-company/lv24-wifi-explorer.git`                         |
+| `package.json` `name`                               | `lv24-wifi-explorer`                                                         |
 | IdP `product_id` (only if you join the suite later) | `wifi` / `wifi-explorer` — not registered today (`city`, `code`, `ytk` only) |
 
 Default branch: city/identity `master` + `develop`; IMS `master` only.

@@ -31,3 +31,8 @@ pubspec_overrides.yaml
 opencode.json
 opencode.json.bak-ctx7
 .vscode/
+
+# Generated next to sources by ad-hoc tsc runs (build output lives in dist/)
+packages/core/src/**/*.js
+packages/core/src/**/*.d.ts
+!packages/core/src/**/*.mjs.d.ts

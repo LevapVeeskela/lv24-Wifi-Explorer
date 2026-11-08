@@ -10,8 +10,8 @@ import { pipeline } from 'node:stream/promises';
 
 const IEEE_OUI_CSV_URL = 'https://standards-oui.ieee.org/oui/oui.csv';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT_DIR = join(__dirname, '../resources/oui');
+const HERE = dirname(fileURLToPath(import.meta.url));
+const OUT_DIR = join(HERE, '../resources/oui');
 
 /** @type {ReadonlyArray<readonly [string, string]>} */
 const CURATED_FALLBACK = [
@@ -55,7 +55,10 @@ const CURATED_FALLBACK = [
 
 /** @param {string} assignment */
 function normalizeOui24(assignment) {
-  const hex = assignment.trim().toLowerCase().replace(/[:\-.]/g, '');
+  const hex = assignment
+    .trim()
+    .toLowerCase()
+    .replace(/[:\-.]/g, '');
   if (!/^[0-9a-f]{6}$/.test(hex)) {
     return null;
   }
@@ -116,9 +119,7 @@ function parseIeeeMalCsv(text) {
     if (joined.includes('assignment') && joined.includes('organization')) {
       assignmentIdx = indexOfHeader(fields, 'assignment') ?? 1;
       orgIdx =
-        indexOfHeader(fields, 'organization name') ??
-        indexOfHeader(fields, 'organization') ??
-        2;
+        indexOfHeader(fields, 'organization name') ?? indexOfHeader(fields, 'organization') ?? 2;
       continue;
     }
     const registry = (fields[0] ?? '').trim().toUpperCase();
@@ -173,7 +174,7 @@ function writeOutputs(records, source, sourceUrl) {
   writeFileSync(
     join(OUT_DIR, 'registry.json'),
     `${JSON.stringify({ meta, byPrefix }, null, 0)}\n`,
-    'utf8',
+    'utf8'
   );
 
   return meta;
@@ -192,17 +193,15 @@ async function main() {
       throw new Error('Parsed zero MA-L assignments from downloaded CSV');
     }
     const meta = writeOutputs(records, 'ieee-mal', IEEE_OUI_CSV_URL);
-    process.stdout.write(
-      `Wrote ${meta.entryCount} MA-L prefixes → resources/oui/registry.json\n`,
-    );
+    process.stdout.write(`Wrote ${meta.entryCount} MA-L prefixes → resources/oui/registry.json\n`);
   } catch (error) {
     process.stderr.write(
-      `IEEE download/parse failed (${error instanceof Error ? error.message : error}); using curated fallback.\n`,
+      `IEEE download/parse failed (${error instanceof Error ? error.message : error}); using curated fallback.\n`
     );
     const records = new Map(CURATED_FALLBACK.map(([oui, org]) => [normalizeOui24(oui), org]));
     const meta = writeOutputs(records, 'curated-fallback', null);
     process.stdout.write(
-      `Wrote ${meta.entryCount} curated prefixes → resources/oui/registry.json\n`,
+      `Wrote ${meta.entryCount} curated prefixes → resources/oui/registry.json\n`
     );
     process.exitCode = 0;
   }

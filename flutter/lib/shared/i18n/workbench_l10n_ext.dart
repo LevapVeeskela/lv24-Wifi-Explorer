@@ -102,6 +102,35 @@ extension ScanWorkbenchL10n on AppLocalizations {
 
   String get emDash => '—';
 
+  String scanStatusDisplayed(int count) =>
+      _ru ? 'Показано: $count' : 'Displayed: $count';
+
+  String get organizeBy => _ru ? 'Группировка' : 'Organize by';
+
+  String get organizeNone => _ru ? 'Нет' : 'None';
+
+  String get organizeSsid => 'SSID';
+
+  String get organizeAp => 'AP';
+
+  String get organizeVendor => _ru ? 'Производитель' : 'Vendor';
+
+  String get saveFilterPreset => _ru ? 'Сохранить пресет' : 'Save preset';
+
+  String get filterPresetsTitle =>
+      _ru ? 'Сохранённые фильтры' : 'Saved filters';
+
+  String get filterPresetsEmpty =>
+      _ru ? 'Нет сохранённых фильтров' : 'No saved filters';
+
+  String get filterPresetsSave =>
+      _ru ? 'Сохранить текущие фильтры' : 'Save current filters';
+
+  String get filterPresetsNewName => _ru ? 'Имя пресета' : 'Preset name';
+
+  String filterPresetsDelete(String name) =>
+      _ru ? 'Удалить «$name»' : 'Delete "$name"';
+
   String get qualityExcellent => scanQualityExcellent;
 
   String get qualityGood => scanQualityGood;

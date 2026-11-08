@@ -19,14 +19,15 @@
 
 ### 0.1 Title bar / toolbar
 
-| Элемент | Что видно | Что это значит для нас |
-|---|---|---|
-| Traffic lights | стандартные close/minimize/zoom | стандартный `NSWindow` |
-| Title | `Scanning-Wi-Fi \| HUKKKA_stafff` | состояние скана + **SSID ассоциированной сети**, не выбранной строки |
+| Элемент             | Что видно                         | Что это значит для нас                                                                           |
+| ------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Traffic lights      | стандартные close/minimize/zoom   | стандартный `NSWindow`                                                                           |
+| Title               | `Scanning-Wi-Fi \| HUKKKA_stafff` | состояние скана + **SSID ассоциированной сети**, не выбранной строки                             |
 | Правый статус связи | `60% · 5 GHz · 20 MHz · 144 Mbps` | live PHY ассоциированной сети: RSSI%, band, channel width, **current Tx rate**, не `maxRate` BSS |
-| Иконка поиска | лупа справа | фокус на `Filter` field (`⇧⌘F`) |
+| Иконка поиска       | лупа справа                       | фокус на `Filter` field (`⇧⌘F`)                                                                  |
 
 Это **два разных объекта**:
+
 - `associatedNetwork` — то, к чему сейчас подключен Mac;
 - `selectedBSS` — выделенная строка таблицы (на скрине `HUKKKA_stafff` / `A8:9D:…:24:3E`, signal 81%, channel 60, max rate 260.1 Mbps).
 
@@ -45,19 +46,19 @@
 
 Колонки слева направо (как на скрине):
 
-| # | Заголовок на скрине | Смысл | Примеры |
-|---|---|---|---|
-| 0 | (swatch) | цвет трекинга | зелёный / оранжевый / серый / синий |
-| 1 | `BSSID` | MAC, усечённый | `A8:9D:…:24:3E` |
-| 2 | `Network Name` | SSID | `HUKKKA_stafff`, `L'ECOLE1_5`, `TP-Link_…` |
-| 3 | (lock icon, без заголовка) | security affordance | 🔒 = secure, открытый замок = open |
-| 4 | `Vendor` | OUI → manufacturer | Cisco Systems, MikroTik, TP-Link |
-| 5 | `Annotations` | редактируемые метки | пусто / галочка |
-| 6 | `Signal` | RSSI как % + bar | `81%`, `3%`, `1%` |
-| 7 | `Channel` | primary channel | `60`, `36`, `2`, `100` |
-| 8 | `Channel Width` | 20/40/80/… MHz | почти все `20 MHz`; MikroTik `80 MHz` |
-| 9 | `Band` | `2.4 GHz` / `5 GHz` | — |
-| 10 | `Mode` | PHY letters | `a/n/ac`, `b/g/n`, `a/n/ac/ax` |
+| #   | Заголовок на скрине        | Смысл               | Примеры                                    |
+| --- | -------------------------- | ------------------- | ------------------------------------------ |
+| 0   | (swatch)                   | цвет трекинга       | зелёный / оранжевый / серый / синий        |
+| 1   | `BSSID`                    | MAC, усечённый      | `A8:9D:…:24:3E`                            |
+| 2   | `Network Name`             | SSID                | `HUKKKA_stafff`, `L'ECOLE1_5`, `TP-Link_…` |
+| 3   | (lock icon, без заголовка) | security affordance | 🔒 = secure, открытый замок = open         |
+| 4   | `Vendor`                   | OUI → manufacturer  | Cisco Systems, MikroTik, TP-Link           |
+| 5   | `Annotations`              | редактируемые метки | пусто / галочка                            |
+| 6   | `Signal`                   | RSSI как % + bar    | `81%`, `3%`, `1%`                          |
+| 7   | `Channel`                  | primary channel     | `60`, `36`, `2`, `100`                     |
+| 8   | `Channel Width`            | 20/40/80/… MHz      | почти все `20 MHz`; MikroTik `80 MHz`      |
+| 9   | `Band`                     | `2.4 GHz` / `5 GHz` | —                                          |
+| 10  | `Mode`                     | PHY letters         | `a/n/ac`, `b/g/n`, `a/n/ac/ax`             |
 
 Наблюдения по данным скрина (для тестовых фикстур, не для копирования UI):
 
@@ -77,33 +78,33 @@
 
 Две колонки key–value + qualitative:
 
-| Поле | Значение на скрине | Комментарий |
-|---|---|---|
-| `SSID` | `HUKKKA_stafff` | |
-| `BSSID` | `A8:9D:21:74:24:3E` | полный MAC |
-| `Vendor` | `Cisco Systems` | OUI |
-| `Signal Quality` | `Excellent` | дискретная шкала по SNR |
-| `Signal` | `81%` | та же единица, что в таблице |
-| `Band` | `5 GHz UNII-2A` | band + UNII sub-band |
-| `Mode` | `802.11a/n/ac` | полная форма, в таблице короче |
-| `Max Rate` | `260.1 Mbps` | theoretical max BSS, не current Tx |
-| `Channel` | `60` | primary |
-| `Noise` | `-1%` | та же % шкала; у пола конверсии выглядит как артефакт — **не копировать слепо** |
-| `Type` | `Infrastructure` | vs IBSS / Mesh |
-| `Security` | `WPA2-Personal` | AKM class |
-| `Encryption` | `CCMP-128` | pairwise/group cipher |
-| `Channel Width` | `20 MHz` | |
-| `SNR` | `48.0 dB` | `RSSI − noise` |
+| Поле             | Значение на скрине  | Комментарий                                                                     |
+| ---------------- | ------------------- | ------------------------------------------------------------------------------- |
+| `SSID`           | `HUKKKA_stafff`     |                                                                                 |
+| `BSSID`          | `A8:9D:21:74:24:3E` | полный MAC                                                                      |
+| `Vendor`         | `Cisco Systems`     | OUI                                                                             |
+| `Signal Quality` | `Excellent`         | дискретная шкала по SNR                                                         |
+| `Signal`         | `81%`               | та же единица, что в таблице                                                    |
+| `Band`           | `5 GHz UNII-2A`     | band + UNII sub-band                                                            |
+| `Mode`           | `802.11a/n/ac`      | полная форма, в таблице короче                                                  |
+| `Max Rate`       | `260.1 Mbps`        | theoretical max BSS, не current Tx                                              |
+| `Channel`        | `60`                | primary                                                                         |
+| `Noise`          | `-1%`               | та же % шкала; у пола конверсии выглядит как артефакт — **не копировать слепо** |
+| `Type`           | `Infrastructure`    | vs IBSS / Mesh                                                                  |
+| `Security`       | `WPA2-Personal`     | AKM class                                                                       |
+| `Encryption`     | `CCMP-128`          | pairwise/group cipher                                                           |
+| `Channel Width`  | `20 MHz`            |                                                                                 |
+| `SNR`            | `48.0 dB`           | `RSSI − noise`                                                                  |
 
 ### 0.6 Нижний графический ряд (внутри Network Details)
 
 Три панели:
 
-1. **Signal timeline (слева)**  
-   - X: время `22:09 … 22:12` + `Now`  
-   - Y: примерно −100…0 dBm или 0–100% (сетка 10/50/90%)  
-   - Две дорожки `2.4 GHz` / `5 GHz`  
-   - На скрине почти пусто — короткая сессия / мало сэмплов  
+1. **Signal timeline (слева)**
+   - X: время `22:09 … 22:12` + `Now`
+   - Y: примерно −100…0 dBm или 0–100% (сетка 10/50/90%)
+   - Две дорожки `2.4 GHz` / `5 GHz`
+   - На скрине почти пусто — короткая сессия / мало сэмплов
    - Подпись оси: выбранный SSID
 
 2. **Same-SSID bars (центр), заголовок `HUKKKA_stafff`**  
@@ -160,25 +161,25 @@ lv24-Wifi-Explorer
 
 ### 1.1 Toolbar
 
-| Control | ID | Поведение |
-|---|---|---|
-| Start / Stop | `scanToggle` | старт/стоп периодического active scan. Shortcut: `⌃S` |
-| Scan state title | `windowTitle` | `Scanning` / `Paused` / `Snapshot` + associated SSID |
-| Associated summary | `associatedStatus` | `signal · band · width · txRate`. Клик — select+scroll к associated BSS. Tooltip: BSSID, channel, security, `rssiDbm` |
-| Filter focus | `filterSearchButton` | фокус `FilterBar.searchField` |
-| Settings | `settingsButton` | открыть Settings |
+| Control            | ID                   | Поведение                                                                                                             |
+| ------------------ | -------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Start / Stop       | `scanToggle`         | старт/стоп периодического active scan. Shortcut: `⌃S`                                                                 |
+| Scan state title   | `windowTitle`        | `Scanning` / `Paused` / `Snapshot` + associated SSID                                                                  |
+| Associated summary | `associatedStatus`   | `signal · band · width · txRate`. Клик — select+scroll к associated BSS. Tooltip: BSSID, channel, security, `rssiDbm` |
+| Filter focus       | `filterSearchButton` | фокус `FilterBar.searchField`                                                                                         |
+| Settings           | `settingsButton`     | открыть Settings                                                                                                      |
 
 Не класть в toolbar: выбор USB-адаптера (MVP не поддерживает), license badge, чужой бренд.
 
 ### 1.2 FilterBar
 
-| Control | ID | Тип |
-|---|---|---|
-| Band | `bandFilter` | segmented: `all` \| `2.4` \| `5` \| `6` (6 скрыть, если радио не умеет) |
-| Security | `securityFilter` | segmented multi: `any` (default) / `open` / `secure` |
-| Search | `searchField` | наш язык запросов, §3.4 |
-| Clear | `clearFilters` | сброс band+security+query |
-| Sensitivity hint | optional | если `minRssiDbm` ≠ default |
+| Control          | ID               | Тип                                                                     |
+| ---------------- | ---------------- | ----------------------------------------------------------------------- |
+| Band             | `bandFilter`     | segmented: `all` \| `2.4` \| `5` \| `6` (6 скрыть, если радио не умеет) |
+| Security         | `securityFilter` | segmented multi: `any` (default) / `open` / `secure`                    |
+| Search           | `searchField`    | наш язык запросов, §3.4                                                 |
+| Clear            | `clearFilters`   | сброс band+security+query                                               |
+| Sensitivity hint | optional         | если `minRssiDbm` ≠ default                                             |
 
 ### 1.3 NetworksTable
 
@@ -198,13 +199,13 @@ lv24-Wifi-Explorer
 
 ### 1.4 Inspector tabs
 
-| Tab | ID | Shortcut | Содержание |
-|---|---|---|---|
-| Network Details | `details` | `⌘1` | key-value + 3 мини-графика + timescale |
-| Signal Strength | `signal` | `⌘2` | полноширинный timeline всех **видимых** BSS; selected = fill |
-| Spectrum 2.4 / 5 | `spectrum24_5` | `⌘3` | occupancy по каналам; selected primary highlighted |
-| Spectrum 6 | `spectrum6` | `⌘4` | то же для 6 GHz; скрыть, если нет 6 GHz BSS и нет железа |
-| Advanced Details | `advanced` | `⌘5` | дерево Information Elements (v1) |
+| Tab              | ID             | Shortcut | Содержание                                                   |
+| ---------------- | -------------- | -------- | ------------------------------------------------------------ |
+| Network Details  | `details`      | `⌘1`     | key-value + 3 мини-графика + timescale                       |
+| Signal Strength  | `signal`       | `⌘2`     | полноширинный timeline всех **видимых** BSS; selected = fill |
+| Spectrum 2.4 / 5 | `spectrum24_5` | `⌘3`     | occupancy по каналам; selected primary highlighted           |
+| Spectrum 6       | `spectrum6`    | `⌘4`     | то же для 6 GHz; скрыть, если нет 6 GHz BSS и нет железа     |
+| Advanced Details | `advanced`     | `⌘5`     | дерево Information Elements (v1)                             |
 
 `⌘[` / `⌘]` — prev/next tab.
 
@@ -421,13 +422,13 @@ else:
 
 **Quality** (публичные WLAN-пороги, ±1 dB на границах ок):
 
-| `snrDb` | `quality` |
-|---|---|
-| ≥ 40 | `excellent` |
-| 25–39 | `good` |
-| 15–24 | `fair` |
-| 10–14 | `poor` |
-| < 10 | `unusable` |
+| `snrDb` | `quality`   |
+| ------- | ----------- |
+| ≥ 40    | `excellent` |
+| 25–39   | `good`      |
+| 15–24   | `fair`      |
+| 10–14   | `poor`      |
+| < 10    | `unusable`  |
 
 **dBm → %** — линейная интерполяция, концы в Settings:
 
@@ -505,20 +506,20 @@ AnnotationRule
 
 ### 2.16 Что macOS реально отдаёт vs что выводим
 
-| Поле | Источник | Риск |
-|---|---|---|
-| ssid, bssid | `CWNetwork` + Location | nil без TCC |
-| rssi, noise | `CWNetwork` | noise часто мусор |
-| channel/band/width | `CWChannel` | width может быть неполным |
-| beaconInterval | `CWNetwork` | ок |
-| countryCode | `CWNetwork` / IE 7 | Location |
-| ibss | `CWNetwork.ibss` | ок |
-| security/PHY | **IE first**, CoreWLAN fallback | CoreWLAN ошибается |
-| vendor | IEEE OUI DB | локальные MAC |
-| maxRate, streams, UNII, QBSS, WPS, FT, AP name | IE / наши таблицы | нет IE → unknown |
-| current Tx rate | `CWInterface` | только associated |
-| clients list | нет в active scan | later / monitor mode |
-| true RF spectrum | нет у Broadcom STA | не обещать waterfall |
+| Поле                                           | Источник                        | Риск                      |
+| ---------------------------------------------- | ------------------------------- | ------------------------- |
+| ssid, bssid                                    | `CWNetwork` + Location          | nil без TCC               |
+| rssi, noise                                    | `CWNetwork`                     | noise часто мусор         |
+| channel/band/width                             | `CWChannel`                     | width может быть неполным |
+| beaconInterval                                 | `CWNetwork`                     | ок                        |
+| countryCode                                    | `CWNetwork` / IE 7              | Location                  |
+| ibss                                           | `CWNetwork.ibss`                | ок                        |
+| security/PHY                                   | **IE first**, CoreWLAN fallback | CoreWLAN ошибается        |
+| vendor                                         | IEEE OUI DB                     | локальные MAC             |
+| maxRate, streams, UNII, QBSS, WPS, FT, AP name | IE / наши таблицы               | нет IE → unknown          |
+| current Tx rate                                | `CWInterface`                   | только associated         |
+| clients list                                   | нет в active scan               | later / monitor mode      |
+| true RF spectrum                               | нет у Broadcom STA              | не обещать waterfall      |
 
 ---
 
@@ -531,42 +532,42 @@ AnnotationRule
 
 **Все колонки**
 
-| id | Title (EN) | Тип | Default | Sort | Источник |
-|---|---|---|---|---|---|
-| `color` | (swatch) | Color | on | нет | overlay |
-| `bssid` | BSSID | MAC, truncate `AA:BB:…:EE:FF`, tooltip полный | on | lexical MAC | CoreWLAN |
-| `ssid` | Network Name | String / `Hidden` | on | case-insensitive | CoreWLAN |
-| `securityIcon` | (lock) | icon | on | open < secure | securityClass |
-| `security` | Security | enum string | off | enum | IE |
-| `vendor` | Vendor | String | on | text | OUI |
-| `annotation` | Annotation | editable | on | text | user |
-| `signal` | Signal | bar + `%` или dBm | on | rssiDbm | CoreWLAN |
-| `noise` | Noise | `%` или dBm | off | noiseDbm | CoreWLAN |
-| `snr` | SNR | `12.0 dB` | off | snrDb | derived |
-| `quality` | Quality | enum | off | rank | derived |
-| `channel` | Channel | Int | on | numeric | CWChannel |
-| `channelWidth` | Channel Width | `20 MHz` | on | numeric | CW / IE |
-| `band` | Band | `2.4 GHz` | on | 2.4 < 5 < 6 | CWChannel |
-| `unii` | UNII | `UNII-2A` | off | enum | table |
-| `mode` | Mode | `a/n/ac` | on | generation then letters | IE |
-| `generation` | Generation | Wi-Fi 4/5/6/6E/7 | off | numeric | derived |
-| `maxRate` | Max Rate | `260.1 Mbps` | off | numeric | MCS tables |
-| `minRate` | Min Rate | Mbps | off | numeric | rates IE |
-| `basicRates` | Basic Rates | `1, 2, 5.5, 11` | off | — | IE |
-| `streams` | Streams | Int | off | numeric | HT/VHT/HE |
-| `type` | Type | Infrastructure/IBSS/Mesh | off | enum | cap / IE |
-| `country` | Country | `US` | off | text | IE / CW |
-| `beaconInterval` | Beacon Interval | `102.4 ms` | off | numeric | CW / IE |
-| `centerFreq` | Center Frequency | `5300 MHz` | off | numeric | channel table |
-| `channelUtil` | Channel Utilization | `%` | off | numeric | BSS Load |
-| `stations` | Stations | Int | off | numeric | BSS Load |
-| `wps` | WPS | Configured/… | off | enum | WPS IE |
-| `fastTransition` | Fast Transition | OTA/OTD | off | enum | MDIE / RSN |
-| `apName` | AP Name | String | off | text | vendor IE, v1+ |
-| `firstSeen` | First Seen | datetime | off | date | session |
-| `lastSeen` | Last Seen | datetime | off | date | session |
-| `seen` | Seen | relative | off | lastSeen | session |
-| `oui` | OUI | `A8:9D:21` | off | text | BSSID |
+| id               | Title (EN)          | Тип                                           | Default | Sort                    | Источник       |
+| ---------------- | ------------------- | --------------------------------------------- | ------- | ----------------------- | -------------- |
+| `color`          | (swatch)            | Color                                         | on      | нет                     | overlay        |
+| `bssid`          | BSSID               | MAC, truncate `AA:BB:…:EE:FF`, tooltip полный | on      | lexical MAC             | CoreWLAN       |
+| `ssid`           | Network Name        | String / `Hidden`                             | on      | case-insensitive        | CoreWLAN       |
+| `securityIcon`   | (lock)              | icon                                          | on      | open < secure           | securityClass  |
+| `security`       | Security            | enum string                                   | off     | enum                    | IE             |
+| `vendor`         | Vendor              | String                                        | on      | text                    | OUI            |
+| `annotation`     | Annotation          | editable                                      | on      | text                    | user           |
+| `signal`         | Signal              | bar + `%` или dBm                             | on      | rssiDbm                 | CoreWLAN       |
+| `noise`          | Noise               | `%` или dBm                                   | off     | noiseDbm                | CoreWLAN       |
+| `snr`            | SNR                 | `12.0 dB`                                     | off     | snrDb                   | derived        |
+| `quality`        | Quality             | enum                                          | off     | rank                    | derived        |
+| `channel`        | Channel             | Int                                           | on      | numeric                 | CWChannel      |
+| `channelWidth`   | Channel Width       | `20 MHz`                                      | on      | numeric                 | CW / IE        |
+| `band`           | Band                | `2.4 GHz`                                     | on      | 2.4 < 5 < 6             | CWChannel      |
+| `unii`           | UNII                | `UNII-2A`                                     | off     | enum                    | table          |
+| `mode`           | Mode                | `a/n/ac`                                      | on      | generation then letters | IE             |
+| `generation`     | Generation          | Wi-Fi 4/5/6/6E/7                              | off     | numeric                 | derived        |
+| `maxRate`        | Max Rate            | `260.1 Mbps`                                  | off     | numeric                 | MCS tables     |
+| `minRate`        | Min Rate            | Mbps                                          | off     | numeric                 | rates IE       |
+| `basicRates`     | Basic Rates         | `1, 2, 5.5, 11`                               | off     | —                       | IE             |
+| `streams`        | Streams             | Int                                           | off     | numeric                 | HT/VHT/HE      |
+| `type`           | Type                | Infrastructure/IBSS/Mesh                      | off     | enum                    | cap / IE       |
+| `country`        | Country             | `US`                                          | off     | text                    | IE / CW        |
+| `beaconInterval` | Beacon Interval     | `102.4 ms`                                    | off     | numeric                 | CW / IE        |
+| `centerFreq`     | Center Frequency    | `5300 MHz`                                    | off     | numeric                 | channel table  |
+| `channelUtil`    | Channel Utilization | `%`                                           | off     | numeric                 | BSS Load       |
+| `stations`       | Stations            | Int                                           | off     | numeric                 | BSS Load       |
+| `wps`            | WPS                 | Configured/…                                  | off     | enum                    | WPS IE         |
+| `fastTransition` | Fast Transition     | OTA/OTD                                       | off     | enum                    | MDIE / RSN     |
+| `apName`         | AP Name             | String                                        | off     | text                    | vendor IE, v1+ |
+| `firstSeen`      | First Seen          | datetime                                      | off     | date                    | session        |
+| `lastSeen`       | Last Seen           | datetime                                      | off     | date                    | session        |
+| `seen`           | Seen                | relative                                      | off     | lastSeen                | session        |
+| `oui`            | OUI                 | `A8:9D:21`                                    | off     | text                    | BSSID          |
 
 v1: reorder drag, persist widths, `View → Size All Columns to Fit`.  
 Позже: pin, rename, profiles.
@@ -582,12 +583,12 @@ v1: reorder drag, persist widths, `View → Size All Columns to Fit`.
 
 ### 3.3 Quick filters (AND с search)
 
-| Control | Predicate |
-|---|---|
-| Band `2.4` / `5` / `6` | `bss.band ==` |
-| `open` | `securityClass == open` |
-| `secure` | `securityClass ∉ {open, unknown}` |
-| `minRssiDbm` | `rssiDbm >= setting` |
+| Control                | Predicate                         |
+| ---------------------- | --------------------------------- |
+| Band `2.4` / `5` / `6` | `bss.band ==`                     |
+| `open`                 | `securityClass == open`           |
+| `secure`               | `securityClass ∉ {open, unknown}` |
+| `minRssiDbm`           | `rssiDbm >= setting`              |
 
 Счётчики status bar — **после** фильтров: `visibleCount` vs `totalCount`.
 
@@ -600,20 +601,20 @@ v1: reorder drag, persist widths, `View → Size All Columns to Fit`.
 
 **Shortcuts**
 
-| Ввод | Значение |
-|---|---|
-| `2.4`, `2.4ghz`, `24ghz` | band24 |
-| `5`, `5ghz` | band5 — **только** если есть единица/`ghz`; голый `5` = channel 5 |
-| `6ghz` | band6 |
-| `20`, `20mhz`, `40mhz`… | width |
-| `1`, `36`, `36-48` | channel / range |
-| `aa:`, `:3e`, `a8:9d:` | BSSID octet |
-| `>=-65`, `<=50%` | RSSI |
-| `open`, `secure`, `wep`, `wpa`, `wpa2`, `wpa3`, `owe`, `802.1x`, `psk`, `sae` | security |
-| `a`, `n`, `ac`, `ax`, `be`, `11n`, `802.11ac` | PHY |
-| `wifi4`…`wifi7` | generation |
-| `hidden` | isHidden |
-| `wps`, `ft` | capability |
+| Ввод                                                                          | Значение                                                          |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `2.4`, `2.4ghz`, `24ghz`                                                      | band24                                                            |
+| `5`, `5ghz`                                                                   | band5 — **только** если есть единица/`ghz`; голый `5` = channel 5 |
+| `6ghz`                                                                        | band6                                                             |
+| `20`, `20mhz`, `40mhz`…                                                       | width                                                             |
+| `1`, `36`, `36-48`                                                            | channel / range                                                   |
+| `aa:`, `:3e`, `a8:9d:`                                                        | BSSID octet                                                       |
+| `>=-65`, `<=50%`                                                              | RSSI                                                              |
+| `open`, `secure`, `wep`, `wpa`, `wpa2`, `wpa3`, `owe`, `802.1x`, `psk`, `sae` | security                                                          |
+| `a`, `n`, `ac`, `ax`, `be`, `11n`, `802.11ac`                                 | PHY                                                               |
+| `wifi4`…`wifi7`                                                               | generation                                                        |
+| `hidden`                                                                      | isHidden                                                          |
+| `wps`, `ft`                                                                   | capability                                                        |
 
 **Keyed (v1)**
 
@@ -651,25 +652,25 @@ mode:ax
 
 ### 4.1 Network Details — обязательные поля MVP
 
-| Label (EN в модели / RU в UI) | Field | Формат |
-|---|---|---|
-| SSID | `ssid` | hidden → «Скрытая сеть» |
-| BSSID | `bssid` | полный MAC, кнопка Copy |
-| Vendor | `vendorName` | + OUI в tooltip |
-| Signal Quality | `quality` | Excellent / Good / Fair / Poor / Unusable |
-| Signal | `rssiDbm` + `signalPercent` | по `signalUnit` |
-| Noise | `noiseDbm` + `noisePercent` | invalid → `—` |
-| SNR | `snrDb` | `48.0 dB` |
-| Band | `band` + `uniiSubband` | `5 GHz · UNII-2A` |
-| Channel | `channel` | + DFS/PSC badge |
-| Channel Width | `channelWidthMHz` | `20 MHz` |
-| Mode | `phyModes` | `802.11a/n/ac` |
-| Max Rate | `maxRateMbps` | `260.1 Mbps` или `—` |
-| Type | `type` | Infrastructure / IBSS / Mesh |
-| Security | `securityClass` | `WPA2-Personal` |
-| Encryption | ciphers | `CCMP-128` |
-| Country | `countryCode` | если есть |
-| Connected | `isAssociated` | badge, current Tx rate |
+| Label (EN в модели / RU в UI) | Field                       | Формат                                    |
+| ----------------------------- | --------------------------- | ----------------------------------------- |
+| SSID                          | `ssid`                      | hidden → «Скрытая сеть»                   |
+| BSSID                         | `bssid`                     | полный MAC, кнопка Copy                   |
+| Vendor                        | `vendorName`                | + OUI в tooltip                           |
+| Signal Quality                | `quality`                   | Excellent / Good / Fair / Poor / Unusable |
+| Signal                        | `rssiDbm` + `signalPercent` | по `signalUnit`                           |
+| Noise                         | `noiseDbm` + `noisePercent` | invalid → `—`                             |
+| SNR                           | `snrDb`                     | `48.0 dB`                                 |
+| Band                          | `band` + `uniiSubband`      | `5 GHz · UNII-2A`                         |
+| Channel                       | `channel`                   | + DFS/PSC badge                           |
+| Channel Width                 | `channelWidthMHz`           | `20 MHz`                                  |
+| Mode                          | `phyModes`                  | `802.11a/n/ac`                            |
+| Max Rate                      | `maxRateMbps`               | `260.1 Mbps` или `—`                      |
+| Type                          | `type`                      | Infrastructure / IBSS / Mesh              |
+| Security                      | `securityClass`             | `WPA2-Personal`                           |
+| Encryption                    | ciphers                     | `CCMP-128`                                |
+| Country                       | `countryCode`               | если есть                                 |
+| Connected                     | `isAssociated`              | badge, current Tx rate                    |
 
 ### 4.2 Дополнительно v1
 
@@ -679,18 +680,18 @@ Beacon Interval, Streams, Basic/Supported Rates, Stations, Channel Utilization, 
 
 Показывать 0–N карточек, не «магический AI».
 
-| id | Когда |
-|---|---|
-| `width40on24` | band24 && width ≥ 40 |
-| `overlap24` | band24 && channel ∉ {1,6,11} (и не JP 14-only special-case) |
-| `crowdedChannel` | N других BSS с overlapping primary, N ≥ 4 (настройка) |
-| `lowSignal` | rssiDbm < −70 |
-| `lowSnr` | snrDb < 25 |
-| `weakSecurity` | open / wep / TKIP-only / нет PMF на WPA3-claim |
-| `hiddenSsid` | isHidden |
-| `legacyOnly` | max PHY ∈ {a,b,g} |
-| `highUtil` | channelUtilPct ≥ 70 |
-| `dfs` | isDFS (инфо, не ошибка) |
+| id               | Когда                                                       |
+| ---------------- | ----------------------------------------------------------- |
+| `width40on24`    | band24 && width ≥ 40                                        |
+| `overlap24`      | band24 && channel ∉ {1,6,11} (и не JP 14-only special-case) |
+| `crowdedChannel` | N других BSS с overlapping primary, N ≥ 4 (настройка)       |
+| `lowSignal`      | rssiDbm < −70                                               |
+| `lowSnr`         | snrDb < 25                                                  |
+| `weakSecurity`   | open / wep / TKIP-only / нет PMF на WPA3-claim              |
+| `hiddenSsid`     | isHidden                                                    |
+| `legacyOnly`     | max PHY ∈ {a,b,g}                                           |
+| `highUtil`       | channelUtilPct ≥ 70                                         |
+| `dfs`            | isDFS (инфо, не ошибка)                                     |
 
 Не копировать чужие формулировки «Large Group of Networks» и т.п.
 
@@ -719,12 +720,12 @@ Beacon Interval, Streams, Basic/Supported Rates, Stations, Channel Utilization, 
 
 **Где:** компакт в Network Details (selected + same-SSID siblings) и полный tab Signal Strength (все visible BSS).
 
-| Ось | Правила |
-|---|---|
-| X | время, live справа `Now` |
-| Y | если unit dBm: −100…0; если %: 0…100 |
-| Series | одна линия = один BSS |
-| Modes (v1) | Signal / Signal+Noise / SNR |
+| Ось        | Правила                              |
+| ---------- | ------------------------------------ |
+| X          | время, live справа `Now`             |
+| Y          | если unit dBm: −100…0; если %: 0…100 |
+| Series     | одна линия = один BSS                |
+| Modes (v1) | Signal / Signal+Noise / SNR          |
 
 Timescale (секунды видимого окна): `30, 60, 120, 300, 600, 1800`.  
 Shortcuts: `⇧⌘.` / `⇧⌘,`, stepper, ←/→, Space = pause redraw (скан идёт).
@@ -838,14 +839,14 @@ SSID change на том же BSSID (редко) — обновить, не пл�
 
 ### 6.5 Permissions / entitlements / signing
 
-| Требование | Зачем |
-|---|---|
-| `NSLocationWhenInUseUsageDescription` | SSID/BSSID с 10.14, жёстче с 14 |
-| `CLLocationManager` when-in-use | TCC prompt |
-| Location Services ON + checkbox приложения | иначе пустые/redacted scan |
-| Stable Developer ID + Hardened Runtime | иначе TCC «теряет» приложение |
-| Не ad-hoc / не unsigned Python | BSSID часто `nil` |
-| `NSLocalNetworkUsageDescription` | только later (sensors) |
+| Требование                                 | Зачем                           |
+| ------------------------------------------ | ------------------------------- |
+| `NSLocationWhenInUseUsageDescription`      | SSID/BSSID с 10.14, жёстче с 14 |
+| `CLLocationManager` when-in-use            | TCC prompt                      |
+| Location Services ON + checkbox приложения | иначе пустые/redacted scan      |
+| Stable Developer ID + Hardened Runtime     | иначе TCC «теряет» приложение   |
+| Не ad-hoc / не unsigned Python             | BSSID часто `nil`               |
+| `NSLocalNetworkUsageDescription`           | только later (sensors)          |
 
 Приложение **не** читает GPS для UI. Можно не держать continuous location updates после `authorized`.
 
@@ -865,12 +866,12 @@ Sandbox:
 
 ### 6.7 Режимы, которых нет в MVP
 
-| Mode | Суть | Когда |
-|---|---|---|
-| Directed | probe с конкретным SSID, ищем hidden не отключаясь | v1 |
-| Passive / monitor | disconnect, channel dwell, beacon+probe, Radiotap RSSI | later; на Apple silicon ограничено |
-| Remote sensor | Linux box / WLAN Pi | later |
-| pcap/pcapng import | только beacon/probe в таблицу | later |
+| Mode               | Суть                                                   | Когда                              |
+| ------------------ | ------------------------------------------------------ | ---------------------------------- |
+| Directed           | probe с конкретным SSID, ищем hidden не отключаясь     | v1                                 |
+| Passive / monitor  | disconnect, channel dwell, beacon+probe, Radiotap RSSI | later; на Apple silicon ограничено |
+| Remote sensor      | Linux box / WLAN Pi                                    | later                              |
+| pcap/pcapng import | только beacon/probe в таблицу                          | later                              |
 
 ### 6.8 Ошибки скана
 
@@ -887,13 +888,13 @@ Sandbox:
 
 ### 7.1 Copy
 
-| Команда | Результат |
-|---|---|
-| Copy | TSV видимых колонок выбранных строк (без swatch) |
-| Copy BSSID | `A8:9D:21:74:24:3E` |
-| Copy SSID | строка SSID |
-| Copy Details (v1) | key-value text details pane |
-| Copy IE field (v1) | имя + значение из Advanced |
+| Команда            | Результат                                        |
+| ------------------ | ------------------------------------------------ |
+| Copy               | TSV видимых колонок выбранных строк (без swatch) |
+| Copy BSSID         | `A8:9D:21:74:24:3E`                              |
+| Copy SSID          | строка SSID                                      |
+| Copy Details (v1)  | key-value text details pane                      |
+| Copy IE field (v1) | имя + значение из Advanced                       |
 
 ### 7.2 Export CSV
 
@@ -988,22 +989,22 @@ PNG 2x содержимого chart. Drag to Finder / Mail.
 
 ## 9. Что мы НЕ копируем
 
-| Запрещено | Почему | Наша замена |
-|---|---|---|
-| Имя, логотип, иконка, splash «WiFi Explorer» / Intuitibits | бренд | `lv24-Wifi-Explorer`, своя иконка |
-| Слоган, App Store/help copy, уникальные подписи осей | copyright | свой RU/EN copy |
-| Pixel-clone layout, те же иконки lock/filter/gear | trade dress | HIG-native controls |
-| `.wifiexplorer`, UTI конкурента | формат | `.lv24scan` |
-| DSL `dot11.net.*`, 680-field autocomplete | уникальный язык | §3.4 |
-| Trial «Not Activated – N Days Remaining» | чужая коммерция | своя лицензия или open |
-| Скриншоты/ассеты конкурента в бандле | copyright | свои |
-| Точный dBm↔% и «Accurate conversion» как их формула | неизвестный алгоритм | линейная интерполяция, концы в Settings |
-| Их пороги Issues / quality copy | неизвестно / уникальный текст | §2.11 и §4.3, открыто |
-| Эвристики vendor/AP-name «как у них» | неизвестно | IEEE CSV + свои парсеры |
-| Passive dwell 120/60 ms как «наш секрет» из их блога | их реализация | если будем делать — свои константы + измерение |
-| Колоночные профили на 550+ IE как клон Pro 3 | продукт Pro | later, свой профиль |
-| Spectrum-analyzer integration брендов (Wi-Spy, WiPry) | их интеграции | later, свой hardware scope |
-| Любой исходник / реверс приложения | clean room | только public docs + IEEE + Apple |
+| Запрещено                                                  | Почему                        | Наша замена                                    |
+| ---------------------------------------------------------- | ----------------------------- | ---------------------------------------------- |
+| Имя, логотип, иконка, splash «WiFi Explorer» / Intuitibits | бренд                         | `lv24-Wifi-Explorer`, своя иконка              |
+| Слоган, App Store/help copy, уникальные подписи осей       | copyright                     | свой RU/EN copy                                |
+| Pixel-clone layout, те же иконки lock/filter/gear          | trade dress                   | HIG-native controls                            |
+| `.wifiexplorer`, UTI конкурента                            | формат                        | `.lv24scan`                                    |
+| DSL `dot11.net.*`, 680-field autocomplete                  | уникальный язык               | §3.4                                           |
+| Trial «Not Activated – N Days Remaining»                   | чужая коммерция               | своя лицензия или open                         |
+| Скриншоты/ассеты конкурента в бандле                       | copyright                     | свои                                           |
+| Точный dBm↔% и «Accurate conversion» как их формула        | неизвестный алгоритм          | линейная интерполяция, концы в Settings        |
+| Их пороги Issues / quality copy                            | неизвестно / уникальный текст | §2.11 и §4.3, открыто                          |
+| Эвристики vendor/AP-name «как у них»                       | неизвестно                    | IEEE CSV + свои парсеры                        |
+| Passive dwell 120/60 ms как «наш секрет» из их блога       | их реализация                 | если будем делать — свои константы + измерение |
+| Колоночные профили на 550+ IE как клон Pro 3               | продукт Pro                   | later, свой профиль                            |
+| Spectrum-analyzer integration брендов (Wi-Spy, WiPry)      | их интеграции                 | later, свой hardware scope                     |
+| Любой исходник / реверс приложения                         | clean room                    | только public docs + IEEE + Apple              |
 
 **Можно** (общественное достояние / стандарты):
 
@@ -1040,18 +1041,18 @@ PNG 2x содержимого chart. Drag to Finder / Mail.
 
 ## Приложение A. Реализация-ready поведение экранов
 
-| Действие пользователя | Система |
-|---|---|
-| Первый запуск | Onboarding → Location prompt → если OK, auto scan |
-| Location denied | PermissionBlockedView, таблица пустая |
-| Start | queue scan loop ≥ 3 с |
-| Stop | больше не планировать цикл; предложить Save Snapshot (v1) |
-| Клик строки | selection → details + charts |
-| Клик bar/hill | select соответствующий BSS |
-| Band pill `5 GHz` | таблица и spectrum 2.4 скрывают 2.4 строки |
-| Filter `cisco` | contains по vendor/ssid/annotation |
-| Смена unit на dBm | таблица, details, Y-axis без пересчёта сырых dBm |
-| Quit во время скана | stop, v1: «Сохранить сессию?» |
+| Действие пользователя | Система                                                   |
+| --------------------- | --------------------------------------------------------- |
+| Первый запуск         | Onboarding → Location prompt → если OK, auto scan         |
+| Location denied       | PermissionBlockedView, таблица пустая                     |
+| Start                 | queue scan loop ≥ 3 с                                     |
+| Stop                  | больше не планировать цикл; предложить Save Snapshot (v1) |
+| Клик строки           | selection → details + charts                              |
+| Клик bar/hill         | select соответствующий BSS                                |
+| Band pill `5 GHz`     | таблица и spectrum 2.4 скрывают 2.4 строки                |
+| Filter `cisco`        | contains по vendor/ssid/annotation                        |
+| Смена unit на dBm     | таблица, details, Y-axis без пересчёта сырых dBm          |
+| Quit во время скана   | stop, v1: «Сохранить сессию?»                             |
 
 ## Приложение B. Публичные источники (не копировать текст)
 

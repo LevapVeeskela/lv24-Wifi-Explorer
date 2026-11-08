@@ -2,11 +2,11 @@
 
 Scan UI strings for LV24 WiFi Explorer Flutter clients, aligned with **lv24 city mobile** localization layout:
 
-| Donor (city app) | This package |
-|------------------|--------------|
-| `mobile/app/l10n.yaml` | `l10n.yaml` |
-| `lib/core/l10n/app_*.arb` | `lib/core/l10n/app_en.arb`, `app_ru.arb` |
-| `lib/core/l10n/generated/` | `lib/core/l10n/generated/` (committed) |
+| Donor (city app)           | This package                             |
+| -------------------------- | ---------------------------------------- |
+| `mobile/app/l10n.yaml`     | `l10n.yaml`                              |
+| `lib/core/l10n/app_*.arb`  | `lib/core/l10n/app_en.arb`, `app_ru.arb` |
+| `lib/core/l10n/generated/` | `lib/core/l10n/generated/` (committed)   |
 
 - **Locales:** `ru` (product default), `en`. No `zh` in this package.
 - **Fallback:** unknown language codes resolve to `ru` via [ScanLocale] and [ScanL10n.fromLanguageCode].

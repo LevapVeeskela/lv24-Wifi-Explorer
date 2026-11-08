@@ -1,0 +1,22 @@
+{
+  "name": "@lv24/wifi-web",
+  "version": "0.1.0",
+  "private": false,
+  "description": "LV24 WiFi Explorer web UI (React + MUI), built by the repo-root Vite config.",
+  "license": "MIT",
+  "author": "LV24",
+  "files": [
+    "dist",
+    "src",
+    "index.html",
+    "README.md"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config ../../vite.config.ts",
+    "build": "vite build --config ../../vite.config.ts"
+  },
+  "dependencies": {
+    "@lv24/wifi-core": "0.1.0"
+  }
+}

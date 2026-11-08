@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lv24_sunset_theme/lv24_sunset_theme.dart';
 
 import '../features/appearance/appearance.dart';
+import '../features/scan_columns/scan_columns.dart';
 import '../features/scan_settings/scan_settings.dart';
 import '../pages/scan_workbench/scan_workbench_page.dart';
 import '../shared/i18n/app_localizations.dart';
@@ -61,7 +62,7 @@ class _Lv24AppState extends State<Lv24App> {
               },
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: scanSupportedLocales,
-              home: const ScanWorkbenchPage(),
+              home: const PersistedScanColumns(child: ScanWorkbenchPage()),
             );
           },
         ),

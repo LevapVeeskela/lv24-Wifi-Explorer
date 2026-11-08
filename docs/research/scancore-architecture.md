@@ -7,12 +7,12 @@
 
 ## Sibling stack check (`/Users/veeskela/Projects`)
 
-| Area | Stack | Path |
-|------|--------|------|
-| LV24 web | Vite, React, TypeScript, **MUI Material ~9** + **MUI X 8** (Data Grid Pro, Charts community) | `/Users/veeskela/Projects/lv24/main/frontend` |
-| LV24 mobile | **Flutter** (iOS/Android) | `/Users/veeskela/Projects/lv24/main/mobile` |
-| LV24 backend | Node/Nest monorepo | `/Users/veeskela/Projects/lv24/main` |
-| Other | Rust CLI/DB (`ferrum-enterprise`), IMS web | no desktop shell |
+| Area         | Stack                                                                                        | Path                                          |
+| ------------ | -------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| LV24 web     | Vite, React, TypeScript, **MUI Material ~9** + **MUI X 8** (Data Grid Pro, Charts community) | `/Users/veeskela/Projects/lv24/main/frontend` |
+| LV24 mobile  | **Flutter** (iOS/Android)                                                                    | `/Users/veeskela/Projects/lv24/main/mobile`   |
+| LV24 backend | Node/Nest monorepo                                                                           | `/Users/veeskela/Projects/lv24/main`          |
+| Other        | Rust CLI/DB (`ferrum-enterprise`), IMS web                                                   | no desktop shell                              |
 
 **Finding:** No existing **Electron**, **Tauri**, or **native SwiftUI desktop** app in the workspace. The natural UI alignment is **React + MUI + TypeScript + Yarn/Vite**, matching LV24 frontend conventions (license pin for X Pro if you reuse Data Grid Pro).
 
@@ -47,12 +47,12 @@ flowchart TB
 
 **Why this over alternatives**
 
-| Option | Fit for LV24 | macOS Wi‑Fi | MUI UI | Verdict |
-|--------|----------------|-------------|--------|---------|
-| **Electron + Swift ScanCore** | Reuses TS/MUI/Vite skills from `lv24/main/frontend` | CoreWLAN in signed helper inside `.app` (proven pattern, e.g. [macwifi-cli](https://github.com/jaisonerick/macwifi-cli)) | Native in renderer | **Recommended** |
-| Tauri + Rust `corewlan` | New Rust desktop stack (only Rust in workspace is `ferrum-enterprise` CLI) | Possible via Swift bridge crates | Web UI OK | Viable but **does not match** LV24 UI toolchain |
-| Pure SwiftUI | Best macOS integration | Direct CoreWLAN | No MUI; rewrite charts/table | Good macOS-only v1, **poor** LV24 UI reuse |
-| Electron-only (no native) | Simple | **Fails** on modern macOS for BSSID/SSID without signed native code + Location | OK | **Not viable** |
+| Option                        | Fit for LV24                                                               | macOS Wi‑Fi                                                                                                              | MUI UI                       | Verdict                                         |
+| ----------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------- | ----------------------------------------------- |
+| **Electron + Swift ScanCore** | Reuses TS/MUI/Vite skills from `lv24/main/frontend`                        | CoreWLAN in signed helper inside `.app` (proven pattern, e.g. [macwifi-cli](https://github.com/jaisonerick/macwifi-cli)) | Native in renderer           | **Recommended**                                 |
+| Tauri + Rust `corewlan`       | New Rust desktop stack (only Rust in workspace is `ferrum-enterprise` CLI) | Possible via Swift bridge crates                                                                                         | Web UI OK                    | Viable but **does not match** LV24 UI toolchain |
+| Pure SwiftUI                  | Best macOS integration                                                     | Direct CoreWLAN                                                                                                          | No MUI; rewrite charts/table | Good macOS-only v1, **poor** LV24 UI reuse      |
+| Electron-only (no native)     | Simple                                                                     | **Fails** on modern macOS for BSSID/SSID without signed native code + Location                                           | OK                           | **Not viable**                                  |
 
 **ScanCore shape (pick one; both stay inside `MyApp.app/Contents/Resources/`):**
 
@@ -69,16 +69,16 @@ flowchart TB
 
 ### Supported API surface (no private entitlements)
 
-| Capability | API | Notes |
-|------------|-----|--------|
-| Active scan | `CWInterface.scanForNetworks(withName:includeHidden:)` | Blocking ~**2–4 s** per invocation ([Apple `CWInterface`](https://developer.apple.com/documentation/corewlan/cwinterface)) |
-| Cached results | `cachedScanResults()` | **Does not** trigger scan; use between full scans |
-| Live association | `CWWiFiClient` + `CWEventDelegate` | RSSI/noise/SSID for **connected** network; event-driven refresh |
-| Per-BSS fields | `CWNetwork`: `ssid`, `bssid`, `rssiValue`, `noiseMeasurement`, `wlanChannel` | SSID/BSSID gated by **Location** ([forum r. 108641482](https://developer.apple.com/forums/thread/732431)) |
-| Channel | `CWChannel`: `channelNumber`, `channelBand`, `channelWidth` | Band/width from enums (`CWChannelBand`, `CWChannelWidth` incl. 80/160 MHz) |
-| PHY | `supportsPHYMode(_:)` over `CWPHYMode` (a/b/g/n/ac/ax/be) | **Advertised** modes, not a single “current PHY” field on scan results |
-| Security | `supportsSecurity(_:)` over `CWSecurity` | **Supported** types; derive display string (Open/WEP/WPA2/WPA3/Enterprise…) |
-| Interface meta | `hardwareAddress()`, `countryCode()`, `noiseMeasurement()` on interface | Useful for “my radio” panel |
+| Capability       | API                                                                          | Notes                                                                                                                      |
+| ---------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Active scan      | `CWInterface.scanForNetworks(withName:includeHidden:)`                       | Blocking ~**2–4 s** per invocation ([Apple `CWInterface`](https://developer.apple.com/documentation/corewlan/cwinterface)) |
+| Cached results   | `cachedScanResults()`                                                        | **Does not** trigger scan; use between full scans                                                                          |
+| Live association | `CWWiFiClient` + `CWEventDelegate`                                           | RSSI/noise/SSID for **connected** network; event-driven refresh                                                            |
+| Per-BSS fields   | `CWNetwork`: `ssid`, `bssid`, `rssiValue`, `noiseMeasurement`, `wlanChannel` | SSID/BSSID gated by **Location** ([forum r. 108641482](https://developer.apple.com/forums/thread/732431))                  |
+| Channel          | `CWChannel`: `channelNumber`, `channelBand`, `channelWidth`                  | Band/width from enums (`CWChannelBand`, `CWChannelWidth` incl. 80/160 MHz)                                                 |
+| PHY              | `supportsPHYMode(_:)` over `CWPHYMode` (a/b/g/n/ac/ax/be)                    | **Advertised** modes, not a single “current PHY” field on scan results                                                     |
+| Security         | `supportsSecurity(_:)` over `CWSecurity`                                     | **Supported** types; derive display string (Open/WEP/WPA2/WPA3/Enterprise…)                                                |
+| Interface meta   | `hardwareAddress()`, `countryCode()`, `noiseMeasurement()` on interface      | Useful for “my radio” panel                                                                                                |
 
 ### Explicitly **not** supported paths (avoid)
 
@@ -127,13 +127,13 @@ Dev workflow
 
 ## 3. Fallback strategies
 
-| Tier | Trigger | Behavior |
-|------|---------|----------|
-| **A – Full** | Location authorized + scan succeeds | All fields populated |
-| **B – Cached** | Scan throttled / in-flight | Serve `cachedScanResults()` with `stale: true` |
-| **C – Connected only** | Scan failed; user on Wi‑Fi | Single row from `interface()` SSID/BSSID/RSSI/noise/channel |
-| **D – Location denied** | TCC denied | Show channel/RSSI/noise if API returns them; mask SSID/BSSID; prompt to fix permissions |
-| **E – Demo / fixture** | `--demo` flag or first-run tutorial | Replay bundled `fixtures/scan-snapshot.json`; label UI **“Demo data”** |
+| Tier                    | Trigger                                                 | Behavior                                                                                             |
+| ----------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **A – Full**            | Location authorized + scan succeeds                     | All fields populated                                                                                 |
+| **B – Cached**          | Scan throttled / in-flight                              | Serve `cachedScanResults()` with `stale: true`                                                       |
+| **C – Connected only**  | Scan failed; user on Wi‑Fi                              | Single row from `interface()` SSID/BSSID/RSSI/noise/channel                                          |
+| **D – Location denied** | TCC denied                                              | Show channel/RSSI/noise if API returns them; mask SSID/BSSID; prompt to fix permissions              |
+| **E – Demo / fixture**  | `--demo` flag or first-run tutorial                     | Replay bundled `fixtures/scan-snapshot.json`; label UI **“Demo data”**                               |
 | **F – Import (manual)** | User exports from **Wireless Diagnostics** (Apple tool) | Optional future: parse user-provided diagnostic file **locally**—no automation of Apple private CLIs |
 
 **Never implement:** spoofing Location, parsing other users’ traffic, or bundled deprecated `airport`.
@@ -148,24 +148,11 @@ Shared package: `@lv24/wifi-explorer-contract` (used by renderer + main; JSON sc
 /** Physical band derived from CWChannelBand */
 export type WifiBand = '2.4GHz' | '5GHz' | '6GHz' | 'unknown';
 
-export type WifiChannelWidth =
-  | '20MHz'
-  | '40MHz'
-  | '80MHz'
-  | '80+80MHz'
-  | '160MHz'
-  | 'unknown';
+export type WifiChannelWidth = '20MHz' | '40MHz' | '80MHz' | '80+80MHz' | '160MHz' | 'unknown';
 
 /** Highest advertised PHY for display; full list in phyModesSupported */
 export type WifiPhyMode =
-  | '802.11a'
-  | '802.11b'
-  | '802.11g'
-  | '802.11n'
-  | '802.11ac'
-  | '802.11ax'
-  | '802.11be'
-  | 'unknown';
+  '802.11a' | '802.11b' | '802.11g' | '802.11n' | '802.11ac' | '802.11ax' | '802.11be' | 'unknown';
 
 export type WifiSecurityLabel =
   | 'Open'
@@ -243,7 +230,10 @@ export type ScanIpcRequest =
 /** Main → renderer (subscribe) */
 export type ScanIpcEvent =
   | { type: 'scan:snapshot'; payload: ScanSnapshot }
-  | { type: 'permissions:status'; payload: { location: 'authorized' | 'denied' | 'notDetermined' | 'restricted' } }
+  | {
+      type: 'permissions:status';
+      payload: { location: 'authorized' | 'denied' | 'notDetermined' | 'restricted' };
+    }
   | { type: 'helper:status'; payload: { running: boolean; version: string } };
 ```
 
@@ -296,17 +286,17 @@ Align lint/tooling with `lv24/main/frontend` where cheap (oxlint, vitest, MUI li
 
 ## 7. Risks vs WiFi Explorer (parity blockers)
 
-| WiFi Explorer–class feature | Feasibility on public macOS APIs |
-|-----------------------------|----------------------------------|
+| WiFi Explorer–class feature                 | Feasibility on public macOS APIs                                                                                                        |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | **Spectrum analyzer / channel utilization** | **Blocked** — monitor mode removed from public CoreWLAN (`supportsMonitorMode` removed); needs hardware analyzer or non-App-Store hacks |
-| **Remote capture / 802.11 decode** | **Blocked in-app** — use external Wireshark; BPF capture is separate product surface |
-| **Sub-ms RSSI streaming** | **Limited** — scan rate ~0.3–0.5 Hz; connected link RSSI via events is faster but one BSS only |
-| **Exact negotiated cipher / PMF / AKM** | **Partial** — only `supportsSecurity` flags on scan results |
-| **6 GHz / multi-link detail** | **Variable** — depends on OS/driver exposing via `CWNetwork`; test on Apple Silicon + Tahoe |
-| **Hidden SSID discovery** | **OK** with `includeHidden: true`; may still miss some probes |
-| **Rogue / evil twin automation** | **Policy** — display only; no offensive tooling |
-| **Location denied environments** | **Degraded** — enterprise-locked Macs may block Location for non-MDM apps |
-| **App Store vs direct** | Sandbox + review may constrain helper design |
+| **Remote capture / 802.11 decode**          | **Blocked in-app** — use external Wireshark; BPF capture is separate product surface                                                    |
+| **Sub-ms RSSI streaming**                   | **Limited** — scan rate ~0.3–0.5 Hz; connected link RSSI via events is faster but one BSS only                                          |
+| **Exact negotiated cipher / PMF / AKM**     | **Partial** — only `supportsSecurity` flags on scan results                                                                             |
+| **6 GHz / multi-link detail**               | **Variable** — depends on OS/driver exposing via `CWNetwork`; test on Apple Silicon + Tahoe                                             |
+| **Hidden SSID discovery**                   | **OK** with `includeHidden: true`; may still miss some probes                                                                           |
+| **Rogue / evil twin automation**            | **Policy** — display only; no offensive tooling                                                                                         |
+| **Location denied environments**            | **Degraded** — enterprise-locked Macs may block Location for non-MDM apps                                                               |
+| **App Store vs direct**                     | Sandbox + review may constrain helper design                                                                                            |
 
 **Realistic v1 parity:** Neighborhood table, signal/noise charts, channel/band/width/PHY/security columns, vendor column, live refresh, connected-BSS detail panel—**not** spectrum/w sniffing/monitor mode.
 

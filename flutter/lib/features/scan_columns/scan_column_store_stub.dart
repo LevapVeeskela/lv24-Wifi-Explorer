@@ -5,7 +5,7 @@ import 'scan_column_storage_key.dart';
 
 /// In-memory fallback when platform file IO is unavailable.
 class ScanColumnStore {
-  ScanColumnStore();
+  ScanColumnStore({Object? file});
 
   String? _json;
 

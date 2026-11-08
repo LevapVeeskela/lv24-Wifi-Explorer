@@ -16,18 +16,18 @@ So the “best template” is the **closest Vite + MUI + MUI X sibling**, plus s
 
 ## Inventory (what exists where)
 
-| Pattern | Found? | Location |
-|--------|--------|----------|
-| `lv24-*` package names | Yes | `lv24-identity`, `lv24-docs` |
-| Vite + React 19 + TS 5.9 | Yes | `lv24/main/frontend`, `IMS/main/frontend` |
-| MUI Material **9.2** + X **8.11** + `@mui/x-license` | Yes | both frontends above |
-| `@mui/x-charts` | **Only lv24 city FE** | `lv24/main/frontend` (`HostMonitorPage` `LineChart`) |
-| `@mui/x-data-grid-pro` | Yes | lv24 + IMS |
-| MUI **7** (no X) | Yes | `lv24/main/docs/docs-app` (ESLint stack—not a good desktop donor) |
-| `electron-vite` / `electron-builder` / `electron-builder.yml` | **None** | — |
-| GitHub Actions CI | **One workflow** | `/Users/veeskela/Projects/lv24-identity/.github/workflows/ci.yml` |
-| macOS `.entitlements` (location/network) | **None for desktop** | closest: Flutter `Info.plist` location strings under `lv24/main/mobile/app/ios/` |
-| Tauri | **None** | — |
+| Pattern                                                       | Found?                | Location                                                                         |
+| ------------------------------------------------------------- | --------------------- | -------------------------------------------------------------------------------- |
+| `lv24-*` package names                                        | Yes                   | `lv24-identity`, `lv24-docs`                                                     |
+| Vite + React 19 + TS 5.9                                      | Yes                   | `lv24/main/frontend`, `IMS/main/frontend`                                        |
+| MUI Material **9.2** + X **8.11** + `@mui/x-license`          | Yes                   | both frontends above                                                             |
+| `@mui/x-charts`                                               | **Only lv24 city FE** | `lv24/main/frontend` (`HostMonitorPage` `LineChart`)                             |
+| `@mui/x-data-grid-pro`                                        | Yes                   | lv24 + IMS                                                                       |
+| MUI **7** (no X)                                              | Yes                   | `lv24/main/docs/docs-app` (ESLint stack—not a good desktop donor)                |
+| `electron-vite` / `electron-builder` / `electron-builder.yml` | **None**              | —                                                                                |
+| GitHub Actions CI                                             | **One workflow**      | `/Users/veeskela/Projects/lv24-identity/.github/workflows/ci.yml`                |
+| macOS `.entitlements` (location/network)                      | **None for desktop**  | closest: Flutter `Info.plist` location strings under `lv24/main/mobile/app/ios/` |
+| Tauri                                                         | **None**              | —                                                                                |
 
 **`package.json` naming in ecosystem:** standalone products use **`lv24-<product>`** (e.g. `"name": "lv24-identity"`, `"name": "lv24-docs"`). City FE is still `"name": "frontend"` inside monorepo; IMS uses `"ims-frontend"`.
 
@@ -47,15 +47,15 @@ So the “best template” is the **closest Vite + MUI + MUI X sibling**, plus s
 4. **Documented MUI license + Docker fail-closed** in lv24 ops (`infra/frontend.Dockerfile`, `infra/.env.example` comments)—even if Wifi Explorer skips Docker, the env contract is the house standard.
 5. **Identity docs already assume Electron PKCE clients** (`lv24-identity/docs/ARCHITECTURE.md`)—Wifi Explorer fits the lv24 product line, not IMS.
 
-**What it does *not* give you:** Electron main/preload, `electron-builder`, macOS entitlements, or CI for a desktop artifact—you must add those (historically they lived in absent `google-parser` repos).
+**What it does _not_ give you:** Electron main/preload, `electron-builder`, macOS entitlements, or CI for a desktop artifact—you must add those (historically they lived in absent `google-parser` repos).
 
 ### Secondary borrowings (not the main clone root)
 
-| Donor | Take |
-|-------|------|
-| `/Users/veeskela/Projects/IMS/main/frontend` | `/Users/veeskela/Projects/IMS/main/frontend/src/shared/lib/mui/license.ts` + `main.tsx` calling `applyMuiXLicense()` **before** render (cleaner for a desktop app that always uses Pro grids/charts, vs lv24’s license only on first `AdminDataGridPro` import). |
-| `/Users/veeskela/Projects/lv24-identity` | Repo shape: root `package.json` `"name": "lv24-…"`, `.gitignore` (`.env`, `.env.local`, `*.pem`), `.github/workflows/ci.yml` as a **skeleton** (adapt to `yarn check` + electron unit tests). |
-| `/Users/veeskela/Projects/lv24/main/mobile/app/ios/Runner/Info.plist` | **Concept only** for `NSLocationWhenInUseUsageDescription` when you add macOS plist/entitlements for WiFi/geo-adjacent APIs—not copy verbatim. |
+| Donor                                                                 | Take                                                                                                                                                                                                                                                             |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/Users/veeskela/Projects/IMS/main/frontend`                          | `/Users/veeskela/Projects/IMS/main/frontend/src/shared/lib/mui/license.ts` + `main.tsx` calling `applyMuiXLicense()` **before** render (cleaner for a desktop app that always uses Pro grids/charts, vs lv24’s license only on first `AdminDataGridPro` import). |
+| `/Users/veeskela/Projects/lv24-identity`                              | Repo shape: root `package.json` `"name": "lv24-…"`, `.gitignore` (`.env`, `.env.local`, `*.pem`), `.github/workflows/ci.yml` as a **skeleton** (adapt to `yarn check` + electron unit tests).                                                                    |
+| `/Users/veeskela/Projects/lv24/main/mobile/app/ios/Runner/Info.plist` | **Concept only** for `NSLocationWhenInUseUsageDescription` when you add macOS plist/entitlements for WiFi/geo-adjacent APIs—not copy verbatim.                                                                                                                   |
 
 **Runner-up:** `/Users/veeskela/Projects/IMS/main/frontend` if you want a **minimal** staff SPA (no charts, simpler grids, `@/` alias only)—faster to strip, but you’d **add `@mui/x-charts` from scratch** and lose lv24’s chart + admin grid policy examples.
 
@@ -94,12 +94,12 @@ So the “best template” is the **closest Vite + MUI + MUI X sibling**, plus s
 
 ## Env files and secrets (house pattern)
 
-| Layer | lv24 city | IMS | lv24-identity |
-|-------|-----------|-----|----------------|
-| Local secrets | `frontend/.env`, `frontend/.env.local` (gitignored via `*.local` + root rules) | same | `.env`, `.env.local` at repo root + `apps/api/.env` |
-| Tracked template | `frontend/.env.example` (no license line—see infra) | `infra/.env.example` with empty `VITE_MUI_LICENSE_KEY=` | `apps/api/.env.example` |
-| MUI key var | `VITE_MUI_LICENSE_KEY` | same | N/A |
-| CI/build fail if key empty | `infra/frontend.Dockerfile` RUN guard + compose `:?` | `IMS/main/frontend/Dockerfile` + compose | N/A |
+| Layer                      | lv24 city                                                                      | IMS                                                     | lv24-identity                                       |
+| -------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------- | --------------------------------------------------- |
+| Local secrets              | `frontend/.env`, `frontend/.env.local` (gitignored via `*.local` + root rules) | same                                                    | `.env`, `.env.local` at repo root + `apps/api/.env` |
+| Tracked template           | `frontend/.env.example` (no license line—see infra)                            | `infra/.env.example` with empty `VITE_MUI_LICENSE_KEY=` | `apps/api/.env.example`                             |
+| MUI key var                | `VITE_MUI_LICENSE_KEY`                                                         | same                                                    | N/A                                                 |
+| CI/build fail if key empty | `infra/frontend.Dockerfile` RUN guard + compose `:?`                           | `IMS/main/frontend/Dockerfile` + compose                | N/A                                                 |
 
 For **Wifi Explorer (Electron)**, mirror lv24/IMS: **tracked** `.env.example` with commented `VITE_MUI_LICENSE_KEY=`; real key only in `.env.local`; optional `electron-builder` env for signing secrets (`APPLE_ID`, `CSC_LINK`, etc.) **never committed**. Reuse lv24-identity `.gitignore` lines for `.env`, `*.pem`, `*.key`.
 
@@ -226,7 +226,7 @@ From `/Users/veeskela/Projects/lv24/main/frontend/package.json`:
 - `oxlint`, `oxfmt`, `vitest` (tooling parity)
 - `resolutions` block for `@mui/x-data-grid*` / `@mui/x-license`
 
-Add net-new: `electron`, `electron-builder` *or* `electron-vite`, `@types/node` for main process.
+Add net-new: `electron`, `electron-builder` _or_ `electron-vite`, `@types/node` for main process.
 
 ---
 

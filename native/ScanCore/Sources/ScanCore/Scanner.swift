@@ -12,9 +12,12 @@ final class Scanner: NSObject, CWEventDelegate {
     private let lock = NSLock()
     private var preferredInterface: String?
     private var includeHidden = true
+    /// Directed scan target: `scanForNetworks(withName:)` probes only this SSID.
+    private var directedSsid: String?
     private var userInterval: TimeInterval = ScanMath.scanIntervalFloor
     private var lastDuration: TimeInterval = ScanMath.scanIntervalFloor
     private var scanning = false
+    private var loopAlive = false
     private var stopRequested = false
     private var inFlight = false
     private var demoMode = false
@@ -60,6 +63,21 @@ final class Scanner: NSObject, CWEventDelegate {
         lock.unlock()
     }
 
+    /// Empty string or nil clears directed mode (full active scan).
+    func setDirectedSsid(_ value: String?) {
+        lock.lock()
+        let normalized = (value?.isEmpty == false) ? value : nil
+        directedSsid = normalized
+        lock.unlock()
+        log(normalized == nil ? "directed scan disabled" : "directed scan enabled")
+    }
+
+    var isDirected: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return directedSsid != nil
+    }
+
     func setIntervalMs(_ ms: Int) {
         lock.lock()
         userInterval = max(ScanMath.scanIntervalFloor, Double(ms) / 1000)
@@ -68,11 +86,12 @@ final class Scanner: NSObject, CWEventDelegate {
 
     func start() {
         lock.lock()
-        if scanning {
+        if scanning || loopAlive {
             lock.unlock()
             return
         }
         scanning = true
+        loopAlive = true
         stopRequested = false
         lock.unlock()
         scanQueue.async { [weak self] in
@@ -115,6 +134,7 @@ final class Scanner: NSObject, CWEventDelegate {
         }
         lock.lock()
         scanning = false
+        loopAlive = false
         lock.unlock()
     }
 
@@ -124,6 +144,7 @@ final class Scanner: NSObject, CWEventDelegate {
         let hidden = includeHidden
         let ifaceName = preferredInterface
         let demo = demoMode
+        let directed = directedSsid
         scanGeneration += 1
         let generation = scanGeneration
         lock.unlock()
@@ -199,10 +220,15 @@ final class Scanner: NSObject, CWEventDelegate {
         var rawNetworks: Set<CWNetwork> = []
 
         do {
-            rawNetworks = try iface.scanForNetworks(withName: nil, includeHidden: hidden)
+            rawNetworks = try iface.scanForNetworks(withName: directed, includeHidden: hidden)
         } catch {
-            let mapped = mapScanError(error)
-            if let cached = iface.cachedScanResults(), !cached.isEmpty {
+            let mapped = mapScanError(error, directedSsid: directed)
+            // Cache holds every BSS; a directed scan must not leak unrelated rows.
+            let cached = (iface.cachedScanResults() ?? []).filter { network in
+                guard let directed else { return true }
+                return network.ssid == directed
+            }
+            if !cached.isEmpty {
                 rawNetworks = cached
                 source = SnapshotSource.cache
                 stale = true
@@ -422,19 +448,20 @@ final class Scanner: NSObject, CWEventDelegate {
         return nil
     }
 
-    private func mapScanError(_ error: Error) -> ScanErrorPayload {
+    private func mapScanError(_ error: Error, directedSsid: String? = nil) -> ScanErrorPayload {
         let ns = error as NSError
         let code = ns.code
+        let mode = directedSsid == nil ? "" : " (directed SSID)"
         if code == -3905 {
             return ScanErrorPayload(
                 code: ScanErrorCode.timeout,
-                message: "scanForNetworks timed out; serving cache if available.",
+                message: "scanForNetworks\(mode) timed out; serving cache if available.",
                 recoverable: true
             )
         }
         return ScanErrorPayload(
             code: ScanErrorCode.scanFailed,
-            message: "scanForNetworks failed (\(code)).",
+            message: "scanForNetworks\(mode) failed (\(code)).",
             recoverable: true
         )
     }

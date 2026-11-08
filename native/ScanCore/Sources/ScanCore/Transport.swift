@@ -100,6 +100,8 @@ final class LineConnection {
 
 final class JSONLinesHub {
     private let queue = DispatchQueue(label: "com.lv24.wifi-explorer.scancore.hub")
+    private let writeQueue = DispatchQueue(label: "com.lv24.wifi-explorer.scancore.stdout")
+    private let queueKey = DispatchSpecificKey<UInt8>()
     private var connections: [ObjectIdentifier: LineConnection] = [:]
     private var listenSources: [DispatchSourceRead] = []
     private var listenFds: [Int32] = []
@@ -112,6 +114,7 @@ final class JSONLinesHub {
 
     init(token: String?) {
         self.token = token
+        queue.setSpecific(key: queueKey, value: 1)
         signal(SIGPIPE, SIG_IGN)
     }
 
@@ -194,13 +197,7 @@ final class JSONLinesHub {
 
     func broadcast<T: Encodable>(_ value: T) {
         guard let data = JSONLines.line(value) else { return }
-        if stdioEnabled {
-            data.withUnsafeBytes { raw in
-                if let base = raw.baseAddress {
-                    _ = Darwin.write(STDOUT_FILENO, base, data.count)
-                }
-            }
-        }
+        writeStdoutData(data)
         broadcastSockets(data: data)
     }
 
@@ -219,21 +216,45 @@ final class JSONLinesHub {
 
     func writeStdout<T: Encodable>(_ value: T) {
         guard let data = JSONLines.line(value) else { return }
-        data.withUnsafeBytes { raw in
-            if let base = raw.baseAddress {
-                _ = Darwin.write(STDOUT_FILENO, base, data.count)
+        writeStdoutData(data)
+    }
+
+    /// Serialized full writes: JSONL framing must never interleave between queues.
+    private func writeStdoutData(_ data: Data) {
+        writeQueue.async {
+            guard self.stdioEnabled else { return }
+            data.withUnsafeBytes { raw in
+                guard let base = raw.baseAddress else { return }
+                var sent = 0
+                while sent < data.count {
+                    let n = Darwin.write(STDOUT_FILENO, base.advanced(by: sent), data.count - sent)
+                    if n <= 0 {
+                        if errno == EINTR { continue }
+                        return
+                    }
+                    sent += n
+                }
             }
         }
     }
 
     func shutdown() {
         FileHandle.standardInput.readabilityHandler = nil
-        queue.sync {
-            connections.values.forEach { $0.disconnect() }
-            connections.removeAll()
-            listenSources.forEach { $0.cancel() }
-            listenSources.removeAll()
-            listenFds.removeAll()
+        let cleanup = {
+            for conn in self.connections.values {
+                conn.disconnect()
+            }
+            self.connections.removeAll()
+            for source in self.listenSources {
+                source.cancel()
+            }
+            self.listenSources.removeAll()
+            self.listenFds.removeAll()
+        }
+        if DispatchQueue.getSpecific(key: queueKey) != nil {
+            cleanup()
+        } else {
+            queue.sync(execute: cleanup)
         }
         if let unixPath {
             unlink(unixPath)

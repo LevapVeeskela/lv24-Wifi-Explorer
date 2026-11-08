@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  Location entitlement: Apple requires location authorization for Wi‑Fi scan APIs
-  (CoreWLAN). The TCC prompt string is merged via electron-builder mac.extendInfo.
+  Hardened-runtime entitlements for the Electron app (the ScanCore helper has
+  its own native/ScanCore/ScanCore.entitlements and is signed separately).
 
   NSLocationWhenInUseUsageDescription:
   LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks
   scanned on this Mac (Apple requirement for Wi‑Fi scan APIs).
+  The TCC prompt string is merged via electron-builder mac.extendInfo.
+
+  Intentionally NOT present:
+  - com.apple.security.cs.disable-library-validation: the app ships no
+    unsigned native modules (.node/dylibs); the helper runs as a child
+    process. Re-add only if a native Electron module is introduced.
+  - com.apple.security.get-task-allow / allow-dyld-environment-variables:
+    debug-only entitlements, never for distribution.
 -->
 <plist version="1.0">
 <dict>
+  <!-- V8/Metal JIT requirements of Electron under hardened runtime. -->
   <key>com.apple.security.cs.allow-jit</key>
   <true/>
   <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
-  <true/>
-  <key>com.apple.security.cs.disable-library-validation</key>
   <true/>
   <key>com.apple.security.network.client</key>
   <true/>

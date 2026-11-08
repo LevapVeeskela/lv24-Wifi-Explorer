@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lv24_wifi_explorer/features/scan_columns/scan_column_id.dart';
 import 'package:lv24_wifi_explorer/features/scan_columns/scan_column_persistence.dart';
 import 'package:lv24_wifi_explorer/features/scan_columns/scan_column_profile.dart';
-import 'package:lv24_wifi_explorer/features/scan_columns/scan_column_store_stub.dart';
+import 'package:lv24_wifi_explorer/features/scan_columns/scan_column_store.dart';
 import 'package:lv24_wifi_explorer/features/scan_columns/scan_column_visibility.dart';
 import 'package:lv24_wifi_explorer/features/scan_columns/scan_columns_controller.dart';
 
@@ -20,7 +22,9 @@ void main() {
   });
 
   test('round-trips profiles through stub store', () async {
-    final store = ScanColumnStore();
+    final store = ScanColumnStore(
+      file: File('${Directory.systemTemp.path}/lv24-columns-test-${DateTime.now().microsecondsSinceEpoch}.json'),
+    );
     final visibility = ScanColumnVisibility.defaults().withVisible(
       ScanColumnId.vendor,
       false,
@@ -47,7 +51,9 @@ void main() {
   });
 
   test('controller saves and switches named profiles', () async {
-    final store = ScanColumnStore();
+    final store = ScanColumnStore(
+      file: File('${Directory.systemTemp.path}/lv24-columns-test-${DateTime.now().microsecondsSinceEpoch}.json'),
+    );
     final controller = ScanColumnsController(store: store);
     await controller.load();
 

@@ -8,14 +8,14 @@ LV24 WiFi Explorer splits **UI + domain** (TypeScript) from **macOS Wi‑Fi APIs
 
 ```text
 ┌─────────────────────────────────────────────────────────┐
-│  Renderer (Vite + React + MUI)                          │
-│  src/pages, widgets, features, domain, scan mappers     │
+│  Renderer (packages/web, Vite + React + MUI)            │
+│  pages/widgets/features; core from packages/core        │
 │  window.wifiExplorer ← preload contextBridge            │
 └───────────────────────────┬─────────────────────────────┘
                             │ IPC invoke + events
 ┌───────────────────────────▼─────────────────────────────┐
-│  Electron main (electron/main.ts, scanState.ts)        │
-│  Spawn ScanCore, attach OUI, forward snapshots          │
+│  Electron main (packages/desktop)                       │
+│  Provider lifecycle + IPC (OUI resolved in renderer)    │
 └───────────────────────────┬─────────────────────────────┘
                             │ JSON Lines (stdio + optional UDS)
 ┌───────────────────────────▼─────────────────────────────┐
@@ -26,15 +26,17 @@ LV24 WiFi Explorer splits **UI + domain** (TypeScript) from **macOS Wi‑Fi APIs
 
 **Division of labor**
 
-| Layer | Owns |
-|-------|------|
-| ScanCore | Raw `ScanSnapshot`: `CoreWlanNetworkRecord[]`, `AssociatedLink`, `location`, timing, `source`, errors |
-| Electron main | Process lifecycle, OUI prefix map, demo/fixture loop, IPC to renderer |
-| Renderer + `src/scan/` | `mapObservedBss`, merge, filters, charts, grid rows |
+| Layer              | Owns                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------ |
+| `packages/core`    | Domain types, mapping, IE decode, merge/filters/issues (no platform APIs)            |
+| `packages/backend` | Provider lifecycle and normalized `ScanSnapshotPayload` for macOS/Linux/Windows/demo |
+| `packages/desktop` | Electron window/IPC/security, provider + demo fallback, packaging                    |
+| `packages/web`     | Grid, filters, charts, details; OUI registry and i18n                                |
+| `packages/cli`     | Headless scan/export for CI and all OS                                               |
 
 Bundled artifact: `ScanCore.app` copied by `electron-builder.yml` into app resources.
 
-Build helper: `pnpm run build:scancore` → `native/ScanCore/.build/ScanCore.app`.
+Build helper: `yarn build:scancore` → `native/ScanCore/.build/ScanCore.app` (universal arm64+x86_64 when SwiftPM supports it).
 
 ---
 
@@ -51,33 +53,33 @@ Details: `native/ScanCore/README.md`.
 
 ## 3. IPC — renderer ↔ main
 
-Preload: `electron/preload.ts` exposes `window.wifiExplorer`.
+Preload: `packages/desktop/src/preload.ts` exposes `window.wifiExplorer`.
 
 ### 3.1 Invoke (renderer → main)
 
-| Channel | Payload | Returns |
-|---------|---------|---------|
-| `scan:start` | — | `{ ok: true }` or `{ ok: false, error }` |
-| `scan:stop` | — | `{ ok: true }` |
-| `scan:setIntervalMs` | `{ ms: number }` | `{ ok, intervalMs }` (floor 3000 ms in main) |
-| `permissions:query` | — | `{ location: string, demoMode: boolean }` |
-| `permissions:openSettings` | — | `{ ok: true }` (macOS Location privacy URL) |
-| `demo:enable` | — | `{ ok, demoMode: true }` |
+| Channel                    | Payload          | Returns                                      |
+| -------------------------- | ---------------- | -------------------------------------------- |
+| `scan:start`               | —                | `{ ok: true }` or `{ ok: false, error }`     |
+| `scan:stop`                | —                | `{ ok: true }`                               |
+| `scan:setIntervalMs`       | `{ ms: number }` | `{ ok, intervalMs }` (floor 3000 ms in main) |
+| `permissions:query`        | —                | `{ location: string, demoMode: boolean }`    |
+| `permissions:openSettings` | —                | `{ ok: true }` (macOS Location privacy URL)  |
+| `demo:enable`              | —                | `{ ok, demoMode: true }`                     |
 
 ### 3.2 Events (main → renderer)
 
-| Channel | Payload |
-|---------|---------|
-| `scan:snapshot` | ScanCore payload + enrichments (see below) |
-| `permissions:status` | `{ location, demoMode }` |
+| Channel              | Payload                                    |
+| -------------------- | ------------------------------------------ |
+| `scan:snapshot`      | ScanCore payload + enrichments (see below) |
+| `permissions:status` | `{ location, demoMode }`                   |
 
 ### 3.3 `scan:snapshot` enrichments (main)
 
-| Field | When |
-|-------|------|
-| `source` | `'scancore'` \| `'fixtures'` |
-| `demo` | `true` in fixture / demo mode |
-Renderer resolves vendor via `resources/oui/registry.json` (`@/shared/lib/oui`) in `ingestScanPayload` → `ScanViewModel` → grid.
+| Field                                                                                                                            | When                          |
+| -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `source`                                                                                                                         | `'scancore'` \| `'fixtures'`  |
+| `demo`                                                                                                                           | `true` in fixture / demo mode |
+| Renderer resolves vendor via `resources/oui/registry.json` (`@/shared/lib/oui`) in `ingestScanPayload` → `ScanViewModel` → grid. |
 
 ### 3.4 ScanCore ↔ main (JSON Lines)
 
@@ -93,10 +95,10 @@ Outbound: `hello`, `permissions:status`, `helper:status`, `scan:snapshot`, `erro
 
 1. User starts scan → main `startScanLoop`.
 2. If `demoMode` or helper missing → fixture timer (`source: 'fixtures'`).
-3. Else spawn ScanCore → on each `scan:snapshot`, main runs OUI attach → `webContents.send('scan:snapshot', …)`.
+3. Else spawn ScanCore → on each `scan:snapshot`, main forwards the payload → `webContents.send('scan:snapshot', …)`; renderer resolves OUI.
 4. Renderer maps records → `ObservedBss[]`, applies filters, updates charts/history.
 
-Merge/stale rules: `src/scan/mergeSnapshots.ts` (session state in view model).
+Merge/stale rules: `packages/core/src/scan/mergeSnapshots.ts` (session state in view model).
 
 ---
 
@@ -104,14 +106,14 @@ Merge/stale rules: `src/scan/mergeSnapshots.ts` (session state in view model).
 
 When live scan cannot deliver full data, degrade in order — label UI honestly.
 
-| Tier | Trigger | Behavior |
-|------|---------|----------|
-| **A — Full** | Location granted + `scanForNetworks` succeeds | All fields; `source: scanForNetworks` |
-| **B — Cached** | Scan throttled / in-flight | `cachedScanResults()` with `stale: true` |
-| **C — Connected only** | Full scan failed; Wi‑Fi associated | Single row from `CWInterface` (SSID/BSSID/RSSI/channel) |
-| **D — Location denied** | TCC denied / restricted | Redact SSID/BSSID/country; show RF if API returns |
-| **E — Demo / fixture** | `--demo`, unsigned helper, missing binary, helper crash, `demoFallback: true` | Bundled fixtures; banner **Demo data** |
-| **F — Manual import** | User provides Apple Wireless Diagnostics export (future) | Parse locally; no private CLIs |
+| Tier                    | Trigger                                                                       | Behavior                                                |
+| ----------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------- |
+| **A — Full**            | Location granted + `scanForNetworks` succeeds                                 | All fields; `source: scanForNetworks`                   |
+| **B — Cached**          | Scan throttled / in-flight                                                    | `cachedScanResults()` with `stale: true`                |
+| **C — Connected only**  | Full scan failed; Wi‑Fi associated                                            | Single row from `CWInterface` (SSID/BSSID/RSSI/channel) |
+| **D — Location denied** | TCC denied / restricted                                                       | Redact SSID/BSSID/country; show RF if API returns       |
+| **E — Demo / fixture**  | `--demo`, unsigned helper, missing binary, helper crash, `demoFallback: true` | Bundled fixtures; banner **Demo data**                  |
+| **F — Manual import**   | User provides Apple Wireless Diagnostics export (future)                      | Parse locally; no private CLIs                          |
 
 **Never:** spoof Location, bundled deprecated `airport`, monitor mode in v1.
 
@@ -121,15 +123,15 @@ Electron wiring today: **E** via `demoMode` / argv (`--live` opts out), helper e
 
 ## 6. Repo map (implementation)
 
-| Path | Role |
-|------|------|
-| `electron/` | Main, preload, CSP, `scanCoreHost`, `scanState`, OUI attach |
-| `native/ScanCore/` | Swift helper + entitlements |
-| `src/domain/` | Shared types (contract with ScanCore JSON) |
-| `src/scan/` | Map raw → `ObservedBss`, tests |
-| `src/features/scan-live/` | IPC ingest |
-| `src/vendor/` | OUI registry |
-| `data/oui/` | Bundled IEEE snapshot |
+| Path                                   | Role                                                      |
+| -------------------------------------- | --------------------------------------------------------- |
+| `packages/desktop/`                    | Main, preload, CSP, provider lifecycle; renderer owns OUI |
+| `native/ScanCore/`                     | Swift helper + entitlements                               |
+| `packages/core/src/domain/`            | Shared types (contract with ScanCore JSON)                |
+| `packages/core/src/scan/`              | Map raw → `ObservedBss`, merge, tests                     |
+| `packages/web/src/features/scan-live/` | IPC ingest                                                |
+| `src/vendor/`                          | OUI registry                                              |
+| `data/oui/`                            | Bundled IEEE snapshot                                     |
 
 ---
 

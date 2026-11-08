@@ -4,7 +4,6 @@ import 'package:lv24_wifi_explorer/features/scan_session/bss_display.dart';
 import 'package:lv24_wifi_explorer/features/scan_session/demo_networks.dart';
 import 'package:lv24_wifi_explorer/shared/i18n/app_localizations.dart';
 import 'package:lv24_wifi_explorer/widgets/scan_grid_display.dart';
-import 'package:scan_l10n/scan_l10n.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

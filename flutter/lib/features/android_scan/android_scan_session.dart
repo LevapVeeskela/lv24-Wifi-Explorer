@@ -57,8 +57,10 @@ class AndroidScanSession extends ChangeNotifier {
 
   Future<void> start() async {
     if (_running) return;
-    _running = true;
+    // Request location before flipping _running: requestLocation() refreshes
+    // when running, and start() must consume exactly one snapshot here.
     await requestLocation();
+    _running = true;
     await refresh();
     _armTimer();
     notifyListeners();

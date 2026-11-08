@@ -1,23 +1,54 @@
-import { defineConfig, mergeConfig } from 'vitest/config';
-import viteConfig from './vite.config';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vitest/config';
 
-export default mergeConfig(
-  viteConfig,
-  defineConfig({
-    test: {
-      environment: 'jsdom',
-      include: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'electron/**/*.test.ts'],
-      // node:test suite — compiled and run by `yarn test:scan`, not Vitest.
-      exclude: ['src/scan/tests/**'],
-      alias: {
-        'node:test': 'vitest',
+const rootDir = path.dirname(fileURLToPath(import.meta.url));
+
+export default defineConfig({
+  resolve: {
+    alias: [
+      {
+        find: /^@\/domain$/,
+        replacement: path.resolve(rootDir, 'packages/core/src/domain/index.ts'),
       },
-      css: true,
-      server: {
-        deps: {
-          inline: [/@mui\/x-data-grid/, /@mui\/x-data-grid-pro/, /@mui\/x-license/],
-        },
+      {
+        find: /^@\/domain\/(.*)$/,
+        replacement: `${path.resolve(rootDir, 'packages/core/src/domain')}/$1`,
+      },
+      {
+        find: /^@\/scan$/,
+        replacement: path.resolve(rootDir, 'packages/core/src/scan/index.ts'),
+      },
+      {
+        find: /^@\/scan\/(.*)$/,
+        replacement: `${path.resolve(rootDir, 'packages/core/src/scan')}/$1`,
+      },
+      { find: '@resources', replacement: path.resolve(rootDir, 'resources') },
+      {
+        find: '@pcap',
+        replacement: path.resolve(rootDir, 'packages/core/src/import/pcap/index.ts'),
+      },
+      { find: '@', replacement: path.resolve(rootDir, 'packages/web/src') },
+      // `packages/core/src/scan/tests` uses node:test; run it under Vitest too.
+      { find: 'node:test', replacement: 'vitest' },
+    ],
+    dedupe: ['react', 'react-dom'],
+  },
+  test: {
+    environment: 'jsdom',
+    include: [
+      'packages/web/src/**/*.test.ts',
+      'packages/web/src/**/*.test.tsx',
+      'packages/core/src/**/*.test.ts',
+      'packages/desktop/src/**/*.test.ts',
+      'packages/backend/src/**/*.test.ts',
+      'packages/cli/src/**/*.test.ts',
+    ],
+    css: true,
+    server: {
+      deps: {
+        inline: [/@mui\/x-data-grid/, /@mui\/x-data-grid-pro/, /@mui\/x-license/],
       },
     },
-  })
-);
+  },
+});

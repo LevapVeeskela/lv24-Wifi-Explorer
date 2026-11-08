@@ -14,6 +14,8 @@ struct CLIOptions {
     var includeHidden = true
     var interfaceName: String?
     var intervalMs = 3000
+    /// Directed scan target; nil = full active scan. Spaces are preserved verbatim.
+    var directedSsid: String?
 
     static func parse(_ args: [String]) -> CLIOptions {
         var options = CLIOptions()
@@ -50,6 +52,11 @@ struct CLIOptions {
             case "--interface":
                 index += 1
                 if index < argv.count { options.interfaceName = argv[index] }
+            case "--ssid":
+                index += 1
+                if index < argv.count, !argv[index].isEmpty {
+                    options.directedSsid = argv[index]
+                }
             case "--interval-ms":
                 index += 1
                 if index < argv.count, let ms = Int(argv[index]) {
@@ -62,6 +69,9 @@ struct CLIOptions {
                 if arg.hasPrefix("--include-hidden=") {
                     let value = String(arg.dropFirst("--include-hidden=".count))
                     options.includeHidden = value != "false" && value != "0"
+                } else if arg.hasPrefix("--ssid=") {
+                    let value = String(arg.dropFirst("--ssid=".count))
+                    if !value.isEmpty { options.directedSsid = value }
                 } else {
                     log("unknown argument: \(arg)")
                 }
@@ -85,6 +95,7 @@ func printHelp() {
       --port N               JSON Lines loopback TCP on 127.0.0.1:N
       --token TOKEN          Auth token (required for TCP)
       --include-hidden BOOL  Pass includeHidden to scanForNetworks (default true)
+      --ssid NAME            Directed scan: probe only NAME (best-effort; BSSID may be missing)
       --interface NAME       BSD name (e.g. en0)
       --interval-ms N        Extra floor for scan pacing, min 3000
       --idle                 Wait for scan:start instead of auto-start
@@ -117,6 +128,7 @@ final class ScanCoreRuntime {
         )
         scanner.setIncludeHidden(options.includeHidden)
         scanner.setIntervalMs(options.intervalMs)
+        scanner.setDirectedSsid(options.directedSsid)
     }
 
     func run() {
@@ -189,8 +201,11 @@ final class ScanCoreRuntime {
                 scanner.setIntervalMs(ms)
             }
         case "permissions:query":
-            let status = options.demo ? .granted : location.refresh()
-            emitLocation(status, force: true)
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                let status = self.options.demo ? LocationAuthorization.granted : self.location.refresh()
+                self.emitLocation(status, force: true)
+            }
         case "permissions:openSettings":
             LocationGate.openSystemSettings()
         case "demo:enable":
@@ -251,15 +266,17 @@ final class ScanCoreRuntime {
         )
     }
 
+    private var signalSources: [DispatchSourceSignal] = []
+
     private func installSignals() {
-        signal(SIGINT) { _ in
-            ScanCoreRuntime.sharedShutdown()
-        }
-        signal(SIGTERM) { _ in
-            ScanCoreRuntime.sharedShutdown()
-        }
-        Self.shutdownHook = { [weak self] in
-            self?.shutdown()
+        for sig in [SIGINT, SIGTERM] {
+            signal(sig, SIG_IGN)
+            let source = DispatchSource.makeSignalSource(signal: sig, queue: .main)
+            source.setEventHandler { [weak self] in
+                self?.shutdown()
+            }
+            source.resume()
+            signalSources.append(source)
         }
     }
 
@@ -268,13 +285,6 @@ final class ScanCoreRuntime {
         shuttingDown = true
         scanner.stop()
         hub.shutdown()
-        exit(0)
-    }
-
-    private static var shutdownHook: (() -> Void)?
-
-    private static func sharedShutdown() {
-        shutdownHook?()
         exit(0)
     }
 }

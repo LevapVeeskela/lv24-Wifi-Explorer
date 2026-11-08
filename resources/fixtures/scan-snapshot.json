@@ -13,22 +13,7 @@
           "status": "available",
           "value": {
             "utf8": "Meridia-Office",
-            "octets": [
-              77,
-              101,
-              114,
-              105,
-              100,
-              105,
-              97,
-              45,
-              79,
-              102,
-              102,
-              105,
-              99,
-              101
-            ],
+            "octets": [77, 101, 114, 105, 100, 105, 97, 45, 79, 102, 102, 105, 99, 101],
             "octetHex": "4d6572696469612d4f6666696365",
             "hidden": false,
             "displayName": "Meridia-Office"
@@ -61,9 +46,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "wpa2-personal"
-        ],
+        "flags": ["wpa2-personal"],
         "primary": "wpa2-personal",
         "authClass": "personal",
         "isOpen": false,
@@ -71,11 +54,7 @@
         "ieHint": "rsn-ie"
       },
       "phy": {
-        "supported": [
-          "b",
-          "g",
-          "n"
-        ],
+        "supported": ["b", "g", "n"],
         "highest": "n",
         "display": "b/g/n",
         "source": "api-supportsPHYMode"
@@ -98,11 +77,7 @@
       "ie": {
         "level": "shallow-tags",
         "byteLength": 30,
-        "presentIds": [
-          7,
-          48,
-          45
-        ],
+        "presentIds": [7, 48, 45],
         "wpaVendorIe": false,
         "rsnIe": true,
         "htCapabilities": true,
@@ -133,22 +108,7 @@
       ],
       "lastRaw": {
         "ssid": "Meridia-Office",
-        "ssidData": [
-          77,
-          101,
-          114,
-          105,
-          100,
-          105,
-          97,
-          45,
-          79,
-          102,
-          102,
-          105,
-          99,
-          101
-        ],
+        "ssidData": [77, 101, 114, 105, 100, 105, 97, 45, 79, 102, 102, 105, 99, 101],
         "bssid": "3c:5a:b4:10:01:01",
         "rssiDbm": -61,
         "noiseDbm": -93,
@@ -159,45 +119,11 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": [
-          7,
-          3,
-          70,
-          73,
-          32,
-          48,
-          2,
-          1,
-          0,
-          45,
-          19,
-          0,
-          0,
-          0,
-          255,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
+          7, 3, 70, 73, 32, 48, 2, 1, 0, 45, 19, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0
         ],
-        "supportedSecurity": [
-          "wpa2-personal"
-        ],
-        "supportedPhyModes": [
-          "b",
-          "g",
-          "n"
-        ]
+        "supportedSecurity": ["wpa2-personal"],
+        "supportedPhyModes": ["b", "g", "n"]
       }
     },
     {
@@ -210,22 +136,7 @@
           "status": "available",
           "value": {
             "utf8": "Meridia-Office",
-            "octets": [
-              77,
-              101,
-              114,
-              105,
-              100,
-              105,
-              97,
-              45,
-              79,
-              102,
-              102,
-              105,
-              99,
-              101
-            ],
+            "octets": [77, 101, 114, 105, 100, 105, 97, 45, 79, 102, 102, 105, 99, 101],
             "octetHex": "4d6572696469612d4f6666696365",
             "hidden": false,
             "displayName": "Meridia-Office"
@@ -258,9 +169,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "wpa2-personal"
-        ],
+        "flags": ["wpa2-personal"],
         "primary": "wpa2-personal",
         "authClass": "personal",
         "isOpen": false,
@@ -268,11 +177,7 @@
         "ieHint": "rsn-ie"
       },
       "phy": {
-        "supported": [
-          "a",
-          "n",
-          "ac"
-        ],
+        "supported": ["a", "n", "ac"],
         "highest": "ac",
         "display": "a/n/ac",
         "source": "api-supportsPHYMode"
@@ -295,11 +200,7 @@
       "ie": {
         "level": "shallow-tags",
         "byteLength": 30,
-        "presentIds": [
-          7,
-          48,
-          45
-        ],
+        "presentIds": [7, 48, 45],
         "wpaVendorIe": false,
         "rsnIe": true,
         "htCapabilities": true,
@@ -330,22 +231,7 @@
       ],
       "lastRaw": {
         "ssid": "Meridia-Office",
-        "ssidData": [
-          77,
-          101,
-          114,
-          105,
-          100,
-          105,
-          97,
-          45,
-          79,
-          102,
-          102,
-          105,
-          99,
-          101
-        ],
+        "ssidData": [77, 101, 114, 105, 100, 105, 97, 45, 79, 102, 102, 105, 99, 101],
         "bssid": "3c:5a:b4:10:01:02",
         "rssiDbm": -54,
         "noiseDbm": -95,
@@ -356,45 +242,11 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": [
-          7,
-          3,
-          70,
-          73,
-          32,
-          48,
-          2,
-          1,
-          0,
-          45,
-          19,
-          0,
-          0,
-          0,
-          255,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
+          7, 3, 70, 73, 32, 48, 2, 1, 0, 45, 19, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0
         ],
-        "supportedSecurity": [
-          "wpa2-personal"
-        ],
-        "supportedPhyModes": [
-          "a",
-          "n",
-          "ac"
-        ]
+        "supportedSecurity": ["wpa2-personal"],
+        "supportedPhyModes": ["a", "n", "ac"]
       }
     },
     {
@@ -407,22 +259,7 @@
           "status": "available",
           "value": {
             "utf8": "Meridia-Office",
-            "octets": [
-              77,
-              101,
-              114,
-              105,
-              100,
-              105,
-              97,
-              45,
-              79,
-              102,
-              102,
-              105,
-              99,
-              101
-            ],
+            "octets": [77, 101, 114, 105, 100, 105, 97, 45, 79, 102, 102, 105, 99, 101],
             "octetHex": "4d6572696469612d4f6666696365",
             "hidden": false,
             "displayName": "Meridia-Office"
@@ -455,11 +292,7 @@
         "centerConfidence": "ie-operation"
       },
       "security": {
-        "flags": [
-          "wpa2-personal",
-          "wpa3-personal",
-          "wpa3-transition"
-        ],
+        "flags": ["wpa2-personal", "wpa3-personal", "wpa3-transition"],
         "primary": "wpa3-personal",
         "authClass": "personal",
         "isOpen": false,
@@ -467,12 +300,7 @@
         "ieHint": "rsn-ie"
       },
       "phy": {
-        "supported": [
-          "a",
-          "n",
-          "ac",
-          "ax"
-        ],
+        "supported": ["a", "n", "ac", "ax"],
         "highest": "ax",
         "display": "a/n/ac/ax",
         "source": "api-supportsPHYMode"
@@ -495,14 +323,7 @@
       "ie": {
         "level": "shallow-tags",
         "byteLength": 53,
-        "presentIds": [
-          7,
-          48,
-          45,
-          61,
-          191,
-          192
-        ],
+        "presentIds": [7, 48, 45, 61, 191, 192],
         "wpaVendorIe": false,
         "rsnIe": true,
         "htCapabilities": true,
@@ -533,22 +354,7 @@
       ],
       "lastRaw": {
         "ssid": "Meridia-Office",
-        "ssidData": [
-          77,
-          101,
-          114,
-          105,
-          100,
-          105,
-          97,
-          45,
-          79,
-          102,
-          102,
-          105,
-          99,
-          101
-        ],
+        "ssidData": [77, 101, 114, 105, 100, 105, 97, 45, 79, 102, 102, 105, 99, 101],
         "bssid": "3c:5a:b4:10:01:03",
         "rssiDbm": -47,
         "noiseDbm": -94,
@@ -559,71 +365,12 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": [
-          7,
-          3,
-          70,
-          73,
-          32,
-          48,
-          2,
-          1,
-          0,
-          45,
-          19,
-          0,
-          0,
-          0,
-          255,
-          255,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          61,
-          2,
-          36,
-          1,
-          191,
-          12,
-          0,
-          0,
-          0,
-          0,
-          250,
-          255,
-          0,
-          0,
-          250,
-          255,
-          0,
-          0,
-          192,
-          3,
-          1,
-          42,
+          7, 3, 70, 73, 32, 48, 2, 1, 0, 45, 19, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 61, 2, 36, 1, 191, 12, 0, 0, 0, 0, 250, 255, 0, 0, 250, 255, 0, 0, 192, 3, 1, 42,
           0
         ],
-        "supportedSecurity": [
-          "wpa2-personal",
-          "wpa3-personal",
-          "wpa3-transition"
-        ],
-        "supportedPhyModes": [
-          "a",
-          "n",
-          "ac",
-          "ax"
-        ]
+        "supportedSecurity": ["wpa2-personal", "wpa3-personal", "wpa3-transition"],
+        "supportedPhyModes": ["a", "n", "ac", "ax"]
       }
     },
     {
@@ -636,19 +383,7 @@
           "status": "available",
           "value": {
             "utf8": "GuestPortal",
-            "octets": [
-              71,
-              117,
-              101,
-              115,
-              116,
-              80,
-              111,
-              114,
-              116,
-              97,
-              108
-            ],
+            "octets": [71, 117, 101, 115, 116, 80, 111, 114, 116, 97, 108],
             "octetHex": "4775657374506f7274616c",
             "hidden": false,
             "displayName": "GuestPortal"
@@ -681,9 +416,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "open"
-        ],
+        "flags": ["open"],
         "primary": "open",
         "authClass": "open",
         "isOpen": true,
@@ -691,11 +424,7 @@
         "ieHint": "none"
       },
       "phy": {
-        "supported": [
-          "b",
-          "g",
-          "n"
-        ],
+        "supported": ["b", "g", "n"],
         "highest": "n",
         "display": "b/g/n",
         "source": "api-supportsPHYMode"
@@ -749,19 +478,7 @@
       ],
       "lastRaw": {
         "ssid": "GuestPortal",
-        "ssidData": [
-          71,
-          117,
-          101,
-          115,
-          116,
-          80,
-          111,
-          114,
-          116,
-          97,
-          108
-        ],
+        "ssidData": [71, 117, 101, 115, 116, 80, 111, 114, 116, 97, 108],
         "bssid": "3c:5a:b4:20:01:01",
         "rssiDbm": -68,
         "noiseDbm": -92,
@@ -772,14 +489,8 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": null,
-        "supportedSecurity": [
-          "open"
-        ],
-        "supportedPhyModes": [
-          "b",
-          "g",
-          "n"
-        ]
+        "supportedSecurity": ["open"],
+        "supportedPhyModes": ["b", "g", "n"]
       }
     },
     {
@@ -792,23 +503,7 @@
           "status": "available",
           "value": {
             "utf8": "Workshop-Secure",
-            "octets": [
-              87,
-              111,
-              114,
-              107,
-              115,
-              104,
-              111,
-              112,
-              45,
-              83,
-              101,
-              99,
-              117,
-              114,
-              101
-            ],
+            "octets": [87, 111, 114, 107, 115, 104, 111, 112, 45, 83, 101, 99, 117, 114, 101],
             "octetHex": "576f726b73686f702d536563757265",
             "hidden": false,
             "displayName": "Workshop-Secure"
@@ -841,9 +536,7 @@
         "centerConfidence": "standard-layout-guess"
       },
       "security": {
-        "flags": [
-          "wpa3-personal"
-        ],
+        "flags": ["wpa3-personal"],
         "primary": "wpa3-personal",
         "authClass": "personal",
         "isOpen": false,
@@ -851,12 +544,7 @@
         "ieHint": "rsn-ie"
       },
       "phy": {
-        "supported": [
-          "a",
-          "n",
-          "ac",
-          "ax"
-        ],
+        "supported": ["a", "n", "ac", "ax"],
         "highest": "ax",
         "display": "a/n/ac/ax",
         "source": "api-supportsPHYMode"
@@ -879,11 +567,7 @@
       "ie": {
         "level": "shallow-tags",
         "byteLength": 30,
-        "presentIds": [
-          7,
-          48,
-          45
-        ],
+        "presentIds": [7, 48, 45],
         "wpaVendorIe": false,
         "rsnIe": true,
         "htCapabilities": true,
@@ -914,23 +598,7 @@
       ],
       "lastRaw": {
         "ssid": "Workshop-Secure",
-        "ssidData": [
-          87,
-          111,
-          114,
-          107,
-          115,
-          104,
-          111,
-          112,
-          45,
-          83,
-          101,
-          99,
-          117,
-          114,
-          101
-        ],
+        "ssidData": [87, 111, 114, 107, 115, 104, 111, 112, 45, 83, 101, 99, 117, 114, 101],
         "bssid": "3c:5a:b4:30:01:01",
         "rssiDbm": -59,
         "noiseDbm": -96,
@@ -941,46 +609,11 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": [
-          7,
-          3,
-          70,
-          73,
-          32,
-          48,
-          2,
-          1,
-          0,
-          45,
-          19,
-          0,
-          0,
-          0,
-          255,
-          255,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
+          7, 3, 70, 73, 32, 48, 2, 1, 0, 45, 19, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0
         ],
-        "supportedSecurity": [
-          "wpa3-personal"
-        ],
-        "supportedPhyModes": [
-          "a",
-          "n",
-          "ac",
-          "ax"
-        ]
+        "supportedSecurity": ["wpa3-personal"],
+        "supportedPhyModes": ["a", "n", "ac", "ax"]
       }
     },
     {
@@ -1026,9 +659,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "wpa2-personal"
-        ],
+        "flags": ["wpa2-personal"],
         "primary": "wpa2-personal",
         "authClass": "personal",
         "isOpen": false,
@@ -1036,11 +667,7 @@
         "ieHint": "none"
       },
       "phy": {
-        "supported": [
-          "b",
-          "g",
-          "n"
-        ],
+        "supported": ["b", "g", "n"],
         "highest": "n",
         "display": "b/g/n",
         "source": "api-supportsPHYMode"
@@ -1105,14 +732,8 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": null,
-        "supportedSecurity": [
-          "wpa2-personal"
-        ],
-        "supportedPhyModes": [
-          "b",
-          "g",
-          "n"
-        ]
+        "supportedSecurity": ["wpa2-personal"],
+        "supportedPhyModes": ["b", "g", "n"]
       }
     },
     {
@@ -1158,9 +779,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "wpa2-personal"
-        ],
+        "flags": ["wpa2-personal"],
         "primary": "wpa2-personal",
         "authClass": "personal",
         "isOpen": false,
@@ -1168,11 +787,7 @@
         "ieHint": "none"
       },
       "phy": {
-        "supported": [
-          "a",
-          "n",
-          "ac"
-        ],
+        "supported": ["a", "n", "ac"],
         "highest": "ac",
         "display": "a/n/ac",
         "source": "api-supportsPHYMode"
@@ -1237,14 +852,8 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": null,
-        "supportedSecurity": [
-          "wpa2-personal"
-        ],
-        "supportedPhyModes": [
-          "a",
-          "n",
-          "ac"
-        ]
+        "supportedSecurity": ["wpa2-personal"],
+        "supportedPhyModes": ["a", "n", "ac"]
       }
     },
     {
@@ -1257,20 +866,7 @@
           "status": "available",
           "value": {
             "utf8": "Remote-Cabin",
-            "octets": [
-              82,
-              101,
-              109,
-              111,
-              116,
-              101,
-              45,
-              67,
-              97,
-              98,
-              105,
-              110
-            ],
+            "octets": [82, 101, 109, 111, 116, 101, 45, 67, 97, 98, 105, 110],
             "octetHex": "52656d6f74652d436162696e",
             "hidden": false,
             "displayName": "Remote-Cabin"
@@ -1303,9 +899,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "wpa2-personal"
-        ],
+        "flags": ["wpa2-personal"],
         "primary": "wpa2-personal",
         "authClass": "personal",
         "isOpen": false,
@@ -1313,11 +907,7 @@
         "ieHint": "none"
       },
       "phy": {
-        "supported": [
-          "b",
-          "g",
-          "n"
-        ],
+        "supported": ["b", "g", "n"],
         "highest": "n",
         "display": "b/g/n",
         "source": "api-supportsPHYMode"
@@ -1371,20 +961,7 @@
       ],
       "lastRaw": {
         "ssid": "Remote-Cabin",
-        "ssidData": [
-          82,
-          101,
-          109,
-          111,
-          116,
-          101,
-          45,
-          67,
-          97,
-          98,
-          105,
-          110
-        ],
+        "ssidData": [82, 101, 109, 111, 116, 101, 45, 67, 97, 98, 105, 110],
         "bssid": "3c:5a:b4:40:01:01",
         "rssiDbm": -89,
         "noiseDbm": -92,
@@ -1395,14 +972,8 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": null,
-        "supportedSecurity": [
-          "wpa2-personal"
-        ],
-        "supportedPhyModes": [
-          "b",
-          "g",
-          "n"
-        ]
+        "supportedSecurity": ["wpa2-personal"],
+        "supportedPhyModes": ["b", "g", "n"]
       }
     },
     {
@@ -1415,22 +986,7 @@
           "status": "available",
           "value": {
             "utf8": "Pocket-Hotspot",
-            "octets": [
-              80,
-              111,
-              99,
-              107,
-              101,
-              116,
-              45,
-              72,
-              111,
-              116,
-              115,
-              112,
-              111,
-              116
-            ],
+            "octets": [80, 111, 99, 107, 101, 116, 45, 72, 111, 116, 115, 112, 111, 116],
             "octetHex": "506f636b65742d486f7473706f74",
             "hidden": false,
             "displayName": "Pocket-Hotspot"
@@ -1463,9 +1019,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "wpa2-personal"
-        ],
+        "flags": ["wpa2-personal"],
         "primary": "wpa2-personal",
         "authClass": "personal",
         "isOpen": false,
@@ -1473,11 +1027,7 @@
         "ieHint": "none"
       },
       "phy": {
-        "supported": [
-          "b",
-          "g",
-          "n"
-        ],
+        "supported": ["b", "g", "n"],
         "highest": "n",
         "display": "b/g/n",
         "source": "api-supportsPHYMode"
@@ -1531,22 +1081,7 @@
       ],
       "lastRaw": {
         "ssid": "Pocket-Hotspot",
-        "ssidData": [
-          80,
-          111,
-          99,
-          107,
-          101,
-          116,
-          45,
-          72,
-          111,
-          116,
-          115,
-          112,
-          111,
-          116
-        ],
+        "ssidData": [80, 111, 99, 107, 101, 116, 45, 72, 111, 116, 115, 112, 111, 116],
         "bssid": "02:7f:3c:91:22:01",
         "rssiDbm": -63,
         "noiseDbm": -88,
@@ -1557,14 +1092,8 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": null,
-        "supportedSecurity": [
-          "wpa2-personal"
-        ],
-        "supportedPhyModes": [
-          "b",
-          "g",
-          "n"
-        ]
+        "supportedSecurity": ["wpa2-personal"],
+        "supportedPhyModes": ["b", "g", "n"]
       }
     },
     {
@@ -1577,20 +1106,7 @@
           "status": "available",
           "value": {
             "utf8": "Harbor-Guest",
-            "octets": [
-              72,
-              97,
-              114,
-              98,
-              111,
-              114,
-              45,
-              71,
-              117,
-              101,
-              115,
-              116
-            ],
+            "octets": [72, 97, 114, 98, 111, 114, 45, 71, 117, 101, 115, 116],
             "octetHex": "486172626f722d4775657374",
             "hidden": false,
             "displayName": "Harbor-Guest"
@@ -1623,9 +1139,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "open"
-        ],
+        "flags": ["open"],
         "primary": "open",
         "authClass": "open",
         "isOpen": true,
@@ -1633,11 +1147,7 @@
         "ieHint": "none"
       },
       "phy": {
-        "supported": [
-          "a",
-          "n",
-          "ac"
-        ],
+        "supported": ["a", "n", "ac"],
         "highest": "ac",
         "display": "a/n/ac",
         "source": "api-supportsPHYMode"
@@ -1691,20 +1201,7 @@
       ],
       "lastRaw": {
         "ssid": "Harbor-Guest",
-        "ssidData": [
-          72,
-          97,
-          114,
-          98,
-          111,
-          114,
-          45,
-          71,
-          117,
-          101,
-          115,
-          116
-        ],
+        "ssidData": [72, 97, 114, 98, 111, 114, 45, 71, 117, 101, 115, 116],
         "bssid": "3c:5a:b4:20:02:01",
         "rssiDbm": -70,
         "noiseDbm": -94,
@@ -1715,14 +1212,8 @@
         "beaconIntervalMs": 100,
         "ibss": false,
         "informationElementData": null,
-        "supportedSecurity": [
-          "open"
-        ],
-        "supportedPhyModes": [
-          "a",
-          "n",
-          "ac"
-        ]
+        "supportedSecurity": ["open"],
+        "supportedPhyModes": ["a", "n", "ac"]
       }
     },
     {
@@ -1735,20 +1226,7 @@
           "status": "available",
           "value": {
             "utf8": "Mesh-Plotter",
-            "octets": [
-              77,
-              101,
-              115,
-              104,
-              45,
-              80,
-              108,
-              111,
-              116,
-              116,
-              101,
-              114
-            ],
+            "octets": [77, 101, 115, 104, 45, 80, 108, 111, 116, 116, 101, 114],
             "octetHex": "4d6573682d506c6f74746572",
             "hidden": false,
             "displayName": "Mesh-Plotter"
@@ -1781,9 +1259,7 @@
         "centerConfidence": "ieee-primary-20"
       },
       "security": {
-        "flags": [
-          "open"
-        ],
+        "flags": ["open"],
         "primary": "open",
         "authClass": "open",
         "isOpen": true,
@@ -1791,9 +1267,7 @@
         "ieHint": "none"
       },
       "phy": {
-        "supported": [
-          "g"
-        ],
+        "supported": ["g"],
         "highest": "g",
         "display": "g",
         "source": "api-supportsPHYMode"
@@ -1847,20 +1321,7 @@
       ],
       "lastRaw": {
         "ssid": "Mesh-Plotter",
-        "ssidData": [
-          77,
-          101,
-          115,
-          104,
-          45,
-          80,
-          108,
-          111,
-          116,
-          116,
-          101,
-          114
-        ],
+        "ssidData": [77, 101, 115, 104, 45, 80, 108, 111, 116, 116, 101, 114],
         "bssid": "3c:5a:b4:ab:00:01",
         "rssiDbm": -65,
         "noiseDbm": -89,
@@ -1871,12 +1332,8 @@
         "beaconIntervalMs": 100,
         "ibss": true,
         "informationElementData": null,
-        "supportedSecurity": [
-          "open"
-        ],
-        "supportedPhyModes": [
-          "g"
-        ]
+        "supportedSecurity": ["open"],
+        "supportedPhyModes": ["g"]
       }
     }
   ],

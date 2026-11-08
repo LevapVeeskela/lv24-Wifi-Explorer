@@ -1,32 +1,52 @@
 {
   "name": "lv24-wifi-explorer",
-  "productName": "LV24 WiFi Explorer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "LV24 desktop WiFi exploration tool (Electron + Vite + MUI)",
-  "main": "dist-electron/main.js",
-  "packageManager": "yarn@1.22.22",
-  "engines": {
-    "node": ">=20"
+  "description": "Cross-platform Wi-Fi scanner toolkit: core domain, cross-OS backend, CLI, web UI, Electron desktop host, Flutter client.",
+  "license": "MIT",
+  "author": "LV24",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer.git"
   },
+  "workspaces": [
+    "packages/core",
+    "packages/backend",
+    "packages/cli",
+    "packages/web",
+    "packages/desktop"
+  ],
+  "main": "dist-electron/main.js",
   "scripts": {
     "dev": "concurrently \"vite\" \"wait-on tcp:5173 && yarn run dev:electron\"",
     "dev:renderer": "vite",
-    "dev:electron": "tsc -p tsconfig.main.json && cross-env WIFI_RENDERER_DEV_URL=http://localhost:5173 electron .",
-    "build": "tsc -p tsconfig.main.json && vite build",
+    "dev:electron": "yarn build:packages && yarn build:desktop && cross-env WIFI_RENDERER_DEV_URL=http://localhost:5173 electron .",
+    "build": "yarn build:packages && yarn build:desktop && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.main.json",
+    "typecheck": "yarn build:packages && tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.main.json && yarn typecheck:packages",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "test": "vitest run",
     "build:scancore": "bash native/ScanCore/scripts/build.sh",
-    "test:scan": "node src/scan/run-tests.mjs",
-    "test:oui": "node --test src/vendor/lookup.test.mjs",
-    "oui:refresh": "node src/vendor/refresh-oui.mjs",
-    "dist:mac": "yarn build && electron-builder --mac dmg --config electron-builder.yml",
-    "dist:win": "yarn build && electron-builder --win nsis --config electron-builder.yml"
+    "test:scan": "node packages/core/src/scan/run-tests.mjs",
+    "test:oui": "node --test packages/web/src/vendor/lookup.test.mjs",
+    "oui:refresh": "node packages/web/src/vendor/refresh-oui.mjs",
+    "dist:mac": "yarn build:scancore && yarn check:scancore && yarn build && electron-builder --mac dmg --config electron-builder.yml",
+    "dist:win": "yarn build && electron-builder --win nsis --config electron-builder.yml",
+    "build:core": "yarn workspace @lv24/wifi-core build",
+    "build:backend": "yarn workspace @lv24/wifi-backend build",
+    "build:cli": "yarn workspace @lv24/wifi-cli build",
+    "build:packages": "yarn build:core && yarn build:backend && yarn build:cli",
+    "typecheck:packages": "yarn workspace @lv24/wifi-backend typecheck && yarn workspace @lv24/wifi-cli typecheck",
+    "cli": "node packages/cli/dist/main.js",
+    "build:desktop": "node scripts/build-desktop.mjs",
+    "dist:linux": "yarn build && electron-builder --linux AppImage --config electron-builder.yml",
+    "sync:assets": "node scripts/sync-flutter-assets.mjs",
+    "check:scancore": "node scripts/check-scancore.mjs",
+    "smoke:dist": "node scripts/smoke-electron.mjs",
+    "dist:mac:dir": "yarn build:scancore && yarn check:scancore && yarn build && electron-builder --mac dir --config electron-builder.yml"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -52,6 +72,7 @@
     "cross-env": "7.0.3",
     "electron": "33.2.1",
     "electron-builder": "25.1.8",
+    "esbuild": "0.25.0",
     "jsdom": "29.1.1",
     "oxfmt": "0.60.0",
     "oxlint": "1.75.0",
@@ -64,5 +85,10 @@
     "@mui/x-data-grid": "8.11.0",
     "@mui/x-data-grid-pro": "8.11.0",
     "@mui/x-license": "8.11.0"
-  }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "yarn@1.22.22",
+  "productName": "LV24 WiFi Explorer"
 }

@@ -36,12 +36,12 @@ Mobile/desktop scan limits and v1 plan: [`docs/FLUTTER-MOBILE-SCAN.md`](FLUTTER-
 └───────────────┘     └─────────────────┘     └─────────────────────────┘
 ```
 
-| Client | Stack | Role |
-|--------|--------|------|
-| **Electron desktop** | Yarn 1, Vite, React 19, MUI 9 | macOS (and builder targets); `window.wifiExplorer` IPC; bundles `ScanCore.app` |
-| **Flutter** | Dart 3, Flutter SDK | iOS / Android / Flutter desktop; `scan_domain`, `scan_core_client`, `scan_l10n`, `lv24_sunset_theme`; platform-specific scan backends |
+| Client               | Stack                         | Role                                                                                                                                  |
+| -------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **Electron desktop** | Yarn 1, Vite, React 19, MUI 9 | macOS (and builder targets); `window.wifiExplorer` IPC; bundles `ScanCore.app`                                                        |
+| **Flutter**          | Dart 3, Flutter SDK           | iOS / Android / Flutter desktop; `scan_domain`, `scan_core_client`, `scan_l10n`, `lv24_sunset_theme`; platform-specific scan backends |
 
-Domain types in Electron today live under `src/domain/` and `src/scan/`; `packages/scan_domain` is the Dart-side mirror for Flutter so grid, filters, and merge behavior stay aligned without copying competitor schemas.
+Domain types in Electron today live under `packages/core/src/domain/` and `packages/core/src/scan/`; `packages/scan_domain` is the Dart-side mirror for Flutter so grid, filters, and merge behavior stay aligned without copying competitor schemas.
 
 Transport and message types match `native/ScanCore/README.md`: JSON Lines, first line `hello` with `protocolVersion: 1`, inbound `scan:start` / `scan:stop` / permissions / `demo:enable`, outbound `scan:snapshot` with `CoreWlanNetworkRecord[]`-shaped payloads before UI mapping.
 
@@ -49,15 +49,15 @@ Transport and message types match `native/ScanCore/README.md`: JSON Lines, first
 
 ## 2. Platform matrix (honest capabilities)
 
-| Platform | Live scan backend | Default when live scan unavailable |
-|----------|-------------------|-------------------------------------|
-| **macOS (Electron)** | `native/ScanCore` (CoreWLAN + CoreLocation) | Demo fixtures (`source: fixtures`, banner **Demo data**) — same as today |
-| **macOS (Flutter desktop)** | Same `ScanCore` via `scan_core_client` (spawn helper, stdio or loopback socket) | Demo fixtures via `--demo` / `demo:enable` or bundled fixture JSON |
-| **Linux (Flutter desktop)** | NetworkManager D-Bus **`GetAccessPoints`**; **connected-network** when that is all NM exposes | Demo fixtures when NM scan is limited |
-| **Windows (Flutter desktop)** | Native Wifi **associated link** (`WlanQueryInterface`); **not** a nearby-BSS survey | Demo fixtures when there is no association (same honesty as iOS) |
-| **Windows / Linux (Electron)** | No CoreWLAN; platform WLAN APIs are separate future adapters | **Demo fixtures** at startup; UI must label non-live data |
-| **Android** | Public **`WifiManager`** scan APIs (scan results, throttling, location permission) — **not** equivalent to CoreWLAN richness (BSSID/SSID rules vary by OS version and permission) | Demo fixtures until adapter + permissions are wired |
-| **iOS** | **No full active scan like CoreWLAN.** Apple does not expose a public “scan all nearby APs with full BSS detail” API comparable to macOS. Expect **connected-network** and **NEHotspot**-class surfaces where documented, plus honest UI when only partial RF/SSID data exists | Demo fixtures for development and store review flows |
+| Platform                       | Live scan backend                                                                                                                                                                                                                                                              | Default when live scan unavailable                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| **macOS (Electron)**           | `native/ScanCore` (CoreWLAN + CoreLocation)                                                                                                                                                                                                                                    | Demo fixtures (`source: fixtures`, banner **Demo data**) — same as today |
+| **macOS (Flutter desktop)**    | Same `ScanCore` via `scan_core_client` (spawn helper, stdio or loopback socket)                                                                                                                                                                                                | Demo fixtures via `--demo` / `demo:enable` or bundled fixture JSON       |
+| **Linux (Flutter desktop)**    | NetworkManager D-Bus **`GetAccessPoints`**; **connected-network** when that is all NM exposes                                                                                                                                                                                  | Demo fixtures when NM scan is limited                                    |
+| **Windows (Flutter desktop)**  | Native Wifi **associated link** (`WlanQueryInterface`); **not** a nearby-BSS survey                                                                                                                                                                                            | Demo fixtures when there is no association (same honesty as iOS)         |
+| **Windows / Linux (Electron)** | No CoreWLAN; platform WLAN APIs are separate future adapters                                                                                                                                                                                                                   | **Demo fixtures** at startup; UI must label non-live data                |
+| **Android**                    | Public **`WifiManager`** scan APIs (scan results, throttling, location permission) — **not** equivalent to CoreWLAN richness (BSSID/SSID rules vary by OS version and permission)                                                                                              | Demo fixtures until adapter + permissions are wired                      |
+| **iOS**                        | **No full active scan like CoreWLAN.** Apple does not expose a public “scan all nearby APs with full BSS detail” API comparable to macOS. Expect **connected-network** and **NEHotspot**-class surfaces where documented, plus honest UI when only partial RF/SSID data exists | Demo fixtures for development and store review flows                     |
 
 **Labeling:** Reuse the fallback tier mindset from `docs/ARCHITECTURE.md` (full → cached → connected-only → location redaction → demo → future import). Flutter must not imply macOS-class scan on iOS, a nearby-BSS survey on Windows, or live CoreWLAN on desktop without a live adapter.
 
@@ -65,11 +65,11 @@ Transport and message types match `native/ScanCore/README.md`: JSON Lines, first
 
 ### Flutter Windows — what works, what does not, why
 
-| | |
-|--|--|
-| **Works** | Associated link via public Native Wifi **`WlanQueryInterface`**: SSID, BSSID, documented quality→RSSI (0 → −100 dBm, 100 → −50 dBm), PHY, security. `createScanWorkbenchSession` routes **`Platform.isWindows`** here. |
-| **Does not** | Nearby-BSS survey. Channel. IEs. Workbench rows from **`WlanGetAvailableNetworkList`** (SSID-aggregated only). WinRT **`WiFiAdapter`** / MSIX **`wifiControl`**. Monitor mode, NDIS, private APIs. |
-| **Why** | Those are public-API limits, not a missing ScanCore port. The SSID list cannot identify a BSS. Unpackaged Flutter is not an MSIX package, so `wifiControl` is typically denied — and WinRT still has no IEs. No association is **demo**, same honesty as iOS. |
+|              |                                                                                                                                                                                                                                                               |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Works**    | Associated link via public Native Wifi **`WlanQueryInterface`**: SSID, BSSID, documented quality→RSSI (0 → −100 dBm, 100 → −50 dBm), PHY, security. `createScanWorkbenchSession` routes **`Platform.isWindows`** here.                                        |
+| **Does not** | Nearby-BSS survey. Channel. IEs. Workbench rows from **`WlanGetAvailableNetworkList`** (SSID-aggregated only). WinRT **`WiFiAdapter`** / MSIX **`wifiControl`**. Monitor mode, NDIS, private APIs.                                                            |
+| **Why**      | Those are public-API limits, not a missing ScanCore port. The SSID list cannot identify a BSS. Unpackaged Flutter is not an MSIX package, so `wifiControl` is typically denied — and WinRT still has no IEs. No association is **demo**, same honesty as iOS. |
 
 **macOS 13.5+** for real CoreWLAN scan in ScanCore (unchanged).
 
@@ -77,15 +77,15 @@ Transport and message types match `native/ScanCore/README.md`: JSON Lines, first
 
 ## 3. Repository layout (Flutter path)
 
-| Path | Purpose |
-|------|---------|
-| `flutter/` | Flutter application(s): mobile + desktop runners, UI, platform channels |
-| `packages/scan_domain` | Pure Dart: BSS/ESS models, filters, merge/stale rules (parity with `src/domain/` + `src/scan/`) |
-| `packages/scan_l10n` | Scan UI strings: `l10n.yaml` + `lib/core/l10n/app_{ru,en}.arb` (city mobile layout); `ScanL10n` dot-key API for TS parity |
-| `packages/lv24_sunset_theme` | Shared LV24 sunset palette, typography tokens, and `ThemeData` helpers for Flutter UI |
-| `packages/scan_core_client` | Dart: spawn/connect to ScanCore, parse JSON Lines, stream snapshots |
-| `native/ScanCore/` | Swift helper (macOS); shared with Electron bundle, also used by Flutter on macOS |
-| `electron/` + `src/` | Existing Electron + React client (unchanged ownership) |
+| Path                         | Purpose                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `flutter/`                   | Flutter application(s): mobile + desktop runners, UI, platform channels                                                     |
+| `packages/scan_domain`       | Pure Dart: BSS/ESS models, filters, merge/stale rules (parity with `packages/core/src/domain/` + `packages/core/src/scan/`) |
+| `packages/scan_l10n`         | Scan UI strings: `l10n.yaml` + `lib/core/l10n/app_{ru,en}.arb` (city mobile layout); `ScanL10n` dot-key API for TS parity   |
+| `packages/lv24_sunset_theme` | Shared LV24 sunset palette, typography tokens, and `ThemeData` helpers for Flutter UI                                       |
+| `packages/scan_core_client`  | Dart: spawn/connect to ScanCore, parse JSON Lines, stream snapshots                                                         |
+| `native/ScanCore/`           | Swift helper (macOS); shared with Electron bundle, also used by Flutter on macOS                                            |
+| `electron/` + `src/`         | Existing Electron + React client (unchanged ownership)                                                                      |
 
 Electron continues to own OUI attach in main for the desktop app; Flutter should use the same bundled IEEE OUI snapshot pattern as the renderer (`resources/oui/` / registry JSON), not third-party vendor databases.
 

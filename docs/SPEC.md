@@ -23,7 +23,7 @@ lv24-Wifi-Explorer
 │   │   └── BottomDock           (tabs: details, signal, occupancy charts)
 │   └── StatusBar                (counts, scan state, errors)
 ├── SettingsWindow               (columns, annotations, vendor DB — v1+)
-├── SnapshotDocument             (*.lv24scan, read-only)
+├── SnapshotDocument             (*.lv24scan, open/save)
 └── ExportSheet                  (CSV — v1)
 ```
 
@@ -33,39 +33,39 @@ lv24-Wifi-Explorer
 
 ## 2. BSS model
 
-| Concept | Rule |
-|--------|------|
-| **BSS** | Одна строка таблицы = один `bssid` на одном primary channel (`ObservedBss`). |
-| **ESS** | Несколько BSS с одним SSID — разные строки; группировка только в UI (same-SSID bars). |
-| **CoreWLAN** | `CWNetwork` мапится в `CoreWlanNetworkRecord` (raw), затем в `ObservedBss` (derived). |
-| **Associated** | `AssociatedLink` из `CWInterface` — не копировать Tx rate / active PHY на BSS row. |
-| **Stale** | `missCount` → dimmed; после `forgetAfter` (~60 s) удалить из live session (history в snapshot). |
+| Concept        | Rule                                                                                            |
+| -------------- | ----------------------------------------------------------------------------------------------- |
+| **BSS**        | Одна строка таблицы = один `bssid` на одном primary channel (`ObservedBss`).                    |
+| **ESS**        | Несколько BSS с одним SSID — разные строки; группировка только в UI (same-SSID bars).           |
+| **CoreWLAN**   | `CWNetwork` мапится в `CoreWlanNetworkRecord` (raw), затем в `ObservedBss` (derived).           |
+| **Associated** | `AssociatedLink` из `CWInterface` — не копировать Tx rate / active PHY на BSS row.              |
+| **Stale**      | `missCount` → dimmed; после `forgetAfter` (~60 s) удалить из live session (history в snapshot). |
 
-Ключевые типы: `src/domain/bss.ts`, `src/domain/identity.ts`, `src/domain/signal.ts`.
+Ключевые типы: `packages/core/src/domain/bss.ts`, `identity.ts`, `signal.ts`.
 
 ---
 
 ## 3. Table columns (default visible)
 
-| column id | EN title | Notes |
-|-----------|----------|--------|
-| `seriesColor` | (swatch) | Stable color per BSSID for charts |
-| `bssid` | BSSID | Truncate middle; tooltip full MAC |
-| `ssid` | Network Name | `Hidden` if hidden |
-| `securityLock` | (lock) | Open vs secure affordance |
-| `vendor` | Vendor | IEEE OUI lookup |
-| `annotation` | Annotation | User-editable (v1 patterns) |
-| `signal` | Signal | Bar + % or dBm |
-| `channel` | Channel | Primary channel number |
-| `channelWidth` | Channel Width | 20/40/80/160 MHz |
-| `band` | Band | 2.4 / 5 / 6 GHz |
-| `phyMode` | Mode | e.g. `a/n/ac` |
-| `security` | Security | Off by default |
-| `rssiDbm` | RSSI | dBm |
-| `noiseDbm` | Noise | dBm; invalid → `—` |
-| `snrDb` | SNR | Derived |
-| `lastSeenAt` | Last Seen | Session time |
-| `networkType` | Type | Infrastructure / IBSS |
+| column id      | EN title      | Notes                             |
+| -------------- | ------------- | --------------------------------- |
+| `seriesColor`  | (swatch)      | Stable color per BSSID for charts |
+| `bssid`        | BSSID         | Truncate middle; tooltip full MAC |
+| `ssid`         | Network Name  | `Hidden` if hidden                |
+| `securityLock` | (lock)        | Open vs secure affordance         |
+| `vendor`       | Vendor        | IEEE OUI lookup                   |
+| `annotation`   | Annotation    | User-editable (v1 patterns)       |
+| `signal`       | Signal        | Bar + % or dBm                    |
+| `channel`      | Channel       | Primary channel number            |
+| `channelWidth` | Channel Width | 20/40/80/160 MHz                  |
+| `band`         | Band          | 2.4 / 5 / 6 GHz                   |
+| `phyMode`      | Mode          | e.g. `a/n/ac`                     |
+| `security`     | Security      | Off by default                    |
+| `rssiDbm`      | RSSI          | dBm                               |
+| `noiseDbm`     | Noise         | dBm; invalid → `—`                |
+| `snrDb`        | SNR           | Derived                           |
+| `lastSeenAt`   | Last Seen     | Session time                      |
+| `networkType`  | Type          | Infrastructure / IBSS             |
 
 Sort: primary column; secondary key always `bssid`. Signal sorts by dBm even when UI shows %.
 
@@ -75,17 +75,17 @@ Sort: primary column; secondary key always `bssid`. Signal sorts by dBm even whe
 
 Предикаты по уже построенным `ObservedBss` — без повторного опроса CoreWLAN.
 
-| Field | Semantics |
-|-------|-----------|
-| `bands` | `'all'` or subset of `2.4`, `5`, `6` |
-| `security` | `any` \| `open` (`isOpen`) \| `secure` (PSK/802.1X/OWE; WEP counts secure) |
-| `ssidQuery` | Substring, case-insensitive, display name / UTF-8 |
-| `vendorQuery` | Substring on organization / OUI |
-| `minRssiDbm` | Lower bound inclusive; `null` = off |
-| `minSnrDb` | Lower bound; rows without SNR dropped if set |
-| `presence` | `live` / `stale` / `all` |
-| `includeIbss` | Include ad-hoc |
-| `includeHiddenSsid` | Include hidden networks |
+| Field               | Semantics                                                                  |
+| ------------------- | -------------------------------------------------------------------------- |
+| `bands`             | `'all'` or subset of `2.4`, `5`, `6`                                       |
+| `security`          | `any` \| `open` (`isOpen`) \| `secure` (PSK/802.1X/OWE; WEP counts secure) |
+| `ssidQuery`         | Substring, case-insensitive, display name / UTF-8                          |
+| `vendorQuery`       | Substring on organization / OUI                                            |
+| `minRssiDbm`        | Lower bound inclusive; `null` = off                                        |
+| `minSnrDb`          | Lower bound; rows without SNR dropped if set                               |
+| `presence`          | `live` / `stale` / `all`                                                   |
+| `includeIbss`       | Include ad-hoc                                                             |
+| `includeHiddenSsid` | Include hidden networks                                                    |
 
 Status bar counts: **after** filters (`visibleCount` / `totalCount`).
 
@@ -135,23 +135,23 @@ Basis: **`snr`** if valid noise; else **`rssi-fallback`**.
 
 **SNR thresholds (dB), inclusive lower bound:**
 
-| quality | min SNR |
-|---------|---------|
-| excellent | 40 |
-| good | 25 |
-| fair | 15 |
-| poor | 10 |
-| unusable | &lt; 10 |
+| quality   | min SNR |
+| --------- | ------- |
+| excellent | 40      |
+| good      | 25      |
+| fair      | 15      |
+| poor      | 10      |
+| unusable  | &lt; 10 |
 
 **RSSI fallback (dBm), if no SNR:**
 
-| quality | min RSSI |
-|---------|----------|
-| excellent | −50 |
-| good | −60 |
-| fair | −70 |
-| poor | −80 |
-| unusable | &lt; −90 |
+| quality   | min RSSI |
+| --------- | -------- |
+| excellent | −50      |
+| good      | −60      |
+| fair      | −70      |
+| poor      | −80      |
+| unusable  | &lt; −90 |
 
 Pick highest tier where `value ≥ min`. Эвристика UI, не IEEE.
 
@@ -174,27 +174,29 @@ Charts may also show raw dBm axis (−100…−30 typical grid).
 
 Open thresholds; keys map to i18n (`scan.issue.*`):
 
-| key | Trigger |
-|-----|---------|
-| `scan.issue.hiddenSsid` | SSID available and `hidden` |
-| `scan.issue.weakSecurity` | `primary` is `open` or `wep` |
-| `scan.issue.lowSignal` | `rssiDbm ≤ −85` |
-| `scan.issue.width40on24` | band 2.4 and width 40 MHz |
-| `scan.issue.crowded` | ≥ 4 other BSS same primary channel + band |
-| `scan.issue.overlap24` | another BSS same band with overlapping channel width (20 MHz default if unknown) |
-| `scan.issue.band24only` | same SSID (octet match) only on 2.4 GHz, not hidden |
+| key                          | Trigger                                                        |
+| ---------------------------- | -------------------------------------------------------------- |
+| `scan.issue.hiddenSsid`      | SSID available and `hidden`                                    |
+| `scan.issue.weakSecurity`    | `primary` is `open` or `wep`                                   |
+| `scan.issue.lowSignal`       | `rssiDbm < −70` (see `src/features/scan-issues/thresholds.ts`) |
+| `scan.issue.width40on24`     | band 2.4 and width 40 MHz                                      |
+| `scan.issue.crowdedChannel`  | ≥ 4 other BSS with overlapping primary channel + band          |
+| `scan.issue.overlap24`       | 2.4 GHz primary not 1/6/11 (Japan ch14 exception)              |
+| `scan.issue.band24only`      | same SSID (octet match) appears only on 2.4 GHz, not hidden    |
+| `scan.issue.tooManyNetworks` | ≥ 80 BSS in the current scan                                   |
+| `scan.issue.largeGroup`      | same SSID has ≥ 8 BSS                                          |
 
 ---
 
 ## 9. Snapshot `.lv24scan`
 
-| Item | Rule |
-|------|------|
-| Extension | `*.lv24scan` only (not `.wifiexplorer` / competitor UTI) |
-| Contents | BSS rows + per-BSSID history + annotations + pinned colors + metadata (app version, OS, interval) |
-| Open | Read-only inspector; live scan stopped |
-| Format | JSON document v1 (SQLite optional later) |
-| Save prompt | LV24 copy on stop/quit |
+| Item        | Rule                                                                                              |
+| ----------- | ------------------------------------------------------------------------------------------------- |
+| Extension   | `*.lv24scan` only (not `.wifiexplorer` / competitor UTI)                                          |
+| Contents    | BSS rows + per-BSSID history + annotations + pinned colors + metadata (app version, OS, interval) |
+| Open        | Inspector + editable annotations; live scan stopped on open                                       |
+| Format      | JSON document v1 (SQLite optional later)                                                          |
+| Save prompt | LV24 copy on stop/quit                                                                            |
 
 ---
 

@@ -5,13 +5,13 @@
 
 ## 1. Repo metadata (`gh repo view`)
 
-| Field | Value |
-|--------|--------|
-| **name** | `lv24-desktop-cv` |
-| **description** | LV24 CV desktop Electron app |
-| **isPrivate** | `true` |
-| **defaultBranch** | `main` |
-| **url** | https://github.com/LevapVeeskela/lv24-desktop-cv |
+| Field             | Value                                            |
+| ----------------- | ------------------------------------------------ |
+| **name**          | `lv24-desktop-cv`                                |
+| **description**   | LV24 CV desktop Electron app                     |
+| **isPrivate**     | `true`                                           |
+| **defaultBranch** | `main`                                           |
+| **url**           | https://github.com/LevapVeeskela/lv24-desktop-cv |
 
 ## 2. Layout (no full clone)
 
@@ -28,17 +28,17 @@ There is **no** top-level `electron/` directory. Main/preload live under `apps/d
 
 ## 3. Stack & versions
 
-| Layer | Details |
-|--------|---------|
-| **Package manager** | pnpm **9.15.0**, Node ≥20 |
-| **Electron** | **33.2.1** |
-| **electron-builder** | **25.1.8** |
-| **electron-updater** | **6.6.2** |
-| **Vite** | **8.1.4** (`root: renderer`, dev port **5175**) |
-| **MUI** | `@mui/material` **9.2.0**, `@mui/icons-material` **9.2.0** |
-| **MUI X (paid)** | `@mui/x-data-grid-pro` **8.11.0**, `@mui/x-license` **8.11.0** (root `pnpm.overrides` pin 8.11) |
-| **React (desktop)** | **18.3.1** (city `lv24/main/frontend` is **19.2.8** + yarn) |
-| **Native** | `better-sqlite3` + `@electron/rebuild` (CV offline cache — likely irrelevant to Wifi Explorer) |
+| Layer                | Details                                                                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------- |
+| **Package manager**  | pnpm **9.15.0**, Node ≥20                                                                       |
+| **Electron**         | **33.2.1**                                                                                      |
+| **electron-builder** | **25.1.8**                                                                                      |
+| **electron-updater** | **6.6.2**                                                                                       |
+| **Vite**             | **8.1.4** (`root: renderer`, dev port **5175**)                                                 |
+| **MUI**              | `@mui/material` **9.2.0**, `@mui/icons-material` **9.2.0**                                      |
+| **MUI X (paid)**     | `@mui/x-data-grid-pro` **8.11.0**, `@mui/x-license` **8.11.0** (root `pnpm.overrides` pin 8.11) |
+| **React (desktop)**  | **18.3.1** (city `lv24/main/frontend` is **19.2.8** + yarn)                                     |
+| **Native**           | `better-sqlite3` + `@electron/rebuild` (CV offline cache — likely irrelevant to Wifi Explorer)  |
 
 **MUI license wiring:** `apps/desktop/renderer/src/main.tsx` — `LicenseInfo.setLicenseKey(import.meta.env.VITE_MUI_LICENSE_KEY)`; Vite `envDir` = `apps/desktop`; README says copy key from `main/frontend/.env.local`. Guard test: `apps/desktop/renderer/src/muiXGridLicensePin.test.ts`.
 
@@ -66,13 +66,13 @@ Types for the bridge: `apps/desktop/renderer/src/types/cvDesktop.d.ts`.
 
 ## 6. vs `lv24/main/frontend`
 
-| | **lv24-desktop-cv** | **lv24/main/frontend** |
-|--|---------------------|-------------------------|
-| Electron | Yes, full shell | **No** — Vite SPA only |
-| MUI versions | Matched 9.2 + X 8.11 | Same MUI pin policy |
-| React | 18.3.1 | 19.2.8 |
-| Tooling | pnpm | yarn 4 |
-| Domain | Entire CV product + SQLite sync | Full city web app (maps, deck.gl, etc.) |
+|              | **lv24-desktop-cv**             | **lv24/main/frontend**                  |
+| ------------ | ------------------------------- | --------------------------------------- |
+| Electron     | Yes, full shell                 | **No** — Vite SPA only                  |
+| MUI versions | Matched 9.2 + X 8.11            | Same MUI pin policy                     |
+| React        | 18.3.1                          | 19.2.8                                  |
+| Tooling      | pnpm                            | yarn 4                                  |
+| Domain       | Entire CV product + SQLite sync | Full city web app (maps, deck.gl, etc.) |
 
 Bootstrapping Wifi Explorer from **main/frontend** would mean inventing Electron from scratch. This repo is the **only** LV24 Electron reference in scope.
 

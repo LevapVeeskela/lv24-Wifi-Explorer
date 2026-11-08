@@ -61,7 +61,7 @@ ScanSnapshotDto _demoWithNativeContext(
     scanDurationMs: native.scanDurationMs ?? demoFixture.scanDurationMs,
     stale: demoFixture.stale,
     locationAuthorized: true,
-    location: native.location ?? 'not-applicable',
+    location: native.location,
     networks: demoFixture.networks,
     results: demoFixture.results,
     associated: associated,

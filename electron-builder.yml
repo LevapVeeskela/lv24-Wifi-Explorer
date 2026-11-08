@@ -13,12 +13,20 @@ files:
   - package.json
 mac:
   icon: resources/icons/icon.icns
+  minimumSystemVersion: '13.5'
   target:
     - target: dmg
       arch: [x64, arm64]
   hardenedRuntime: true
   entitlements: entitlements.mac.plist
   entitlementsInherit: entitlements.mac.plist
+  # Notarization is opt-in through the environment, never through this file:
+  #   APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID
+  # Without those variables electron-builder logs "skipped macOS notarization"
+  # and unsigned/local builds keep working. A notarization attempt still
+  # requires a Developer ID Application signing identity (CSC_* or keychain).
+  # Disable a single run with: -c.mac.notarize=false
+  notarize: true
   extendInfo:
     NSLocationWhenInUseUsageDescription: >-
       LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks
@@ -31,9 +39,17 @@ win:
   target:
     - target: nsis
       arch: [x64]
-  signAndEditExecutable: false
+  # Keeps icon/version metadata editing on and signs whenever a certificate is
+  # configured; without one electron-builder still produces an unsigned exe.
+  # Note: building win targets from macOS needs wine for this step — use a
+  # Windows host/CI runner for dist:win.
+  signAndEditExecutable: true
 linux:
   icon: resources/icons/icon.svg
+  target:
+    - target: AppImage
+      arch: [x64, arm64]
+  category: Network
 nsis:
   oneClick: false
   perMachine: false

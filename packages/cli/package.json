@@ -1,0 +1,41 @@
+{
+  "name": "@lv24/wifi-cli",
+  "version": "0.1.0",
+  "description": "Cross-platform Wi-Fi scan CLI built on @lv24/wifi-backend.",
+  "homepage": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer#readme",
+  "bugs": {
+    "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues"
+  },
+  "license": "MIT",
+  "author": "LV24",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer.git",
+    "directory": "packages/cli"
+  },
+  "bin": {
+    "lv24-wifi": "./dist/main.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "type": "commonjs",
+  "main": "./dist/main.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@lv24/wifi-backend": "0.1.0",
+    "@lv24/wifi-core": "0.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

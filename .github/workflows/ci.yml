@@ -1,12 +1,12 @@
-# JS/TS verify for LV24 WiFi Explorer (Node 20 + pnpm).
-# Optional (local macOS): unaccepted Xcode license can block git hooks and
-# native tooling until you run `sudo xcodebuild -license`.
+# JS/TS verify for LV24 WiFi Explorer (Node 20+ / Yarn 1.22).
+# Zero-spend policy: manual-only; no automatic push/PR runs on hosted runners.
 name: CI
 
-# Zero-spend policy: no automatic CI on push/PR (private repo + hosted runners =
-# paid minutes). Run manually from the Actions tab when needed.
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -15,48 +15,47 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
-      - name: Detect package manifest
-        id: pkg
-        run: |
-          if [ ! -f package.json ]; then
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::No package.json yet — skipping install/lint/test until it exists."
-          fi
-
       - uses: actions/setup-node@v4
-        if: steps.pkg.outputs.skip != 'true'
         with:
-          node-version: "20"
-          cache: pnpm
+          node-version: '22'
+          cache: yarn
 
-      - name: Enable pnpm
-        if: steps.pkg.outputs.skip != 'true'
-        run: corepack enable && corepack prepare pnpm@9.15.0 --activate
+      - name: Enable Yarn 1.22
+        run: npm install -g yarn@1.22.22
 
       - name: Install (frozen lockfile)
-        if: steps.pkg.outputs.skip != 'true'
-        run: pnpm install --frozen-lockfile
+        run: yarn install --frozen-lockfile --non-interactive
 
       - name: Typecheck
-        if: steps.pkg.outputs.skip != 'true'
-        run: pnpm run typecheck
+        run: yarn typecheck
 
-      - name: Project node tests
-        if: steps.pkg.outputs.skip != 'true'
+      - name: Lint
+        run: yarn lint
+
+      - name: Format check
+        run: yarn format:check
+
+      - name: Tests (includes scan suite)
+        run: yarn test
+
+      - name: Legacy scan node:test suite
+        run: yarn test:scan
+
+      - name: OUI tests
+        run: yarn test:oui
+
+      - name: CLI smoke (demo provider)
         run: |
-          pnpm run test:scan
-          pnpm run test:oui
+          yarn cli providers
+          yarn cli scan --provider demo --format json > /tmp/lv24-demo.json
+          test -s /tmp/lv24-demo.json
 
-      - name: Oxlint
-        if: steps.pkg.outputs.skip != 'true'
-        run: pnpm dlx oxlint@latest ./src ./electron
-
-      - name: Vitest
-        if: steps.pkg.outputs.skip != 'true'
-        run: pnpm dlx vitest@3 run
+      - name: Renderer + desktop build
+        run: yarn build
         env:
-          CI: true
           # Intentionally no VITE_MUI_LICENSE_KEY — MUI license proof test skips without a local key.
+          CI: true

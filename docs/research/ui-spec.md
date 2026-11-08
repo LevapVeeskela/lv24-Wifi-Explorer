@@ -9,7 +9,8 @@ Visual language is **Sunset** (coral/violet, Manrope + Plus Jakarta), not Intuit
 
 ---
 
-# UI specification / Спецификация UI  
+# UI specification / Спецификация UI
+
 **Product:** LV24 WiFi Explorer (`lv24-wifi-explorer`)  
 **Surface:** `ScanWorkbench` / `ВерстакСканирования`  
 **Locale default:** `ru` · fallback `en`  
@@ -19,15 +20,15 @@ Visual language is **Sunset** (coral/violet, Manrope + Plus Jakarta), not Intuit
 
 ## 0. Stack, license, non-goals
 
-| Layer | Package | Version policy | License |
-|---|---|---|---|
-| Core | `@mui/material` `@mui/icons-material` `@mui/system` | **9.2.0** (latest free) | MIT |
-| Emotion | `@emotion/react` `@emotion/styled` | match LV24 | MIT |
-| Data grid | `@mui/x-data-grid-pro` | **8.11.0 pin** | **Pro key** `VITE_MUI_LICENSE_KEY` |
-| License runtime | `@mui/x-license` | **8.11.0 pin** | same key |
-| Charts | `@mui/x-charts` | 8.11.0 or latest **Community** | **MIT — must stay Community** |
-| Date pickers (only if needed) | `@mui/x-date-pickers` | Community | **MIT — must stay Community** |
-| Theme | Sunset from `lv24/main/frontend/src/shared/lib/theme` | cssVariables + light/dark | — |
+| Layer                         | Package                                               | Version policy                 | License                            |
+| ----------------------------- | ----------------------------------------------------- | ------------------------------ | ---------------------------------- |
+| Core                          | `@mui/material` `@mui/icons-material` `@mui/system`   | **9.2.0** (latest free)        | MIT                                |
+| Emotion                       | `@emotion/react` `@emotion/styled`                    | match LV24                     | MIT                                |
+| Data grid                     | `@mui/x-data-grid-pro`                                | **8.11.0 pin**                 | **Pro key** `VITE_MUI_LICENSE_KEY` |
+| License runtime               | `@mui/x-license`                                      | **8.11.0 pin**                 | same key                           |
+| Charts                        | `@mui/x-charts`                                       | 8.11.0 or latest **Community** | **MIT — must stay Community**      |
+| Date pickers (only if needed) | `@mui/x-date-pickers`                                 | Community                      | **MIT — must stay Community**      |
+| Theme                         | Sunset from `lv24/main/frontend/src/shared/lib/theme` | cssVariables + light/dark      | —                                  |
 
 **Apply key** like IMS `applyMuiXLicense()` at renderer entry. Do not print or commit the key. Empty key → Pro watermark on the grid only.
 
@@ -37,13 +38,13 @@ Visual language is **Sunset** (coral/violet, Manrope + Plus Jakarta), not Intuit
 
 These **must not** be added, even if IMS already has some of them:
 
-| Forbidden package | Why |
-|---|---|
-| `@mui/x-data-grid-premium` | Key is Pro, not Premium. No row grouping, aggregation, Excel, pivot. |
+| Forbidden package                             | Why                                                                                  |
+| --------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `@mui/x-data-grid-premium`                    | Key is Pro, not Premium. No row grouping, aggregation, Excel, pivot.                 |
 | `@mui/x-charts-pro` / `@mui/x-charts-premium` | Key is validated as `x-data-grid-pro`. Zoom/pan/heatmap/funnel/export = Pro/Premium. |
-| `@mui/x-date-pickers-pro` | IMS uses this; **Wifi-Explorer must not**. No `DateTimeRangePicker`. |
-| `@mui/x-tree-view-pro` | Not covered; do not add. |
-| Any `@mui/x-*-pro` **9.x** | `NotValidForPackage` against the v8 key. |
+| `@mui/x-date-pickers-pro`                     | IMS uses this; **Wifi-Explorer must not**. No `DateTimeRangePicker`.                 |
+| `@mui/x-tree-view-pro`                        | Not covered; do not add.                                                             |
+| Any `@mui/x-*-pro` **9.x**                    | `NotValidForPackage` against the v8 key.                                             |
 
 **Allowed Pro features (DataGridPro 8 only):** column resize, reorder, pin, visibility manager, `apiRef.updateRows`, no pagination, multi-sort, virtualization. Optional later: **tree data** (Pro) to nest BSS under SSID — **not** Premium `rowGrouping`.
 
@@ -94,19 +95,19 @@ These **must not** be added, even if IMS already has some of them:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-| Region ID | RU | MUI / custom | License |
-|---|---|---|---|
-| `ScanShell` | `СканОболочка` | `Box` column, 100dvh | Community |
-| `TitleBar` | `Титул` | Electron chrome + `Typography` / `Chip` | Community |
-| `ScanAppBar` | `СканАппбар` | `AppBar` `position="static"` + `Toolbar` `variant="dense"` | Community |
-| `ScanMainSplit` | `СканГлавныйСплит` | CSS grid + `PaneResizeSeparator` (GuideEditor pattern) | Community (custom) |
-| `ScanDataGrid` | `СканТаблица` | **`DataGridPro`** | **Pro** |
-| `SplitterH` | `ГоризонтальныйСплиттер` | `Box` `role="separator"` | Community |
-| `BottomDock` | `НижнийДок` | `Paper` + `Stack` | Community |
-| `DetailsTabs` | `ВкладкиДеталей` | `Tabs` + `Tab` | Community |
-| `NetworkDetailsPane` | `ПанельСведений` | `Grid` (MUI 9 Grid2) 2 columns | Community |
-| `ChartStrip` | `ЛентаГрафиков` | 3× `Paper` + Community charts | **Community charts** |
-| `StatusBar` | `СтрокаСостояния` | `Paper`/`AppBar` dense | Community |
+| Region ID            | RU                       | MUI / custom                                               | License              |
+| -------------------- | ------------------------ | ---------------------------------------------------------- | -------------------- |
+| `ScanShell`          | `СканОболочка`           | `Box` column, 100dvh                                       | Community            |
+| `TitleBar`           | `Титул`                  | Electron chrome + `Typography` / `Chip`                    | Community            |
+| `ScanAppBar`         | `СканАппбар`             | `AppBar` `position="static"` + `Toolbar` `variant="dense"` | Community            |
+| `ScanMainSplit`      | `СканГлавныйСплит`       | CSS grid + `PaneResizeSeparator` (GuideEditor pattern)     | Community (custom)   |
+| `ScanDataGrid`       | `СканТаблица`            | **`DataGridPro`**                                          | **Pro**              |
+| `SplitterH`          | `ГоризонтальныйСплиттер` | `Box` `role="separator"`                                   | Community            |
+| `BottomDock`         | `НижнийДок`              | `Paper` + `Stack`                                          | Community            |
+| `DetailsTabs`        | `ВкладкиДеталей`         | `Tabs` + `Tab`                                             | Community            |
+| `NetworkDetailsPane` | `ПанельСведений`         | `Grid` (MUI 9 Grid2) 2 columns                             | Community            |
+| `ChartStrip`         | `ЛентаГрафиков`          | 3× `Paper` + Community charts                              | **Community charts** |
+| `StatusBar`          | `СтрокаСостояния`        | `Paper`/`AppBar` dense                                     | Community            |
 
 **Not used:** `DataGridPremium`, `Accordion` as the primary details chrome (tabs win). `Accordion` **is** allowed inside `AdvancedDetailsPane` for IE groups.
 
@@ -119,30 +120,30 @@ These **must not** be added, even if IMS already has some of them:
 
 **Left — scan state**
 
-| ID | RU | Content |
-|---|---|---|
-| `title.scanState` | `title.scanState` | `Scanning` / `Сканирование` · `Paused` / `Пауза` · `Demo` / `Демо` |
-| `title.connectedSsid` | `title.connectedSsid` | ` | {ssid}` if associated; else omit |
+| ID                    | RU                    | Content                                                            |
+| --------------------- | --------------------- | ------------------------------------------------------------------ |
+| `title.scanState`     | `title.scanState`     | `Scanning` / `Сканирование` · `Paused` / `Пауза` · `Demo` / `Демо` |
+| `title.connectedSsid` | `title.connectedSsid` | `                                                                  | {ssid}` if associated; else omit |
 
 **Right — associated link (only if connected)**
 
-| ID | RU label | Source |
-|---|---|---|
-| `title.linkRssi` | RSSI | connected BSS `rssiDbm` as `−60 dBm` (never the screenshot’s “−60%”) |
-| `title.linkBand` | Диапазон | `5 GHz` |
-| `title.linkWidth` | Ширина | `20 MHz` |
-| `title.linkTxRate` | Скорость | `144 Mbps` |
+| ID                 | RU label | Source                                                               |
+| ------------------ | -------- | -------------------------------------------------------------------- |
+| `title.linkRssi`   | RSSI     | connected BSS `rssiDbm` as `−60 dBm` (never the screenshot’s “−60%”) |
+| `title.linkBand`   | Диапазон | `5 GHz`                                                              |
+| `title.linkWidth`  | Ширина   | `20 MHz`                                                             |
+| `title.linkTxRate` | Скорость | `144 Mbps`                                                           |
 
 Separator: `Divider` `orientation="vertical"` `flexItem` or middots. `Typography` `variant="caption"`.
 
 **Actions (icon-only, `Tooltip` + `aria-label`):**
 
-| ID | Icon (MUI) | Action |
-|---|---|---|
-| `title.pause` | `Pause` / `PlayArrow` | start/stop scan |
-| `title.iface` | `SettingsInputAntenna` | `Menu` of interfaces |
-| `title.theme` | `DarkMode` / `LightMode` | color scheme |
-| `title.about` | `InfoOutlined` | `Dialog` about — **our** version, not their license |
+| ID            | Icon (MUI)               | Action                                              |
+| ------------- | ------------------------ | --------------------------------------------------- |
+| `title.pause` | `Pause` / `PlayArrow`    | start/stop scan                                     |
+| `title.iface` | `SettingsInputAntenna`   | `Menu` of interfaces                                |
+| `title.theme` | `DarkMode` / `LightMode` | color scheme                                        |
+| `title.about` | `InfoOutlined`           | `Dialog` about — **our** version, not their license |
 
 ---
 
@@ -154,12 +155,12 @@ Separator: `Divider` `orientation="vertical"` `flexItem` or middots. `Typography
 
 `ToggleButtonGroup` **exclusive**. `size="small"`.
 
-| value | EN | RU | Rule |
-|---|---|---|---|
-| `all` | All | Все | default |
-| `24` | 2.4 GHz | 2,4 ГГц | `band === '2.4'` |
-| `5` | 5 GHz | 5 ГГц | `band === '5'` |
-| `6` | 6 GHz | 6 ГГц | `band === '6'`; if hardware/OS has no 6 GHz BSS, keep enabled, empty grid + hint `scan.filter.band6.empty` |
+| value | EN      | RU      | Rule                                                                                                       |
+| ----- | ------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `all` | All     | Все     | default                                                                                                    |
+| `24`  | 2.4 GHz | 2,4 ГГц | `band === '2.4'`                                                                                           |
+| `5`   | 5 GHz   | 5 ГГц   | `band === '5'`                                                                                             |
+| `6`   | 6 GHz   | 6 ГГц   | `band === '6'`; if hardware/OS has no 6 GHz BSS, keep enabled, empty grid + hint `scan.filter.band6.empty` |
 
 **a11y:** `aria-label={scan.filter.band}`.
 
@@ -167,9 +168,9 @@ Separator: `Divider` `orientation="vertical"` `flexItem` or middots. `Typography
 
 `ToggleButtonGroup` **multi-select** (`value: Array<'open' \| 'secure'>`).
 
-| value | EN | RU | Rule |
-|---|---|---|---|
-| `open` | Open | Открытые | `securityClass === 'open'` |
+| value    | EN     | RU         | Rule                         |
+| -------- | ------ | ---------- | ---------------------------- |
+| `open`   | Open   | Открытые   | `securityClass === 'open'`   |
 | `secure` | Secure | Защищённые | `securityClass === 'secure'` |
 
 **Logic:** `[]` or `['open','secure']` = all. Only `open` / only `secure` = filter. Do not treat both-off as empty (matches “idle = all”).
@@ -203,12 +204,12 @@ EN: `Filter networks` · RU: `Фильтр сетей`
 
 ### 4.5 Optional v1 toolbar extras
 
-| ID | Component | License |
-|---|---|---|
-| `RssiFloorFilter` | `Slider` or `Select` min RSSI | Community |
-| `ScanSensitivity` | `Select` dwell/interval | Community |
-| `ExportCsv` | `Button` → Community CSV | Community |
-| `IssuesToggle` | `Badge` + `ToggleButton` show Issues rows | Community |
+| ID                | Component                                 | License   |
+| ----------------- | ----------------------------------------- | --------- |
+| `RssiFloorFilter` | `Slider` or `Select` min RSSI             | Community |
+| `ScanSensitivity` | `Select` dwell/interval                   | Community |
+| `ExportCsv`       | `Button` → Community CSV                  | Community |
+| `IssuesToggle`    | `Badge` + `ToggleButton` show Issues rows | Community |
 
 ---
 
@@ -236,42 +237,42 @@ EN: `Filter networks` · RU: `Фильтр сетей`
 
 **Visible by default** (screenshot order, original headers):
 
-| `field` | EN header | RU header | Cell | Notes |
-|---|---|---|---|---|
-| `seriesColor` | (none) | (none) | 8×8 `Box` swatch | Chart color; `filterable:false` `hideable:false` |
-| `bssid` | BSSID | BSSID | `Typography` mono, truncate middle | Copy on `Mod+C` when focused |
-| `ssid` | Network name | Имя сети | text; hidden → `‹hidden›` / `‹скрытая›` italic | Connected: `Wifi` icon + weight 600 |
-| `securityLock` | (icon) | (icon) | `Lock` / `LockOpen` + `Tooltip` full security | Not hideable; sort by `securityClass` |
-| `vendor` | Vendor | Производитель | `Stack` `Avatar` 16px initials + name | Our OUI, not their logos |
-| `annotation` | Annotations | Пометки | `IconButton` `StickyNote2` if empty; text if set | `Dialog` or inline `TextField` |
-| `signal` | Signal | Сигнал | `%` + `LinearProgress` | Sort by `signalPct` / `rssiDbm` |
-| `channel` | Channel | Канал | number | — |
-| `channelWidth` | Channel width | Ширина канала | `20 MHz` | — |
-| `band` | Band | Диапазон | `2.4` / `5` / `6` + UNII suffix in tooltip | — |
-| `phyMode` | Mode | Режим | `a/n/ac` compact; tooltip `802.11a/n/ac` | — |
+| `field`        | EN header     | RU header     | Cell                                             | Notes                                            |
+| -------------- | ------------- | ------------- | ------------------------------------------------ | ------------------------------------------------ |
+| `seriesColor`  | (none)        | (none)        | 8×8 `Box` swatch                                 | Chart color; `filterable:false` `hideable:false` |
+| `bssid`        | BSSID         | BSSID         | `Typography` mono, truncate middle               | Copy on `Mod+C` when focused                     |
+| `ssid`         | Network name  | Имя сети      | text; hidden → `‹hidden›` / `‹скрытая›` italic   | Connected: `Wifi` icon + weight 600              |
+| `securityLock` | (icon)        | (icon)        | `Lock` / `LockOpen` + `Tooltip` full security    | Not hideable; sort by `securityClass`            |
+| `vendor`       | Vendor        | Производитель | `Stack` `Avatar` 16px initials + name            | Our OUI, not their logos                         |
+| `annotation`   | Annotations   | Пометки       | `IconButton` `StickyNote2` if empty; text if set | `Dialog` or inline `TextField`                   |
+| `signal`       | Signal        | Сигнал        | `%` + `LinearProgress`                           | Sort by `signalPct` / `rssiDbm`                  |
+| `channel`      | Channel       | Канал         | number                                           | —                                                |
+| `channelWidth` | Channel width | Ширина канала | `20 MHz`                                         | —                                                |
+| `band`         | Band          | Диапазон      | `2.4` / `5` / `6` + UNII suffix in tooltip       | —                                                |
+| `phyMode`      | Mode          | Режим         | `a/n/ac` compact; tooltip `802.11a/n/ac`         | —                                                |
 
 **Hidden by default (column picker) — v1 scanner extras:**
 
-| `field` | EN | RU | Why |
-|---|---|---|---|
-| `rssiDbm` | RSSI | RSSI | raw dBm |
-| `noiseDbm` | Noise | Шум | dBm (not “−1%”) |
-| `snrDb` | SNR | ОСШ | `rssi − noise` |
-| `signalQuality` | Quality | Качество | Excellent / Хорошо / … |
-| `security` | Security | Защита | `WPA2-Personal` |
-| `encryption` | Encryption | Шифрование | `CCMP-128` |
-| `maxRateMbps` | Max rate | Макс. скорость | — |
-| `frequencyMHz` | Frequency | Частота | — |
-| `unii` | UNII | UNII | `UNII-2A` |
-| `networkType` | Type | Тип | Infrastructure / IBSS / … |
-| `connected` | Connected | Подключено | boolean + `Chip` |
-| `hidden` | Hidden | Скрытая | boolean |
-| `firstSeen` | First seen | Впервые | relative |
-| `lastSeen` | Last seen | Недавно | relative |
-| `country` | Country | Страна | if present |
-| `favorite` | Favorite | Избранное | star |
-| `iface` | Interface | Интерфейс | scan iface |
-| `issueFlags` | Issues | Проблемы | `Chip` count; heuristics from capability matrix |
+| `field`         | EN         | RU             | Why                                             |
+| --------------- | ---------- | -------------- | ----------------------------------------------- |
+| `rssiDbm`       | RSSI       | RSSI           | raw dBm                                         |
+| `noiseDbm`      | Noise      | Шум            | dBm (not “−1%”)                                 |
+| `snrDb`         | SNR        | ОСШ            | `rssi − noise`                                  |
+| `signalQuality` | Quality    | Качество       | Excellent / Хорошо / …                          |
+| `security`      | Security   | Защита         | `WPA2-Personal`                                 |
+| `encryption`    | Encryption | Шифрование     | `CCMP-128`                                      |
+| `maxRateMbps`   | Max rate   | Макс. скорость | —                                               |
+| `frequencyMHz`  | Frequency  | Частота        | —                                               |
+| `unii`          | UNII       | UNII           | `UNII-2A`                                       |
+| `networkType`   | Type       | Тип            | Infrastructure / IBSS / …                       |
+| `connected`     | Connected  | Подключено     | boolean + `Chip`                                |
+| `hidden`        | Hidden     | Скрытая        | boolean                                         |
+| `firstSeen`     | First seen | Впервые        | relative                                        |
+| `lastSeen`      | Last seen  | Недавно        | relative                                        |
+| `country`       | Country    | Страна         | if present                                      |
+| `favorite`      | Favorite   | Избранное      | star                                            |
+| `iface`         | Interface  | Интерфейс      | scan iface                                      |
+| `issueFlags`    | Issues     | Проблемы       | `Chip` count; heuristics from capability matrix |
 
 **Signal bar (`SignalBar` / `ПолосаСигнала`):**
 
@@ -284,12 +285,12 @@ EN: `Filter networks` · RU: `Фильтр сетей`
 
 ### 5.2 Selection highlight / Выделение
 
-| Token | Meaning |
-|---|---|
+| Token           | Meaning                                                                                                                                                                                                                                                   |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `row--selected` | `palette.action.selected` + `palette.primary.main` left 3 px bar; text `primary.contrastText` **only if** contrast fails — prefer keep `text.primary` on tinted coral (`alpha(primary, 0.16)` like Sunset dark). **Do not** use screenshot electric blue. |
-| Focus | MUI `action.focus` outline on the row, `:focus-visible` only |
-| Hover | `action.hover` |
-| Multi | v1 off |
+| Focus           | MUI `action.focus` outline on the row, `:focus-visible` only                                                                                                                                                                                              |
+| Hover           | `action.hover`                                                                                                                                                                                                                                            |
+| Multi           | v1 off                                                                                                                                                                                                                                                    |
 
 `onRowClick` / `onRowSelectionModelChange` → `selectedBssid`. Details + charts bind to this id. Empty selection → details empty state.
 
@@ -297,14 +298,14 @@ EN: `Filter networks` · RU: `Фильтр сетей`
 
 Independent of selection.
 
-| Cue | Spec |
-|---|---|
-| Title bar | SSID + link stats |
-| Row | `Wifi` icon in `ssid` cell; `fontWeight: 600` |
-| Optional `Chip` `size="small"` `color="success"` | `Connected` / `Подключено` |
-| Left accent | 3 px `success.main` **under** selection bar (selection wins if both) |
-| Sort pin | **Do not** force-sort connected to top (keeps channel/signal sort honest). Optional later: pin row via Pro `pinnedRows` — nice-to-have, not v1 must |
-| Disappeared | if association lost, remove cues immediately |
+| Cue                                              | Spec                                                                                                                                                |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Title bar                                        | SSID + link stats                                                                                                                                   |
+| Row                                              | `Wifi` icon in `ssid` cell; `fontWeight: 600`                                                                                                       |
+| Optional `Chip` `size="small"` `color="success"` | `Connected` / `Подключено`                                                                                                                          |
+| Left accent                                      | 3 px `success.main` **under** selection bar (selection wins if both)                                                                                |
+| Sort pin                                         | **Do not** force-sort connected to top (keeps channel/signal sort honest). Optional later: pin row via Pro `pinnedRows` — nice-to-have, not v1 must |
+| Disappeared                                      | if association lost, remove cues immediately                                                                                                        |
 
 ---
 
@@ -314,12 +315,12 @@ Independent of selection.
 
 `Tabs` `variant="scrollable"` `scrollButtons="auto"` `allowScrollButtonsMobile`. Selected tab: Sunset primary indicator.
 
-| `value` | EN | RU | Panel |
-|---|---|---|---|
-| `details` | Network details | Сведения о сети | `NetworkDetailsPane` + `ChartStrip` |
-| `signal` | Signal strength | Уровень сигнала | full-width `SignalHistoryChart` |
-| `occupancy` | Channel occupancy | Занятость каналов | 2.4 / 5 / 6 charts, larger |
-| `advanced` | Advanced details | Дополнительно | `AdvancedDetailsPane` |
+| `value`     | EN                | RU                | Panel                               |
+| ----------- | ----------------- | ----------------- | ----------------------------------- |
+| `details`   | Network details   | Сведения о сети   | `NetworkDetailsPane` + `ChartStrip` |
+| `signal`    | Signal strength   | Уровень сигнала   | full-width `SignalHistoryChart`     |
+| `occupancy` | Channel occupancy | Занятость каналов | 2.4 / 5 / 6 charts, larger          |
+| `advanced`  | Advanced details  | Дополнительно     | `AdvancedDetailsPane`               |
 
 Keyboard: `Mod+1…4`. `aria-controls` / `id` pairs.
 
@@ -334,33 +335,33 @@ Two columns: `xs={12} md={6}`. Each field is `DetailsField` / `ПолеСвед�
 
 **Column A**
 
-| `fieldId` | EN | RU | Format |
-|---|---|---|---|
-| `ssid` | SSID | SSID | raw; hidden placeholder |
-| `bssid` | BSSID | BSSID | full colon MAC |
-| `vendor` | Vendor | Производитель | OUI name |
+| `fieldId`       | EN             | RU               | Format                                                                              |
+| --------------- | -------------- | ---------------- | ----------------------------------------------------------------------------------- |
+| `ssid`          | SSID           | SSID             | raw; hidden placeholder                                                             |
+| `bssid`         | BSSID          | BSSID            | full colon MAC                                                                      |
+| `vendor`        | Vendor         | Производитель    | OUI name                                                                            |
 | `signalQuality` | Signal quality | Качество сигнала | Excellent / Отличное · Good / Хорошее · Fair / Среднее · Weak / Слабое · None / Нет |
-| `signalPct` | Signal | Сигнал | `81%` |
+| `signalPct`     | Signal         | Сигнал           | `81%`                                                                               |
 
 **Column B**
 
-| `fieldId` | EN | RU | Format |
-|---|---|---|---|
-| `band` | Band | Диапазон | `5 GHz UNII-2A` |
-| `phyMode` | Mode | Режим | `802.11a/n/ac` |
-| `maxRateMbps` | Max rate | Макс. скорость | `260.1 Mbps` |
-| `channel` | Channel | Канал | `60` |
-| `noiseDbm` | Noise | Шум | `−95 dBm` (**not** “−1%”) |
+| `fieldId`     | EN       | RU             | Format                    |
+| ------------- | -------- | -------------- | ------------------------- |
+| `band`        | Band     | Диапазон       | `5 GHz UNII-2A`           |
+| `phyMode`     | Mode     | Режим          | `802.11a/n/ac`            |
+| `maxRateMbps` | Max rate | Макс. скорость | `260.1 Mbps`              |
+| `channel`     | Channel  | Канал          | `60`                      |
+| `noiseDbm`    | Noise    | Шум            | `−95 dBm` (**not** “−1%”) |
 
 **Row 3 (wraps both columns, still 2-col):**
 
-| `fieldId` | EN | RU | Format |
-|---|---|---|---|
-| `networkType` | Type | Тип | Infrastructure / Инфраструктура |
-| `security` | Security | Защита | WPA2-Personal |
-| `encryption` | Encryption | Шифрование | CCMP-128 |
-| `channelWidth` | Channel width | Ширина канала | 20 MHz |
-| `snrDb` | SNR | ОСШ | `48.00 dB` |
+| `fieldId`      | EN            | RU            | Format                          |
+| -------------- | ------------- | ------------- | ------------------------------- |
+| `networkType`  | Type          | Тип           | Infrastructure / Инфраструктура |
+| `security`     | Security      | Защита        | WPA2-Personal                   |
+| `encryption`   | Encryption    | Шифрование    | CCMP-128                        |
+| `channelWidth` | Channel width | Ширина канала | 20 MHz                          |
+| `snrDb`        | SNR           | ОСШ           | `48.00 dB`                      |
 
 v1 extras in this pane (if space, else Advanced): `frequencyMHz`, `country`, `firstSeen`, `lastSeen`, `connected`.
 
@@ -370,12 +371,12 @@ v1 extras in this pane (if space, else Advanced): `frequencyMHz`, `country`, `fi
 
 `Accordion` `disableGutters` `square` groups (Community):
 
-| ID | EN | RU |
-|---|---|---|
-| `adv.radio` | Radio | Радио |
-| `adv.security` | Security | Защита |
-| `adv.ies` | Information elements | Информационные элементы |
-| `adv.issues` | Issues | Проблемы |
+| ID             | EN                   | RU                      |
+| -------------- | -------------------- | ----------------------- |
+| `adv.radio`    | Radio                | Радио                   |
+| `adv.security` | Security             | Защита                  |
+| `adv.ies`      | Information elements | Информационные элементы |
+| `adv.issues`   | Issues               | Проблемы                |
 
 IE decode is **ours** (capability matrix), not their engine. Missing CoreWLAN fields → `—` + tooltip `scan.field.unavailable`.
 
@@ -389,16 +390,16 @@ IE decode is **ours** (capability matrix), not their engine. Missing CoreWLAN fi
 
 ### 7.1 Signal history — `SignalHistoryChart` / `ГрафикИсторииСигнала`
 
-| Item | Spec |
-|---|---|
-| Component | `LineChart` Community |
-| X | time, `scaleType: 'time'` |
-| Y | 0–100 `%` **or** −100–0 dBm (toggle `scan.chart.unit`) |
-| Series | selected BSS; optional 2–3 comparison later |
-| Marks | `showMark: false` |
+| Item      | Spec                                                                                                          |
+| --------- | ------------------------------------------------------------------------------------------------------------- |
+| Component | `LineChart` Community                                                                                         |
+| X         | time, `scaleType: 'time'`                                                                                     |
+| Y         | 0–100 `%` **or** −100–0 dBm (toggle `scan.chart.unit`)                                                        |
+| Series    | selected BSS; optional 2–3 comparison later                                                                   |
+| Marks     | `showMark: false`                                                                                             |
 | Timescale | store window: 30s / 1m / 5m / 15m / 1h — `IconButton` `UnfoldMore`/`UnfoldLess` or ↑/↓ **when chart focused** |
-| Empty | no samples yet — HostMonitor-style caption |
-| Color | `seriesColor` of selected row |
+| Empty     | no samples yet — HostMonitor-style caption                                                                    |
+| Color     | `seriesColor` of selected row                                                                                 |
 
 **Do not** use Charts Pro zoom/pan.
 
@@ -406,12 +407,12 @@ IE decode is **ours** (capability matrix), not their engine. Missing CoreWLAN fi
 
 Two (or three) Community `BarChart`s: `2.4 GHz` · `5 GHz` · `6 GHz` if any 6 GHz BSS or UNII-5/6/7/8 present.
 
-| Item | Spec |
-|---|---|
-| X | channel numbers (2.4: 1–14; 5: UNII set; 6: 1–233 stepped) |
-| Y | 0–100 occupancy score from overlapping BSS RSSI/width (our heuristic) |
-| Selected | highlight bar + label `Channel {n}` / `Канал {n}` |
-| Overlap | stacked or two series: others vs selected |
+| Item       | Spec                                                                                                                        |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
+| X          | channel numbers (2.4: 1–14; 5: UNII set; 6: 1–233 stepped)                                                                  |
+| Y          | 0–100 occupancy score from overlapping BSS RSSI/width (our heuristic)                                                       |
+| Selected   | highlight bar + label `Channel {n}` / `Канал {n}`                                                                           |
+| Overlap    | stacked or two series: others vs selected                                                                                   |
 | PARITY-GAP | caption `scan.chart.occupancy.hint`: «По данным активного сканирования, не RF-спектр» / «From active scan, not RF spectrum» |
 
 Screenshot’s empty grey bars + one green selected bar = this model.
@@ -432,11 +433,11 @@ Each chart: `aria-label`, `slotProps` hide decorative legend if redundant, **vis
 
 **Left**
 
-| ID | EN | RU |
-|---|---|---|
-| `status.sortHint` | Signal · use ↑ or ↓ to change timescale **when a chart is focused** | Сигнал · ↑/↓ меняют шкалу времени, когда фокус на графике |
-| `status.networksFound` | Networks found: {n} | Сетей: {n} |
-| `status.selected` | Selected: {n} | Выбрано: {n} |
+| ID                     | EN                                                                  | RU                                                        |
+| ---------------------- | ------------------------------------------------------------------- | --------------------------------------------------------- |
+| `status.sortHint`      | Signal · use ↑ or ↓ to change timescale **when a chart is focused** | Сигнал · ↑/↓ меняют шкалу времени, когда фокус на графике |
+| `status.networksFound` | Networks found: {n}                                                 | Сетей: {n}                                                |
+| `status.selected`      | Selected: {n}                                                       | Выбрано: {n}                                              |
 
 `aria-live="polite"` on the counts (announce on change, not every scan tick — debounce 1s).
 
@@ -444,13 +445,13 @@ Each chart: `aria-label`, `slotProps` hide decorative legend if redundant, **vis
 
 **Forbidden:** “Not Activated”, “Days Remaining”, Paddle, their license SKU.
 
-| ID | EN | RU |
-|---|---|---|
+| ID                | EN                          | RU                           |
+| ----------------- | --------------------------- | ---------------------------- |
 | `status.scanCore` | ScanCore: ok / error / demo | ScanCore: ок / ошибка / демо |
-| `status.location` | Location: granted / denied | Геолокация: разрешена / нет |
-| `status.lastScan` | Last scan: {relative} | Последнее: {relative} |
-| `status.version` | v{semver} | v{semver} |
-| `status.about` | About | О программе |
+| `status.location` | Location: granted / denied  | Геолокация: разрешена / нет  |
+| `status.lastScan` | Last scan: {relative}       | Последнее: {relative}        |
+| `status.version`  | v{semver}                   | v{semver}                    |
+| `status.about`    | About                       | О программе                  |
 
 `status.about` opens `AboutDialog` / `ДиалогОПрограмме`: product name **LV24 WiFi Explorer**, version, ScanCore version, Location privacy sentence, MUI attribution (MIT + Pro grid). No third-party scanner names.
 
@@ -458,16 +459,16 @@ Each chart: `aria-label`, `slotProps` hide decorative legend if redundant, **vis
 
 ## 9. Dark theme density / Тёмная плотность
 
-| Token | Value |
-|---|---|
-| Default scheme | dark |
-| `shape.borderRadius` | Sunset 10 for dialogs/chips; **grid 0** (square instrument) |
-| Toolbar | dense, 8 px vertical |
-| DataGrid | `density="compact"`; `palette.DataGrid.bg/headerBg/pinnedBg` = paper |
-| Dividers | `palette.divider` |
-| Scrollbars | thin, Sunset divider thumb |
-| Charts | `theme.palette` series; axis `text.secondary` |
-| Compact padding | `spacing(1)` in dock; `spacing(0.5)` in field grid |
+| Token                | Value                                                                |
+| -------------------- | -------------------------------------------------------------------- |
+| Default scheme       | dark                                                                 |
+| `shape.borderRadius` | Sunset 10 for dialogs/chips; **grid 0** (square instrument)          |
+| Toolbar              | dense, 8 px vertical                                                 |
+| DataGrid             | `density="compact"`; `palette.DataGrid.bg/headerBg/pinnedBg` = paper |
+| Dividers             | `palette.divider`                                                    |
+| Scrollbars           | thin, Sunset divider thumb                                           |
+| Charts               | `theme.palette` series; axis `text.secondary`                        |
+| Compact padding      | `spacing(1)` in dock; `spacing(0.5)` in field grid                   |
 
 Light scheme must remain WCAG AA (Sunset already tuned). Do not ship a third “WiFi Explorer skin”.
 
@@ -477,32 +478,32 @@ Light scheme must remain WCAG AA (Sunset already tuned). Do not ship a third “
 
 ### 10.1 Focus scopes (Tab order)
 
-1. `TitleBar` icon actions  
-2. `BandFilter` → `SecurityFilter` → `ScanSearch` → `ColumnPicker`  
-3. `ScanDataGrid` (MUI X grid roving tabindex)  
-4. `SplitterH`  
-5. `DetailsTabs` → panel fields  
-6. `ChartStrip` panes  
-7. `StatusBar` About  
+1. `TitleBar` icon actions
+2. `BandFilter` → `SecurityFilter` → `ScanSearch` → `ColumnPicker`
+3. `ScanDataGrid` (MUI X grid roving tabindex)
+4. `SplitterH`
+5. `DetailsTabs` → panel fields
+6. `ChartStrip` panes
+7. `StatusBar` About
 
 Skip links: `scan.a11y.skipToGrid` / `К таблице`, `scan.a11y.skipToDetails` / `К сведениям`.
 
 ### 10.2 Shortcuts
 
-| Key | Scope | Action |
-|---|---|---|
-| `Mod+F` | global | focus search |
-| `Escape` | search focused | clear query |
-| `Escape` | menu/dialog | close |
-| `ArrowUp/Down` | **grid** | move selection |
-| `ArrowUp/Down` | **chart focused** | timescale ± |
-| `Enter` | grid | keep selection, focus details |
-| `Space` | grid | toggle `favorite` |
-| `Mod+C` | grid | copy BSSID (or SSID if ssid cell) |
-| `Mod+1…4` | global | details tabs |
-| `Mod+P` | global | pause/resume scan |
-| `Home`/`End` | grid | first/last visible row |
-| `ArrowLeft/Right` `Home` `End` | splitter focused | resize (GuideEditor keys; vertical splitter uses Up/Down) |
+| Key                            | Scope             | Action                                                    |
+| ------------------------------ | ----------------- | --------------------------------------------------------- |
+| `Mod+F`                        | global            | focus search                                              |
+| `Escape`                       | search focused    | clear query                                               |
+| `Escape`                       | menu/dialog       | close                                                     |
+| `ArrowUp/Down`                 | **grid**          | move selection                                            |
+| `ArrowUp/Down`                 | **chart focused** | timescale ±                                               |
+| `Enter`                        | grid              | keep selection, focus details                             |
+| `Space`                        | grid              | toggle `favorite`                                         |
+| `Mod+C`                        | grid              | copy BSSID (or SSID if ssid cell)                         |
+| `Mod+1…4`                      | global            | details tabs                                              |
+| `Mod+P`                        | global            | pause/resume scan                                         |
+| `Home`/`End`                   | grid              | first/last visible row                                    |
+| `ArrowLeft/Right` `Home` `End` | splitter focused  | resize (GuideEditor keys; vertical splitter uses Up/Down) |
 
 Document ↑/↓ conflict in status hint: **focus-dependent**.
 
@@ -526,11 +527,11 @@ MUI has **no** Splitter. **Do not** add a paid splitter. Use GuideEditor: CSS gr
 
 ### 11.1 Desktop (`md+`, primary)
 
-| Splitter | ID | Axis | Persist key | Min | Default |
-|---|---|---|---|---|---|
-| Grid vs dock | `split.main` / `сплит.главный` | horizontal (row heights) | `lv24.wifi-explorer.panes` | grid 160 px, dock 180 px | grid 0.58 / dock 0.42 |
-| Details vs charts | `split.dock` / `сплит.док` | horizontal | same JSON | details 72 px, charts 120 px | 0.45 / 0.55 |
-| Chart panes (optional v1) | `split.charts` / `сплит.графики` | vertical | same | 160 px each | 1/3 |
+| Splitter                  | ID                               | Axis                     | Persist key                | Min                          | Default               |
+| ------------------------- | -------------------------------- | ------------------------ | -------------------------- | ---------------------------- | --------------------- |
+| Grid vs dock              | `split.main` / `сплит.главный`   | horizontal (row heights) | `lv24.wifi-explorer.panes` | grid 160 px, dock 180 px     | grid 0.58 / dock 0.42 |
+| Details vs charts         | `split.dock` / `сплит.док`       | horizontal               | same JSON                  | details 72 px, charts 120 px | 0.45 / 0.55           |
+| Chart panes (optional v1) | `split.charts` / `сплит.графики` | vertical                 | same                       | 160 px each                  | 1/3                   |
 
 Reset control: `scan.panes.reset` in About or toolbar overflow.
 
@@ -552,32 +553,32 @@ Electron: min 960×640. `ScanShell` `height: 100%` `overflow: hidden`. Grid and 
 
 ## 12. Component map / Карта компонентов
 
-| UI job | Component | Package | License |
-|---|---|---|---|
-| App frame | `Box` `Stack` `CssBaseline` `ThemeProvider` | material 9 | Community |
-| Top bars | `AppBar` `Toolbar` | material | Community |
-| Band / security | `ToggleButtonGroup` `ToggleButton` | material | Community |
-| Search | `TextField` `InputAdornment` | material | Community |
-| Icons | `@mui/icons-material` | icons 9 | Community |
-| Column picker | `IconButton` + DataGridPro columns management | material + **data-grid-pro** | **Pro** |
-| BSS table | **`DataGridPro`** | **x-data-grid-pro 8.11** | **Pro** |
-| Signal bar | `LinearProgress` | material | Community |
-| Vendor | `Avatar` `Typography` | material | Community |
-| Lock / wifi | `Lock` `LockOpen` `Wifi` | icons | Community |
-| Details tabs | `Tabs` `Tab` `Box` role=tabpanel | material | Community |
-| Details fields | `Grid` + `Typography` | material | Community |
-| Advanced groups | `Accordion` `AccordionSummary` `AccordionDetails` | material | Community |
-| Issues | `Chip` `Alert` | material | Community |
-| Signal chart | `LineChart` | **x-charts** | **Community MUST** |
-| Occupancy | `BarChart` | **x-charts** | **Community MUST** |
-| Mini spark (optional later) | `SparkLineChart` | x-charts | Community |
-| Timescale | `IconButton` / `ToggleButtonGroup` / `Select` | material | Community |
-| About / notes | `Dialog` `DialogTitle` `TextField` | material | Community |
-| Status | `Paper` `Typography` `Link` | material | Community |
-| Toasts | `Snackbar` | material | Community |
-| Splitters | custom `Box` (GuideEditor) | — | MIT in-repo |
-| Theme toggle | existing Sunset `ColorSchemeToggle` | material | Community |
-| Date/time (avoid) | if ever: `Select` presets only | material | Community |
+| UI job                      | Component                                         | Package                      | License            |
+| --------------------------- | ------------------------------------------------- | ---------------------------- | ------------------ |
+| App frame                   | `Box` `Stack` `CssBaseline` `ThemeProvider`       | material 9                   | Community          |
+| Top bars                    | `AppBar` `Toolbar`                                | material                     | Community          |
+| Band / security             | `ToggleButtonGroup` `ToggleButton`                | material                     | Community          |
+| Search                      | `TextField` `InputAdornment`                      | material                     | Community          |
+| Icons                       | `@mui/icons-material`                             | icons 9                      | Community          |
+| Column picker               | `IconButton` + DataGridPro columns management     | material + **data-grid-pro** | **Pro**            |
+| BSS table                   | **`DataGridPro`**                                 | **x-data-grid-pro 8.11**     | **Pro**            |
+| Signal bar                  | `LinearProgress`                                  | material                     | Community          |
+| Vendor                      | `Avatar` `Typography`                             | material                     | Community          |
+| Lock / wifi                 | `Lock` `LockOpen` `Wifi`                          | icons                        | Community          |
+| Details tabs                | `Tabs` `Tab` `Box` role=tabpanel                  | material                     | Community          |
+| Details fields              | `Grid` + `Typography`                             | material                     | Community          |
+| Advanced groups             | `Accordion` `AccordionSummary` `AccordionDetails` | material                     | Community          |
+| Issues                      | `Chip` `Alert`                                    | material                     | Community          |
+| Signal chart                | `LineChart`                                       | **x-charts**                 | **Community MUST** |
+| Occupancy                   | `BarChart`                                        | **x-charts**                 | **Community MUST** |
+| Mini spark (optional later) | `SparkLineChart`                                  | x-charts                     | Community          |
+| Timescale                   | `IconButton` / `ToggleButtonGroup` / `Select`     | material                     | Community          |
+| About / notes               | `Dialog` `DialogTitle` `TextField`                | material                     | Community          |
+| Status                      | `Paper` `Typography` `Link`                       | material                     | Community          |
+| Toasts                      | `Snackbar`                                        | material                     | Community          |
+| Splitters                   | custom `Box` (GuideEditor)                        | —                            | MIT in-repo        |
+| Theme toggle                | existing Sunset `ColorSchemeToggle`               | material                     | Community          |
+| Date/time (avoid)           | if ever: `Select` presets only                    | material                     | Community          |
 
 **Not in v1:** `DataGrid` Community (loses resize), `DataGridPremium`, `ChartsPro`, `Heatmap`, `DateRangePicker`, `TreeViewPro`.
 
@@ -605,36 +606,36 @@ Hidden SSID display: `scan.ssid.hidden`.
 
 ## 14. Suggested FSD map (no files created)
 
-| Path | Role |
-|---|---|
-| `pages/ScanWorkbenchPage` | shell + splits |
-| `widgets/ScanAppBar` | filters |
-| `widgets/ScanDataGrid` | DataGridPro wrapper |
-| `widgets/NetworkDetailsPane` | 2-col fields |
-| `widgets/ChartStrip` | three charts |
-| `widgets/StatusBar` | counts + about |
-| `features/scan-filters` | band/security/search model |
-| `features/scan-selection` | selected + connected |
-| `features/signal-history` | ring buffer + timescale |
-| `features/channel-occupancy` | occupancy heuristic |
-| `entities/bss` | row type / i18n field ids |
-| `shared/lib/mui/license.ts` | `applyMuiXLicense` |
-| `shared/lib/theme` | Sunset |
-| `shared/ui/PaneResizeSeparator` | from GuideEditor |
+| Path                            | Role                       |
+| ------------------------------- | -------------------------- |
+| `pages/ScanWorkbenchPage`       | shell + splits             |
+| `widgets/ScanAppBar`            | filters                    |
+| `widgets/ScanDataGrid`          | DataGridPro wrapper        |
+| `widgets/NetworkDetailsPane`    | 2-col fields               |
+| `widgets/ChartStrip`            | three charts               |
+| `widgets/StatusBar`             | counts + about             |
+| `features/scan-filters`         | band/security/search model |
+| `features/scan-selection`       | selected + connected       |
+| `features/signal-history`       | ring buffer + timescale    |
+| `features/channel-occupancy`    | occupancy heuristic        |
+| `entities/bss`                  | row type / i18n field ids  |
+| `shared/lib/mui/license.ts`     | `applyMuiXLicense`         |
+| `shared/lib/theme`              | Sunset                     |
+| `shared/ui/PaneResizeSeparator` | from GuideEditor           |
 
 ---
 
 ## 15. States / Состояния
 
-| State | Grid | Dock | Status |
-|---|---|---|---|
-| Scanning | live rows | last selection sticky if still present | `found` updates |
-| Paused | frozen | frozen | `Paused` |
-| Demo | fixture rows + `Chip` Demo | same | `ScanCore: demo` |
-| Location denied | masked SSID/BSSID per ScanCore | explanation `Alert` | `Location: denied` + open Settings |
-| No iface | empty overlay | — | error |
-| No match (filters) | DataGrid overlay `scan.grid.emptyFilter` | — | found = 0 |
-| ScanCore down | overlay + retry | — | error |
+| State              | Grid                                     | Dock                                   | Status                             |
+| ------------------ | ---------------------------------------- | -------------------------------------- | ---------------------------------- |
+| Scanning           | live rows                                | last selection sticky if still present | `found` updates                    |
+| Paused             | frozen                                   | frozen                                 | `Paused`                           |
+| Demo               | fixture rows + `Chip` Demo               | same                                   | `ScanCore: demo`                   |
+| Location denied    | masked SSID/BSSID per ScanCore           | explanation `Alert`                    | `Location: denied` + open Settings |
+| No iface           | empty overlay                            | —                                      | error                              |
+| No match (filters) | DataGrid overlay `scan.grid.emptyFilter` | —                                      | found = 0                          |
+| ScanCore down      | overlay + retry                          | —                                      | error                              |
 
 Overlay: DataGrid `slots.noRowsOverlay` — not a page-level spinner that unmounts the grid.
 
@@ -642,15 +643,15 @@ Overlay: DataGrid `slots.noRowsOverlay` — not a page-level spinner that unmoun
 
 ## 16. Implementation order
 
-1. `ScanShell` + Sunset dark + license pin + empty `DataGridPro` compact.  
-2. Columns (screenshot set) + selection + connected cues.  
-3. `ScanAppBar` filters + search + column visibility persist.  
-4. `NetworkDetailsPane` 2-col.  
-5. Community `LineChart` + timescale buttons.  
-6. Occupancy `BarChart` + PARITY-GAP caption.  
-7. Splitters + persist.  
-8. `StatusBar` / About (no trial).  
-9. Keyboard, live region, hidden-SSID, Issues chips.  
+1. `ScanShell` + Sunset dark + license pin + empty `DataGridPro` compact.
+2. Columns (screenshot set) + selection + connected cues.
+3. `ScanAppBar` filters + search + column visibility persist.
+4. `NetworkDetailsPane` 2-col.
+5. Community `LineChart` + timescale buttons.
+6. Occupancy `BarChart` + PARITY-GAP caption.
+7. Splitters + persist.
+8. `StatusBar` / About (no trial).
+9. Keyboard, live region, hidden-SSID, Issues chips.
 10. Tablet tab fallback.
 
 ---

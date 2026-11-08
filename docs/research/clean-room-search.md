@@ -17,39 +17,39 @@ What exists is a **licensed commercial Intuitibits WiFi Explorer 3.6.9 install**
 
 ### Commercial product — **DO NOT COPY**
 
-| Path | What it is |
-|---|---|
-| `/Applications/WiFi Explorer.app` | Installed **Mach-O universal binary** (x86_64 + arm64). Bundle ID `wifiexplorer`, version **3.6.9** (build 80), min macOS **13.5**. Copyright Intuitibits LLC 2012–2026. Sparkle updates from `https://www.intuitibits.com/`. Paddle licensing. **No `.swift` / `.m` / `.c` source in the bundle.** |
-| `/Applications/WiFi Explorer.app/Contents/MacOS/WiFi Explorer` | Main executable. **Must not be decompiled, class-dumped, or reused.** |
-| `/Applications/WiFi Explorer.app/Contents/Resources/` | Nibs, lproj strings, PDF print templates, icons, `demo.bin` (binary plist sample scan), `vendors.zip` (proprietary OUI/vendor DB), `dot11.net.plist`. **Assets + DBs must not be copied.** |
-| `/Applications/WiFi Explorer.app/Contents/Frameworks/` | `Paddle.framework`, `Sparkle.framework`, `VendorDatabase.framework`. Third-party/commercial. **Do not link or copy.** |
-| `/Users/veeskela/Downloads/WiFiExplorer_3.6.9.dmg` | Official installer (~8 MB, dated 2026-09-15). **Do not unpack for source.** |
+| Path                                                           | What it is                                                                                                                                                                                                                                                                                          |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/Applications/WiFi Explorer.app`                              | Installed **Mach-O universal binary** (x86_64 + arm64). Bundle ID `wifiexplorer`, version **3.6.9** (build 80), min macOS **13.5**. Copyright Intuitibits LLC 2012–2026. Sparkle updates from `https://www.intuitibits.com/`. Paddle licensing. **No `.swift` / `.m` / `.c` source in the bundle.** |
+| `/Applications/WiFi Explorer.app/Contents/MacOS/WiFi Explorer` | Main executable. **Must not be decompiled, class-dumped, or reused.**                                                                                                                                                                                                                               |
+| `/Applications/WiFi Explorer.app/Contents/Resources/`          | Nibs, lproj strings, PDF print templates, icons, `demo.bin` (binary plist sample scan), `vendors.zip` (proprietary OUI/vendor DB), `dot11.net.plist`. **Assets + DBs must not be copied.**                                                                                                          |
+| `/Applications/WiFi Explorer.app/Contents/Frameworks/`         | `Paddle.framework`, `Sparkle.framework`, `VendorDatabase.framework`. Third-party/commercial. **Do not link or copy.**                                                                                                                                                                               |
+| `/Users/veeskela/Downloads/WiFiExplorer_3.6.9.dmg`             | Official installer (~8 MB, dated 2026-09-15). **Do not unpack for source.**                                                                                                                                                                                                                         |
 
 No `_MASReceipt` — this is a **direct/Paddle** copy, not MAS-extracted source. No WiFi Explorer Pro app, Airtool, NetSpot, iStumbler, inSSIDer, wavemon, or Kismet installs.
 
 ### User data / license / caches — not source, do not copy
 
-| Path | What it is |
-|---|---|
-| `/Users/veeskela/Library/Application Support/WiFi Explorer/501956.padl` | Paddle license blob |
-| `/Users/veeskela/Library/Application Support/WiFi Explorer/501956.spadl` | Paddle sidecar |
-| `/Users/veeskela/Library/Preferences/wifiexplorer.plist` | UI prefs (columns, split views, filters, trial). First launch **2026-09-15**, last version 80, **2 launches**. `Experimental6GHzSupport = false`. |
-| `/Users/veeskela/Library/Caches/wifiexplorer/` | HTTP cache DB |
-| `/Users/veeskela/Library/HTTPStorages/wifiexplorer` (+ `.binarycookies`) | Network cache |
-| `/Users/veeskela/Library/Application Scripts/2B9R362QNU.com.intuitibits` | Empty App Group scripts dir |
-| `/Users/veeskela/Library/Application Scripts/2B9R362QNU.com.adriangranados.wifiexplorer` | Empty |
-| `/Users/veeskela/Library/Group Containers/2B9R362QNU.com.intuitibits` | Empty |
-| `/Users/veeskela/Library/Group Containers/2B9R362QNU.com.adriangranados.wifiexplorer` | Empty |
+| Path                                                                                     | What it is                                                                                                                                        |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/Users/veeskela/Library/Application Support/WiFi Explorer/501956.padl`                  | Paddle license blob                                                                                                                               |
+| `/Users/veeskela/Library/Application Support/WiFi Explorer/501956.spadl`                 | Paddle sidecar                                                                                                                                    |
+| `/Users/veeskela/Library/Preferences/wifiexplorer.plist`                                 | UI prefs (columns, split views, filters, trial). First launch **2026-09-15**, last version 80, **2 launches**. `Experimental6GHzSupport = false`. |
+| `/Users/veeskela/Library/Caches/wifiexplorer/`                                           | HTTP cache DB                                                                                                                                     |
+| `/Users/veeskela/Library/HTTPStorages/wifiexplorer` (+ `.binarycookies`)                 | Network cache                                                                                                                                     |
+| `/Users/veeskela/Library/Application Scripts/2B9R362QNU.com.intuitibits`                 | Empty App Group scripts dir                                                                                                                       |
+| `/Users/veeskela/Library/Application Scripts/2B9R362QNU.com.adriangranados.wifiexplorer` | Empty                                                                                                                                             |
+| `/Users/veeskela/Library/Group Containers/2B9R362QNU.com.intuitibits`                    | Empty                                                                                                                                             |
+| `/Users/veeskela/Library/Group Containers/2B9R362QNU.com.adriangranados.wifiexplorer`    | Empty                                                                                                                                             |
 
 No saved `*.wifiexplorer` or `*.filterlist` files under Desktop / Documents / Downloads / Projects.
 
 ### Screenshots (UI only — inspiration, not assets)
 
-| Path | What it is |
-|---|---|
-| `/Users/veeskela/Desktop/Снимок экрана — 2026-09-17 в 22.12.44.png` | User screenshot of **WiFi Explorer** (trial: “Not Activated – 5 Days Remaining”) |
-| `/Users/veeskela/.cursor/projects/Users-veeskela-Projects/assets/image-756df449-e552-4992-b734-5b4ebe4e97ab.png` | Same UI, attached to this chat |
-| `/Users/veeskela/Desktop/Снимок экрана — 2026-09-17 в 21.51.30.png` | **Unrelated** Windows “open .sh with…” dialog |
+| Path                                                                                                             | What it is                                                                       |
+| ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `/Users/veeskela/Desktop/Снимок экрана — 2026-09-17 в 22.12.44.png`                                              | User screenshot of **WiFi Explorer** (trial: “Not Activated – 5 Days Remaining”) |
+| `/Users/veeskela/.cursor/projects/Users-veeskela-Projects/assets/image-756df449-e552-4992-b734-5b4ebe4e97ab.png` | Same UI, attached to this chat                                                   |
+| `/Users/veeskela/Desktop/Снимок экрана — 2026-09-17 в 21.51.30.png`                                              | **Unrelated** Windows “open .sh with…” dialog                                    |
 
 ### Searched, confidently empty for scanner source
 
@@ -68,10 +68,10 @@ No saved `*.wifiexplorer` or `*.filterlist` files under Desktop / Documents / Do
 
 ### System tools (not project source)
 
-| Path | Note |
-|---|---|
-| `/usr/bin/wdutil` | Present |
-| `airport` CLI | **Not found** (typical on current macOS) |
+| Path                                                 | Note                                             |
+| ---------------------------------------------------- | ------------------------------------------------ |
+| `/usr/bin/wdutil`                                    | Present                                          |
+| `airport` CLI                                        | **Not found** (typical on current macOS)         |
 | `/System/Applications/Utilities/AirPort Utility.app` | Apple AP manager, not a scanner and not reusable |
 
 ---
@@ -83,6 +83,7 @@ From **Info.plist keywords**, **English menu/localizable labels**, **nib names**
 **Product framing (their marketing string):** scan, troubleshoot, and monitor wireless networks. Location Services required.
 
 **Main chrome (screenshot + menus)**
+
 - Live scan / stop; status shows connected SSID + channel / band / width / PHY rate
 - Band chips: All / 2.4 GHz / 5 GHz (6 GHz exists in strings; prefs have `Experimental6GHzSupport`)
 - Open / Secure filters; search (“Filter”)
@@ -98,9 +99,10 @@ From **Info.plist keywords**, **English menu/localizable labels**, **nib names**
 - Trial / license / Sparkle update (we should not clone Paddle)
 
 **Table columns they expose (names only)**  
-SSID, BSSID, vendor (OUI), annotations, security, RSSI (+ min/avg/max + bar), noise (+ min/avg/max), SNR (+ min/avg/max), channel, channel center, center frequency, width, band, PHY mode, generation, country code, max/min rates, basic rates, streams, network type, first/last seen, device name, WPS, MFP, 802.11r, HT protection, BSS color, Hotspot 2.0 / HESSID, mesh, DTIM, beacon interval/rate/airtime/mode, IE count/length, channel utilization, client/station counts, uptime, Cisco CCX fields, amendments, plus history-*, client-*, BLE-*, Zigbee-*, iBeacon-* columns.
+SSID, BSSID, vendor (OUI), annotations, security, RSSI (+ min/avg/max + bar), noise (+ min/avg/max), SNR (+ min/avg/max), channel, channel center, center frequency, width, band, PHY mode, generation, country code, max/min rates, basic rates, streams, network type, first/last seen, device name, WPS, MFP, 802.11r, HT protection, BSS color, Hotspot 2.0 / HESSID, mesh, DTIM, beacon interval/rate/airtime/mode, IE count/length, channel utilization, client/station counts, uptime, Cisco CCX fields, amendments, plus history-_, client-_, BLE-_, Zigbee-_, iBeacon-* columns.
 
 **Detail tabs (screenshot)**
+
 - Network Details: SSID, BSSID, vendor, signal quality, RSSI, band/UNII, PHY, max rate, channel, noise, type, security, encryption, width, SNR
 - Signal Strength (RSSI timeline; 5-minute default in prefs)
 - Spectrum 2.4 / 5 GHz (and a 6 GHz spectrum view in menus)

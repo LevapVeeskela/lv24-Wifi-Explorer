@@ -2,11 +2,11 @@
 
 Bundled vendor lookup for 24-bit Organizationally Unique Identifiers from the public [IEEE OUI CSV](https://standards-oui.ieee.org/oui/oui.csv).
 
-| File | Purpose |
-|------|---------|
-| `registry.json` | Prefix → organization map consumed by `src/shared/lib/oui` |
-| `meta.json` | Build metadata (`source`, `generatedAt`, `entryCount`) |
-| `ieee-mal.csv` | Last downloaded IEEE file (present after a successful refresh) |
+| File            | Purpose                                                        |
+| --------------- | -------------------------------------------------------------- |
+| `registry.json` | Prefix → organization map consumed by `src/shared/lib/oui`     |
+| `meta.json`     | Build metadata (`source`, `generatedAt`, `entryCount`)         |
+| `ieee-mal.csv`  | Last downloaded IEEE file (present after a successful refresh) |
 
 ## Refresh
 

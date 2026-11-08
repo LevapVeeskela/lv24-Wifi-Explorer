@@ -104,8 +104,9 @@ void main() {
 
       final band = parseScanQuery('5ghz');
       expect(band, isA<ParseScanQueryOk>());
-      expect((band as ParseScanQueryOk).ast.pred?.kind, ScanPredicateKind.band);
-      expect((band as ParseScanQueryOk).ast.pred?.band, 5);
+      final ok = band as ParseScanQueryOk;
+      expect(ok.ast.pred?.kind, ScanPredicateKind.band);
+      expect(ok.ast.pred?.band, 5);
     });
 
     test('parses AND/OR/NOT with parentheses', () {
