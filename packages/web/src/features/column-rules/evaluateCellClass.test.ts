@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { columnRuleClassesForCell } from './evaluateCellClass';
 import type { ColumnRulesConfig } from './types';
 

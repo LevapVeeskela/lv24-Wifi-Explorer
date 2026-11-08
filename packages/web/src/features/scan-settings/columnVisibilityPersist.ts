@@ -1,5 +1,5 @@
 import { STORAGE_COLUMNS } from '@/shared/lib/persistence/keys';
-import { DEFAULT_COLUMN_VISIBILITY } from './columnCatalog';
+import { DEFAULT_COLUMN_VISIBILITY } from '@/entities/columns';
 
 export type ColumnVisibilityStorage = Pick<Storage, 'getItem' | 'setItem'>;
 

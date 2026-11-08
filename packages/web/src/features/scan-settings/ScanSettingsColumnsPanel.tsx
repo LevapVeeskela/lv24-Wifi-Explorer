@@ -1,9 +1,9 @@
 import { Button, Divider, FormControlLabel, Stack, Switch, Typography } from '@mui/material';
 import { ColumnProfilesControls, useColumnProfiles } from '@/features/column-profiles';
 import { useColumnRules, type ColumnRulesHighlight } from '@/features/column-rules';
-import { ColoringRulesPanel } from '@/features/coloring-rules/ColoringRulesPanel';
+import { ColoringRulesPanel } from '@/features/coloring-rules';
 import type { ColoringRulesConfig } from '@/features/coloring-rules';
-import { SCAN_GRID_COLUMNS } from './columnCatalog';
+import { SCAN_GRID_COLUMNS } from '@/entities/columns';
 import { useSettingsMessage } from './useSettingsMessage';
 
 function withHighlightToggled(

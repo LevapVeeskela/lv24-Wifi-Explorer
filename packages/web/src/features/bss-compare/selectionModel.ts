@@ -1,6 +1,6 @@
 import type { GridRowId, GridRowSelectionModel } from '@mui/x-data-grid-pro';
-import { normalizeBssid } from '@/entities/bss/normalizeBssid';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import { normalizeBssid } from '@/entities/bss';
+import type { ScanGridRow } from '@/entities/bss';
 import { MAX_BSS_COMPARE_SELECTION } from './constants';
 
 export function selectedRowIdsFromModel(model: GridRowSelectionModel): string[] {

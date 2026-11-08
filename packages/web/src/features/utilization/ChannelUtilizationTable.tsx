@@ -11,8 +11,8 @@ import {
   Typography,
 } from '@mui/material';
 import type { ObservedBss } from '@/domain/bss';
-import { formatDbm } from '@/entities/bss/formatters';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { formatDbm } from '@/entities/bss';
+import { useScanIntl } from '@/shared/i18n';
 import {
   computeUtilization,
   type ChannelUtilization,

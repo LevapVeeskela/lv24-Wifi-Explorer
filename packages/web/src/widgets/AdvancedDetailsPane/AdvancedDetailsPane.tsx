@@ -9,9 +9,9 @@ import {
 } from '@mui/material';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Grid from '@mui/material/Grid';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { createFormatMessage } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { DetailsField } from '@/widgets/NetworkDetailsPane';
 import {
   formatBandField,
@@ -24,7 +24,7 @@ import {
   formatSecurity,
   formatSnrDetails,
   formatWidthField,
-} from '@/widgets/NetworkDetailsPane/formatFields';
+} from '@/entities/bss';
 import {
   advancedChipRowSx,
   advancedDetailsSx,

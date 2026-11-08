@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import type { FormatMessageFn } from '@/shared/i18n';
 import { buildIeDiff, type IeDiffCell, type IeDiffEntry } from './buildIeDiff';
 import {

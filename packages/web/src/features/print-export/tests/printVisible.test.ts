@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'vitest';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { buildPrintHtml } from '../buildPrintHtml';
 import { resolvePrintColumns } from '../resolvePrintColumns';
 

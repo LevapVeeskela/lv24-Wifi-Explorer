@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
-import { loadScanSettings } from '@/features/scan-settings/persist';
-import type { ScanSettings } from '@/features/scan-settings/types';
+import { loadScanSettings } from '@/features/scan-settings';
+import type { ScanSettings } from '@/features/scan-settings';
 import { FILTER_DEFAULTS, type ScanWorkbenchFilters } from './types';
 
 export type ScanSettingsFilterFields = Pick<ScanSettings, 'minRssiDbm' | 'includeHiddenSsid'>;

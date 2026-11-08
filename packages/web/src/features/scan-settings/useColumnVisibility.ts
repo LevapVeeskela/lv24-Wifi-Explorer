@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { DEFAULT_COLUMN_VISIBILITY } from './columnCatalog';
+import { DEFAULT_COLUMN_VISIBILITY } from '@/entities/columns';
 import { loadColumnVisibility, saveColumnVisibility } from './columnVisibilityPersist';
 
 export function useColumnVisibility(): {

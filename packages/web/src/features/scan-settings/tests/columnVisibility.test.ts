@@ -4,7 +4,7 @@ import {
   DEFAULT_COLUMN_VISIBILITY,
   DEFAULT_HIDDEN_FIELDS,
   SCAN_GRID_COLUMNS,
-} from '../columnCatalog';
+} from '@/entities/columns';
 import { loadColumnVisibility, saveColumnVisibility } from '../columnVisibilityPersist';
 
 function memoryStorage(): Storage {

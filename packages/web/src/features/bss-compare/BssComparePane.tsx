@@ -11,10 +11,10 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import { ssidGridLabel } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
+import { ssidGridLabel } from '@/entities/bss';
 import { createFormatMessage } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { buildCompareFieldRows } from './buildCompareFields';
 import { MIN_BSS_COMPARE_COUNT } from './constants';
 import { IeCompareSection } from './IeCompareSection';

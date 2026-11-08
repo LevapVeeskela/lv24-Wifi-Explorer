@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { Paper, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import { graphLabelForRow } from '@/features/scan-settings/graphLabelForRow';
-import type { GraphLabelMode } from '@/features/scan-settings/types';
+import type { ScanGridRow } from '@/entities/bss';
+import { graphLabelForRow } from '@/features/scan-settings';
+import type { GraphLabelMode } from '@/features/scan-settings';
 import { createFormatMessage } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { ChartA11yTable } from './ChartA11yTable';
 import { chartCaptionSx, chartEmptySx, chartPaperSx } from './styles';
 

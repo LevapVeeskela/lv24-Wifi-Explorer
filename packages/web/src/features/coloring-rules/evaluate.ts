@@ -1,4 +1,4 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { NUMERIC_COLORING_FIELDS } from './constants';
 import { compactBssid, matchBssidGlob, matchGlob, parseNumericToken } from './match';
 import type { ColoringField, ColoringOp, ColoringRule, ColoringRulesConfig } from './types';

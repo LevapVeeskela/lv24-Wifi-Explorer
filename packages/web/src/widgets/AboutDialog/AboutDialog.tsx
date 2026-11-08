@@ -6,7 +6,7 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import {
   aboutActionsSx,
   aboutBodySx,

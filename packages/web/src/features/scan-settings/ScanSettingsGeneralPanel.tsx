@@ -14,6 +14,14 @@ import {
 import { SCAN_INTERVAL_SEC_OPTIONS } from './constants';
 import { useSettingsMessage } from './useSettingsMessage';
 import type { ScanSettings, SignalDisplayUnit } from './types';
+import { normalizeAppLocale, writeLocalePreference, type AppLocale } from '@/shared/i18n';
+import { useScanIntl } from '@/shared/i18n';
+
+const LOCALE_OPTIONS: { value: AppLocale; labelKey: string }[] = [
+  { value: 'ru', labelKey: 'scan.settings.language.ru' },
+  { value: 'en', labelKey: 'scan.settings.language.en' },
+  { value: 'zh', labelKey: 'scan.settings.language.zh' },
+];
 
 export type ScanSettingsGeneralPanelProps = {
   settings: ScanSettings;
@@ -22,8 +30,28 @@ export type ScanSettingsGeneralPanelProps = {
 
 export function ScanSettingsGeneralPanel({ settings, onChange }: ScanSettingsGeneralPanelProps) {
   const msg = useSettingsMessage();
+  const { locale } = useScanIntl();
+  const activeLocale = normalizeAppLocale(locale);
   return (
     <Stack spacing={3}>
+      <FormControl fullWidth size="small">
+        <InputLabel id="scan-settings-language-label">{msg('scan.settings.language')}</InputLabel>
+        <Select
+          label={msg('scan.settings.language')}
+          labelId="scan-settings-language-label"
+          value={activeLocale}
+          onChange={(event) => {
+            writeLocalePreference(normalizeAppLocale(String(event.target.value)));
+          }}
+        >
+          {LOCALE_OPTIONS.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {msg(option.labelKey)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
       <Stack spacing={1}>
         <Typography color="text.secondary" variant="subtitle2">
           {msg('scan.settings.signalUnit')}

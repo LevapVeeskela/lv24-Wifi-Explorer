@@ -1,1 +1,1 @@
-export { computeIssueKeys } from './computeIssueKeys';
+export { computeIssueKeys, computeIssueKeysForScan } from './computeIssueKeys';

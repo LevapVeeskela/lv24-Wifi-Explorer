@@ -45,7 +45,7 @@ import {
   searchFieldSx,
   vendorFieldSx,
 } from './styles';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { t } from './t';
 
 export type ScanAppBarProps = {

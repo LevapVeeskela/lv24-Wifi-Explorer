@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Box, Chip, List, ListItemButton, Stack, Typography } from '@mui/material';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import {
   buildIssueInspectorGroups,
   rowsWithIssues,
@@ -9,7 +9,7 @@ import {
 import type { IssueInspectorRow, IssueSeverity, ScanIssueId } from '@/features/scan-issues';
 import { isSelectedRow } from '@/features/scan-selection';
 import type { MessageKey } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { useIssuesInspectorData } from './IssuesInspectorContext';
 import {
   issueBssButtonSx,

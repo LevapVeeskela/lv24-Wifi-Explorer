@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import type { UseFilterPresetsResult } from './useFilterPresets';
 
 export type FilterPresetsMenuProps = {

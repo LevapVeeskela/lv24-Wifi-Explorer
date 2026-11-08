@@ -3,9 +3,9 @@ import { Paper, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import type { ObservedBss } from '@/domain/bss';
 import type { BandGhz } from '@/domain/channel';
-import { computeBandOccupancy } from '@/features/channel-occupancy/computeOccupancy';
+import { computeBandOccupancy } from '@/features/channel-occupancy';
 import { createFormatMessage } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { ChartA11yTable } from './ChartA11yTable';
 import { chartCaptionSx, chartPaperSx } from './styles';
 

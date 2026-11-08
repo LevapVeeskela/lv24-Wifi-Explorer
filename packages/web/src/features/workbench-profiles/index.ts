@@ -51,3 +51,4 @@ export {
   type WorkbenchStateInput,
   type WorkbenchStatePatch,
 } from './types';
+export { WorkbenchProfilesMenu, type WorkbenchProfilesMenuProps } from './WorkbenchProfilesMenu';

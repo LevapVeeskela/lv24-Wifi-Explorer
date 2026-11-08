@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { makeObservedBss } from '@/domain/testSupport';
-import { observedBssToGridRow } from '@/entities/bss/scanGridRow';
+import { observedBssToGridRow } from '@/entities/bss';
 import { applyAllFilters } from './applyAllFilters';
 import { FILTER_DEFAULTS } from './types';
 

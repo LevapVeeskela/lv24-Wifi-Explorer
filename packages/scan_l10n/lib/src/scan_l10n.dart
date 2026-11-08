@@ -63,4 +63,4 @@ class ScanL10n {
 const scanSupportedLocales = AppLocalizations.supportedLocales;
 
 /// Language codes for scan UI (`ru` default when unknown).
-const scanSupportedLocaleCodes = <String>['ru', 'en'];
+const scanSupportedLocaleCodes = <String>['ru', 'en', 'zh'];

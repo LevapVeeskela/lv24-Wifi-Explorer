@@ -1,32 +1,32 @@
 import { useEffect, useMemo, useState, type KeyboardEvent } from 'react';
 import { Paper, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import { graphLabelForRow } from '@/features/scan-settings/graphLabelForRow';
-import type { GraphLabelMode } from '@/features/scan-settings/types';
+import type { ScanGridRow } from '@/entities/bss';
+import { graphLabelForRow } from '@/features/scan-settings';
+import type { GraphLabelMode } from '@/features/scan-settings';
 import {
   buildMetricSeries,
   buildSignalSeries,
   type SignalSeriesPoint,
-} from '@/features/signal-history/buildSignalSeries';
-import { signalTraceLabel, type SignalTraceKind } from '@/features/signal-history/i18n';
-import { formatMetricValue, metricAxis } from '@/features/signal-history/metricAxis';
+} from '@/features/signal-history';
+import { signalTraceLabel, type SignalTraceKind } from '@/features/signal-history';
+import { formatMetricValue, metricAxis } from '@/features/signal-history';
 import {
   buildAverageSeries,
   buildMaxSeries,
   DEFAULT_ROLLING_WINDOW,
-} from '@/features/signal-history/rollingSeries';
-import { seriesStats } from '@/features/signal-history/seriesStats';
-import { stepTimescale, TIMESCALE_MS } from '@/features/signal-history/timescale';
+} from '@/features/signal-history';
+import { seriesStats } from '@/features/signal-history';
+import { stepTimescale, TIMESCALE_MS } from '@/features/signal-history';
 import {
   METRIC_ORDER,
   TIMESCALE_ORDER,
   type ChartTimescale,
   type SignalChartMetric,
   type SignalChartUnit,
-} from '@/features/signal-history/types';
+} from '@/features/signal-history';
 import { createFormatMessage } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { ChartA11yTable } from './ChartA11yTable';
 import {
   chartCaptionSx,

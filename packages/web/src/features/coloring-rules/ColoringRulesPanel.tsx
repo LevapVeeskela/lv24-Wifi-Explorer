@@ -11,19 +11,12 @@ import {
   Typography,
 } from '@mui/material';
 import Delete from '@mui/icons-material/Delete';
-import {
-  COLORING_FIELDS,
-  COLORING_OPS,
-  importColoringRules,
-  newColoringRuleId,
-  normalizeColor,
-  saveColoringRules,
-  withUniquePriorities,
-  type ColoringField,
-  type ColoringOp,
-  type ColoringRulesConfig,
-} from '@/features/coloring-rules';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { COLORING_FIELDS, COLORING_OPS } from './constants';
+import { importColoringRules } from './importExport';
+import { newColoringRuleId, normalizeColor, withUniquePriorities } from './normalize';
+import { saveColoringRules } from './persist';
+import type { ColoringField, ColoringOp, ColoringRulesConfig } from './types';
+import { useScanIntl } from '@/shared/i18n';
 import { openWorkbenchFile, saveWorkbenchFile } from '@/shared/lib/files/rendererFileIo';
 
 export type ColoringRulesPanelProps = {

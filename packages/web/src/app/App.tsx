@@ -2,6 +2,7 @@ import { useEffect, useState, type ComponentType } from 'react';
 import { Alert, Box, CssBaseline, Paper, ThemeProvider, Typography } from '@mui/material';
 import { ScanWorkbenchPage } from '@/pages/ScanWorkbenchPage';
 import { theme } from '@/shared/lib/theme';
+import { readLocalePreference, subscribeLocalePreference, type AppLocale } from '@/shared/i18n';
 
 function PlaceholderPaper() {
   return (
@@ -15,7 +16,8 @@ function PlaceholderPaper() {
   );
 }
 
-const Workbench: ComponentType<{ demoMode?: boolean }> | undefined = ScanWorkbenchPage;
+const Workbench: ComponentType<{ demoMode?: boolean; locale?: AppLocale }> | undefined =
+  ScanWorkbenchPage;
 
 /**
  * Theme host. ScanWorkbenchPage is used when the workbench slice is present;
@@ -27,6 +29,9 @@ export function App() {
   // the first permissions/snapshot event says otherwise.
   const [demoMode, setDemoMode] = useState(() => !window.wifiExplorer);
   const [helperNotice, setHelperNotice] = useState<string | null>(null);
+  const [locale, setLocale] = useState<AppLocale>(() => readLocalePreference());
+
+  useEffect(() => subscribeLocalePreference(setLocale), []);
 
   useEffect(() => {
     const bridge = window.wifiExplorer;
@@ -70,7 +75,7 @@ export function App() {
           {helperNotice}
         </Alert>
       ) : null}
-      {Workbench ? <Workbench demoMode={demoMode} /> : <PlaceholderPaper />}
+      {Workbench ? <Workbench demoMode={demoMode} locale={locale} /> : <PlaceholderPaper />}
     </ThemeProvider>
   );
 }

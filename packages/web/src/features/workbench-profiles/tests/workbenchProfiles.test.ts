@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_COLUMN_VISIBILITY } from '@/features/scan-settings/columnCatalog';
-import { FILTER_DEFAULTS } from '@/features/scan-filters/types';
+import { DEFAULT_COLUMN_VISIBILITY } from '@/entities/columns';
+import { FILTER_DEFAULTS } from '@/features/scan-filters';
 import { applyProfileToState, profileFromState } from '../apply';
 import { builtInDefaultWorkbenchProfile, normalizeWorkbenchProfilesStore } from '../normalize';
 import { loadWorkbenchProfilesStore, saveWorkbenchProfilesStore } from '../persist';

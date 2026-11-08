@@ -1,0 +1,1184 @@
+{
+  "@@locale": "zh",
+  "permissionsDeniedBody": "SSID 和 BSSID 将保持隐藏，直到你允许本应用使用定位服务。RF 指标仍可能更新。",
+  "@permissionsDeniedBody": {
+    "description": "TS MessageKey: permissions.denied.body"
+  },
+  "permissionsDeniedTitle": "网络名称已隐藏",
+  "@permissionsDeniedTitle": {
+    "description": "TS MessageKey: permissions.denied.title"
+  },
+  "permissionsLocationBody": "在 macOS 上，Wi‑Fi 网络名称（SSID）和硬件地址（BSSID）被视为与位置相关的数据。LV24 WiFi Explorer 请求定位服务仅用于解锁这些字段——不用于 GPS 定位跟踪或显示地图。",
+  "@permissionsLocationBody": {
+    "description": "TS MessageKey: permissions.location.body"
+  },
+  "permissionsLocationSettingsHint": "先全局开启定位服务，然后在“系统设置 → 隐私与安全性 → 定位服务”中启用 LV24 WiFi Explorer。",
+  "@permissionsLocationSettingsHint": {
+    "description": "TS MessageKey: permissions.location.settingsHint"
+  },
+  "permissionsLocationTitle": "定位服务",
+  "@permissionsLocationTitle": {
+    "description": "TS MessageKey: permissions.location.title"
+  },
+  "permissionsOnboardingBody": "主动扫描无需定位即可显示信号和信道。要列出网络名称和 MAC 地址，请在系统提示时允许定位。",
+  "@permissionsOnboardingBody": {
+    "description": "TS MessageKey: permissions.onboarding.body"
+  },
+  "permissionsOnboardingTitle": "macOS 上的 Wi‑Fi 身份识别",
+  "@permissionsOnboardingTitle": {
+    "description": "TS MessageKey: permissions.onboarding.title"
+  },
+  "permissionsOpenSettings": "打开定位设置",
+  "@permissionsOpenSettings": {
+    "description": "TS MessageKey: permissions.openSettings"
+  },
+  "permissionsRestrictedBody": "设备策略阻止了定位服务。你仍可查看仅 RF 的扫描数据，或在可用时使用演示模式。",
+  "@permissionsRestrictedBody": {
+    "description": "TS MessageKey: permissions.restricted.body"
+  },
+  "permissionsRestrictedTitle": "定位受限",
+  "@permissionsRestrictedTitle": {
+    "description": "TS MessageKey: permissions.restricted.title"
+  },
+  "onboardingLocationContinue": "继续",
+  "@onboardingLocationContinue": {
+    "description": "TS MessageKey: onboarding.location.continue"
+  },
+  "onboardingLocationLater": "暂不",
+  "@onboardingLocationLater": {
+    "description": "TS MessageKey: onboarding.location.later"
+  },
+  "onboardingLocationRetry": "重试",
+  "@onboardingLocationRetry": {
+    "description": "TS MessageKey: onboarding.location.retry"
+  },
+  "permissionsPlatformAndroidBody": "Android 将 Wi‑Fi 扫描结果视为与位置相关的数据。WifiManager 需要定位权限（Android 13+ 还需要“附近的 Wi‑Fi 设备”）。系统会限制 startScan 频率；这与 macOS ScanCore 的丰富程度不同。",
+  "@permissionsPlatformAndroidBody": {
+    "description": "TS MessageKey: permissions.platform.android.body"
+  },
+  "permissionsPlatformAndroidSettingsHint": "开启定位、向本应用授权，并保持 Wi‑Fi 开启。出现空白或过期的行通常意味着系统正在限流扫描。",
+  "@permissionsPlatformAndroidSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.android.settingsHint"
+  },
+  "permissionsPlatformAndroidTitle": "Android 定位可解锁 WifiManager 结果",
+  "@permissionsPlatformAndroidTitle": {
+    "description": "TS MessageKey: permissions.platform.android.title"
+  },
+  "permissionsPlatformIosBody": "Apple 不向第三方应用提供 CoreWLAN 式的完整扫描。当“使用 App 期间”定位允许 Wi‑Fi 身份识别时，本客户端可显示已连接的网络——而不是漫游站点勘测。",
+  "@permissionsPlatformIosBody": {
+    "description": "TS MessageKey: permissions.platform.ios.body"
+  },
+  "permissionsPlatformIosSettingsHint": "设置 → 隐私与安全性 → 定位服务 → 使用 App 期间。没有该授权时 SSID 和 BSSID 保持隐藏。",
+  "@permissionsPlatformIosSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.ios.settingsHint"
+  },
+  "permissionsPlatformIosTitle": "iOS 无法扫描所有附近网络",
+  "@permissionsPlatformIosTitle": {
+    "description": "TS MessageKey: permissions.platform.ios.title"
+  },
+  "permissionsPlatformLinuxBody": "Linux 的实时数据来自 NetworkManager 通过公共 D-Bus 提供的 GetAccessPoints——不是 iw，也不是 monitor 模式。部分桌面还会在你允许定位或 geoclue 提示之前隐藏 SSID。",
+  "@permissionsPlatformLinuxBody": {
+    "description": "TS MessageKey: permissions.platform.linux.body"
+  },
+  "permissionsPlatformLinuxSettingsHint": "如果门户询问，请允许定位或 geoclue。否则你可能只能看到已连接的网络或演示数据。",
+  "@permissionsPlatformLinuxSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.linux.settingsHint"
+  },
+  "permissionsPlatformLinuxTitle": "Linux NetworkManager 公共 D-Bus",
+  "@permissionsPlatformLinuxTitle": {
+    "description": "TS MessageKey: permissions.platform.linux.title"
+  },
+  "permissionsPlatformMacosBody": "在 macOS 上，SSID 和 BSSID 受 CoreLocation 保护。LV24 请求“使用 App 期间”定位，仅用于通过实时 ScanCore 助手解锁这些字段——不涉及 GPS 或地图。",
+  "@permissionsPlatformMacosBody": {
+    "description": "TS MessageKey: permissions.platform.macos.body"
+  },
+  "permissionsPlatformMacosSettingsHint": "开启定位服务，启用 LV24 WiFi Explorer（若单独运行 ScanCore 也要启用它），然后使用签名的实时 ScanCore。ad-hoc 或未签名的助手会回退到演示数据。",
+  "@permissionsPlatformMacosSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.macos.settingsHint"
+  },
+  "permissionsPlatformMacosTitle": "macOS 上的 Wi‑Fi 身份识别",
+  "@permissionsPlatformMacosTitle": {
+    "description": "TS MessageKey: permissions.platform.macos.title"
+  },
+  "permissionsPlatformOtherBody": "此版本无法保证 macOS 级别的主动扫描。SSID 和 BSSID 可能需要系统定位权限；否则你只能看到 RF 字段、关联链路或演示数据。",
+  "@permissionsPlatformOtherBody": {
+    "description": "TS MessageKey: permissions.platform.other.body"
+  },
+  "permissionsPlatformOtherSettingsHint": "如果系统询问，请打开系统定位设置。Windows v1 使用关联链路加演示数据，而不是附近 BSS 勘测。",
+  "@permissionsPlatformOtherSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.other.settingsHint"
+  },
+  "permissionsPlatformOtherTitle": "定位与扫描限制",
+  "@permissionsPlatformOtherTitle": {
+    "description": "TS MessageKey: permissions.platform.other.title"
+  },
+  "permissionsPlatformWindowsBody": "Windows v1 通过 Native Wifi 的 WlanQueryInterface 获取已连接的网络。没有公开的附近 BSS 勘测能力。定位可能解锁 Wi‑Fi 身份信息，但不会把它变成站点勘测。",
+  "@permissionsPlatformWindowsBody": {
+    "description": "TS MessageKey: permissions.platform.windows.body"
+  },
+  "permissionsPlatformWindowsSettingsHint": "如果 Windows 为显示当前 SSID 或 BSSID 请求定位，请允许。未关联网络时显示演示数据。",
+  "@permissionsPlatformWindowsSettingsHint": {
+    "description": "TS MessageKey: permissions.platform.windows.settingsHint"
+  },
+  "permissionsPlatformWindowsTitle": "Windows 仅关联链路",
+  "@permissionsPlatformWindowsTitle": {
+    "description": "TS MessageKey: permissions.platform.windows.title"
+  },
+  "scanDegradedAndroidThrottledBody": "WifiManager 限制了本次扫描（系统限流或 SCAN_FAILED）。结果可能过期；下次尝试将退避（30 秒或更久）。",
+  "@scanDegradedAndroidThrottledBody": {
+    "description": "TS MessageKey: scan.degraded.androidThrottled.body"
+  },
+  "scanDegradedAndroidThrottledTitle": "Android 扫描受限",
+  "@scanDegradedAndroidThrottledTitle": {
+    "description": "TS MessageKey: scan.degraded.androidThrottled.title"
+  },
+  "scanDegradedDemoBody": "实时扫描未运行。macOS 需要“使用 App 期间”定位和签名版实时 ScanCore。iOS 无法完整扫描；Android WifiManager 受限流限制；Linux 使用公共 NetworkManager D-Bus；Windows 仅关联链路。",
+  "@scanDegradedDemoBody": {
+    "description": "TS MessageKey: scan.degraded.demo.body"
+  },
+  "scanDegradedDemoTitle": "演示数据",
+  "@scanDegradedDemoTitle": {
+    "description": "TS MessageKey: scan.degraded.demo.title"
+  },
+  "scanDegradedIosConnectedOnlyBody": "iOS 没有可完整扫描附近 BSS 的公共 API。在可获得身份信息时显示已关联的网络。",
+  "@scanDegradedIosConnectedOnlyBody": {
+    "description": "TS MessageKey: scan.degraded.iosConnectedOnly.body"
+  },
+  "scanDegradedIosConnectedOnlyTitle": "iOS 仅已连接网络",
+  "@scanDegradedIosConnectedOnlyTitle": {
+    "description": "TS MessageKey: scan.degraded.iosConnectedOnly.title"
+  },
+  "scanDegradedLinuxNmBody": "仅有公共 NetworkManager D-Bus 数据可用——通常只是已连接的网络。这不是完整的 RF 勘测。",
+  "@scanDegradedLinuxNmBody": {
+    "description": "TS MessageKey: scan.degraded.linuxNm.body"
+  },
+  "scanDegradedLinuxNmTitle": "Linux NetworkManager 受限",
+  "@scanDegradedLinuxNmTitle": {
+    "description": "TS MessageKey: scan.degraded.linuxNm.title"
+  },
+  "scanDegradedWindowsConnectedOnlyBody": "Native Wifi 报告已连接的网络（SSID、BSSID、质量）。在 v1 路径中无法获得附近 BSS、信道和 IE 信息。",
+  "@scanDegradedWindowsConnectedOnlyBody": {
+    "description": "TS MessageKey: scan.degraded.windowsConnectedOnly.body"
+  },
+  "scanDegradedWindowsConnectedOnlyTitle": "Windows 仅关联链路",
+  "@scanDegradedWindowsConnectedOnlyTitle": {
+    "description": "TS MessageKey: scan.degraded.windowsConnectedOnly.title"
+  },
+  "scanDemoBanner": "演示数据——实时扫描未运行。macOS 需要“使用 App 期间”定位和实时 ScanCore；iOS 仅已连接网络；Android WifiManager 受限流限制；Linux 使用公共 NetworkManager D-Bus；Windows 仅关联链路。",
+  "@scanDemoBanner": {
+    "description": "TS MessageKey: scan.demo.banner"
+  },
+  "scanAboutAttribution": "UI：Material UI（MIT）· Data Grid Pro（商业许可）· MUI X Charts（MIT）。",
+  "@scanAboutAttribution": {
+    "description": "TS MessageKey: scan.about.attribution"
+  },
+  "scanAboutLocation": "在现代 macOS 上，显示 SSID 和 BSSID 可能需要定位服务。本应用不使用 GPS 或地图跟踪。",
+  "@scanAboutLocation": {
+    "description": "TS MessageKey: scan.about.location"
+  },
+  "scanAboutScanCore": "ScanCore · macOS CoreWLAN 主动扫描助手。",
+  "@scanAboutScanCore": {
+    "description": "TS MessageKey: scan.about.scanCore"
+  },
+  "scanAboutTitle": "LV24 WiFi Explorer",
+  "@scanAboutTitle": {
+    "description": "TS MessageKey: scan.about.title"
+  },
+  "scanAdvIes": "信息元素",
+  "@scanAdvIes": {
+    "description": "TS MessageKey: scan.adv.ies"
+  },
+  "scanAdvIssues": "问题",
+  "@scanAdvIssues": {
+    "description": "TS MessageKey: scan.adv.issues"
+  },
+  "scanAdvRadio": "无线电",
+  "@scanAdvRadio": {
+    "description": "TS MessageKey: scan.adv.radio"
+  },
+  "scanAdvSecurity": "安全",
+  "@scanAdvSecurity": {
+    "description": "TS MessageKey: scan.adv.security"
+  },
+  "scanAdvIesTree": "信息元素 — 树状视图",
+  "@scanAdvIesTree": {
+    "description": "TS MessageKey: scan.adv.ies.tree"
+  },
+  "scanIeParseLevel": "解析级别",
+  "@scanIeParseLevel": {
+    "description": "TS MessageKey: scan.ie.parseLevel"
+  },
+  "scanIeByteLength": "字节长度",
+  "@scanIeByteLength": {
+    "description": "TS MessageKey: scan.ie.byteLength"
+  },
+  "scanIeElementCount": "元素数量",
+  "@scanIeElementCount": {
+    "description": "TS MessageKey: scan.ie.elementCount"
+  },
+  "scanIeRawHex": "原始十六进制",
+  "@scanIeRawHex": {
+    "description": "TS MessageKey: scan.ie.rawHex"
+  },
+  "scanIeYes": "是",
+  "@scanIeYes": {
+    "description": "TS MessageKey: scan.ie.yes"
+  },
+  "scanIeNo": "否",
+  "@scanIeNo": {
+    "description": "TS MessageKey: scan.ie.no"
+  },
+  "scanIeHiddenValue": "（隐藏）",
+  "@scanIeHiddenValue": {
+    "description": "TS MessageKey: scan.ie.hiddenValue"
+  },
+  "scanIeFlagSet": "已设置",
+  "@scanIeFlagSet": {
+    "description": "TS MessageKey: scan.ie.flagSet"
+  },
+  "scanIeWpaIe": "WPA IE",
+  "@scanIeWpaIe": {
+    "description": "TS MessageKey: scan.ie.wpaIe"
+  },
+  "scanIeLevelAbsent": "缺失",
+  "@scanIeLevelAbsent": {
+    "description": "TS MessageKey: scan.ie.levelAbsent"
+  },
+  "scanIeLevelRawOnly": "仅原始数据",
+  "@scanIeLevelRawOnly": {
+    "description": "TS MessageKey: scan.ie.levelRawOnly"
+  },
+  "scanIeLevelShallowTags": "浅层标签",
+  "@scanIeLevelShallowTags": {
+    "description": "TS MessageKey: scan.ie.levelShallowTags"
+  },
+  "scanIeLevelUnsupportedDeep": "不支持的深层解析",
+  "@scanIeLevelUnsupportedDeep": {
+    "description": "TS MessageKey: scan.ie.levelUnsupportedDeep"
+  },
+  "scanIeSsid": "SSID",
+  "@scanIeSsid": {
+    "description": "TS MessageKey: scan.ie.ssid"
+  },
+  "scanIeHidden": "隐藏",
+  "@scanIeHidden": {
+    "description": "TS MessageKey: scan.ie.hidden"
+  },
+  "scanIeRates": "速率",
+  "@scanIeRates": {
+    "description": "TS MessageKey: scan.ie.rates"
+  },
+  "scanIeBasicRates": "基础速率",
+  "@scanIeBasicRates": {
+    "description": "TS MessageKey: scan.ie.basicRates"
+  },
+  "scanIeChannel": "信道",
+  "@scanIeChannel": {
+    "description": "TS MessageKey: scan.ie.channel"
+  },
+  "scanIeCountryCode": "国家代码",
+  "@scanIeCountryCode": {
+    "description": "TS MessageKey: scan.ie.countryCode"
+  },
+  "scanIeEnvironment": "环境",
+  "@scanIeEnvironment": {
+    "description": "TS MessageKey: scan.ie.environment"
+  },
+  "scanIeRegulatoryTriplet": "监管三元组 {index}",
+  "@scanIeRegulatoryTriplet": {
+    "description": "TS MessageKey: scan.ie.regulatoryTriplet",
+    "placeholders": {
+      "index": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanIeStationCount": "站点数量",
+  "@scanIeStationCount": {
+    "description": "TS MessageKey: scan.ie.stationCount"
+  },
+  "scanIeChannelUtilization": "信道利用率",
+  "@scanIeChannelUtilization": {
+    "description": "TS MessageKey: scan.ie.channelUtilization"
+  },
+  "scanIeAdmissionCapacity": "可用准入容量",
+  "@scanIeAdmissionCapacity": {
+    "description": "TS MessageKey: scan.ie.admissionCapacity"
+  },
+  "scanIeDtimCount": "DTIM 计数",
+  "@scanIeDtimCount": {
+    "description": "TS MessageKey: scan.ie.dtimCount"
+  },
+  "scanIeDtimPeriod": "DTIM 周期",
+  "@scanIeDtimPeriod": {
+    "description": "TS MessageKey: scan.ie.dtimPeriod"
+  },
+  "scanIeBitmapControl": "位图控制",
+  "@scanIeBitmapControl": {
+    "description": "TS MessageKey: scan.ie.bitmapControl"
+  },
+  "scanIePartialBitmapLength": "部分位图长度",
+  "@scanIePartialBitmapLength": {
+    "description": "TS MessageKey: scan.ie.partialBitmapLength"
+  },
+  "scanIeLocalPowerConstraint": "本地功率限制",
+  "@scanIeLocalPowerConstraint": {
+    "description": "TS MessageKey: scan.ie.localPowerConstraint"
+  },
+  "scanIeSpatialStreams": "空间流",
+  "@scanIeSpatialStreams": {
+    "description": "TS MessageKey: scan.ie.spatialStreams"
+  },
+  "scanIeFortyMhz": "40 MHz",
+  "@scanIeFortyMhz": {
+    "description": "TS MessageKey: scan.ie.fortyMhz"
+  },
+  "scanIeShortGi20": "短 GI 20 MHz",
+  "@scanIeShortGi20": {
+    "description": "TS MessageKey: scan.ie.shortGi20"
+  },
+  "scanIeShortGi40": "短 GI 40 MHz",
+  "@scanIeShortGi40": {
+    "description": "TS MessageKey: scan.ie.shortGi40"
+  },
+  "scanIeVersion": "版本",
+  "@scanIeVersion": {
+    "description": "TS MessageKey: scan.ie.version"
+  },
+  "scanIeGroupCipher": "组加密",
+  "@scanIeGroupCipher": {
+    "description": "TS MessageKey: scan.ie.groupCipher"
+  },
+  "scanIePairwise": "成对加密 {index}",
+  "@scanIePairwise": {
+    "description": "TS MessageKey: scan.ie.pairwise",
+    "placeholders": {
+      "index": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanIeAkm": "AKM {index}",
+  "@scanIeAkm": {
+    "description": "TS MessageKey: scan.ie.akm",
+    "placeholders": {
+      "index": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanIeMfpc": "MFPC（支持 PMF）",
+  "@scanIeMfpc": {
+    "description": "TS MessageKey: scan.ie.mfpc"
+  },
+  "scanIeMfpr": "MFPR（要求 PMF）",
+  "@scanIeMfpr": {
+    "description": "TS MessageKey: scan.ie.mfpr"
+  },
+  "scanIePrimaryChannel": "主信道",
+  "@scanIePrimaryChannel": {
+    "description": "TS MessageKey: scan.ie.primaryChannel"
+  },
+  "scanIeSecondaryOffset": "次信道偏移",
+  "@scanIeSecondaryOffset": {
+    "description": "TS MessageKey: scan.ie.secondaryOffset"
+  },
+  "scanIeStaWidthAny40": "STA 信道宽度任意 40",
+  "@scanIeStaWidthAny40": {
+    "description": "TS MessageKey: scan.ie.staWidthAny40"
+  },
+  "scanIeMaxMcs": "最大 MCS",
+  "@scanIeMaxMcs": {
+    "description": "TS MessageKey: scan.ie.maxMcs"
+  },
+  "scanIeShortGi80": "短 GI 80 MHz",
+  "@scanIeShortGi80": {
+    "description": "TS MessageKey: scan.ie.shortGi80"
+  },
+  "scanIeShortGi160": "短 GI 160 MHz",
+  "@scanIeShortGi160": {
+    "description": "TS MessageKey: scan.ie.shortGi160"
+  },
+  "scanIeChannelWidthSet": "支持的信道宽度集",
+  "@scanIeChannelWidthSet": {
+    "description": "TS MessageKey: scan.ie.channelWidthSet"
+  },
+  "scanIeWidthCode": "信道宽度代码",
+  "@scanIeWidthCode": {
+    "description": "TS MessageKey: scan.ie.widthCode"
+  },
+  "scanIeChannelWidth": "信道宽度",
+  "@scanIeChannelWidth": {
+    "description": "TS MessageKey: scan.ie.channelWidth"
+  },
+  "scanIeCcfs0": "中心频段 0",
+  "@scanIeCcfs0": {
+    "description": "TS MessageKey: scan.ie.ccfs0"
+  },
+  "scanIeCcfs1": "中心频段 1",
+  "@scanIeCcfs1": {
+    "description": "TS MessageKey: scan.ie.ccfs1"
+  },
+  "scanIeLength": "长度",
+  "@scanIeLength": {
+    "description": "TS MessageKey: scan.ie.length"
+  },
+  "scanIeOui": "OUI",
+  "@scanIeOui": {
+    "description": "TS MessageKey: scan.ie.oui"
+  },
+  "scanIeVendorType": "厂商类型",
+  "@scanIeVendorType": {
+    "description": "TS MessageKey: scan.ie.vendorType"
+  },
+  "scanIeSaeH2e": "SAE 哈希到元素",
+  "@scanIeSaeH2e": {
+    "description": "TS MessageKey: scan.ie.saeH2e"
+  },
+  "scanIeMaxMcs80": "最大 MCS（≤80 MHz）",
+  "@scanIeMaxMcs80": {
+    "description": "TS MessageKey: scan.ie.maxMcs80"
+  },
+  "scanIeBssColor": "BSS 颜色",
+  "@scanIeBssColor": {
+    "description": "TS MessageKey: scan.ie.bssColor"
+  },
+  "scanIeBssColorDisabled": "BSS 颜色已禁用",
+  "@scanIeBssColorDisabled": {
+    "description": "TS MessageKey: scan.ie.bssColorDisabled"
+  },
+  "scanIeSixGhzPrimary": "6 GHz 主信道",
+  "@scanIeSixGhzPrimary": {
+    "description": "TS MessageKey: scan.ie.sixGhzPrimary"
+  },
+  "scanColumnsManage": "列",
+  "@scanColumnsManage": {
+    "description": "TS MessageKey: scan.columns.manage"
+  },
+  "scanColumnsReset": "重置列",
+  "@scanColumnsReset": {
+    "description": "TS MessageKey: scan.columns.reset"
+  },
+  "scanCopied": "已复制到剪贴板",
+  "@scanCopied": {
+    "description": "TS MessageKey: scan.copied"
+  },
+  "scanCompareDiffLegend": "高亮单元格表示所选网络之间的差异。",
+  "@scanCompareDiffLegend": {
+    "description": "TS MessageKey: scan.compare.diffLegend"
+  },
+  "scanCompareField": "字段",
+  "@scanCompareField": {
+    "description": "TS MessageKey: scan.compare.field"
+  },
+  "scanCompareHint": "在表格中选择 2–3 个网络（复选框或 ⌘-点击），然后并排查看各字段。",
+  "@scanCompareHint": {
+    "description": "TS MessageKey: scan.compare.hint"
+  },
+  "scanChartEmpty": "尚无样本",
+  "@scanChartEmpty": {
+    "description": "TS MessageKey: scan.chart.empty"
+  },
+  "scanChartOccupancy": "信道占用",
+  "@scanChartOccupancy": {
+    "description": "TS MessageKey: scan.chart.occupancy"
+  },
+  "scanChartOccupancyHint": "来自主动扫描，而非 RF 频谱",
+  "@scanChartOccupancyHint": {
+    "description": "TS MessageKey: scan.chart.occupancy.hint"
+  },
+  "scanChartSelected": "所选网络",
+  "@scanChartSelected": {
+    "description": "TS MessageKey: scan.chart.selected"
+  },
+  "scanChartSignal": "信号历史",
+  "@scanChartSignal": {
+    "description": "TS MessageKey: scan.chart.signal"
+  },
+  "scanChartTable": "图表数据表",
+  "@scanChartTable": {
+    "description": "TS MessageKey: scan.chart.table"
+  },
+  "scanChartTimescale": "时间范围",
+  "@scanChartTimescale": {
+    "description": "TS MessageKey: scan.chart.timescale"
+  },
+  "scanChartUnitDbm": "dBm",
+  "@scanChartUnitDbm": {
+    "description": "TS MessageKey: scan.chart.unit.dbm"
+  },
+  "scanChartUnitPct": "百分比",
+  "@scanChartUnitPct": {
+    "description": "TS MessageKey: scan.chart.unit.pct"
+  },
+  "scanColBand": "频段",
+  "@scanColBand": {
+    "description": "TS MessageKey: scan.col.band"
+  },
+  "scanColBssid": "BSSID",
+  "@scanColBssid": {
+    "description": "TS MessageKey: scan.col.bssid"
+  },
+  "scanColChannel": "信道",
+  "@scanColChannel": {
+    "description": "TS MessageKey: scan.col.channel"
+  },
+  "scanColChannelWidth": "信道宽度",
+  "@scanColChannelWidth": {
+    "description": "TS MessageKey: scan.col.channelWidth"
+  },
+  "scanColIssues": "问题",
+  "@scanColIssues": {
+    "description": "TS MessageKey: scan.col.issues"
+  },
+  "scanColPhyMode": "模式",
+  "@scanColPhyMode": {
+    "description": "TS MessageKey: scan.col.phyMode"
+  },
+  "scanColRssi": "RSSI",
+  "@scanColRssi": {
+    "description": "TS MessageKey: scan.col.rssi"
+  },
+  "scanColSecurity": "安全",
+  "@scanColSecurity": {
+    "description": "TS MessageKey: scan.col.security"
+  },
+  "scanColSsid": "网络名称",
+  "@scanColSsid": {
+    "description": "TS MessageKey: scan.col.ssid"
+  },
+  "scanColVendor": "厂商",
+  "@scanColVendor": {
+    "description": "TS MessageKey: scan.col.vendor"
+  },
+  "scanDetailsBand": "频段",
+  "@scanDetailsBand": {
+    "description": "TS MessageKey: scan.details.band"
+  },
+  "scanDetailsBssid": "BSSID",
+  "@scanDetailsBssid": {
+    "description": "TS MessageKey: scan.details.bssid"
+  },
+  "scanDetailsChannel": "信道",
+  "@scanDetailsChannel": {
+    "description": "TS MessageKey: scan.details.channel"
+  },
+  "scanDetailsChannelWidth": "信道宽度",
+  "@scanDetailsChannelWidth": {
+    "description": "TS MessageKey: scan.details.channelWidth"
+  },
+  "scanDetailsConnected": "已连接",
+  "@scanDetailsConnected": {
+    "description": "TS MessageKey: scan.details.connected"
+  },
+  "scanDetailsCountry": "国家",
+  "@scanDetailsCountry": {
+    "description": "TS MessageKey: scan.details.country"
+  },
+  "scanDetailsEmpty": "选择一个网络",
+  "@scanDetailsEmpty": {
+    "description": "TS MessageKey: scan.details.empty"
+  },
+  "scanDetailsEncryption": "加密",
+  "@scanDetailsEncryption": {
+    "description": "TS MessageKey: scan.details.encryption"
+  },
+  "scanDetailsFirstSeen": "首次发现",
+  "@scanDetailsFirstSeen": {
+    "description": "TS MessageKey: scan.details.firstSeen"
+  },
+  "scanDetailsFrequencyMHz": "频率",
+  "@scanDetailsFrequencyMHz": {
+    "description": "TS MessageKey: scan.details.frequencyMHz"
+  },
+  "scanDetailsLastSeen": "最近发现",
+  "@scanDetailsLastSeen": {
+    "description": "TS MessageKey: scan.details.lastSeen"
+  },
+  "scanDetailsMaxRateMbps": "最大速率",
+  "@scanDetailsMaxRateMbps": {
+    "description": "TS MessageKey: scan.details.maxRateMbps"
+  },
+  "scanDetailsNetworkType": "类型",
+  "@scanDetailsNetworkType": {
+    "description": "TS MessageKey: scan.details.networkType"
+  },
+  "scanDetailsNoiseDbm": "噪声",
+  "@scanDetailsNoiseDbm": {
+    "description": "TS MessageKey: scan.details.noiseDbm"
+  },
+  "scanDetailsPhyMode": "模式",
+  "@scanDetailsPhyMode": {
+    "description": "TS MessageKey: scan.details.phyMode"
+  },
+  "scanDetailsSecurity": "安全",
+  "@scanDetailsSecurity": {
+    "description": "TS MessageKey: scan.details.security"
+  },
+  "scanDetailsSignalPct": "信号",
+  "@scanDetailsSignalPct": {
+    "description": "TS MessageKey: scan.details.signalPct"
+  },
+  "scanDetailsSignalQuality": "信号质量",
+  "@scanDetailsSignalQuality": {
+    "description": "TS MessageKey: scan.details.signalQuality"
+  },
+  "scanDetailsSnrDb": "SNR",
+  "@scanDetailsSnrDb": {
+    "description": "TS MessageKey: scan.details.snrDb"
+  },
+  "scanDetailsSsid": "SSID",
+  "@scanDetailsSsid": {
+    "description": "TS MessageKey: scan.details.ssid"
+  },
+  "scanDetailsVendor": "厂商",
+  "@scanDetailsVendor": {
+    "description": "TS MessageKey: scan.details.vendor"
+  },
+  "scanExportAll": "所有行",
+  "@scanExportAll": {
+    "description": "TS MessageKey: scan.export.all"
+  },
+  "scanExportCsv": "导出 CSV",
+  "@scanExportCsv": {
+    "description": "TS MessageKey: scan.export.csv"
+  },
+  "scanExportSelected": "所选行",
+  "@scanExportSelected": {
+    "description": "TS MessageKey: scan.export.selected"
+  },
+  "scanExportVisible": "可见行",
+  "@scanExportVisible": {
+    "description": "TS MessageKey: scan.export.visible"
+  },
+  "scanFieldUnavailable": "主动扫描无法提供",
+  "@scanFieldUnavailable": {
+    "description": "TS MessageKey: scan.field.unavailable"
+  },
+  "scanFileMenu": "文件",
+  "@scanFileMenu": {
+    "description": "TS MessageKey: scan.file.menu"
+  },
+  "scanFileOpen": "打开快照…",
+  "@scanFileOpen": {
+    "description": "TS MessageKey: scan.file.open"
+  },
+  "scanFileSave": "保存快照…",
+  "@scanFileSave": {
+    "description": "TS MessageKey: scan.file.save"
+  },
+  "scanPrintVisible": "打印可见表格…",
+  "@scanPrintVisible": {
+    "description": "TS MessageKey: scan.print.visible"
+  },
+  "scanFilterBand": "频段筛选",
+  "@scanFilterBand": {
+    "description": "TS MessageKey: scan.filter.band"
+  },
+  "scanFilterBand24": "2.4 GHz",
+  "@scanFilterBand24": {
+    "description": "TS MessageKey: scan.filter.band.24"
+  },
+  "scanFilterBand5": "5 GHz",
+  "@scanFilterBand5": {
+    "description": "TS MessageKey: scan.filter.band.5"
+  },
+  "scanFilterBand6": "6 GHz",
+  "@scanFilterBand6": {
+    "description": "TS MessageKey: scan.filter.band.6"
+  },
+  "scanFilterBandAll": "全部",
+  "@scanFilterBandAll": {
+    "description": "TS MessageKey: scan.filter.band.all"
+  },
+  "scanFilterBand6Empty": "本次扫描没有 6 GHz 网络",
+  "@scanFilterBand6Empty": {
+    "description": "TS MessageKey: scan.filter.band6.empty"
+  },
+  "scanFilterMinRssi": "最小 RSSI",
+  "@scanFilterMinRssi": {
+    "description": "TS MessageKey: scan.filter.minRssi"
+  },
+  "scanFilterOpen": "开放",
+  "@scanFilterOpen": {
+    "description": "TS MessageKey: scan.filter.open"
+  },
+  "scanFilterSecure": "加密",
+  "@scanFilterSecure": {
+    "description": "TS MessageKey: scan.filter.secure"
+  },
+  "scanFilterSidebarChipCount": "{label} ({count})",
+  "@scanFilterSidebarChipCount": {
+    "description": "TS MessageKey: scan.filterSidebar.chipCount",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scanFilterSidebarClear": "清除频段、安全和厂商筛选",
+  "@scanFilterSidebarClear": {
+    "description": "TS MessageKey: scan.filterSidebar.clear"
+  },
+  "scanFilterSidebarCollapse": "收起筛选面板",
+  "@scanFilterSidebarCollapse": {
+    "description": "TS MessageKey: scan.filterSidebar.collapse"
+  },
+  "scanFilterSidebarEmpty": "暂无可筛选的网络。",
+  "@scanFilterSidebarEmpty": {
+    "description": "TS MessageKey: scan.filterSidebar.empty"
+  },
+  "scanFilterSidebarExpand": "展开筛选面板",
+  "@scanFilterSidebarExpand": {
+    "description": "TS MessageKey: scan.filterSidebar.expand"
+  },
+  "scanFilterSidebarSectionBand": "频段",
+  "@scanFilterSidebarSectionBand": {
+    "description": "TS MessageKey: scan.filterSidebar.section.band"
+  },
+  "scanFilterSidebarSectionSecurity": "安全",
+  "@scanFilterSidebarSectionSecurity": {
+    "description": "TS MessageKey: scan.filterSidebar.section.security"
+  },
+  "scanFilterSidebarSectionVendor": "厂商",
+  "@scanFilterSidebarSectionVendor": {
+    "description": "TS MessageKey: scan.filterSidebar.section.vendor"
+  },
+  "scanFilterSidebarTitle": "筛选",
+  "@scanFilterSidebarTitle": {
+    "description": "TS MessageKey: scan.filterSidebar.title"
+  },
+  "scanFilterSidebarVendorUnknown": "未知厂商",
+  "@scanFilterSidebarVendorUnknown": {
+    "description": "TS MessageKey: scan.filterSidebar.vendor.unknown"
+  },
+  "scanIssueCrowdedChannel": "信道拥挤",
+  "@scanIssueCrowdedChannel": {
+    "description": "TS MessageKey: scan.issue.crowdedChannel"
+  },
+  "scanIssueDfs": "DFS 信道",
+  "@scanIssueDfs": {
+    "description": "TS MessageKey: scan.issue.dfs"
+  },
+  "scanIssueHiddenSsid": "隐藏网络名称",
+  "@scanIssueHiddenSsid": {
+    "description": "TS MessageKey: scan.issue.hiddenSsid"
+  },
+  "scanIssueHighUtil": "信道利用率高",
+  "@scanIssueHighUtil": {
+    "description": "TS MessageKey: scan.issue.highUtil"
+  },
+  "scanIssueLegacyOnly": "仅旧版 Wi‑Fi（a/b/g）",
+  "@scanIssueLegacyOnly": {
+    "description": "TS MessageKey: scan.issue.legacyOnly"
+  },
+  "scanIssueLowSignal": "信号弱",
+  "@scanIssueLowSignal": {
+    "description": "TS MessageKey: scan.issue.lowSignal"
+  },
+  "scanIssueLowSnr": "SNR 低",
+  "@scanIssueLowSnr": {
+    "description": "TS MessageKey: scan.issue.lowSnr"
+  },
+  "scanIssueOverlap24": "非标准 2.4 GHz 信道",
+  "@scanIssueOverlap24": {
+    "description": "TS MessageKey: scan.issue.overlap24"
+  },
+  "scanIssueWeakSecurity": "安全较弱",
+  "@scanIssueWeakSecurity": {
+    "description": "TS MessageKey: scan.issue.weakSecurity"
+  },
+  "scanIssueWidth40on24": "2.4 GHz 上使用 40 MHz 或更宽",
+  "@scanIssueWidth40on24": {
+    "description": "TS MessageKey: scan.issue.width40on24"
+  },
+  "scanQualityExcellent": "极佳",
+  "@scanQualityExcellent": {
+    "description": "TS MessageKey: scan.quality.excellent"
+  },
+  "scanQualityFair": "一般",
+  "@scanQualityFair": {
+    "description": "TS MessageKey: scan.quality.fair"
+  },
+  "scanQualityGood": "良好",
+  "@scanQualityGood": {
+    "description": "TS MessageKey: scan.quality.good"
+  },
+  "scanQualityPoor": "较差",
+  "@scanQualityPoor": {
+    "description": "TS MessageKey: scan.quality.poor"
+  },
+  "scanQualityUnusable": "不可用",
+  "@scanQualityUnusable": {
+    "description": "TS MessageKey: scan.quality.unusable"
+  },
+  "scanLocationDenied": "已拒绝",
+  "@scanLocationDenied": {
+    "description": "TS MessageKey: scan.location.denied"
+  },
+  "scanLocationGranted": "已授权",
+  "@scanLocationGranted": {
+    "description": "TS MessageKey: scan.location.granted"
+  },
+  "scanLocationNotDetermined": "未询问",
+  "@scanLocationNotDetermined": {
+    "description": "TS MessageKey: scan.location.notDetermined"
+  },
+  "scanLocationRestricted": "受限",
+  "@scanLocationRestricted": {
+    "description": "TS MessageKey: scan.location.restricted"
+  },
+  "scanScanCoreDemo": "演示",
+  "@scanScanCoreDemo": {
+    "description": "TS MessageKey: scan.scanCore.demo"
+  },
+  "scanScanCoreError": "错误",
+  "@scanScanCoreError": {
+    "description": "TS MessageKey: scan.scanCore.error"
+  },
+  "scanScanCoreOk": "正常",
+  "@scanScanCoreOk": {
+    "description": "TS MessageKey: scan.scanCore.ok"
+  },
+  "scanSearchClear": "清除搜索",
+  "@scanSearchClear": {
+    "description": "TS MessageKey: scan.search.clear"
+  },
+  "scanSearchPlaceholder": "筛选网络",
+  "@scanSearchPlaceholder": {
+    "description": "TS MessageKey: scan.search.placeholder"
+  },
+  "scanSettingsOpen": "扫描设置",
+  "@scanSettingsOpen": {
+    "description": "TS MessageKey: scan.settings.open"
+  },
+  "scanSettingsScanInterval": "扫描间隔",
+  "@scanSettingsScanInterval": {
+    "description": "TS MessageKey: scan.settings.scanInterval"
+  },
+  "scanSettingsScanIntervalSec": "{sec} 秒",
+  "@scanSettingsScanIntervalSec": {
+    "description": "TS MessageKey: scan.settings.scanIntervalSec",
+    "placeholders": {
+      "sec": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanSettingsSignalUnit": "信号显示",
+  "@scanSettingsSignalUnit": {
+    "description": "TS MessageKey: scan.settings.signalUnit"
+  },
+  "scanSettingsSignalUnitDbm": "dBm",
+  "@scanSettingsSignalUnitDbm": {
+    "description": "TS MessageKey: scan.settings.signalUnit.dbm"
+  },
+  "scanSettingsSignalUnitPercent": "百分比",
+  "@scanSettingsSignalUnitPercent": {
+    "description": "TS MessageKey: scan.settings.signalUnit.percent"
+  },
+  "scanSettingsAutoStart": "启动时开始扫描",
+  "@scanSettingsAutoStart": {
+    "description": "TS MessageKey: scan.settings.autoStartScan"
+  },
+  "scanSettingsColumnsCellRules": "单元格高亮",
+  "@scanSettingsColumnsCellRules": {
+    "description": "TS MessageKey: scan.settings.columns.cellRules"
+  },
+  "scanSettingsColumnsCellRulesEnabled": "启用基于规则的高亮",
+  "@scanSettingsColumnsCellRulesEnabled": {
+    "description": "TS MessageKey: scan.settings.columns.cellRules.enabled"
+  },
+  "scanSettingsColumnsCellRulesRssi": "信号质量（RSSI、SNR、噪声）",
+  "@scanSettingsColumnsCellRulesRssi": {
+    "description": "TS MessageKey: scan.settings.columns.cellRules.rssi"
+  },
+  "scanSettingsColumnsCellRulesSecurity": "开放和弱加密网络（WEP）",
+  "@scanSettingsColumnsCellRulesSecurity": {
+    "description": "TS MessageKey: scan.settings.columns.cellRules.security"
+  },
+  "scanSettingsColumnsOpenVisibility": "管理列可见性…",
+  "@scanSettingsColumnsOpenVisibility": {
+    "description": "TS MessageKey: scan.settings.columns.openVisibility"
+  },
+  "scanSettingsTitle": "扫描设置",
+  "@scanSettingsTitle": {
+    "description": "TS MessageKey: scan.settings.title"
+  },
+  "scanSettingsWindowTitle": "LV24 WiFi Explorer 设置",
+  "@scanSettingsWindowTitle": {
+    "description": "TS MessageKey: scan.settings.windowTitle"
+  },
+  "scanSettingsTabGeneral": "常规",
+  "@scanSettingsTabGeneral": {
+    "description": "TS MessageKey: scan.settings.tab.general"
+  },
+  "scanSettingsTabColumns": "列",
+  "@scanSettingsTabColumns": {
+    "description": "TS MessageKey: scan.settings.tab.columns"
+  },
+  "scanSettingsTabAnnotations": "标注",
+  "@scanSettingsTabAnnotations": {
+    "description": "TS MessageKey: scan.settings.tab.annotations"
+  },
+  "scanSettingsTabVendor": "厂商数据库",
+  "@scanSettingsTabVendor": {
+    "description": "TS MessageKey: scan.settings.tab.vendor"
+  },
+  "scanSettingsTabAdvanced": "高级",
+  "@scanSettingsTabAdvanced": {
+    "description": "TS MessageKey: scan.settings.tab.advanced"
+  },
+  "scanSettingsIncludeHiddenSsid": "扫描时包含隐藏 SSID",
+  "@scanSettingsIncludeHiddenSsid": {
+    "description": "TS MessageKey: scan.settings.includeHiddenSsid"
+  },
+  "scanSettingsDataSource": "数据源",
+  "@scanSettingsDataSource": {
+    "description": "TS MessageKey: scan.settings.dataSource"
+  },
+  "scanSettingsLiveScan": "实时扫描",
+  "@scanSettingsLiveScan": {
+    "description": "TS MessageKey: scan.settings.liveScan"
+  },
+  "scanSettingsLanguage": "界面语言",
+  "@scanSettingsLanguage": {
+    "description": "TS MessageKey: scan.settings.language"
+  },
+  "scanSettingsClose": "关闭",
+  "@scanSettingsClose": {
+    "description": "TS MessageKey: scan.settings.close"
+  },
+  "scanSettingsAnnotationsAdd": "添加规则",
+  "@scanSettingsAnnotationsAdd": {
+    "description": "TS MessageKey: scan.settings.annotations.add"
+  },
+  "scanSettingsAnnotationsPattern": "BSSID 模式",
+  "@scanSettingsAnnotationsPattern": {
+    "description": "TS MessageKey: scan.settings.annotations.pattern"
+  },
+  "scanSettingsAnnotationsText": "文本",
+  "@scanSettingsAnnotationsText": {
+    "description": "TS MessageKey: scan.settings.annotations.text"
+  },
+  "scanSettingsAnnotationsEmpty": "尚无规则。添加 MAC 模式或导入 CSV。",
+  "@scanSettingsAnnotationsEmpty": {
+    "description": "TS MessageKey: scan.settings.annotations.empty"
+  },
+  "scanSettingsAnnotationsImport": "导入 CSV",
+  "@scanSettingsAnnotationsImport": {
+    "description": "TS MessageKey: scan.settings.annotations.import"
+  },
+  "scanSettingsAnnotationsExport": "导出 CSV",
+  "@scanSettingsAnnotationsExport": {
+    "description": "TS MessageKey: scan.settings.annotations.export"
+  },
+  "scanSettingsAnnotationsRemove": "移除",
+  "@scanSettingsAnnotationsRemove": {
+    "description": "TS MessageKey: scan.settings.annotations.remove"
+  },
+  "scanSettingsVendorBundled": "内置——IEEE MA-L（24 位 OUI）的本地副本。",
+  "@scanSettingsVendorBundled": {
+    "description": "TS MessageKey: scan.settings.vendor.bundled"
+  },
+  "scanSettingsVendorEntries": "条目：{count}",
+  "@scanSettingsVendorEntries": {
+    "description": "TS MessageKey: scan.settings.vendor.entries",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanSettingsVendorUpdated": "更新于：{date}",
+  "@scanSettingsVendorUpdated": {
+    "description": "TS MessageKey: scan.settings.vendor.updated",
+    "placeholders": {
+      "date": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanSettingsVendorRefreshHint": "刷新：yarn oui:refresh（公开 IEEE 注册库，不使用第三方 API）。",
+  "@scanSettingsVendorRefreshHint": {
+    "description": "TS MessageKey: scan.settings.vendor.refreshHint"
+  },
+  "scanSettingsAdvancedHideEmptySpectrum": "在频谱中隐藏空频段",
+  "@scanSettingsAdvancedHideEmptySpectrum": {
+    "description": "TS MessageKey: scan.settings.advanced.hideEmptySpectrum"
+  },
+  "scanSettingsAdvancedGraphLabels": "图表标签",
+  "@scanSettingsAdvancedGraphLabels": {
+    "description": "TS MessageKey: scan.settings.advanced.graphLabels"
+  },
+  "scanSettingsAdvancedGraphLabelsSsid": "网络名称（SSID）",
+  "@scanSettingsAdvancedGraphLabelsSsid": {
+    "description": "TS MessageKey: scan.settings.advanced.graphLabels.ssid"
+  },
+  "scanSettingsAdvancedGraphLabelsApName": "接入点名称",
+  "@scanSettingsAdvancedGraphLabelsApName": {
+    "description": "TS MessageKey: scan.settings.advanced.graphLabels.apName"
+  },
+  "scanSettingsAdvancedGraphLabelsAnnotation": "标注",
+  "@scanSettingsAdvancedGraphLabelsAnnotation": {
+    "description": "TS MessageKey: scan.settings.advanced.graphLabels.annotation"
+  },
+  "scanSettingsAdvancedFollowSystem": "跟随系统外观",
+  "@scanSettingsAdvancedFollowSystem": {
+    "description": "TS MessageKey: scan.settings.advanced.followSystem"
+  },
+  "scanSnapshotOpenError": "无法打开快照：{detail}",
+  "@scanSnapshotOpenError": {
+    "description": "TS MessageKey: scan.snapshot.openError",
+    "placeholders": {
+      "detail": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanSsidHidden": "‹隐藏›",
+  "@scanSsidHidden": {
+    "description": "TS MessageKey: scan.ssid.hidden"
+  },
+  "scanStatusAbout": "关于",
+  "@scanStatusAbout": {
+    "description": "TS MessageKey: scan.status.about"
+  },
+  "scanStatusFound": "网络：{count}",
+  "@scanStatusFound": {
+    "description": "TS MessageKey: scan.status.found",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusLastScan": "上次扫描：{time}",
+  "@scanStatusLastScan": {
+    "description": "TS MessageKey: scan.status.lastScan",
+    "placeholders": {
+      "time": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusLocation": "定位：{state}",
+  "@scanStatusLocation": {
+    "description": "TS MessageKey: scan.status.location",
+    "placeholders": {
+      "state": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusScanCore": "ScanCore：{state}",
+  "@scanStatusScanCore": {
+    "description": "TS MessageKey: scan.status.scanCore",
+    "placeholders": {
+      "state": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusSelected": "已选择：{count}",
+  "@scanStatusSelected": {
+    "description": "TS MessageKey: scan.status.selected",
+    "placeholders": {
+      "count": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanStatusShortcutsHint": "⌘F 搜索 · ⌘P 暂停扫描 · ⌘1–4 详情 · 网格获焦时 ⌘C 复制 BSSID",
+  "@scanStatusShortcutsHint": {
+    "description": "TS MessageKey: scan.status.shortcutsHint"
+  },
+  "scanStatusTimescaleHint": "信号 · 图表获焦时用 ↑ 或 ↓ 切换时间范围",
+  "@scanStatusTimescaleHint": {
+    "description": "TS MessageKey: scan.status.timescaleHint"
+  },
+  "scanStatusVersion": "v{version}",
+  "@scanStatusVersion": {
+    "description": "TS MessageKey: scan.status.version",
+    "placeholders": {
+      "version": {
+        "type": "Object"
+      }
+    }
+  },
+  "scanTypeIbss": "Ad-hoc",
+  "@scanTypeIbss": {
+    "description": "TS MessageKey: scan.type.ibss"
+  },
+  "scanTypeInfrastructure": "基础设施",
+  "@scanTypeInfrastructure": {
+    "description": "TS MessageKey: scan.type.infrastructure"
+  },
+  "scanTabAdvanced": "高级",
+  "@scanTabAdvanced": {
+    "description": "TS MessageKey: scan.tab.advanced"
+  },
+  "scanTabCompare": "对比",
+  "@scanTabCompare": {
+    "description": "TS MessageKey: scan.tab.compare"
+  },
+  "scanTabDetails": "网络详情",
+  "@scanTabDetails": {
+    "description": "TS MessageKey: scan.tab.details"
+  },
+  "scanTabOccupancy": "信道占用",
+  "@scanTabOccupancy": {
+    "description": "TS MessageKey: scan.tab.occupancy"
+  },
+  "scanTabSignal": "信号强度",
+  "@scanTabSignal": {
+    "description": "TS MessageKey: scan.tab.signal"
+  },
+  "scanTitleDemo": "演示",
+  "@scanTitleDemo": {
+    "description": "TS MessageKey: scan.title.demo"
+  },
+  "scanTitlePaused": "已暂停",
+  "@scanTitlePaused": {
+    "description": "TS MessageKey: scan.title.paused"
+  },
+  "scanTitleScanning": "扫描中",
+  "@scanTitleScanning": {
+    "description": "TS MessageKey: scan.title.scanning"
+  },
+  "workbenchStart": "开始",
+  "workbenchStop": "停止",
+  "workbenchRedacted": "已隐藏",
+  "workbenchColumnsProfileDefault": "默认",
+  "workbenchColumnsProfiles": "配置文件",
+  "workbenchColumnsSaveProfile": "保存配置文件",
+  "workbenchColumnsDeleteProfile": "删除配置文件",
+  "workbenchColumnsProfileNameHint": "配置文件名称",
+  "workbenchStatusDisplayed": "已显示：{count}",
+  "@workbenchStatusDisplayed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "workbenchOrganizeBy": "分组方式",
+  "workbenchOrganizeNone": "无",
+  "workbenchOrganizeVendor": "厂商",
+  "workbenchSaveFilterPreset": "保存预设",
+  "workbenchFilterPresetsTitle": "已保存的筛选",
+  "workbenchFilterPresetsEmpty": "没有已保存的筛选",
+  "workbenchFilterPresetsSave": "保存当前筛选",
+  "workbenchFilterPresetsNewName": "预设名称",
+  "workbenchFilterPresetsDelete": "删除“{name}”",
+  "@workbenchFilterPresetsDelete": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
+}

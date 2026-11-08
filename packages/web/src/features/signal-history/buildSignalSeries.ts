@@ -1,5 +1,5 @@
 import type { ObservedBss } from '@/domain/bss';
-import { rssiToBarPercent } from '@/entities/bss/formatters';
+import { rssiToBarPercent } from '@/entities/bss';
 import { timescaleWindowMs } from './timescale';
 import type { ChartTimescale, SignalChartMetric, SignalChartUnit } from './types';
 

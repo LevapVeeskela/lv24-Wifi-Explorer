@@ -10,7 +10,7 @@ import {
   type GridApiPro,
   type GridRowSelectionModel,
 } from '@mui/x-data-grid-pro';
-import { ScanIntlProvider, useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { ScanIntlProvider, useScanIntl } from '@/shared/i18n';
 import type { MessageKey } from '@/shared/i18n';
 import { ThemePreferenceSync } from '@/shared/ui/ThemePreferenceSync';
 import { PaneResizeSeparator } from '@/shared/ui/PaneResizeSeparator';
@@ -22,13 +22,13 @@ import {
 import { importCapture } from '@pcap';
 import { asIsoTime } from '@/scan/identity';
 import { mapCoreWlanRecordsToObservedBss } from '@/scan/mapObservedBss';
-import { SHARED_OUI_LOOKUP } from '@/features/scan-live/sharedOuiLookup';
+import { SHARED_OUI_LOOKUP } from '@/features/scan-live';
 import {
   getVerticalPaneBounds,
   type VerticalPaneFractions,
 } from '@/shared/lib/paneLayout/verticalPaneLayout';
-import { DEMO_CONNECTED_BSSID, DEMO_OBSERVED_BSS } from '@/entities/scan/demoNetworks';
-import { observedBssToGridRow } from '@/entities/bss/scanGridRow';
+import { DEMO_CONNECTED_BSSID, DEMO_OBSERVED_BSS } from '@/entities/scan';
+import { observedBssToGridRow } from '@/entities/bss';
 import {
   exportAnnotationCsv,
   importAnnotationCsv,
@@ -40,8 +40,8 @@ import {
   useAnnotations,
 } from '@/features/annotations';
 import { LocationOnboarding } from '@/features/onboarding';
-import { useNativeMenuBridge } from '@/features/menu-bridge/useNativeMenuBridge';
-import { computeIssueKeysForScan } from '@/features/issues/computeIssueKeys';
+import { useNativeMenuBridge } from '@/features/menu-bridge';
+import { computeIssueKeysForScan } from '@/features/issues';
 import { scanIssueIdsFromMessageKeys } from '@/features/scan-issues';
 import {
   loadColoringRules,
@@ -69,7 +69,7 @@ import {
   selectedBssidFromModel,
   selectionCount,
 } from '@/features/scan-selection';
-import { connectedBssidFromPayload, ingestScanPayload } from '@/features/scan-live/ingestSnapshot';
+import { connectedBssidFromPayload, ingestScanPayload } from '@/features/scan-live';
 import type { ScanViewModel } from '@/domain/scan';
 import type { ObservedBss } from '@/domain/bss';
 import {
@@ -82,18 +82,18 @@ import {
   useScanSettings,
 } from '@/features/scan-settings';
 import { printVisibleTable, resolvePrintColumns } from '@/features/print-export';
-import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history/types';
+import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history';
 import { ScanAppBar } from '@/widgets/ScanAppBar';
 import { resolveScanGridOverlay, ScanDataGrid, showColumnModel } from '@/widgets/ScanDataGrid';
 import { TitleBar } from '@/widgets/TitleBar';
 import { BottomDock, type DetailsTab } from '@/widgets/BottomDock';
 import { FilterSidebar } from '@/widgets/FilterSidebar';
 import { IssuesInspectorProvider } from '@/widgets/IssuesInspector';
-import { WorkbenchProfilesMenu } from '@/features/workbench-profiles/WorkbenchProfilesMenu';
+import { WorkbenchProfilesMenu } from '@/features/workbench-profiles';
 import { StatusBar } from '@/widgets/StatusBar';
 import { AboutDialog } from '@/widgets/AboutDialog';
 import { LocationBanner } from '@/widgets/LocationBanner';
-import { normalizeLocationAuthorization } from '@/widgets/LocationBanner/normalizeLocationAuthorization';
+import { normalizeLocationAuthorization } from '@/widgets/LocationBanner';
 import type { LocationAuthorization } from '@/domain/identity';
 import { DEFAULT_COLUMN_VISIBILITY } from './columnVisibility';
 import {
@@ -659,6 +659,7 @@ function ScanWorkbenchInner({
 
   return (
     <Box sx={scanShellSx}>
+      <ThemePreferenceSync followSystem={scanSettings.settings.appearanceFollowSystem} />
       <Link href="#scan-grid" sx={skipLinkSx}>
         {t('scan.a11y.skipToGrid')}
       </Link>
@@ -833,7 +834,6 @@ function ScanWorkbenchInner({
 export function ScanWorkbenchPage({ locale = 'ru', demoMode = true }: ScanWorkbenchPageProps) {
   return (
     <>
-      <ThemePreferenceSync />
       <ScanIntlProvider locale={locale}>
         <ScanWorkbenchInner demoMode={demoMode} locale={locale} />
       </ScanIntlProvider>

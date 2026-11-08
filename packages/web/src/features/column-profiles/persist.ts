@@ -1,5 +1,5 @@
 import { STORAGE_COLUMN_PROFILES } from '@/shared/lib/persistence/keys';
-import { DEFAULT_COLUMN_VISIBILITY } from '@/features/scan-settings/columnCatalog';
+import { DEFAULT_COLUMN_VISIBILITY } from '@/entities/columns';
 import { normalizeColumnVisibility } from './normalizeVisibility';
 import {
   BUILT_IN_DEFAULT_PROFILE_ID,

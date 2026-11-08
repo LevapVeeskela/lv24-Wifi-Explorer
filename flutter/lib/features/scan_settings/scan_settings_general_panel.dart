@@ -24,9 +24,8 @@ class ScanSettingsGeneralPanel extends StatelessWidget {
       children: [
         Text(
           l10n.scanSettingsSignalUnit,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+          style: Theme.of(context).textTheme.titleSmall
+              ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         const SizedBox(height: 8),
         SegmentedButton<SignalDisplayUnit>(
@@ -50,9 +49,8 @@ class ScanSettingsGeneralPanel extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           l10n.scanFilterMinRssi,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+          style: Theme.of(context).textTheme.titleSmall
+              ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         Slider(
           min: minRssiFilterMinDbm.toDouble(),
@@ -72,9 +70,8 @@ class ScanSettingsGeneralPanel extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           l10n.scanSettingsScanInterval,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+          style: Theme.of(context).textTheme.titleSmall
+              ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         const SizedBox(height: 8),
         DropdownButtonFormField<int>(
@@ -107,22 +104,15 @@ class ScanSettingsGeneralPanel extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           l10n.scanSettingsDataSource,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+          style: Theme.of(context).textTheme.titleSmall
+              ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         const SizedBox(height: 8),
         SegmentedButton<bool>(
           showSelectedIcon: false,
           segments: [
-            ButtonSegment(
-              value: true,
-              label: Text(l10n.scanTitleDemo),
-            ),
-            ButtonSegment(
-              value: false,
-              label: Text(l10n.scanSettingsLiveScan),
-            ),
+            ButtonSegment(value: true, label: Text(l10n.scanTitleDemo)),
+            ButtonSegment(value: false, label: Text(l10n.scanSettingsLiveScan)),
           ],
           selected: {settings.preferDemo},
           onSelectionChanged: (next) {
@@ -133,16 +123,18 @@ class ScanSettingsGeneralPanel extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           l10n.scanSettingsLanguage,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+          style: Theme.of(context).textTheme.titleSmall
+              ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         const SizedBox(height: 8),
         SegmentedButton<String>(
           showSelectedIcon: false,
-          segments: const [
-            ButtonSegment(value: 'ru', label: Text('Русский')),
-            ButtonSegment(value: 'en', label: Text('English')),
+          segments: [
+            for (final option in supportedLanguageOptions)
+              ButtonSegment(
+                value: option.languageCode,
+                label: Text(option.label),
+              ),
           ],
           selected: {settings.languageCode},
           onSelectionChanged: (next) {

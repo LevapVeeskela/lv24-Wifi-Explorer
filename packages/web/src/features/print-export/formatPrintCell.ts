@@ -4,8 +4,8 @@ import {
   formatDbm,
   formatSnr,
   securityDisplayLabel,
-} from '@/entities/bss/formatters';
-import { ssidGridLabel, type ScanGridRow } from '@/entities/bss/scanGridRow';
+} from '@/entities/bss';
+import { ssidGridLabel, type ScanGridRow } from '@/entities/bss';
 import type { SignalDisplayUnit } from '@/features/scan-settings';
 import type { MessageKey } from '@/shared/i18n';
 

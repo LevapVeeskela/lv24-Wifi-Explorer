@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import type { FormatValues, MessageKey } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { t } from './t';
 
 /** Locale catalog first, then scan-settings `t.ts` fallbacks for new keys. */

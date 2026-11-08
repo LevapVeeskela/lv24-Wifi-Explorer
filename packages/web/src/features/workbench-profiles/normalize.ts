@@ -1,14 +1,8 @@
-import {
-  DEFAULT_COLUMN_VISIBILITY,
-  SCAN_GRID_COLUMNS,
-} from '@/features/scan-settings/columnCatalog';
-import { normalizeFilterPresetFilters } from '@/features/scan-filters/presets/persist';
-import {
-  SCAN_INTERVAL_SEC_MIN,
-  SCAN_INTERVAL_SEC_OPTIONS,
-} from '@/features/scan-settings/constants';
+import { DEFAULT_COLUMN_VISIBILITY, SCAN_GRID_COLUMNS } from '@/entities/columns';
+import { normalizeFilterPresetFilters } from '@/features/scan-filters';
+import { SCAN_INTERVAL_SEC_MIN, SCAN_INTERVAL_SEC_OPTIONS } from '@/features/scan-settings';
 import { ORGANIZE_BY_DEFAULT, type OrganizeByValue } from '@/features/scan-organize';
-import { FILTER_DEFAULTS } from '@/features/scan-filters/types';
+import { FILTER_DEFAULTS } from '@/features/scan-filters';
 import {
   BUILT_IN_DEFAULT_PROFILE_ID,
   BUILT_IN_DEFAULT_PROFILE_NAME,

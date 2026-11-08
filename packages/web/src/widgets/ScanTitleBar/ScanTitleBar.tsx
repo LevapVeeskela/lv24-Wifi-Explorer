@@ -6,7 +6,7 @@ import DarkMode from '@mui/icons-material/DarkMode';
 import LightMode from '@mui/icons-material/LightMode';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import { useColorScheme } from '@mui/material/styles';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { markManualThemePreference } from '@/features/scan-settings';
 import { scanTitleBarSx } from './styles';
 

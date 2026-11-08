@@ -1,5 +1,6 @@
 import { enMessages } from './en';
 import { ruMessages } from './ru';
+import { zhMessages } from './zh';
 import type { AppLocale, FormatMessageFn, FormatValues, MessageKey, MessageMap } from './types';
 
 /** Default UI locale. */
@@ -11,18 +12,20 @@ export const FALLBACK_LOCALE: AppLocale = 'en';
 const catalogs: Record<AppLocale, MessageMap> = {
   ru: ruMessages,
   en: enMessages,
+  zh: zhMessages,
 };
 
-export { enMessages, ruMessages };
+export { enMessages, ruMessages, zhMessages };
 export type { AppLocale, FormatMessageFn, FormatValues, MessageKey, MessageMap };
 
 /** react-intl-style message maps keyed by locale. */
 export const messagesByLocale = catalogs;
 
 export function normalizeAppLocale(locale: string | undefined): AppLocale {
-  if (locale?.toLowerCase().startsWith('en')) {
-    return 'en';
-  }
+  const base = locale?.toLowerCase().split(/[-_]/)[0];
+  if (base === 'zh') return 'zh';
+  if (base === 'en') return 'en';
+  if (base === 'ru') return 'ru';
   return DEFAULT_LOCALE;
 }
 

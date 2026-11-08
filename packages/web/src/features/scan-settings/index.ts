@@ -9,7 +9,7 @@ export {
   DEFAULT_VISIBLE_FIELDS,
   SCAN_GRID_COLUMNS,
   resetColumnVisibility,
-} from './columnCatalog';
+} from '@/entities/columns';
 export { loadColumnVisibility, saveColumnVisibility } from './columnVisibilityPersist';
 export { loadScanSettings, normalizeScanSettings, saveScanSettings } from './persist';
 export { applyScanIntervalMs } from './applyScanInterval';

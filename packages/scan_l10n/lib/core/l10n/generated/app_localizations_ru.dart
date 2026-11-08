@@ -889,4 +889,62 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scanTitleScanning => 'Сканирование';
+
+  @override
+  String get workbenchStart => 'Старт';
+
+  @override
+  String get workbenchStop => 'Стоп';
+
+  @override
+  String get workbenchRedacted => 'скрыто';
+
+  @override
+  String get workbenchColumnsProfileDefault => 'По умолчанию';
+
+  @override
+  String get workbenchColumnsProfiles => 'Профиль';
+
+  @override
+  String get workbenchColumnsSaveProfile => 'Сохранить профиль';
+
+  @override
+  String get workbenchColumnsDeleteProfile => 'Удалить профиль';
+
+  @override
+  String get workbenchColumnsProfileNameHint => 'Имя профиля';
+
+  @override
+  String workbenchStatusDisplayed(int count) {
+    return 'Показано: $count';
+  }
+
+  @override
+  String get workbenchOrganizeBy => 'Группировка';
+
+  @override
+  String get workbenchOrganizeNone => 'Нет';
+
+  @override
+  String get workbenchOrganizeVendor => 'Производитель';
+
+  @override
+  String get workbenchSaveFilterPreset => 'Сохранить пресет';
+
+  @override
+  String get workbenchFilterPresetsTitle => 'Сохранённые фильтры';
+
+  @override
+  String get workbenchFilterPresetsEmpty => 'Нет сохранённых фильтров';
+
+  @override
+  String get workbenchFilterPresetsSave => 'Сохранить текущие фильтры';
+
+  @override
+  String get workbenchFilterPresetsNewName => 'Имя пресета';
+
+  @override
+  String workbenchFilterPresetsDelete(String name) {
+    return 'Удалить «$name»';
+  }
 }

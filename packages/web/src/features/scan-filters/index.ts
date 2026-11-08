@@ -19,6 +19,7 @@ export {
 
 export {
   FilterPresetsMenu,
+  normalizeFilterPresetFilters,
   useFilterPresets,
   type UseFilterPresetsOptions,
   type UseFilterPresetsResult,

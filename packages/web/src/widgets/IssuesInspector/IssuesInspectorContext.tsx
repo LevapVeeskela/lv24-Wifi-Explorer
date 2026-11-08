@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import type { ScanIssueId } from '@/features/scan-issues';
 
 /** Data the page computes once per scan snapshot for the issues inspector. */

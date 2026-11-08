@@ -1,7 +1,8 @@
 /// Supported scan UI locales (`ru` is the product default).
 enum ScanLocale {
   ru('ru'),
-  en('en');
+  en('en'),
+  zh('zh');
 
   const ScanLocale(this.languageCode);
 
@@ -11,7 +12,7 @@ enum ScanLocale {
 
   static ScanLocale? tryParse(String? code) {
     if (code == null || code.isEmpty) return null;
-    final normalized = code.split('_').first.toLowerCase();
+    final normalized = code.split(RegExp('[-_]')).first.toLowerCase();
     for (final locale in ScanLocale.values) {
       if (locale.languageCode == normalized) return locale;
     }

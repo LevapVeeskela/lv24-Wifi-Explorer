@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { makeObservedBss } from '@/domain/testSupport';
-import { observedBssToGridRow } from '@/entities/bss/scanGridRow';
+import { observedBssToGridRow } from '@/entities/bss';
 import { buildAutoFilterFacets } from './buildAutoFilterFacets';
 
 function row(ssid: string, bssid: string, extra: Record<string, unknown> = {}) {

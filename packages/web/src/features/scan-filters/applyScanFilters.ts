@@ -1,4 +1,4 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import type { ParseScanQueryResult } from '@/features/scan-search';
 import { applyAllFilters, type ApplyAllFiltersOptions } from './applyAllFilters';
 import type { ScanWorkbenchFilters } from './types';

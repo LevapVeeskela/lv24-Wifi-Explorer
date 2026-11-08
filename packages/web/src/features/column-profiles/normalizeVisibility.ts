@@ -1,4 +1,4 @@
-import { DEFAULT_COLUMN_VISIBILITY } from '@/features/scan-settings/columnCatalog';
+import { DEFAULT_COLUMN_VISIBILITY } from '@/entities/columns';
 
 export function normalizeColumnVisibility(
   raw: Record<string, boolean> | undefined

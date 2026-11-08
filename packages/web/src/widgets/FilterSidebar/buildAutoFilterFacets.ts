@@ -1,4 +1,4 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import {
   SCAN_ISSUE_IDS,
   SCAN_ISSUE_SEVERITY,

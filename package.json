@@ -46,7 +46,8 @@
     "sync:assets": "node scripts/sync-flutter-assets.mjs",
     "check:scancore": "node scripts/check-scancore.mjs",
     "smoke:dist": "node scripts/smoke-electron.mjs",
-    "dist:mac:dir": "yarn build:scancore && yarn check:scancore && yarn build && electron-builder --mac dir --config electron-builder.yml"
+    "dist:mac:dir": "yarn build:scancore && yarn check:scancore && yarn build && electron-builder --mac dir --config electron-builder.yml",
+    "check:boundaries": "node scripts/check-boundaries.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

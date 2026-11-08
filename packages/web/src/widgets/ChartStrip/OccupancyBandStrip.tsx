@@ -2,14 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import type { ObservedBss } from '@/domain/bss';
 import type { BandGhz } from '@/domain/channel';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import {
-  bandHasBss,
-  pickOccupancyBand,
-  visibleOccupancyBands,
-} from '@/features/channel-occupancy/bandVisibility';
+import type { ScanGridRow } from '@/entities/bss';
+import { bandHasBss, pickOccupancyBand, visibleOccupancyBands } from '@/features/channel-occupancy';
 import { createFormatMessage, type MessageKey } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { ChannelUtilizationTable } from '@/features/utilization';
 import { OccupancyChart } from './OccupancyChart';
 import { chartEmptySx, chartToolbarSx, occupancyStripSx } from './styles';

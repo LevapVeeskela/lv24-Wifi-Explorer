@@ -1,6 +1,6 @@
 import { Alert, AlertTitle, Button } from '@mui/material';
 import type { LocationAuthorization } from '@/domain/identity';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { locationBannerSx } from './styles';
 import { useOnboardingDismissed } from './useOnboardingDismissed';
 

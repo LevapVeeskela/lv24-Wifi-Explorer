@@ -6,7 +6,7 @@ import {
   type GridRowSelectionModel,
 } from '@mui/x-data-grid-pro';
 import { Box } from '@mui/material';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { columnRuleClassNameForCell, useColumnRules } from '@/features/column-rules';
 import { isRowIdSelected } from '@/features/scan-selection';
 import type { SignalDisplayUnit } from '@/features/scan-settings';

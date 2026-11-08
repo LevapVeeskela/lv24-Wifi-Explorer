@@ -16,20 +16,21 @@ import {
 } from '@mui/material';
 import BookmarkBorder from '@mui/icons-material/BookmarkBorder';
 import Delete from '@mui/icons-material/Delete';
+import { applyProfileToState } from './apply';
+import { loadWorkbenchProfilesStore, saveWorkbenchProfilesStore } from './persist';
 import {
   activeWorkbenchProfile,
   addWorkbenchProfile,
   deleteWorkbenchProfile,
-  loadWorkbenchProfilesStore,
-  saveWorkbenchProfilesStore,
   selectWorkbenchProfile,
-  applyProfileToState,
-  type WorkbenchProfile,
-  type WorkbenchStateInput,
-  type WorkbenchStatePatch,
-  type WorkbenchProfilesStoreV1,
-} from '@/features/workbench-profiles';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+} from './store';
+import type {
+  WorkbenchProfile,
+  WorkbenchProfilesStoreV1,
+  WorkbenchStateInput,
+  WorkbenchStatePatch,
+} from './types';
+import { useScanIntl } from '@/shared/i18n';
 
 export type WorkbenchProfilesMenuProps = {
   state: WorkbenchStateInput;

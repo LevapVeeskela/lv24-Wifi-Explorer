@@ -1,12 +1,9 @@
 import Grid from '@mui/material/Grid';
 import type { ObservedBss } from '@/domain/bss';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import {
-  pickOccupancyBand,
-  visibleOccupancyBands,
-} from '@/features/channel-occupancy/bandVisibility';
-import type { GraphLabelMode } from '@/features/scan-settings/types';
-import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history/types';
+import type { ScanGridRow } from '@/entities/bss';
+import { pickOccupancyBand, visibleOccupancyBands } from '@/features/channel-occupancy';
+import type { GraphLabelMode } from '@/features/scan-settings';
+import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history';
 import { OccupancyChart } from './OccupancyChart';
 import { SelectedChannelChart } from './SelectedChannelChart';
 import { SignalHistoryChart } from './SignalHistoryChart';

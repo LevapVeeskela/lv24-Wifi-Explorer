@@ -1,4 +1,4 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import type { SignalDisplayUnit } from '@/features/scan-settings';
 import type { MessageKey } from '@/shared/i18n';
 

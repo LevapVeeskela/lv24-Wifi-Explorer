@@ -9,3 +9,4 @@ nullable-getter: false
 preferred-supported-locales:
   - ru
   - en
+  - zh

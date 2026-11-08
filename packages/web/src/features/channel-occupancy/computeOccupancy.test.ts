@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'vitest';
 import type { ObservedBss } from '@/domain/bss';
 import { computeBandOccupancy } from './computeOccupancy';
-import { formatBandWithUnii, uniiSubband } from './unii';
+import { formatBandWithUnii, uniiSubband } from '@/entities/channel';
 
 function mockBss(partial: {
   bssid: string;

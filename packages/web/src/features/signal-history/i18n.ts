@@ -10,6 +10,7 @@ type SignalTraceLabels = Record<SignalTraceKind, string>;
 const catalogs: Record<AppLocale, SignalTraceLabels> = {
   ru: { live: 'Текущий', average: 'Среднее', max: 'Максимум' },
   en: { live: 'Live', average: 'Average', max: 'Max' },
+  zh: { live: '实时', average: '平均', max: '最大值' },
 };
 
 /**

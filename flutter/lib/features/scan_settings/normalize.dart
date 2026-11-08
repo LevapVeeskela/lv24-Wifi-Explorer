@@ -1,18 +1,21 @@
+import 'package:scan_l10n/scan_l10n.dart';
+
 import 'constants.dart';
 import 'types.dart';
 
-const ScanWorkbenchSettings scanWorkbenchSettingsDefaults = ScanWorkbenchSettings(
-  scanIntervalSec: 5,
-  preferDemo: true,
-  languageCode: 'ru',
-  signalUnit: SignalDisplayUnit.percent,
-  minRssiDbm: null,
-  autoStartScanOnLaunch: false,
-  includeHiddenSsid: true,
-  hideEmptySpectrumBand: true,
-  graphLabelMode: GraphLabelMode.ssid,
-  appearanceFollowSystem: true,
-);
+const ScanWorkbenchSettings scanWorkbenchSettingsDefaults =
+    ScanWorkbenchSettings(
+      scanIntervalSec: 5,
+      preferDemo: true,
+      languageCode: 'ru',
+      signalUnit: SignalDisplayUnit.percent,
+      minRssiDbm: null,
+      autoStartScanOnLaunch: false,
+      includeHiddenSsid: true,
+      hideEmptySpectrumBand: true,
+      graphLabelMode: GraphLabelMode.ssid,
+      appearanceFollowSystem: true,
+    );
 
 int snapScanIntervalSec(num raw) {
   final floored = raw.floor().clamp(scanIntervalSecMin, 999);
@@ -30,13 +33,16 @@ int snapScanIntervalSec(num raw) {
 
 String normalizeLanguageCode(Object? raw) {
   if (raw is! String) return scanWorkbenchSettingsDefaults.languageCode;
-  final code = raw.trim().toLowerCase();
-  if (code == 'en') return 'en';
-  return 'ru';
+  final code = raw.trim().toLowerCase().split(RegExp('[-_]')).first;
+  if (scanSupportedLocaleCodes.contains(code)) return code;
+  return scanWorkbenchSettingsDefaults.languageCode;
 }
 
 GraphLabelMode normalizeGraphLabelMode(Object? raw) {
-  return GraphLabelMode.parse(raw, scanWorkbenchSettingsDefaults.graphLabelMode);
+  return GraphLabelMode.parse(
+    raw,
+    scanWorkbenchSettingsDefaults.graphLabelMode,
+  );
 }
 
 SignalDisplayUnit normalizeSignalUnit(Object? raw) {
@@ -87,7 +93,8 @@ ScanWorkbenchSettings normalizeScanWorkbenchSettingsMap(
       preferDemo: map['preferDemo'] is bool
           ? map['preferDemo'] as bool
           : scanWorkbenchSettingsDefaults.preferDemo,
-      languageCode: map['languageCode']?.toString() ??
+      languageCode:
+          map['languageCode']?.toString() ??
           scanWorkbenchSettingsDefaults.languageCode,
       signalUnit: normalizeSignalUnit(map['signalUnit']),
       minRssiDbm: map.containsKey('minRssiDbm')

@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
 import type { ObservedBss } from '@/domain/bss';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import type { GraphLabelMode } from '@/features/scan-settings/types';
-import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history/types';
+import type { ScanGridRow } from '@/entities/bss';
+import type { GraphLabelMode } from '@/features/scan-settings';
+import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history';
 import { createFormatMessage, type MessageKey } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { BssComparePane } from '@/features/bss-compare';
 import { AdvancedDetailsPane } from '@/widgets/AdvancedDetailsPane';
 import { IssuesInspectorPanel } from '@/widgets/IssuesInspector';

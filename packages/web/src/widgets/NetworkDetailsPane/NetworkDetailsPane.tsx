@@ -1,11 +1,11 @@
 import { useCallback, useMemo, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { Box, Button, Snackbar, Stack, Typography } from '@mui/material';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import { qualityMessageKey } from '@/entities/bss/formatters';
+import type { ScanGridRow } from '@/entities/bss';
+import { qualityMessageKey } from '@/entities/bss';
 import { PIN_COLOR_PALETTE } from '@/features/annotations';
 import { createFormatMessage } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import { DetailsField } from './DetailsField';
 import {
   formatBandField,
@@ -20,7 +20,7 @@ import {
   formatSignalPct,
   formatSnrDetails,
   formatWidthField,
-} from './formatFields';
+} from '@/entities/bss';
 import { detailsEmptySx, detailsEmptyTextSx, detailsPaneSx, detailsSnackbarSx } from './styles';
 
 export type NetworkDetailsPaneProps = {

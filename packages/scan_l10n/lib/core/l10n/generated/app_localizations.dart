@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_ru.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -95,7 +96,8 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ru'),
-    Locale('en')
+    Locale('en'),
+    Locale('zh')
   ];
 
   /// TS MessageKey: permissions.denied.body
@@ -1711,6 +1713,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scanning'**
   String get scanTitleScanning;
+
+  /// No description provided for @workbenchStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get workbenchStart;
+
+  /// No description provided for @workbenchStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get workbenchStop;
+
+  /// No description provided for @workbenchRedacted.
+  ///
+  /// In en, this message translates to:
+  /// **'redacted'**
+  String get workbenchRedacted;
+
+  /// No description provided for @workbenchColumnsProfileDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get workbenchColumnsProfileDefault;
+
+  /// No description provided for @workbenchColumnsProfiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get workbenchColumnsProfiles;
+
+  /// No description provided for @workbenchColumnsSaveProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Save profile'**
+  String get workbenchColumnsSaveProfile;
+
+  /// No description provided for @workbenchColumnsDeleteProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete profile'**
+  String get workbenchColumnsDeleteProfile;
+
+  /// No description provided for @workbenchColumnsProfileNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile name'**
+  String get workbenchColumnsProfileNameHint;
+
+  /// No description provided for @workbenchStatusDisplayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Displayed: {count}'**
+  String workbenchStatusDisplayed(int count);
+
+  /// No description provided for @workbenchOrganizeBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Organize by'**
+  String get workbenchOrganizeBy;
+
+  /// No description provided for @workbenchOrganizeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get workbenchOrganizeNone;
+
+  /// No description provided for @workbenchOrganizeVendor.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor'**
+  String get workbenchOrganizeVendor;
+
+  /// No description provided for @workbenchSaveFilterPreset.
+  ///
+  /// In en, this message translates to:
+  /// **'Save preset'**
+  String get workbenchSaveFilterPreset;
+
+  /// No description provided for @workbenchFilterPresetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved filters'**
+  String get workbenchFilterPresetsTitle;
+
+  /// No description provided for @workbenchFilterPresetsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved filters'**
+  String get workbenchFilterPresetsEmpty;
+
+  /// No description provided for @workbenchFilterPresetsSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save current filters'**
+  String get workbenchFilterPresetsSave;
+
+  /// No description provided for @workbenchFilterPresetsNewName.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset name'**
+  String get workbenchFilterPresetsNewName;
+
+  /// No description provided for @workbenchFilterPresetsDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete \"{name}\"'**
+  String workbenchFilterPresetsDelete(String name);
 }
 
 class _AppLocalizationsDelegate
@@ -1724,7 +1834,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'ru'].contains(locale.languageCode);
+      <String>['en', 'ru', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1737,6 +1847,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'ru':
       return AppLocalizationsRu();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

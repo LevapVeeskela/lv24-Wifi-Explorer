@@ -1,5 +1,5 @@
 import type { GridRowId, GridRowSelectionModel } from '@mui/x-data-grid-pro';
-import { normalizeBssid } from '@/entities/bss/normalizeBssid';
+import { normalizeBssid } from '@/entities/bss';
 
 /**
  * Selected row (inspector / charts) is independent of the associated Mac link.

@@ -4,9 +4,9 @@ import 'package:scan_l10n/scan_l10n.dart';
 extension ScanWorkbenchL10n on AppLocalizations {
   String get appTitle => scanAboutTitle;
 
-  String get scanStart => _ru ? 'Старт' : 'Start';
+  String get scanStart => workbenchStart;
 
-  String get scanStop => _ru ? 'Стоп' : 'Stop';
+  String get scanStop => workbenchStop;
 
   String get demoChip => scanTitleDemo;
 
@@ -84,52 +84,45 @@ extension ScanWorkbenchL10n on AppLocalizations {
 
   String get locationUnknown => scanLocationNotDetermined;
 
-  String get redacted => _ru ? 'скрыто' : 'redacted';
+  String get redacted => workbenchRedacted;
 
   String get hiddenSsid => scanSsidHidden;
 
-  String get scanColumnsProfileDefault => _ru ? 'По умолчанию' : 'Default';
+  String get scanColumnsProfileDefault => workbenchColumnsProfileDefault;
 
-  String get scanColumnsProfiles => _ru ? 'Профиль' : 'Profile';
+  String get scanColumnsProfiles => workbenchColumnsProfiles;
 
-  String get scanColumnsSaveProfile =>
-      _ru ? 'Сохранить профиль' : 'Save profile';
+  String get scanColumnsSaveProfile => workbenchColumnsSaveProfile;
 
-  String get scanColumnsDeleteProfile =>
-      _ru ? 'Удалить профиль' : 'Delete profile';
+  String get scanColumnsDeleteProfile => workbenchColumnsDeleteProfile;
 
-  String get scanColumnsProfileNameHint => _ru ? 'Имя профиля' : 'Profile name';
+  String get scanColumnsProfileNameHint => workbenchColumnsProfileNameHint;
 
   String get emDash => '—';
 
-  String scanStatusDisplayed(int count) =>
-      _ru ? 'Показано: $count' : 'Displayed: $count';
+  String scanStatusDisplayed(int count) => workbenchStatusDisplayed(count);
 
-  String get organizeBy => _ru ? 'Группировка' : 'Organize by';
+  String get organizeBy => workbenchOrganizeBy;
 
-  String get organizeNone => _ru ? 'Нет' : 'None';
+  String get organizeNone => workbenchOrganizeNone;
 
   String get organizeSsid => 'SSID';
 
   String get organizeAp => 'AP';
 
-  String get organizeVendor => _ru ? 'Производитель' : 'Vendor';
+  String get organizeVendor => workbenchOrganizeVendor;
 
-  String get saveFilterPreset => _ru ? 'Сохранить пресет' : 'Save preset';
+  String get saveFilterPreset => workbenchSaveFilterPreset;
 
-  String get filterPresetsTitle =>
-      _ru ? 'Сохранённые фильтры' : 'Saved filters';
+  String get filterPresetsTitle => workbenchFilterPresetsTitle;
 
-  String get filterPresetsEmpty =>
-      _ru ? 'Нет сохранённых фильтров' : 'No saved filters';
+  String get filterPresetsEmpty => workbenchFilterPresetsEmpty;
 
-  String get filterPresetsSave =>
-      _ru ? 'Сохранить текущие фильтры' : 'Save current filters';
+  String get filterPresetsSave => workbenchFilterPresetsSave;
 
-  String get filterPresetsNewName => _ru ? 'Имя пресета' : 'Preset name';
+  String get filterPresetsNewName => workbenchFilterPresetsNewName;
 
-  String filterPresetsDelete(String name) =>
-      _ru ? 'Удалить «$name»' : 'Delete "$name"';
+  String filterPresetsDelete(String name) => workbenchFilterPresetsDelete(name);
 
   String get qualityExcellent => scanQualityExcellent;
 
@@ -143,6 +136,4 @@ extension ScanWorkbenchL10n on AppLocalizations {
 
   String scanMessage(String messageKey, [Map<String, Object>? values]) =>
       lookupScanMessage(this, messageKey, values);
-
-  bool get _ru => localeName.startsWith('ru');
 }

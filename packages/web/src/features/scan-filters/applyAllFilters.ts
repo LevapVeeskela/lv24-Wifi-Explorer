@@ -1,4 +1,4 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import type { ParseScanQueryResult } from '@/features/scan-search';
 import { scanIssueMessageKey, type ScanIssueId } from '@/features/scan-issues';
 import { matchBss, parseScanQuery } from '@/features/scan-search';

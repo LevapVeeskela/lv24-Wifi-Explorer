@@ -1,5 +1,5 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import { qualityMessageKey } from '@/entities/bss/formatters';
+import type { ScanGridRow } from '@/entities/bss';
+import { qualityMessageKey } from '@/entities/bss';
 import type { FormatMessageFn, MessageKey } from '@/shared/i18n';
 import {
   formatBandField,
@@ -14,7 +14,7 @@ import {
   formatSignalPct,
   formatSnrDetails,
   formatWidthField,
-} from '@/widgets/NetworkDetailsPane/formatFields';
+} from '@/entities/bss';
 
 export type CompareCell = {
   value: string;

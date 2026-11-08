@@ -13,7 +13,7 @@ import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import FilterList from '@mui/icons-material/FilterList';
 import FilterAltOff from '@mui/icons-material/FilterAltOff';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import type { ScanIssueId } from '@/features/scan-issues';
 import {
   FILTER_DEFAULTS,
@@ -23,7 +23,7 @@ import {
   type SecurityFilterValue,
   type WidthFilterValue,
 } from '@/features/scan-filters';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import type { MessageKey } from '@/shared/i18n';
 import { buildAutoFilterFacets, vendorQueryMatchesLabel } from './buildAutoFilterFacets';
 import {

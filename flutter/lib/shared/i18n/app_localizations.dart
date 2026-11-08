@@ -2,4 +2,6 @@
 library;
 
 export 'package:scan_l10n/scan_l10n.dart';
+
+export 'language_options.dart';
 export 'workbench_l10n_ext.dart';

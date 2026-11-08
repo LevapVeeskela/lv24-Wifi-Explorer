@@ -1026,5 +1026,29 @@
   "scanTitleScanning": "Scanning",
   "@scanTitleScanning": {
     "description": "TS MessageKey: scan.title.scanning"
+  },
+  "workbenchStart": "Start",
+  "workbenchStop": "Stop",
+  "workbenchRedacted": "redacted",
+  "workbenchColumnsProfileDefault": "Default",
+  "workbenchColumnsProfiles": "Profile",
+  "workbenchColumnsSaveProfile": "Save profile",
+  "workbenchColumnsDeleteProfile": "Delete profile",
+  "workbenchColumnsProfileNameHint": "Profile name",
+  "workbenchStatusDisplayed": "Displayed: {count}",
+  "@workbenchStatusDisplayed": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "workbenchOrganizeBy": "Organize by",
+  "workbenchOrganizeNone": "None",
+  "workbenchOrganizeVendor": "Vendor",
+  "workbenchSaveFilterPreset": "Save preset",
+  "workbenchFilterPresetsTitle": "Saved filters",
+  "workbenchFilterPresetsEmpty": "No saved filters",
+  "workbenchFilterPresetsSave": "Save current filters",
+  "workbenchFilterPresetsNewName": "Preset name",
+  "workbenchFilterPresetsDelete": "Delete \"{name}\"",
+  "@workbenchFilterPresetsDelete": {
+    "placeholders": { "name": { "type": "String" } }
   }
 }

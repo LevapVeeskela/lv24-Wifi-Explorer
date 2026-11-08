@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { STORAGE_ORGANIZE_BY } from '@/shared/lib/persistence/keys';
 import { loadOrganizeBy, saveOrganizeBy } from './persist';
 import { treeDataPathForOrganize } from './useScanOrganize';

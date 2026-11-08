@@ -4,7 +4,7 @@ import { Avatar, Box, Chip, LinearProgress, Stack, Tooltip, Typography } from '@
 import Lock from '@mui/icons-material/Lock';
 import LockOpen from '@mui/icons-material/LockOpen';
 import Wifi from '@mui/icons-material/Wifi';
-import { ssidGridLabel, type ScanGridRow } from '@/entities/bss/scanGridRow';
+import { ssidGridLabel, type ScanGridRow } from '@/entities/bss';
 import type { SignalDisplayUnit } from '@/features/scan-settings';
 import {
   formatBandLabel,
@@ -14,11 +14,11 @@ import {
   securityDisplayLabel,
   truncateBssidMiddle,
   vendorInitials,
-} from '@/entities/bss/formatters';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+} from '@/entities/bss';
+import { useScanIntl } from '@/shared/i18n';
 import { RssiSparkline } from './RssiSparkline';
 import { signalPercentFromRssi } from './signalPercent';
-import { uniiSubband } from '@/features/channel-occupancy/unii';
+import { uniiSubband } from '@/features/channel-occupancy';
 import {
   issueCountChipSx,
   issueFlagsCellSx,

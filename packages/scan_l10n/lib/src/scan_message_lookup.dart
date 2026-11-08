@@ -1,6 +1,7 @@
 import '../core/l10n/generated/app_localizations.dart';
 import '../core/l10n/generated/app_localizations_en.dart';
 import '../core/l10n/generated/app_localizations_ru.dart';
+import '../core/l10n/generated/app_localizations_zh.dart';
 import 'scan_locale.dart';
 
 /// All TS-style message keys (`scan.status.found`, …) present in ARB catalogs.
@@ -285,6 +286,8 @@ AppLocalizations appLocalizationsForLanguageCode(String languageCode) {
   switch (languageCode) {
     case 'en':
       return AppLocalizationsEn();
+    case 'zh':
+      return AppLocalizationsZh();
     case 'ru':
     default:
       return AppLocalizationsRu();

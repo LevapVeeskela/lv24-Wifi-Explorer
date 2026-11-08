@@ -1,5 +1,5 @@
 import { Divider, Menu, MenuItem } from '@mui/material';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 
 export type ScanCellMenuAnchor = { top: number; left: number };
 

@@ -1,4 +1,4 @@
-import type { MenuIpcAction } from '@/shared/ipc/menuIpc';
+import type { MenuIpcAction } from '@/shared/ipc';
 
 export interface WifiExplorerBridge {
   scanStart: (directedSsid?: string) => Promise<{ ok: boolean; error?: string }>;

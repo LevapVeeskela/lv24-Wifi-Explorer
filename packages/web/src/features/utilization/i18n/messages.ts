@@ -40,9 +40,24 @@ export const utilizationRuMessages: Record<UtilizationMessageKey, string> = {
   'utilization.band': '{band} ГГц',
 };
 
+export const utilizationZhMessages: Record<UtilizationMessageKey, string> = {
+  'utilization.title': '各信道利用率',
+  'utilization.column.channel': '信道',
+  'utilization.column.band': '频段',
+  'utilization.column.networks': '网络数',
+  'utilization.column.overlapping': '重叠',
+  'utilization.column.avgRssi': '平均 RSSI',
+  'utilization.column.beacon': 'Beacon 开销',
+  'utilization.caption.estimate': 'Beacon 开销为估算值（最大速率下的 beacon 字节数），并非实测。',
+  'utilization.empty': '本次扫描没有网络。',
+  'utilization.estimatePrefix': '约',
+  'utilization.band': '{band} GHz',
+};
+
 const catalogs: Record<AppLocale, Record<UtilizationMessageKey, string>> = {
   en: utilizationEnMessages,
   ru: utilizationRuMessages,
+  zh: utilizationZhMessages,
 };
 
 export type UtilizationFormatValues = Record<string, string | number>;

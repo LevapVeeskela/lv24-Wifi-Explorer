@@ -10,4 +10,4 @@ export {
   computeBandOccupancy,
   type OccupancyBar,
 } from './computeOccupancy';
-export { formatBandWithUnii, uniiSubband, type UniiLabel } from './unii';
+export { formatBandWithUnii, uniiSubband, type UniiLabel } from '@/entities/channel';

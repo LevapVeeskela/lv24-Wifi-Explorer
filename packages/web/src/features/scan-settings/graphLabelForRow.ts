@@ -1,5 +1,5 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import { ssidGridLabel } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
+import { ssidGridLabel } from '@/entities/bss';
 import type { GraphLabelMode } from './types';
 
 export type GraphLabelRow = Pick<

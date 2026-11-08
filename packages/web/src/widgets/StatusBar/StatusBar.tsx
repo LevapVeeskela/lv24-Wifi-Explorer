@@ -1,7 +1,7 @@
 import { Link, Stack, Typography } from '@mui/material';
 import type { LocationAuthorization } from '@/domain/identity';
 import type { SignalQuality } from '@/domain/signal';
-import { qualityMessageKey } from '@/entities/bss/formatters';
+import { qualityMessageKey } from '@/entities/bss';
 import { statusAboutLinkSx, statusBarSx, statusClusterSx } from './styles';
 import { t } from './t';
 

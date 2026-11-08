@@ -2,11 +2,13 @@ import 'package:scan_l10n/scan_l10n.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('ru and en catalogs share the same keys', () {
-    expect(
-      ScanL10n.catalogFor(ScanLocale.ru).keys.toSet(),
-      ScanL10n.catalogFor(ScanLocale.en).keys.toSet(),
-    );
+  test('ru, en and zh catalogs share the same keys', () {
+    final keys = {
+      for (final locale in ScanLocale.values)
+        locale: ScanL10n.catalogFor(locale).keys.toSet(),
+    };
+    expect(keys[ScanLocale.ru], keys[ScanLocale.en]);
+    expect(keys[ScanLocale.en], keys[ScanLocale.zh]);
     expect(scanMessageKeys.length, greaterThan(100));
   });
 
@@ -135,11 +137,17 @@ void main() {
     expect(ScanL10n.defaultLocale, ScanLocale.ru);
     expect(ScanL10n.fromLanguageCode('ru').locale, ScanLocale.ru);
     expect(ScanL10n.fromLanguageCode('en').locale, ScanLocale.en);
+    expect(ScanL10n.fromLanguageCode('zh').locale, ScanLocale.zh);
+    expect(ScanL10n.fromLanguageCode('zh-CN').locale, ScanLocale.zh);
     expect(ScanL10n.fromLanguageCode('de').locale, ScanLocale.ru);
   });
 
-  test('AppLocalizations delegate lists ru before en', () {
+  test('AppLocalizations delegate lists ru, en and zh', () {
     expect(AppLocalizations.supportedLocales.first.languageCode, 'ru');
+    expect(
+      AppLocalizations.supportedLocales.map((locale) => locale.languageCode),
+      containsAll(<String>['ru', 'en', 'zh']),
+    );
   });
 
   test('IE tree field labels resolve in ru and en', () {

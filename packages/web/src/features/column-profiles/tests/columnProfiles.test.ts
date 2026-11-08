@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { STORAGE_COLUMN_PROFILES } from '@/shared/lib/persistence/keys';
-import { DEFAULT_COLUMN_VISIBILITY } from '@/features/scan-settings/columnCatalog';
+import { DEFAULT_COLUMN_VISIBILITY } from '@/entities/columns';
 import { BUILT_IN_DEFAULT_PROFILE_ID } from '../types';
 import {
   createCustomProfile,

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type { CsvExportScope } from '@/features/export';
-import type { MenuIpcAction } from '@/shared/ipc/menuIpc';
+import type { MenuIpcAction } from '@/shared/ipc';
 
 export type UseNativeMenuBridgeOptions = {
   onOpenSnapshot: () => void;

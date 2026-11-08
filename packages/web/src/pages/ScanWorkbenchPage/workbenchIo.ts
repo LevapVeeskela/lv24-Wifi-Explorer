@@ -1,5 +1,5 @@
 import type { GridApiPro } from '@mui/x-data-grid-pro';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import type { ObservedBss } from '@/domain/bss';
 import type { LocationAuthorization } from '@/domain/identity';
 import type { AnnotationRule } from '@/features/annotations';

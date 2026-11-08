@@ -1,4 +1,4 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { loadOrganizeBy, saveOrganizeBy } from './persist';
 import type { OrganizeByValue } from './types';
 import { useCallback, useState } from 'react';

@@ -1,5 +1,5 @@
 /** Cell context-menu helpers: build a scan-search query from a clicked cell. */
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 
 /** Grid fields that can be turned into a scan-search query. */
 export const FILTERABLE_CELL_FIELDS = [

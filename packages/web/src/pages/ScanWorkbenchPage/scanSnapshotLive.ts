@@ -1,6 +1,6 @@
 import type { LocationAuthorization } from '@/domain/identity';
-import type { ScanSnapshotIpcPayload } from '@/shared/ipc/scanIpc';
-import { normalizeLocationAuthorization } from '@/widgets/LocationBanner/normalizeLocationAuthorization';
+import type { ScanSnapshotIpcPayload } from '@/shared/ipc';
+import { normalizeLocationAuthorization } from '@/widgets/LocationBanner';
 
 export function locationStateFromSnapshot(value: unknown): LocationAuthorization | null {
   if (typeof value !== 'string') {

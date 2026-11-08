@@ -1,4 +1,4 @@
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { RSSI_HIGHLIGHT_FIELDS, SECURITY_HIGHLIGHT_FIELDS } from './constants';
 import type { ColumnRuleCellClass, ColumnRulesConfig } from './types';
 import { QUALITY_TO_CELL_CLASS } from './types';

@@ -1,4 +1,4 @@
-import { normalizeFilterPresetFilters } from '@/features/scan-filters/presets/persist';
+import { normalizeFilterPresetFilters } from '@/features/scan-filters';
 import {
   builtInDefaultWorkbenchProfile,
   normalizeOrganizeBy,

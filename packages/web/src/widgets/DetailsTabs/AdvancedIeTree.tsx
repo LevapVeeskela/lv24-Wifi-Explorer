@@ -13,10 +13,10 @@ import {
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import ContentCopy from '@mui/icons-material/ContentCopy';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
+import type { ScanGridRow } from '@/entities/bss';
 import { buildIeTree, decodeInformationElements, type IeTreeNode } from '@/domain/ie';
 import { createFormatMessage, type FormatMessageFn } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { useScanIntl } from '@/shared/i18n';
 import {
   advancedIeTreeBytesSx,
   advancedIeTreeElementRowSx,

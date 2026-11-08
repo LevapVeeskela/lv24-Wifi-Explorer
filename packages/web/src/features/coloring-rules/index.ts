@@ -44,3 +44,4 @@ export type {
   ColoringRulesConfig,
   ColoringRulesStoreV1,
 } from './types';
+export { ColoringRulesPanel, type ColoringRulesPanelProps } from './ColoringRulesPanel';

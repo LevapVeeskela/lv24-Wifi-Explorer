@@ -885,4 +885,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scanTitleScanning => 'Scanning';
+
+  @override
+  String get workbenchStart => 'Start';
+
+  @override
+  String get workbenchStop => 'Stop';
+
+  @override
+  String get workbenchRedacted => 'redacted';
+
+  @override
+  String get workbenchColumnsProfileDefault => 'Default';
+
+  @override
+  String get workbenchColumnsProfiles => 'Profile';
+
+  @override
+  String get workbenchColumnsSaveProfile => 'Save profile';
+
+  @override
+  String get workbenchColumnsDeleteProfile => 'Delete profile';
+
+  @override
+  String get workbenchColumnsProfileNameHint => 'Profile name';
+
+  @override
+  String workbenchStatusDisplayed(int count) {
+    return 'Displayed: $count';
+  }
+
+  @override
+  String get workbenchOrganizeBy => 'Organize by';
+
+  @override
+  String get workbenchOrganizeNone => 'None';
+
+  @override
+  String get workbenchOrganizeVendor => 'Vendor';
+
+  @override
+  String get workbenchSaveFilterPreset => 'Save preset';
+
+  @override
+  String get workbenchFilterPresetsTitle => 'Saved filters';
+
+  @override
+  String get workbenchFilterPresetsEmpty => 'No saved filters';
+
+  @override
+  String get workbenchFilterPresetsSave => 'Save current filters';
+
+  @override
+  String get workbenchFilterPresetsNewName => 'Preset name';
+
+  @override
+  String workbenchFilterPresetsDelete(String name) {
+    return 'Delete \"$name\"';
+  }
 }

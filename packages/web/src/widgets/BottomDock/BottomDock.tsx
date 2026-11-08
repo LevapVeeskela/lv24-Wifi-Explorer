@@ -1,8 +1,8 @@
 import { Paper } from '@mui/material';
 import type { ObservedBss } from '@/domain/bss';
-import type { ScanGridRow } from '@/entities/bss/scanGridRow';
-import type { GraphLabelMode } from '@/features/scan-settings/types';
-import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history/types';
+import type { ScanGridRow } from '@/entities/bss';
+import type { GraphLabelMode } from '@/features/scan-settings';
+import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history';
 import { DetailsTabs, type DetailsTabId } from '@/widgets/DetailsTabs';
 import { bottomDockSx } from './styles';
 
