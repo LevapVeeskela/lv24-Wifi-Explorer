@@ -16,6 +16,7 @@ import {
   vendorInitials,
 } from '@/entities/bss/formatters';
 import { useScanIntl } from '@/shared/i18n/ScanIntlProvider';
+import { RssiSparkline } from './RssiSparkline';
 import { signalPercentFromRssi } from './signalPercent';
 import {
   issueCountChipSx,
@@ -216,6 +217,16 @@ export function useScanGridColumns(
             </Tooltip>
           );
         },
+      },
+      {
+        field: 'signalTrend',
+        headerName: t('scan.col.signalTrend'),
+        width: 80,
+        sortable: false,
+        filterable: false,
+        renderCell: (params) => (
+          <RssiSparkline bss={params.row.source} color={params.row.seriesColor} />
+        ),
       },
       {
         field: 'channel',

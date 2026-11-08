@@ -9,6 +9,7 @@ const RU: Record<string, string> = {
   'scan.col.annotation': 'Пометки',
   'scan.col.issues': 'Проблемы',
   'scan.col.signal': 'Сигнал',
+  'scan.col.signalTrend': 'Тренд',
   'scan.col.channel': 'Канал',
   'scan.col.channelWidth': 'Ширина канала',
   'scan.col.band': 'Диапазон',

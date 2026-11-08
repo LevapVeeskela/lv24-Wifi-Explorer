@@ -98,6 +98,7 @@ export const ruMessages: Record<MessageKey, string> = {
   'scan.col.vendor': 'Производитель',
   'scan.col.annotation': 'Пометки',
   'scan.col.signal': 'Сигнал',
+  'scan.col.signalTrend': 'Тренд',
   'scan.col.channel': 'Канал',
   'scan.col.channelWidth': 'Ширина канала',
   'scan.col.band': 'Диапазон',

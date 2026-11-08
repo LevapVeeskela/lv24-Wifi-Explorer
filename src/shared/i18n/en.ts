@@ -98,6 +98,7 @@ export const enMessages = {
   'scan.col.vendor': 'Vendor',
   'scan.col.annotation': 'Notes',
   'scan.col.signal': 'Signal',
+  'scan.col.signalTrend': 'Trend',
   'scan.col.channel': 'Channel',
   'scan.col.channelWidth': 'Channel width',
   'scan.col.band': 'Band',

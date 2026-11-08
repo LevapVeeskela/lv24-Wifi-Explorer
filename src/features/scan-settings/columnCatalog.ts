@@ -8,6 +8,7 @@ export type ScanGridColumnField =
   | 'annotation'
   | 'issueFlags'
   | 'signal'
+  | 'signalTrend'
   | 'channel'
   | 'channelWidth'
   | 'band'
@@ -35,6 +36,7 @@ export const SCAN_GRID_COLUMNS: readonly ScanGridColumnDef[] = [
   { field: 'annotation', labelKey: 'scan.col.annotation', hideable: true },
   { field: 'issueFlags', labelKey: 'scan.col.issues', hideable: true },
   { field: 'signal', labelKey: 'scan.col.signal', hideable: true },
+  { field: 'signalTrend', labelKey: 'scan.col.signalTrend', hideable: true },
   { field: 'channel', labelKey: 'scan.col.channel', hideable: true },
   { field: 'channelWidth', labelKey: 'scan.col.channelWidth', hideable: true },
   { field: 'band', labelKey: 'scan.col.band', hideable: true },
@@ -63,6 +65,7 @@ export const DEFAULT_VISIBLE_FIELDS: readonly ScanGridColumnField[] = [
 ];
 
 export const DEFAULT_HIDDEN_FIELDS: readonly ScanGridColumnField[] = [
+  'signalTrend',
   'issueFlags',
   'security',
   'rssiDbm',
