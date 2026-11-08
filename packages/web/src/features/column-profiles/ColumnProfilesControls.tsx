@@ -7,6 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   Stack,
   TextField,
   Tooltip,
@@ -16,6 +17,7 @@ import { useState } from 'react';
 import { BUILT_IN_DEFAULT_PROFILE_ID } from './types';
 import type { UseColumnProfilesResult } from './useColumnProfiles';
 import { useScanIntl } from '@/shared/i18n';
+import { openWorkbenchFile, saveWorkbenchFile } from '@/shared/lib/files/rendererFileIo';
 
 export type ColumnProfilesControlsProps = {
   profiles: UseColumnProfilesResult;
@@ -24,6 +26,7 @@ export type ColumnProfilesControlsProps = {
 export function ColumnProfilesControls({ profiles }: ColumnProfilesControlsProps) {
   const { formatMessage } = useScanIntl();
   const [newName, setNewName] = useState('');
+  const [notice, setNotice] = useState<string | null>(null);
 
   const profileLabel = (id: string, name: string) =>
     id === BUILT_IN_DEFAULT_PROFILE_ID
@@ -31,6 +34,30 @@ export function ColumnProfilesControls({ profiles }: ColumnProfilesControlsProps
       : name;
 
   const activeIsCustom = profiles.activeProfileId !== BUILT_IN_DEFAULT_PROFILE_ID;
+
+  const onExport = async () => {
+    await saveWorkbenchFile({
+      defaultPath: 'lv24-column-profiles.json',
+      contents: profiles.exportProfilesJson(),
+      mimeType: 'application/json',
+    });
+  };
+
+  const onImport = async () => {
+    const picked = await openWorkbenchFile({ accept: '.json', extensions: ['json'] });
+    if (picked.canceled) return;
+    const result = profiles.importProfilesJson(picked.text);
+    if (result.error) {
+      setNotice(formatMessage('scan.profiles.importError'));
+      return;
+    }
+    setNotice(
+      formatMessage('scan.profiles.imported', {
+        imported: result.imported,
+        skipped: result.skipped,
+      })
+    );
+  };
 
   const onSaveNew = () => {
     const trimmed = newName.trim();
@@ -104,6 +131,20 @@ export function ColumnProfilesControls({ profiles }: ColumnProfilesControlsProps
           {formatMessage('scan.settings.columns.profiles.saveAs')}
         </Button>
       </Stack>
+      <Stack direction="row" spacing={1}>
+        <Button size="small" variant="text" onClick={() => void onExport()}>
+          {formatMessage('scan.profiles.export')}
+        </Button>
+        <Button size="small" variant="text" onClick={() => void onImport()}>
+          {formatMessage('scan.profiles.import')}
+        </Button>
+      </Stack>
+      <Snackbar
+        autoHideDuration={6000}
+        message={notice ?? ''}
+        open={notice != null}
+        onClose={() => setNotice(null)}
+      />
     </Stack>
   );
 }

@@ -14,6 +14,11 @@ import {
   selectActiveProfile,
   updateCustomProfileVisibility,
 } from './persist';
+import {
+  exportColumnProfilesJson,
+  importColumnProfilesJson,
+  type ColumnProfilesImportResult,
+} from './transfer';
 
 export type UseColumnProfilesOptions = {
   columnVisibility: Record<string, boolean>;
@@ -29,6 +34,8 @@ export type UseColumnProfilesResult = {
   updateActiveProfileFromCurrent: () => void;
   deleteProfile: (profileId: string) => void;
   resetToDefault: () => void;
+  exportProfilesJson: () => string;
+  importProfilesJson: (raw: string) => ColumnProfilesImportResult;
 };
 
 function persist(store: ColumnProfilesStoreV1): ColumnProfilesStoreV1 {
@@ -111,7 +118,22 @@ export function useColumnProfiles({
     });
   }, [applyProfile]);
 
+  const exportProfilesJson = useCallback(() => exportColumnProfilesJson(store), [store]);
+
+  const importProfilesJson = useCallback(
+    (raw: string) => {
+      const result = importColumnProfilesJson(raw, store);
+      if (!result.error && result.imported > 0) {
+        setStore(persist(result.store));
+      }
+      return result;
+    },
+    [store]
+  );
+
   return {
+    exportProfilesJson,
+    importProfilesJson,
     profiles,
     activeProfileId: store.activeProfileId,
     activeProfile,
