@@ -1,6 +1,6 @@
 name: scan_domain
 description: Clean-room Wi-Fi scan domain types, signal metrics, merge policy, ESS grouping, occupancy visualization, and issue heuristics for LV24 WiFi Explorer.
-version: 0.1.0
+version: 1.0.0
 publish_to: none
 
 environment:

@@ -1,6 +1,6 @@
 {
   "name": "@lv24/wifi-core",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Platform-agnostic Wi-Fi scan domain: BSS/ESS models, IE decode, signal, filters, merge, issues, channel math.",
   "homepage": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer#readme",
   "bugs": {

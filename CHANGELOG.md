@@ -17,6 +17,13 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Workbench profiles and column profiles can be exported/imported as JSON; coloring rules already supported it.
 - Filter sidebar has locale render tests (ru/en/zh) and the empty-state copy is covered.
 
+### Packaging
+
+- All publishable packages are versioned `1.0.0` (matching the app).
+- `dist:mac:public` builds a redistributable, watermarked macOS DMG without the
+  commercial MUI key; `check:public-bundle` fails the build if the key leaks
+  into `dist/`.
+
 ### Internationalization
 
 - Simplified Chinese added: web catalog, MUI DataGrid locale, Flutter ARB catalog,

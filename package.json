@@ -47,7 +47,9 @@
     "check:scancore": "node scripts/check-scancore.mjs",
     "smoke:dist": "node scripts/smoke-electron.mjs",
     "dist:mac:dir": "yarn build:scancore && yarn check:scancore && yarn build && electron-builder --mac dir --config electron-builder.yml",
-    "check:boundaries": "node scripts/check-boundaries.mjs"
+    "check:boundaries": "node scripts/check-boundaries.mjs",
+    "check:public-bundle": "node scripts/check-public-bundle.mjs",
+    "dist:mac:public": "yarn build:scancore && yarn check:scancore && cross-env VITE_MUI_LICENSE_KEY= yarn build && yarn check:public-bundle && electron-builder --mac dmg --config electron-builder.yml -c.mac.notarize=false -c.artifactName=\"LV24 WiFi Explorer-\\${version}-\\${arch}-public.\\${ext}\""
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

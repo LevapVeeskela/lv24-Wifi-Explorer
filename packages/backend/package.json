@@ -1,6 +1,6 @@
 {
   "name": "@lv24/wifi-backend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Cross-platform Wi-Fi scan backend (macOS ScanCore, Linux NetworkManager, Windows netsh, demo).",
   "homepage": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer#readme",
   "bugs": {
@@ -36,7 +36,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@lv24/wifi-core": "0.1.0"
+    "@lv24/wifi-core": "1.0.0"
   },
   "engines": {
     "node": ">=20"

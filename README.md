@@ -172,6 +172,8 @@ Demo fixtures by default. **Android:** live `WifiManager` via [`flutter/lib/feat
 | `yarn smoke:dist`            | Verify built renderer CSP, bundles and preload      |
 | `yarn dist:mac` / `dist:win` | electron-builder installers                         |
 | `yarn dist:mac:dir`          | Unpacked local macOS `.app` smoke package           |
+| `yarn dist:mac:public`       | Key-free watermarked macOS DMG (redistributable)    |
+| `yarn check:public-bundle`   | Fail if the MUI key leaked into `dist/`             |
 
 Env overrides: `WIFI_EXPLORER_DEMO=1` (opt-in demo), `WIFI_RENDERER_DEV_URL`.
 
@@ -188,6 +190,10 @@ Checklist: [`docs/RELEASE.md`](docs/RELEASE.md); history:
   are hardened-runtime signed; notarization is enabled and runs only when
   `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD` and `APPLE_TEAM_ID` are exported.
   Unsigned local builds still work (Gatekeeper will warn).
+- **Private vs public artifacts**: `dist:mac` / `dist:mac:dir` inline
+  `VITE_MUI_LICENSE_KEY` from `.env.local` and must **not** be redistributed.
+  `dist:mac:public` builds with an empty key, fails if the key is found in the
+  bundle, and produces a watermarked DMG that is safe to publish.
 - **Windows/Linux** installers are built on their own platform
   (`yarn dist:win`, `yarn dist:linux`); Windows builds are unsigned unless a
   certificate is configured.

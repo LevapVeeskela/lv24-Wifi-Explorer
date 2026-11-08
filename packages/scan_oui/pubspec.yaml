@@ -2,7 +2,7 @@ name: scan_oui
 description: >-
   IEEE MA-L vendor lookup from BSSID using the bundled
   resources/oui/registry.json (aligned with src/shared/lib/oui).
-version: 0.1.0
+version: 1.0.0
 publish_to: none
 
 environment:

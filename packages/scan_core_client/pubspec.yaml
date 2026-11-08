@@ -2,7 +2,7 @@ name: scan_core_client
 description: >-
   Process-based ScanCore JSON Lines client and demo fixture replay for
   LV24 WiFi Explorer (protocolVersion 1, CoreWLAN + Location only).
-version: 0.1.0
+version: 1.0.0
 publish_to: none
 
 environment:

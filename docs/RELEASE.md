@@ -57,6 +57,21 @@ security find-identity -v -p codesigning
 
 ---
 
+## 1a. Private vs public macOS artifacts
+
+| Command                | MUI key           | Watermark | Redistributable |
+| ---------------------- | ----------------- | --------- | --------------- |
+| `yarn dist:mac`        | from `.env.local` | no        | **no**          |
+| `yarn dist:mac:dir`    | from `.env.local` | no        | **no**          |
+| `yarn dist:mac:public` | forced empty      | yes       | yes             |
+
+`dist:mac:public` runs `yarn check:public-bundle` between the renderer build and
+packaging; the build fails if the commercial key is present anywhere in `dist/`.
+The public DMG is named `…-public.dmg` and stays unsigned until a Developer ID
+Application identity and notarization are available.
+
+---
+
 ## 2. Build all packages and artifacts
 
 ```bash

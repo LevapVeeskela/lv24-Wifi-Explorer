@@ -1,6 +1,6 @@
 {
   "name": "@lv24/wifi-desktop",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Electron desktop shell for LV24 WiFi Explorer (cross-platform host, macOS ScanCore helper).",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "build": "tsc -p ../../tsconfig.main.json"
   },
   "dependencies": {
-    "@lv24/wifi-backend": "0.1.0",
-    "@lv24/wifi-core": "0.1.0"
+    "@lv24/wifi-backend": "1.0.0",
+    "@lv24/wifi-core": "1.0.0"
   }
 }
