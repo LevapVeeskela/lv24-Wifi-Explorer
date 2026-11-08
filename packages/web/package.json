@@ -1,7 +1,7 @@
 {
   "name": "@lv24/wifi-web",
   "version": "1.0.0",
-  "private": false,
+  "private": true,
   "description": "LV24 WiFi Explorer web UI (React + MUI), built by the repo-root Vite config.",
   "license": "MIT",
   "author": "LV24",
