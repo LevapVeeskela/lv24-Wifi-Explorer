@@ -9,7 +9,7 @@
 
 import type { ObservedBss } from '@/domain/bss';
 import type { BandGhz } from '@/domain/channel';
-import { primaryChannelsOverlap } from '@/features/scan-issues';
+import { primaryChannelsOverlap } from './overlap';
 
 /** Typical beacon frame size (MAC header + fixed + SSID/RSN/HT/VHT/HE IEs). */
 export const DEFAULT_BEACON_BYTES = 250;

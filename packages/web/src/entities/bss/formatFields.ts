@@ -1,7 +1,7 @@
 import type { ObservedBss } from '@/domain/bss';
 import type { ScanGridRow } from './scanGridRow';
 import { formatChannelWidth, formatDbm, securityDisplayLabel } from './formatters';
-import { formatBandWithUnii } from '@/entities/channel';
+import { formatBandWithUnii } from '../channel/unii';
 import type { SecurityKind } from '@/domain/security';
 
 export function formatPhyMode(phyMode: string): string {

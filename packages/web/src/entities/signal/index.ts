@@ -1,3 +1,7 @@
+/**
+ * Signal entity — pure time-series math for RSSI/SNR/noise charts and the
+ * per-row sparkline. No React, no i18n catalogs.
+ */
 export {
   buildMetricSeries,
   buildSignalSeries,
@@ -6,6 +10,7 @@ export {
   type BuildSignalSeriesOptions,
   type SignalSeriesPoint,
 } from './buildSignalSeries';
+export { rssiSparklinePoints, type SparklineGeometry } from './rssiSparkline';
 export {
   formatMetricValue,
   metricAxis,
@@ -22,8 +27,6 @@ export {
   type RollingSeriesKind,
   type RollingSeriesPoint,
 } from './rollingSeries';
-export { signalTraceLabel, SIGNAL_TRACE_KINDS, type SignalTraceKind } from './i18n';
-export { rssiSparklinePoints, type SparklineGeometry } from './rssiSparkline';
 export { seriesStats, type SeriesStats } from './seriesStats';
 export { stepTimescale, TIMESCALE_MS, timescaleWindowMs } from './timescale';
 export {

@@ -17,7 +17,7 @@ import {
   computeUtilization,
   type ChannelUtilization,
   type UtilizationReport,
-} from './computeUtilization';
+} from '@/entities/channel';
 import { createUtilizationFormatMessage } from './i18n/messages';
 
 export type ChannelUtilizationTableProps = {

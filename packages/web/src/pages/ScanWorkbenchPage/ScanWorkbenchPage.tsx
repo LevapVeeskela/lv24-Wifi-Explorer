@@ -82,7 +82,7 @@ import {
   useScanSettings,
 } from '@/features/scan-settings';
 import { printVisibleTable, resolvePrintColumns } from '@/features/print-export';
-import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history';
+import type { ChartTimescale, SignalChartUnit } from '@/entities/signal';
 import { ScanAppBar } from '@/widgets/ScanAppBar';
 import { resolveScanGridOverlay, ScanDataGrid, showColumnModel } from '@/widgets/ScanDataGrid';
 import { TitleBar } from '@/widgets/TitleBar';

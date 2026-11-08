@@ -4,27 +4,19 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import type { ScanGridRow } from '@/entities/bss';
 import { graphLabelForRow } from '@/features/scan-settings';
 import type { GraphLabelMode } from '@/features/scan-settings';
-import {
-  buildMetricSeries,
-  buildSignalSeries,
-  type SignalSeriesPoint,
-} from '@/features/signal-history';
-import { signalTraceLabel, type SignalTraceKind } from '@/features/signal-history';
-import { formatMetricValue, metricAxis } from '@/features/signal-history';
-import {
-  buildAverageSeries,
-  buildMaxSeries,
-  DEFAULT_ROLLING_WINDOW,
-} from '@/features/signal-history';
-import { seriesStats } from '@/features/signal-history';
-import { stepTimescale, TIMESCALE_MS } from '@/features/signal-history';
+import { buildMetricSeries, buildSignalSeries, type SignalSeriesPoint } from '@/entities/signal';
+import { signalTraceLabel, type SignalTraceKind } from '@/shared/i18n';
+import { formatMetricValue, metricAxis } from '@/entities/signal';
+import { buildAverageSeries, buildMaxSeries, DEFAULT_ROLLING_WINDOW } from '@/entities/signal';
+import { seriesStats } from '@/entities/signal';
+import { stepTimescale, TIMESCALE_MS } from '@/entities/signal';
 import {
   METRIC_ORDER,
   TIMESCALE_ORDER,
   type ChartTimescale,
   type SignalChartMetric,
   type SignalChartUnit,
-} from '@/features/signal-history';
+} from '@/entities/signal';
 import { createFormatMessage } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n';
 import { ChartA11yTable } from './ChartA11yTable';

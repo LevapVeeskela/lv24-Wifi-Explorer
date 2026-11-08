@@ -3,7 +3,7 @@ import { Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/materia
 import type { ObservedBss } from '@/domain/bss';
 import type { BandGhz } from '@/domain/channel';
 import type { ScanGridRow } from '@/entities/bss';
-import { bandHasBss, pickOccupancyBand, visibleOccupancyBands } from '@/features/channel-occupancy';
+import { bandHasBss, pickOccupancyBand, visibleOccupancyBands } from '@/entities/channel';
 import { createFormatMessage, type MessageKey } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n';
 import { ChannelUtilizationTable } from '@/features/utilization';

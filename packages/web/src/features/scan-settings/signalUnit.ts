@@ -1,4 +1,4 @@
-import type { SignalChartUnit } from '@/features/signal-history';
+import type { SignalChartUnit } from '@/entities/signal';
 import type { SignalDisplayUnit } from './types';
 
 export function signalDisplayToChartUnit(unit: SignalDisplayUnit): SignalChartUnit {

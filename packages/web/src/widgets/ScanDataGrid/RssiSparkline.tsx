@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import type { ObservedBss } from '@/domain/bss';
-import { rssiSparklinePoints } from '@/features/signal-history';
+import { rssiSparklinePoints } from '@/entities/signal';
 
 export type RssiSparklineProps = {
   bss: ObservedBss | null;

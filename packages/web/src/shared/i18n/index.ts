@@ -23,3 +23,4 @@ export type { AppLocale, FormatMessageFn, FormatValues, MessageKey, MessageMap }
 export { APP_LOCALES } from './types';
 
 export { ScanIntlProvider, useScanIntl } from './ScanIntlProvider';
+export { SIGNAL_TRACE_KINDS, signalTraceLabel, type SignalTraceKind } from './signalTrace';

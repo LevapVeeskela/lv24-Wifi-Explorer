@@ -18,7 +18,7 @@ import {
 import { useScanIntl } from '@/shared/i18n';
 import { RssiSparkline } from './RssiSparkline';
 import { signalPercentFromRssi } from './signalPercent';
-import { uniiSubband } from '@/features/channel-occupancy';
+import { uniiSubband } from '@/entities/channel';
 import {
   issueCountChipSx,
   issueFlagsCellSx,

@@ -3,7 +3,7 @@ import { Box, Tab, Tabs } from '@mui/material';
 import type { ObservedBss } from '@/domain/bss';
 import type { ScanGridRow } from '@/entities/bss';
 import type { GraphLabelMode } from '@/features/scan-settings';
-import type { ChartTimescale, SignalChartUnit } from '@/features/signal-history';
+import type { ChartTimescale, SignalChartUnit } from '@/entities/signal';
 import { createFormatMessage, type MessageKey } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n';
 import { BssComparePane } from '@/features/bss-compare';

@@ -8,7 +8,7 @@ export {
   type ComputeUtilizationOptions,
   type UtilizationReport,
   type UtilizationTotals,
-} from './computeUtilization';
+} from '@/entities/channel';
 export {
   ChannelUtilizationTable,
   type ChannelUtilizationTableProps,
