@@ -132,6 +132,10 @@ export const enMessages = {
   'scan.profiles.save': 'Save current as profile…',
   'scan.profiles.name': 'Profile name',
   'scan.profiles.create': 'Save profile',
+  'scan.profiles.export': 'Export profiles…',
+  'scan.profiles.import': 'Import profiles…',
+  'scan.profiles.importError': 'Could not import profiles: invalid file',
+  'scan.profiles.imported': 'Imported {imported}, skipped {skipped}',
   'scan.profiles.cancel': 'Cancel',
   'scan.profiles.delete': 'Delete profile',
 

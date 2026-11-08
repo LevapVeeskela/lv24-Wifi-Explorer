@@ -132,6 +132,10 @@ export const ruMessages: Record<MessageKey, string> = {
   'scan.profiles.save': 'Сохранить текущее как профиль…',
   'scan.profiles.name': 'Название профиля',
   'scan.profiles.create': 'Сохранить профиль',
+  'scan.profiles.export': 'Экспорт профилей…',
+  'scan.profiles.import': 'Импорт профилей…',
+  'scan.profiles.importError': 'Не удалось импортировать профили: неверный файл',
+  'scan.profiles.imported': 'Импортировано {imported}, пропущено {skipped}',
   'scan.profiles.cancel': 'Отмена',
   'scan.profiles.delete': 'Удалить профиль',
 

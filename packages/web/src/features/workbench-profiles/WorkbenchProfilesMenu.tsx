@@ -10,6 +10,7 @@ import {
   Menu,
   MenuItem,
   Stack,
+  Snackbar,
   TextField,
   Tooltip,
   Typography,
@@ -18,6 +19,7 @@ import BookmarkBorder from '@mui/icons-material/BookmarkBorder';
 import Delete from '@mui/icons-material/Delete';
 import { applyProfileToState } from './apply';
 import { loadWorkbenchProfilesStore, saveWorkbenchProfilesStore } from './persist';
+import { exportWorkbenchProfilesJson, importWorkbenchProfilesJson } from './transfer';
 import {
   activeWorkbenchProfile,
   addWorkbenchProfile,
@@ -31,6 +33,7 @@ import type {
   WorkbenchStatePatch,
 } from './types';
 import { useScanIntl } from '@/shared/i18n';
+import { openWorkbenchFile, saveWorkbenchFile } from '@/shared/lib/files/rendererFileIo';
 
 export type WorkbenchProfilesMenuProps = {
   state: WorkbenchStateInput;
@@ -43,6 +46,7 @@ export function WorkbenchProfilesMenu({ state, onApply }: WorkbenchProfilesMenuP
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const [saveOpen, setSaveOpen] = useState(false);
   const [name, setName] = useState('');
+  const [notice, setNotice] = useState<string | null>(null);
 
   const persist = (next: WorkbenchProfilesStoreV1) => {
     setStore(next);
@@ -56,6 +60,33 @@ export function WorkbenchProfilesMenu({ state, onApply }: WorkbenchProfilesMenuP
     const mutation = selectWorkbenchProfile(store, profile.id);
     persist(mutation.store);
     onApply(applyProfileToState(profile));
+  };
+
+  const exportProfiles = async () => {
+    setAnchor(null);
+    await saveWorkbenchFile({
+      defaultPath: 'lv24-workbench-profiles.json',
+      contents: exportWorkbenchProfilesJson(store),
+      mimeType: 'application/json',
+    });
+  };
+
+  const importProfiles = async () => {
+    setAnchor(null);
+    const picked = await openWorkbenchFile({ accept: '.json', extensions: ['json'] });
+    if (picked.canceled) return;
+    const result = importWorkbenchProfilesJson(picked.text, store);
+    if (result.error) {
+      setNotice(formatMessage('scan.profiles.importError'));
+      return;
+    }
+    persist(result.store);
+    setNotice(
+      formatMessage('scan.profiles.imported', {
+        imported: result.imported,
+        skipped: result.skipped,
+      })
+    );
   };
 
   const saveCurrent = () => {
@@ -122,6 +153,13 @@ export function WorkbenchProfilesMenu({ state, onApply }: WorkbenchProfilesMenuP
         >
           {formatMessage('scan.profiles.save')}
         </MenuItem>
+        <Divider />
+        <MenuItem onClick={() => void exportProfiles()}>
+          {formatMessage('scan.profiles.export')}
+        </MenuItem>
+        <MenuItem onClick={() => void importProfiles()}>
+          {formatMessage('scan.profiles.import')}
+        </MenuItem>
       </Menu>
       <Dialog fullWidth maxWidth="xs" onClose={() => setSaveOpen(false)} open={saveOpen}>
         <DialogTitle>{formatMessage('scan.profiles.save')}</DialogTitle>
@@ -143,6 +181,12 @@ export function WorkbenchProfilesMenu({ state, onApply }: WorkbenchProfilesMenuP
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        autoHideDuration={6000}
+        message={notice ?? ''}
+        open={notice != null}
+        onClose={() => setNotice(null)}
+      />
     </>
   );
 }

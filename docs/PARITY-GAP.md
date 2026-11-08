@@ -76,7 +76,7 @@ These are platform limits, not LV24 bugs.
 - Passive/monitor where Apple allows on specific hardware
 - remote sensors, client analytics
 - UNII/DFS/PSC badges, directed scan polish
-- Coloring/profile import/export UI polish
+- Column-profile import/export (workbench profiles and coloring rules already support JSON import/export)
 - Flutter sort/organize/presets column parity tests
 - Beacon airtime measurement (current value is an explicit estimate)
 - Electron Windows / Linux live scan — shipped via `@lv24/wifi-backend` (`nmcli` / `netsh`); no IEs/widths, RSSI derived from quality.

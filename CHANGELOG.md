@@ -14,6 +14,8 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
   `entities/columns` (grid catalog), `entities/bss` (row model + formatting).
 - `ScanWorkbenchPage` split into `useScanSession`, `useWorkbenchRows`,
   `useWorkbenchIo`; theme, filter sidebar and grid columns split into focused modules.
+- Workbench profiles can be exported/imported as JSON from the profile menu.
+- Filter sidebar has locale render tests (ru/en/zh) and the empty-state copy is covered.
 
 ### Internationalization
 

@@ -130,6 +130,10 @@ export const zhMessages: Record<MessageKey, string> = {
   'scan.profiles.save': '将当前设置保存为配置文件…',
   'scan.profiles.name': '配置文件名称',
   'scan.profiles.create': '保存配置文件',
+  'scan.profiles.export': '导出配置文件…',
+  'scan.profiles.import': '导入配置文件…',
+  'scan.profiles.importError': '无法导入配置文件：文件无效',
+  'scan.profiles.imported': '已导入 {imported}，跳过 {skipped}',
   'scan.profiles.cancel': '取消',
   'scan.profiles.delete': '删除配置文件',
 
