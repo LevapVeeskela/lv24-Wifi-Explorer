@@ -32,6 +32,20 @@ Verify identities:
 security find-identity -v -p codesigning
 ```
 
+> **Apple Development is not enough.** If the only identity is
+> `Apple Development: …`, the build signs and runs on this machine but Gatekeeper
+> rejects it elsewhere and `notarytool` cannot notarize it. A distributable
+> release needs `Developer ID Application: … (TEAMID)`, which requires a paid
+> Apple Developer Program membership. Confirm before shipping:
+>
+> ```bash
+> codesign -dv --verbose=4 "release/mac-arm64/LV24 WiFi Explorer.app" 2>&1 | grep Authority
+> # expected: Authority=Developer ID Application: …
+> ```
+>
+> `spctl -a -vvv -t exec` must say `accepted, source=Notarized Developer ID`;
+> `rejected` means the artifact is local-only.
+
 ---
 
 ## 1. Version bump
