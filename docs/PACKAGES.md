@@ -40,6 +40,7 @@ cd packages/cli && npm publish --access public
 cd packages/mcp && npm publish --access public
 ```
 
+Published at **1.0.0** on npm: `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli`, `@lv24/wifi-mcp`.
 Each package has `files: ["dist"]`, `license: MIT`, `engines.node >= 20`, and
 CJS output for maximum consumer compatibility (`packages/mcp` is ESM because the MCP SDK is ESM-only). The web/desktop apps are MIT
 code but the desktop UI depends on commercial MUI X Pro (see `CONTRIBUTING.md`).

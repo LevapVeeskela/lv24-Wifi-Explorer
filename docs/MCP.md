@@ -31,6 +31,12 @@ Concurrent tool calls are serialized so only one native scan runs at a time.
 ## Build and run
 
 ```bash
+npx -y @lv24/wifi-mcp                   # published package (1.0.0)
+```
+
+From the repository:
+
+```bash
 yarn build:packages        # core, backend, cli, mcp
 # or
 yarn build:mcp

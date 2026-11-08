@@ -49,9 +49,9 @@ one domain model.
 
 | Package                                  | Purpose                                                       | Publish        |
 | ---------------------------------------- | ------------------------------------------------------------- | -------------- |
-| [`@lv24/wifi-core`](packages/core)       | platform-agnostic domain, IE decode, merge, filters, issues   | npm (MIT)      |
-| [`@lv24/wifi-backend`](packages/backend) | macOS ScanCore / Linux nmcli / Windows netsh / demo providers | npm (MIT)      |
-| [`@lv24/wifi-cli`](packages/cli)         | `lv24-wifi scan` CLI on every OS                              | npm (MIT)      |
+| [`@lv24/wifi-core`](packages/core)       | platform-agnostic domain, IE decode, merge, filters, issues   | npm 1.0.0      |
+| [`@lv24/wifi-backend`](packages/backend) | macOS ScanCore / Linux nmcli / Windows netsh / demo providers | npm 1.0.0      |
+| [`@lv24/wifi-cli`](packages/cli)         | `lv24-wifi scan` CLI on every OS                              | npm 1.0.0      |
 | [`@lv24/wifi-mcp`](packages/mcp)         | MCP server: Wi-Fi scan data for AI agents                     | npm (MIT)      |
 | [`@lv24/wifi-web`](packages/web)         | React + MUI UI                                                | app (MIT code) |
 | [`@lv24/wifi-desktop`](packages/desktop) | Electron host (Windows/Linux/macOS)                           | app (MIT code) |
@@ -75,7 +75,15 @@ same networks, channels and issue heuristics. See [`docs/MCP.md`](docs/MCP.md)
 for client configs (Claude Desktop, Cursor, OpenCode) and data-honesty notes.
 
 ```bash
-yarn build:mcp && node packages/mcp/dist/main.js
+npx -y @lv24/wifi-mcp          # published package
+yarn build:mcp && node packages/mcp/dist/main.js   # local dev
+```
+
+The CLI is on npm too:
+
+```bash
+npm i -g @lv24/wifi-cli
+lv24-wifi scan --format json
 ```
 
 ## Cross-platform scan sources
