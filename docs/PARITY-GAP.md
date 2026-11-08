@@ -27,6 +27,7 @@ This document sets expectations vs. full-featured commercial Wi‑Fi analyzers. 
 | 550+ per-IE columns | Later; shallow IE + Advanced tree in v1 |
 | Column profiles / coloring rules | Later |
 | Compare two BSS field-by-field | Later |
+| **Vendor logos** (branded icons per OUI vendor) | Never — clean room: no third-party trademarked logo assets; the **vendor column + initials avatar** is the substitute |
 | Branded spectrum-analyzer hardware integrations | Out of scope unless we ship our own scope |
 | Competitor file formats (`.wifiexplorer`, UTI) | Never — use `.lv24scan` |
 
@@ -51,6 +52,7 @@ These are platform limits, not LV24 bugs.
 - Periodic **active scan** with ≥ 3 s pacing
 - **BSS table** with OUI vendor, security/PHY from IE + CoreWLAN
 - **Associated link** summary (Tx rate from interface only)
+- **Permanent per-network color** — deterministic `seriesColorForBssid(bssid)` (hash → sunset palette), stable across sessions, pinned left column; the v1 substitute for “set a custom network color”
 - **Signal history**, same-SSID and same-channel occupancy charts
 - **Issues** heuristics (open thresholds — see `docs/SPEC.md`)
 - **`.lv24scan`** snapshot format (LV24-owned)
