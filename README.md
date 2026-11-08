@@ -58,7 +58,7 @@ Screenshots use the deterministic demo provider — no real networks are exposed
 
 ## Desktop app (macOS)
 
-1. Download `LV24 WiFi Explorer-1.0.0-arm64-public.dmg` from
+1. Download `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg` from
    [Releases](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/latest).
 2. Open it and drag the app to **Applications**.
 3. First launch: **right-click → Open** (the build is signed but not yet
