@@ -47,7 +47,7 @@ security find-identity -v -p codesigning
 
 ```bash
 yarn install --frozen-lockfile
-yarn format:check && yarn typecheck && yarn lint && yarn test
+yarn format:check && yarn typecheck && yarn lint && yarn check:boundaries && yarn test
 yarn build          # packages + desktop main/preload + renderer
 yarn smoke:dist     # CSP + bundles + preload isolation
 ```

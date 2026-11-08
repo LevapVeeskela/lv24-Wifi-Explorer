@@ -1,17 +1,11 @@
 import { useCallback } from 'react';
-import type { FormatValues, MessageKey } from '@/shared/i18n';
-import { useScanIntl } from '@/shared/i18n';
-import { t } from './t';
+import { useScanIntl, type FormatValues } from '@/shared/i18n';
 
-/** Locale catalog first, then scan-settings `t.ts` fallbacks for new keys. */
+/** Resolves settings copy from the active locale. */
 export function useSettingsMessage(): (id: string, values?: FormatValues) => string {
   const { formatMessage } = useScanIntl();
   return useCallback(
-    (id: string, values?: FormatValues) => {
-      const formatted = formatMessage(id as MessageKey, values);
-      if (formatted === id) return t(id, values);
-      return formatted;
-    },
+    (id: string, values?: FormatValues) => formatMessage(id as never, values),
     [formatMessage]
   );
 }

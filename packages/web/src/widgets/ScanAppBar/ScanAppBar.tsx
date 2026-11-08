@@ -46,7 +46,6 @@ import {
   vendorFieldSx,
 } from './styles';
 import { useScanIntl } from '@/shared/i18n';
-import { t } from './t';
 
 export type ScanAppBarProps = {
   filters: ScanWorkbenchFilters;
@@ -119,7 +118,7 @@ export function ScanAppBar({
     <AppBar color="transparent" elevation={0} position="static" sx={scanAppBarSx}>
       <Toolbar disableGutters sx={scanToolbarSx} variant="dense">
         <ToggleButtonGroup
-          aria-label={t('scan.filter.band')}
+          aria-label={formatMessage('scan.filter.band')}
           exclusive
           size="small"
           value={filters.band}
@@ -127,22 +126,22 @@ export function ScanAppBar({
             if (value) onFiltersChange({ ...filters, band: value });
           }}
         >
-          <ToggleButton value="all">{t('scan.filter.band.all')}</ToggleButton>
-          <ToggleButton value="24">{t('scan.filter.band.24')}</ToggleButton>
-          <ToggleButton value="5">{t('scan.filter.band.5')}</ToggleButton>
-          <ToggleButton value="6">{t('scan.filter.band.6')}</ToggleButton>
+          <ToggleButton value="all">{formatMessage('scan.filter.band.all')}</ToggleButton>
+          <ToggleButton value="24">{formatMessage('scan.filter.band.24')}</ToggleButton>
+          <ToggleButton value="5">{formatMessage('scan.filter.band.5')}</ToggleButton>
+          <ToggleButton value="6">{formatMessage('scan.filter.band.6')}</ToggleButton>
         </ToggleButtonGroup>
 
         <ToggleButtonGroup
-          aria-label={t('scan.filter.secure')}
+          aria-label={formatMessage('scan.filter.secure')}
           size="small"
           value={filters.security}
           onChange={(_, value: SecurityFilterValue[]) => {
             onFiltersChange({ ...filters, security: value });
           }}
         >
-          <ToggleButton value="open">{t('scan.filter.open')}</ToggleButton>
-          <ToggleButton value="secure">{t('scan.filter.secure')}</ToggleButton>
+          <ToggleButton value="open">{formatMessage('scan.filter.open')}</ToggleButton>
+          <ToggleButton value="secure">{formatMessage('scan.filter.secure')}</ToggleButton>
         </ToggleButtonGroup>
 
         <Autocomplete
@@ -165,7 +164,7 @@ export function ScanAppBar({
             <TextField
               {...params}
               inputRef={searchInputRef}
-              placeholder={t('scan.search.placeholder')}
+              placeholder={formatMessage('scan.search.placeholder')}
               size="small"
               slotProps={{
                 ...params.slotProps,
@@ -182,7 +181,7 @@ export function ScanAppBar({
                   endAdornment: localSearch ? (
                     <InputAdornment position="end">
                       <IconButton
-                        aria-label={t('scan.search.clear')}
+                        aria-label={formatMessage('scan.search.clear')}
                         edge="end"
                         size="small"
                         onClick={() => setLocalSearch('')}
@@ -214,7 +213,7 @@ export function ScanAppBar({
         />
 
         <TextField
-          placeholder={t('scan.col.vendor')}
+          placeholder={formatMessage('scan.col.vendor')}
           size="small"
           sx={vendorFieldSx}
           value={filters.vendorQuery}
@@ -223,14 +222,14 @@ export function ScanAppBar({
 
         <FormControl size="small" sx={{ minWidth: 88 }}>
           <Select
-            aria-label={t('scan.settings.scanInterval')}
+            aria-label={formatMessage('scan.settings.scanInterval')}
             displayEmpty
             value={scanIntervalSec}
             onChange={(event) => onScanIntervalSecChange(Number(event.target.value))}
           >
             {SCAN_INTERVAL_SEC_OPTIONS.map((sec) => (
               <MenuItem key={sec} value={sec}>
-                {t('scan.settings.scanIntervalSec', { sec })}
+                {formatMessage('scan.settings.scanIntervalSec', { sec })}
               </MenuItem>
             ))}
           </Select>
@@ -259,7 +258,7 @@ export function ScanAppBar({
 
         <Stack direction="row" spacing={1} sx={rssiFilterSx}>
           <Typography color="text.secondary" variant="caption">
-            {t('scan.filter.minRssi')}
+            {formatMessage('scan.filter.minRssi')}
           </Typography>
           <Slider
             max={-40}
@@ -281,12 +280,12 @@ export function ScanAppBar({
 
         <FilterPresetsMenu presets={filterPresets} />
 
-        <Tooltip title={t('scan.export.csv')}>
+        <Tooltip title={formatMessage('scan.export.csv')}>
           <IconButton
             aria-controls={exportMenuOpen ? 'scan-export-menu' : undefined}
             aria-expanded={exportMenuOpen}
             aria-haspopup="true"
-            aria-label={t('scan.export.csv')}
+            aria-label={formatMessage('scan.export.csv')}
             onClick={(event) => setExportMenuEl(event.currentTarget)}
           >
             <FileDownload />
@@ -298,19 +297,24 @@ export function ScanAppBar({
           open={exportMenuOpen}
           onClose={closeExportMenu}
         >
-          <MenuItem onClick={() => exportScope('visible')}>{t('scan.export.visible')}</MenuItem>
-          <MenuItem disabled={exportSelectedDisabled} onClick={() => exportScope('selected')}>
-            {t('scan.export.selected')}
+          <MenuItem onClick={() => exportScope('visible')}>
+            {formatMessage('scan.export.visible')}
           </MenuItem>
-          <MenuItem onClick={() => exportScope('all')}>{t('scan.export.all')}</MenuItem>
+          <MenuItem disabled={exportSelectedDisabled} onClick={() => exportScope('selected')}>
+            {formatMessage('scan.export.selected')}
+          </MenuItem>
+          <MenuItem onClick={() => exportScope('all')}>{formatMessage('scan.export.all')}</MenuItem>
         </Menu>
-        <Tooltip title={t('scan.settings.open')}>
-          <IconButton aria-label={t('scan.settings.open')} onClick={onOpenSettings}>
+        <Tooltip title={formatMessage('scan.settings.open')}>
+          <IconButton aria-label={formatMessage('scan.settings.open')} onClick={onOpenSettings}>
             <Settings />
           </IconButton>
         </Tooltip>
-        <Tooltip title={t('scan.columns.manage')}>
-          <IconButton aria-label={t('scan.columns.manage')} onClick={onOpenColumnsPanel}>
+        <Tooltip title={formatMessage('scan.columns.manage')}>
+          <IconButton
+            aria-label={formatMessage('scan.columns.manage')}
+            onClick={onOpenColumnsPanel}
+          >
             <ViewColumn />
           </IconButton>
         </Tooltip>

@@ -1180,5 +1180,98 @@
         "type": "String"
       }
     }
+  },
+  "annotationNoteLabel": "标注",
+  "@annotationNoteLabel": {
+    "description": "Flutter annotations: note field label"
+  },
+  "annotationPinColorLabel": "标记颜色",
+  "@annotationPinColorLabel": {
+    "description": "Flutter annotations: pin color field label"
+  },
+  "annotationPinColorAuto": "自动",
+  "@annotationPinColorAuto": {
+    "description": "Flutter annotations: automatic pin color option"
+  },
+  "annotationNoteHint": "为此网络添加备注…",
+  "@annotationNoteHint": {
+    "description": "Flutter annotations: note field hint"
+  },
+  "annotationImportCsv": "导入 CSV",
+  "@annotationImportCsv": {
+    "description": "Flutter annotations: import CSV action"
+  },
+  "annotationExportCsv": "导出 CSV",
+  "@annotationExportCsv": {
+    "description": "Flutter annotations: export CSV action"
+  },
+  "annotationImportCsvTitle": "导入标注",
+  "@annotationImportCsvTitle": {
+    "description": "Flutter annotations: import dialog title"
+  },
+  "annotationExportCsvTitle": "导出标注",
+  "@annotationExportCsvTitle": {
+    "description": "Flutter annotations: export dialog title"
+  },
+  "annotationImportCsvAction": "导入",
+  "@annotationImportCsvAction": {
+    "description": "Flutter annotations: import dialog confirm button"
+  },
+  "annotationImportCsvHint": "将替换所有标注规则。格式：bssid_pattern,text",
+  "@annotationImportCsvHint": {
+    "description": "Flutter annotations: import dialog hint"
+  },
+  "annotationCsvFilePathLabel": "文件路径（.csv）",
+  "@annotationCsvFilePathLabel": {
+    "description": "Flutter annotations: CSV file path field label"
+  },
+  "annotationCsvOptionalPathLabel": ".csv 路径（可选）",
+  "@annotationCsvOptionalPathLabel": {
+    "description": "Flutter annotations: optional CSV file path field label"
+  },
+  "annotationCsvTextLabel": "CSV",
+  "@annotationCsvTextLabel": {
+    "description": "Flutter annotations: CSV text field label"
+  },
+  "annotationPasteCsvLabel": "或粘贴 CSV",
+  "@annotationPasteCsvLabel": {
+    "description": "Flutter annotations: paste CSV field label"
+  },
+  "annotationCopyCsv": "复制 CSV",
+  "@annotationCopyCsv": {
+    "description": "Flutter annotations: copy CSV to clipboard action"
+  },
+  "annotationWriteFile": "写入文件",
+  "@annotationWriteFile": {
+    "description": "Flutter annotations: write CSV file action"
+  },
+  "annotationLoadFromDisk": "从磁盘加载",
+  "@annotationLoadFromDisk": {
+    "description": "Flutter annotations: load CSV from disk action"
+  },
+  "annotationDialogClose": "关闭",
+  "@annotationDialogClose": {
+    "description": "Flutter annotations: dialog close button"
+  },
+  "annotationCsvCopiedMessage": "CSV 已复制到剪贴板。",
+  "@annotationCsvCopiedMessage": {
+    "description": "Flutter annotations: copy confirmation"
+  },
+  "annotationCsvWrittenMessage": "文件已写入。",
+  "@annotationCsvWrittenMessage": {
+    "description": "Flutter annotations: write confirmation"
+  },
+  "annotationCsvWriteErrorMessage": "无法写入文件（请检查路径，或手动复制 CSV）。",
+  "@annotationCsvWriteErrorMessage": {
+    "description": "Flutter annotations: write error"
+  },
+  "annotationCsvRuleCount": "规则：{count}",
+  "@annotationCsvRuleCount": {
+    "description": "Flutter annotations: annotation rule count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

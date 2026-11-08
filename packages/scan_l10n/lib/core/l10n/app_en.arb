@@ -1050,5 +1050,98 @@
   "workbenchFilterPresetsDelete": "Delete \"{name}\"",
   "@workbenchFilterPresetsDelete": {
     "placeholders": { "name": { "type": "String" } }
+  },
+  "annotationNoteLabel": "Notes",
+  "@annotationNoteLabel": {
+    "description": "Flutter annotations: note field label"
+  },
+  "annotationPinColorLabel": "Pin color",
+  "@annotationPinColorLabel": {
+    "description": "Flutter annotations: pin color field label"
+  },
+  "annotationPinColorAuto": "Auto",
+  "@annotationPinColorAuto": {
+    "description": "Flutter annotations: automatic pin color option"
+  },
+  "annotationNoteHint": "Note for this network…",
+  "@annotationNoteHint": {
+    "description": "Flutter annotations: note field hint"
+  },
+  "annotationImportCsv": "Import CSV",
+  "@annotationImportCsv": {
+    "description": "Flutter annotations: import CSV action"
+  },
+  "annotationExportCsv": "Export CSV",
+  "@annotationExportCsv": {
+    "description": "Flutter annotations: export CSV action"
+  },
+  "annotationImportCsvTitle": "Import annotations",
+  "@annotationImportCsvTitle": {
+    "description": "Flutter annotations: import dialog title"
+  },
+  "annotationExportCsvTitle": "Export annotations",
+  "@annotationExportCsvTitle": {
+    "description": "Flutter annotations: export dialog title"
+  },
+  "annotationImportCsvAction": "Import",
+  "@annotationImportCsvAction": {
+    "description": "Flutter annotations: import dialog confirm button"
+  },
+  "annotationImportCsvHint": "Replaces all annotation rules. Format: bssid_pattern,text",
+  "@annotationImportCsvHint": {
+    "description": "Flutter annotations: import dialog hint"
+  },
+  "annotationCsvFilePathLabel": "File path (.csv)",
+  "@annotationCsvFilePathLabel": {
+    "description": "Flutter annotations: CSV file path field label"
+  },
+  "annotationCsvOptionalPathLabel": "Path to .csv (optional)",
+  "@annotationCsvOptionalPathLabel": {
+    "description": "Flutter annotations: optional CSV file path field label"
+  },
+  "annotationCsvTextLabel": "CSV",
+  "@annotationCsvTextLabel": {
+    "description": "Flutter annotations: CSV text field label"
+  },
+  "annotationPasteCsvLabel": "Or paste CSV",
+  "@annotationPasteCsvLabel": {
+    "description": "Flutter annotations: paste CSV field label"
+  },
+  "annotationCopyCsv": "Copy CSV",
+  "@annotationCopyCsv": {
+    "description": "Flutter annotations: copy CSV to clipboard action"
+  },
+  "annotationWriteFile": "Write file",
+  "@annotationWriteFile": {
+    "description": "Flutter annotations: write CSV file action"
+  },
+  "annotationLoadFromDisk": "Load from disk",
+  "@annotationLoadFromDisk": {
+    "description": "Flutter annotations: load CSV from disk action"
+  },
+  "annotationDialogClose": "Close",
+  "@annotationDialogClose": {
+    "description": "Flutter annotations: dialog close button"
+  },
+  "annotationCsvCopiedMessage": "CSV copied to clipboard.",
+  "@annotationCsvCopiedMessage": {
+    "description": "Flutter annotations: copy confirmation"
+  },
+  "annotationCsvWrittenMessage": "File written.",
+  "@annotationCsvWrittenMessage": {
+    "description": "Flutter annotations: write confirmation"
+  },
+  "annotationCsvWriteErrorMessage": "Could not write file (check path or copy CSV manually).",
+  "@annotationCsvWriteErrorMessage": {
+    "description": "Flutter annotations: write error"
+  },
+  "annotationCsvRuleCount": "Rules: {count}",
+  "@annotationCsvRuleCount": {
+    "description": "Flutter annotations: annotation rule count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -943,4 +943,74 @@ class AppLocalizationsEn extends AppLocalizations {
   String workbenchFilterPresetsDelete(String name) {
     return 'Delete \"$name\"';
   }
+
+  @override
+  String get annotationNoteLabel => 'Notes';
+
+  @override
+  String get annotationPinColorLabel => 'Pin color';
+
+  @override
+  String get annotationPinColorAuto => 'Auto';
+
+  @override
+  String get annotationNoteHint => 'Note for this network…';
+
+  @override
+  String get annotationImportCsv => 'Import CSV';
+
+  @override
+  String get annotationExportCsv => 'Export CSV';
+
+  @override
+  String get annotationImportCsvTitle => 'Import annotations';
+
+  @override
+  String get annotationExportCsvTitle => 'Export annotations';
+
+  @override
+  String get annotationImportCsvAction => 'Import';
+
+  @override
+  String get annotationImportCsvHint =>
+      'Replaces all annotation rules. Format: bssid_pattern,text';
+
+  @override
+  String get annotationCsvFilePathLabel => 'File path (.csv)';
+
+  @override
+  String get annotationCsvOptionalPathLabel => 'Path to .csv (optional)';
+
+  @override
+  String get annotationCsvTextLabel => 'CSV';
+
+  @override
+  String get annotationPasteCsvLabel => 'Or paste CSV';
+
+  @override
+  String get annotationCopyCsv => 'Copy CSV';
+
+  @override
+  String get annotationWriteFile => 'Write file';
+
+  @override
+  String get annotationLoadFromDisk => 'Load from disk';
+
+  @override
+  String get annotationDialogClose => 'Close';
+
+  @override
+  String get annotationCsvCopiedMessage => 'CSV copied to clipboard.';
+
+  @override
+  String get annotationCsvWrittenMessage => 'File written.';
+
+  @override
+  String get annotationCsvWriteErrorMessage =>
+      'Could not write file (check path or copy CSV manually).';
+
+  @override
+  String annotationCsvRuleCount(int count) {
+    return 'Rules: $count';
+  }
 }

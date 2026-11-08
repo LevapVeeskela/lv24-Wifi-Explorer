@@ -2,6 +2,13 @@ import type { MessageKey } from './types';
 
 /** Russian message catalog (default locale). */
 export const ruMessages: Record<MessageKey, string> = {
+  'scan.a11y.theme': 'Тема',
+  'scan.a11y.scanToggle': 'Запуск и пауза сканирования',
+  'scan.grid.empty': 'Сети не найдены',
+  'scan.grid.demo': 'Демо-режим: нет сетей для таблицы',
+  'scan.grid.locationDenied': 'Нужно разрешение геолокации, чтобы видеть имена сетей',
+  'scan.grid.openLocationSettings': 'Открыть настройки',
+
   'scan.title.scanning': 'Сканирование',
   'scan.title.paused': 'Пауза',
   'scan.title.demo': 'Демо',

@@ -3,6 +3,13 @@
  * Shape matches react-intl `messages` records: id → default string with `{placeholders}`.
  */
 export const enMessages = {
+  'scan.a11y.theme': 'Theme',
+  'scan.a11y.scanToggle': 'Start or pause scanning',
+  'scan.grid.empty': 'No networks found',
+  'scan.grid.demo': 'Demo mode: no networks for the grid',
+  'scan.grid.locationDenied': 'Location permission is required to see network names',
+  'scan.grid.openLocationSettings': 'Open settings',
+
   'scan.title.scanning': 'Scanning',
   'scan.title.paused': 'Paused',
   'scan.title.demo': 'Demo',

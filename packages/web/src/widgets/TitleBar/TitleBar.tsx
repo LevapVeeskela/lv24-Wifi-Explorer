@@ -20,6 +20,7 @@ import { useColorScheme } from '@mui/material/styles';
 import type { CsvExportScope } from '@/features/export';
 import type { ThemePreference } from '@/shared/lib/persistence/keys';
 import { markManualThemePreference } from '@/features/scan-settings';
+import { useScanIntl } from '@/shared/i18n';
 import {
   fileMenuButtonSx,
   fileMenuSubheaderSx,
@@ -27,7 +28,6 @@ import {
   titleClusterSx,
   titleLabelSx,
 } from './styles';
-import { t } from './t';
 
 /** Electron native menu: File ⌘O/⌘S, Scan ⌘⇧S/⌘⇧T — hide duplicate TitleBar File when `window.wifiExplorer` is set. */
 function hasNativeAppMenu(): boolean {
@@ -74,14 +74,15 @@ export function TitleBar({
   profilesMenu,
 }: TitleBarProps) {
   const { mode, setMode } = useColorScheme();
+  const { formatMessage } = useScanIntl();
   const [fileMenuEl, setFileMenuEl] = useState<null | HTMLElement>(null);
   const fileMenuOpen = Boolean(fileMenuEl);
 
   const stateLabel = demoMode
-    ? t('scan.title.demo')
+    ? formatMessage('scan.title.demo')
     : scanning
-      ? t('scan.title.scanning')
-      : t('scan.title.paused');
+      ? formatMessage('scan.title.scanning')
+      : formatMessage('scan.title.paused');
 
   const toggleTheme = () => {
     const next: ThemePreference = mode === 'dark' ? 'light' : 'dark';
@@ -99,7 +100,7 @@ export function TitleBar({
           {stateLabel}
           {connectedSsid ? ` · ${connectedSsid}` : ''}
         </Typography>
-        {demoMode ? <Chip label={t('scan.title.demo')} size="small" /> : null}
+        {demoMode ? <Chip label={formatMessage('scan.title.demo')} size="small" /> : null}
       </Stack>
 
       <Stack direction="row" spacing={1} sx={titleClusterSx}>
@@ -118,12 +119,12 @@ export function TitleBar({
               aria-controls={fileMenuOpen ? 'scan-file-menu' : undefined}
               aria-expanded={fileMenuOpen}
               aria-haspopup="true"
-              aria-label={t('scan.file.menu')}
+              aria-label={formatMessage('scan.file.menu')}
               size="small"
               sx={fileMenuButtonSx}
               onClick={(event) => setFileMenuEl(event.currentTarget)}
             >
-              {t('scan.file.menu')}
+              {formatMessage('scan.file.menu')}
             </Button>
             <Menu
               anchorEl={fileMenuEl}
@@ -137,7 +138,7 @@ export function TitleBar({
                   onImportPcap();
                 }}
               >
-                {t('scan.file.importPcap')}
+                {formatMessage('scan.file.importPcap')}
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -147,7 +148,7 @@ export function TitleBar({
               >
                 <Stack direction="row" spacing={2} sx={{ alignItems: 'center', width: '100%' }}>
                   <Typography component="span" variant="inherit">
-                    {t('scan.file.open')}
+                    {formatMessage('scan.file.open')}
                   </Typography>
                   <Typography
                     color="text.secondary"
@@ -167,7 +168,7 @@ export function TitleBar({
               >
                 <Stack direction="row" spacing={2} sx={{ alignItems: 'center', width: '100%' }}>
                   <Typography component="span" variant="inherit">
-                    {t('scan.file.save')}
+                    {formatMessage('scan.file.save')}
                   </Typography>
                   <Typography
                     color="text.secondary"
@@ -181,7 +182,7 @@ export function TitleBar({
               </MenuItem>
               <Divider />
               <ListSubheader disableSticky sx={fileMenuSubheaderSx}>
-                {t('scan.export.csv')}
+                {formatMessage('scan.export.csv')}
               </ListSubheader>
               <MenuItem
                 onClick={() => {
@@ -189,7 +190,7 @@ export function TitleBar({
                   onExportCsv('visible');
                 }}
               >
-                {t('scan.export.visible')}
+                {formatMessage('scan.export.visible')}
               </MenuItem>
               <MenuItem
                 disabled={exportSelectedDisabled}
@@ -198,7 +199,7 @@ export function TitleBar({
                   onExportCsv('selected');
                 }}
               >
-                {t('scan.export.selected')}
+                {formatMessage('scan.export.selected')}
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -206,7 +207,7 @@ export function TitleBar({
                   onExportCsv('all');
                 }}
               >
-                {t('scan.export.all')}
+                {formatMessage('scan.export.all')}
               </MenuItem>
               <Divider />
               <MenuItem
@@ -217,7 +218,7 @@ export function TitleBar({
               >
                 <Stack direction="row" spacing={2} sx={{ alignItems: 'center', width: '100%' }}>
                   <Typography component="span" variant="inherit">
-                    {t('scan.print.visible')}
+                    {formatMessage('scan.print.visible')}
                   </Typography>
                   <Typography
                     color="text.secondary"
@@ -236,23 +237,39 @@ export function TitleBar({
                   onAbout();
                 }}
               >
-                {t('scan.status.about')}
+                {formatMessage('scan.status.about')}
               </MenuItem>
             </Menu>
           </>
         ) : null}
-        <Tooltip title={scanning ? t('scan.title.paused') : t('scan.title.scanning')}>
-          <IconButton aria-label={t('scan.a11y.scanToggle')} size="small" onClick={onToggleScan}>
+        <Tooltip
+          title={
+            scanning ? formatMessage('scan.title.paused') : formatMessage('scan.title.scanning')
+          }
+        >
+          <IconButton
+            aria-label={formatMessage('scan.a11y.scanToggle')}
+            size="small"
+            onClick={onToggleScan}
+          >
             {scanning ? <Pause fontSize="small" /> : <PlayArrow fontSize="small" />}
           </IconButton>
         </Tooltip>
-        <Tooltip title={t('scan.a11y.theme')}>
-          <IconButton aria-label={t('scan.a11y.theme')} size="small" onClick={toggleTheme}>
+        <Tooltip title={formatMessage('scan.a11y.theme')}>
+          <IconButton
+            aria-label={formatMessage('scan.a11y.theme')}
+            size="small"
+            onClick={toggleTheme}
+          >
             {mode === 'dark' ? <LightMode fontSize="small" /> : <DarkMode fontSize="small" />}
           </IconButton>
         </Tooltip>
-        <Tooltip title={t('scan.status.about')}>
-          <IconButton aria-label={t('scan.status.about')} size="small" onClick={onAbout}>
+        <Tooltip title={formatMessage('scan.status.about')}>
+          <IconButton
+            aria-label={formatMessage('scan.status.about')}
+            size="small"
+            onClick={onAbout}
+          >
             <InfoOutlined fontSize="small" />
           </IconButton>
         </Tooltip>

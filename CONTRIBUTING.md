@@ -22,6 +22,7 @@ Never import Electron/Node/DOM into `core`.
 yarn build:packages
 yarn typecheck
 yarn lint
+yarn check:boundaries
 yarn test
 yarn format:check
 yarn cli scan --provider demo

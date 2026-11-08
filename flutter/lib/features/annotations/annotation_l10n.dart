@@ -1,56 +1,56 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
+import '../../shared/i18n/app_localizations.dart';
+
+/// Annotation UI strings; every getter delegates to the ARB catalogs
+/// (`packages/scan_l10n`), so en/ru/zh stay in sync.
 extension AnnotationL10n on BuildContext {
-  bool get _ru => Localizations.localeOf(this).languageCode.startsWith('ru');
+  AppLocalizations get _l10n => AppLocalizations.of(this);
 
-  String get annotationNoteLabel => _ru ? 'Пометки' : 'Notes';
+  String get annotationNoteLabel => _l10n.annotationNoteLabel;
 
-  String get annotationPinColorLabel => _ru ? 'Цвет метки' : 'Pin color';
+  String get annotationPinColorLabel => _l10n.annotationPinColorLabel;
 
-  String get annotationPinColorAuto => _ru ? 'Авто' : 'Auto';
+  String get annotationPinColorAuto => _l10n.annotationPinColorAuto;
 
-  String get annotationNoteHint => _ru ? 'Заметка для этой сети…' : 'Note for this network…';
+  String get annotationNoteHint => _l10n.annotationNoteHint;
 
-  String get annotationImportCsv => _ru ? 'Импорт CSV' : 'Import CSV';
+  String get annotationImportCsv => _l10n.annotationImportCsv;
 
-  String get annotationExportCsv => _ru ? 'Экспорт CSV' : 'Export CSV';
+  String get annotationExportCsv => _l10n.annotationExportCsv;
 
-  String get annotationImportCsvTitle => _ru ? 'Импорт пометок' : 'Import annotations';
+  String get annotationImportCsvTitle => _l10n.annotationImportCsvTitle;
 
-  String get annotationExportCsvTitle => _ru ? 'Экспорт пометок' : 'Export annotations';
+  String get annotationExportCsvTitle => _l10n.annotationExportCsvTitle;
 
-  String get annotationImportCsvAction => _ru ? 'Импортировать' : 'Import';
+  String get annotationImportCsvAction => _l10n.annotationImportCsvAction;
 
-  String get annotationImportCsvHint => _ru
-      ? 'Заменит все правила пометок. Формат: bssid_pattern,text'
-      : 'Replaces all annotation rules. Format: bssid_pattern,text';
+  String get annotationImportCsvHint => _l10n.annotationImportCsvHint;
 
-  String get annotationCsvFilePathLabel => _ru ? 'Путь к файлу (.csv)' : 'File path (.csv)';
+  String get annotationCsvFilePathLabel => _l10n.annotationCsvFilePathLabel;
 
   String get annotationCsvOptionalPathLabel =>
-      _ru ? 'Путь к .csv (необязательно)' : 'Path to .csv (optional)';
+      _l10n.annotationCsvOptionalPathLabel;
 
-  String get annotationCsvTextLabel => 'CSV';
+  String get annotationCsvTextLabel => _l10n.annotationCsvTextLabel;
 
-  String get annotationPasteCsvLabel => _ru ? 'Или вставьте CSV' : 'Or paste CSV';
+  String get annotationPasteCsvLabel => _l10n.annotationPasteCsvLabel;
 
-  String get annotationCopyCsv => _ru ? 'Копировать CSV' : 'Copy CSV';
+  String get annotationCopyCsv => _l10n.annotationCopyCsv;
 
-  String get annotationWriteFile => _ru ? 'Записать' : 'Write file';
+  String get annotationWriteFile => _l10n.annotationWriteFile;
 
-  String get annotationLoadFromDisk => _ru ? 'Загрузить с диска' : 'Load from disk';
+  String get annotationLoadFromDisk => _l10n.annotationLoadFromDisk;
 
-  String get annotationDialogClose => _ru ? 'Закрыть' : 'Close';
+  String get annotationDialogClose => _l10n.annotationDialogClose;
 
-  String get annotationCsvCopiedMessage =>
-      _ru ? 'CSV скопирован в буфер обмена.' : 'CSV copied to clipboard.';
+  String get annotationCsvCopiedMessage => _l10n.annotationCsvCopiedMessage;
 
-  String get annotationCsvWrittenMessage => _ru ? 'Файл записан.' : 'File written.';
+  String get annotationCsvWrittenMessage => _l10n.annotationCsvWrittenMessage;
 
-  String get annotationCsvWriteErrorMessage => _ru
-      ? 'Не удалось записать файл (проверьте путь или скопируйте CSV вручную).'
-      : 'Could not write file (check path or copy CSV manually).';
+  String get annotationCsvWriteErrorMessage =>
+      _l10n.annotationCsvWriteErrorMessage;
 
   String annotationCsvRuleCount(int count) =>
-      _ru ? 'Правил: $count' : 'Rules: $count';
+      _l10n.annotationCsvRuleCount(count);
 }

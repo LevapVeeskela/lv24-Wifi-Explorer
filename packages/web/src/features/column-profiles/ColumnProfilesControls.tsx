@@ -15,17 +15,20 @@ import {
 import { useState } from 'react';
 import { BUILT_IN_DEFAULT_PROFILE_ID } from './types';
 import type { UseColumnProfilesResult } from './useColumnProfiles';
-import { t } from './t';
+import { useScanIntl } from '@/shared/i18n';
 
 export type ColumnProfilesControlsProps = {
   profiles: UseColumnProfilesResult;
 };
 
 export function ColumnProfilesControls({ profiles }: ColumnProfilesControlsProps) {
+  const { formatMessage } = useScanIntl();
   const [newName, setNewName] = useState('');
 
   const profileLabel = (id: string, name: string) =>
-    id === BUILT_IN_DEFAULT_PROFILE_ID ? t('scan.settings.columns.profile.default') : name;
+    id === BUILT_IN_DEFAULT_PROFILE_ID
+      ? formatMessage('scan.settings.columns.profile.default')
+      : name;
 
   const activeIsCustom = profiles.activeProfileId !== BUILT_IN_DEFAULT_PROFILE_ID;
 
@@ -39,15 +42,15 @@ export function ColumnProfilesControls({ profiles }: ColumnProfilesControlsProps
   return (
     <Stack spacing={1.5}>
       <Typography color="text.secondary" variant="caption">
-        {t('scan.settings.columns.profiles.hint')}
+        {formatMessage('scan.settings.columns.profiles.hint')}
       </Typography>
       <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
         <FormControl fullWidth size="small">
           <InputLabel id="column-profile-select-label">
-            {t('scan.settings.columns.profiles.label')}
+            {formatMessage('scan.settings.columns.profiles.label')}
           </InputLabel>
           <Select
-            label={t('scan.settings.columns.profiles.label')}
+            label={formatMessage('scan.settings.columns.profiles.label')}
             labelId="column-profile-select-label"
             value={profiles.activeProfileId}
             onChange={(event) => profiles.switchProfile(String(event.target.value))}
@@ -61,18 +64,18 @@ export function ColumnProfilesControls({ profiles }: ColumnProfilesControlsProps
         </FormControl>
         {activeIsCustom ? (
           <>
-            <Tooltip title={t('scan.settings.columns.profiles.updateActive')}>
+            <Tooltip title={formatMessage('scan.settings.columns.profiles.updateActive')}>
               <IconButton
-                aria-label={t('scan.settings.columns.profiles.updateActive')}
+                aria-label={formatMessage('scan.settings.columns.profiles.updateActive')}
                 size="small"
                 onClick={() => profiles.updateActiveProfileFromCurrent()}
               >
                 <Save fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title={t('scan.settings.columns.profiles.delete')}>
+            <Tooltip title={formatMessage('scan.settings.columns.profiles.delete')}>
               <IconButton
-                aria-label={t('scan.settings.columns.profiles.delete')}
+                aria-label={formatMessage('scan.settings.columns.profiles.delete')}
                 color="error"
                 size="small"
                 onClick={() => profiles.deleteProfile(profiles.activeProfileId)}
@@ -86,7 +89,7 @@ export function ColumnProfilesControls({ profiles }: ColumnProfilesControlsProps
       <Stack direction="row" spacing={1} sx={{ alignItems: 'flex-start' }}>
         <TextField
           fullWidth
-          placeholder={t('scan.settings.columns.profiles.newName')}
+          placeholder={formatMessage('scan.settings.columns.profiles.newName')}
           size="small"
           value={newName}
           onChange={(event) => setNewName(event.target.value)}
@@ -98,7 +101,7 @@ export function ColumnProfilesControls({ profiles }: ColumnProfilesControlsProps
           }}
         />
         <Button disabled={!newName.trim()} size="small" variant="outlined" onClick={onSaveNew}>
-          {t('scan.settings.columns.profiles.saveAs')}
+          {formatMessage('scan.settings.columns.profiles.saveAs')}
         </Button>
       </Stack>
     </Stack>

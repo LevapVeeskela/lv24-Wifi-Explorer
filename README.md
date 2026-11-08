@@ -42,6 +42,7 @@ one domain model.
 - **Workbench, not a black box**: filter presets, saved workbench profiles, annotations, named coloring rules, column profiles, CSV/print/snapshot export.
 - **One model everywhere**: the same `@lv24/wifi-core` powers the desktop UI and the CLI; Linux/Windows providers degrade honestly (RSSI derived from quality, unknown widths/IE).
 - **Offline analysis**: import pcap/pcapng captures (radiotap + 802.11 beacon/probe) with explicit warnings for unsupported frames.
+- **Three UI languages**: Russian, English and Simplified Chinese, switchable live in Settings (desktop and Flutter).
 - **Open and reusable**: MIT core/backend/CLI packages, typed provider API, demo provider for CI, no private APIs in the core.
 
 ## Packages

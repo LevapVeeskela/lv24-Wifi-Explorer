@@ -947,4 +947,74 @@ class AppLocalizationsRu extends AppLocalizations {
   String workbenchFilterPresetsDelete(String name) {
     return 'Удалить «$name»';
   }
+
+  @override
+  String get annotationNoteLabel => 'Пометки';
+
+  @override
+  String get annotationPinColorLabel => 'Цвет метки';
+
+  @override
+  String get annotationPinColorAuto => 'Авто';
+
+  @override
+  String get annotationNoteHint => 'Заметка для этой сети…';
+
+  @override
+  String get annotationImportCsv => 'Импорт CSV';
+
+  @override
+  String get annotationExportCsv => 'Экспорт CSV';
+
+  @override
+  String get annotationImportCsvTitle => 'Импорт пометок';
+
+  @override
+  String get annotationExportCsvTitle => 'Экспорт пометок';
+
+  @override
+  String get annotationImportCsvAction => 'Импортировать';
+
+  @override
+  String get annotationImportCsvHint =>
+      'Заменит все правила пометок. Формат: bssid_pattern,text';
+
+  @override
+  String get annotationCsvFilePathLabel => 'Путь к файлу (.csv)';
+
+  @override
+  String get annotationCsvOptionalPathLabel => 'Путь к .csv (необязательно)';
+
+  @override
+  String get annotationCsvTextLabel => 'CSV';
+
+  @override
+  String get annotationPasteCsvLabel => 'Или вставьте CSV';
+
+  @override
+  String get annotationCopyCsv => 'Копировать CSV';
+
+  @override
+  String get annotationWriteFile => 'Записать';
+
+  @override
+  String get annotationLoadFromDisk => 'Загрузить с диска';
+
+  @override
+  String get annotationDialogClose => 'Закрыть';
+
+  @override
+  String get annotationCsvCopiedMessage => 'CSV скопирован в буфер обмена.';
+
+  @override
+  String get annotationCsvWrittenMessage => 'Файл записан.';
+
+  @override
+  String get annotationCsvWriteErrorMessage =>
+      'Не удалось записать файл (проверьте путь или скопируйте CSV вручную).';
+
+  @override
+  String annotationCsvRuleCount(int count) {
+    return 'Правил: $count';
+  }
 }

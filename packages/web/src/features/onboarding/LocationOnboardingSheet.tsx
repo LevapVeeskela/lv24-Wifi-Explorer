@@ -11,11 +11,9 @@ import type { LocationAuthorization } from '@/domain/identity';
 import { useScanIntl } from '@/shared/i18n';
 import {
   locationOnboardingContinueKey,
-  locationOnboardingEnMessages,
   locationOnboardingLaterKey,
-  locationOnboardingRuMessages,
   locationOnboardingScanHintKey,
-  type LocationOnboardingMessageKey,
+  resolveLocationOnboardingMessages,
 } from './i18n/messages';
 import {
   locationOnboardingActionsSx,
@@ -31,11 +29,6 @@ export type LocationOnboardingSheetProps = {
   onContinue: () => void;
 };
 
-function featureMessage(locale: string, key: LocationOnboardingMessageKey): string {
-  const catalog = locale === 'en' ? locationOnboardingEnMessages : locationOnboardingRuMessages;
-  return catalog[key];
-}
-
 export function LocationOnboardingSheet({
   open,
   location,
@@ -47,6 +40,8 @@ export function LocationOnboardingSheet({
   if (location !== 'not-determined') {
     return null;
   }
+
+  const messages = resolveLocationOnboardingMessages(locale);
 
   return (
     <Dialog
@@ -63,7 +58,7 @@ export function LocationOnboardingSheet({
             {formatMessage('permissions.location.body')}
           </Typography>
           <Typography sx={locationOnboardingBodySx} variant="body2">
-            {featureMessage(locale, locationOnboardingScanHintKey)}
+            {messages[locationOnboardingScanHintKey]}
           </Typography>
           <Typography sx={locationOnboardingBodySx} variant="body2">
             {formatMessage('permissions.onboarding.body')}
@@ -72,10 +67,10 @@ export function LocationOnboardingSheet({
       </DialogContent>
       <DialogActions sx={locationOnboardingActionsSx}>
         <Button color="inherit" onClick={onClose}>
-          {featureMessage(locale, locationOnboardingLaterKey)}
+          {messages[locationOnboardingLaterKey]}
         </Button>
         <Button variant="contained" onClick={onContinue}>
-          {featureMessage(locale, locationOnboardingContinueKey)}
+          {messages[locationOnboardingContinueKey]}
         </Button>
       </DialogActions>
     </Dialog>

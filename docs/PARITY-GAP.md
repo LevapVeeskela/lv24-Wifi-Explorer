@@ -12,8 +12,8 @@ This document sets expectations vs. full-featured commercial Wi‑Fi analyzers. 
 | **Client / station list**       | ❌     | Active scan does not enumerate associated clients; no `stations` from air unless BSS Load IE (optional field) |
 | **Passive / monitor mode**      | ❌     | No disconnect-and-dwell, no Radiotap capture on Apple STA                                                     |
 | **Remote sensors**              | ❌     | No WLAN Pi / Linux remote probe integration                                                                   |
-| **pcap / pcapng import**        | ❌     | Later optional: beacon/probe parse into table                                                                 |
-| **Directed hidden scan**        | ⏳ v1+ | Probe specific SSID without full product parity                                                               |
+| **pcap / pcapng import**        | ✓      | Radiotap + 802.11 beacon/probe import shipped; unsupported frames reported as warnings                        |
+| **Directed hidden scan**        | ✓      | macOS `scanStart(ssid)` probes a specific SSID; full product parity out of scope                              |
 | **USB external Wi‑Fi adapters** | ❌     | Built-in interface only (typically `en0`)                                                                     |
 | **IO80211 private APIs**        | ❌     | Clean room: CoreWLAN only                                                                                     |
 
@@ -74,11 +74,11 @@ These are platform limits, not LV24 bugs.
 ## 6. Roadmap bucket (later, no commitment)
 
 - Passive/monitor where Apple allows on specific hardware
-- pcap import, remote sensors, client analytics
+- remote sensors, client analytics
 - UNII/DFS/PSC badges, directed scan polish
-- Coloring/profile import/export UI polish, utilization table
+- Coloring/profile import/export UI polish
 - Flutter sort/organize/presets column parity tests
-- AP Name vendor IE, beacon overhead/airtime estimates
+- Beacon airtime measurement (current value is an explicit estimate)
 - Electron Windows / Linux live scan — shipped via `@lv24/wifi-backend` (`nmcli` / `netsh`); no IEs/widths, RSSI derived from quality.
 - Flutter Windows nearby-BSS / MSIX `wifiControl` (out of v1; associated-link only today)
 

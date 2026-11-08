@@ -1,3 +1,5 @@
+import type { MessageKey } from '@/shared/i18n';
+
 /** Grid column fields aligned with `useScanGridColumns` and SPEC §3 table ids. */
 export type ScanGridColumnField =
   | 'seriesColor'
@@ -43,7 +45,7 @@ export type ScanGridColumnField =
 export type ScanGridColumnDef = {
   field: ScanGridColumnField;
   /** i18n key shared with grid headers (`scan.col.*`). */
-  labelKey: string;
+  labelKey: MessageKey;
   hideable: boolean;
 };
 

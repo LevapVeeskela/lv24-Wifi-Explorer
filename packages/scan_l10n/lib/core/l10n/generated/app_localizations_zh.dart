@@ -927,4 +927,72 @@ class AppLocalizationsZh extends AppLocalizations {
   String workbenchFilterPresetsDelete(String name) {
     return '删除“$name”';
   }
+
+  @override
+  String get annotationNoteLabel => '标注';
+
+  @override
+  String get annotationPinColorLabel => '标记颜色';
+
+  @override
+  String get annotationPinColorAuto => '自动';
+
+  @override
+  String get annotationNoteHint => '为此网络添加备注…';
+
+  @override
+  String get annotationImportCsv => '导入 CSV';
+
+  @override
+  String get annotationExportCsv => '导出 CSV';
+
+  @override
+  String get annotationImportCsvTitle => '导入标注';
+
+  @override
+  String get annotationExportCsvTitle => '导出标注';
+
+  @override
+  String get annotationImportCsvAction => '导入';
+
+  @override
+  String get annotationImportCsvHint => '将替换所有标注规则。格式：bssid_pattern,text';
+
+  @override
+  String get annotationCsvFilePathLabel => '文件路径（.csv）';
+
+  @override
+  String get annotationCsvOptionalPathLabel => '.csv 路径（可选）';
+
+  @override
+  String get annotationCsvTextLabel => 'CSV';
+
+  @override
+  String get annotationPasteCsvLabel => '或粘贴 CSV';
+
+  @override
+  String get annotationCopyCsv => '复制 CSV';
+
+  @override
+  String get annotationWriteFile => '写入文件';
+
+  @override
+  String get annotationLoadFromDisk => '从磁盘加载';
+
+  @override
+  String get annotationDialogClose => '关闭';
+
+  @override
+  String get annotationCsvCopiedMessage => 'CSV 已复制到剪贴板。';
+
+  @override
+  String get annotationCsvWrittenMessage => '文件已写入。';
+
+  @override
+  String get annotationCsvWriteErrorMessage => '无法写入文件（请检查路径，或手动复制 CSV）。';
+
+  @override
+  String annotationCsvRuleCount(int count) {
+    return '规则：$count';
+  }
 }

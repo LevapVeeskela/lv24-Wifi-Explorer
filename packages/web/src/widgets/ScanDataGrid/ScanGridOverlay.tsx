@@ -1,7 +1,6 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { useScanIntl } from '@/shared/i18n';
+import { useScanIntl, type MessageKey } from '@/shared/i18n';
 import { overlayRootSx } from './styles';
-import { t } from './t';
 
 export type ScanGridOverlayKind = 'empty' | 'demo' | 'location-denied' | 'empty-filter';
 
@@ -9,7 +8,7 @@ export type ScanGridOverlayProps = {
   kind: ScanGridOverlayKind;
 };
 
-const KIND_KEY: Record<ScanGridOverlayKind, string> = {
+const KIND_KEY: Record<ScanGridOverlayKind, MessageKey> = {
   empty: 'scan.grid.empty',
   demo: 'scan.grid.demo',
   'location-denied': 'scan.grid.locationDenied',
@@ -48,7 +47,7 @@ export function ScanGridOverlay({ kind }: ScanGridOverlayProps) {
   return (
     <Box sx={overlayRootSx}>
       <Typography color="text.secondary" variant="body2">
-        {t(KIND_KEY[kind])}
+        {formatMessage(KIND_KEY[kind])}
       </Typography>
     </Box>
   );

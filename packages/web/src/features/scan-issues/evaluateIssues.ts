@@ -1,5 +1,5 @@
 import { inferDfsChannel } from './dfs';
-import { scanIssueMessageKey } from './i18n/messages';
+import { scanIssueMessageKey } from './scanIssueKey';
 import { primaryChannelsOverlap } from '@/entities/channel';
 import { NON_OVERLAPPING_24_CHANNELS, SCAN_ISSUE_THRESHOLDS } from './thresholds';
 import type {

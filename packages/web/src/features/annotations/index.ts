@@ -1,4 +1,10 @@
-export type { AnnotationRule, AnnotationStorage, AnnotationStoreV1 } from './types';
+export type {
+  AnnotationRule,
+  AnnotationStorage,
+  AnnotationStoreV1,
+  PinnedColor,
+  PinnedColorStoreV1,
+} from './types';
 export {
   ANNOTATIONS_STORAGE_KEY,
   createAnnotationRule,

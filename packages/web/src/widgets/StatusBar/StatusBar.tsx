@@ -2,8 +2,21 @@ import { Link, Stack, Typography } from '@mui/material';
 import type { LocationAuthorization } from '@/domain/identity';
 import type { SignalQuality } from '@/domain/signal';
 import { qualityMessageKey } from '@/entities/bss';
+import { useScanIntl, type MessageKey } from '@/shared/i18n';
 import { statusAboutLinkSx, statusBarSx, statusClusterSx } from './styles';
-import { t } from './t';
+
+const SCAN_CORE_KEY: Record<'ok' | 'error' | 'demo', MessageKey> = {
+  ok: 'scan.scanCore.ok',
+  error: 'scan.scanCore.error',
+  demo: 'scan.scanCore.demo',
+};
+
+const LOCATION_KEY: Record<LocationAuthorization, MessageKey> = {
+  granted: 'scan.location.granted',
+  denied: 'scan.location.denied',
+  'not-determined': 'scan.location.notDetermined',
+  restricted: 'scan.location.restricted',
+};
 
 export type StatusBarProps = {
   networksFound: number;
@@ -33,41 +46,44 @@ export function StatusBar({
   annotationCount,
   signalQuality,
 }: StatusBarProps) {
-  const scanCoreText = t('scan.status.scanCore', {
-    state: t(`scan.scanCore.${scanCoreState}`),
+  const { formatMessage } = useScanIntl();
+  const scanCoreText = formatMessage('scan.status.scanCore', {
+    state: formatMessage(SCAN_CORE_KEY[scanCoreState]),
   });
-  const locationText = t('scan.status.location', {
-    state: t(`scan.location.${locationState}`),
+  const locationText = formatMessage('scan.status.location', {
+    state: formatMessage(LOCATION_KEY[locationState]),
   });
 
   return (
     <Stack aria-live="polite" component="footer" direction="row" sx={statusBarSx}>
       <Stack direction="row" spacing={2} sx={statusClusterSx}>
         <Typography color="text.secondary" variant="caption">
-          {t('scan.status.timescaleHint')}
+          {formatMessage('scan.status.timescaleHint')}
         </Typography>
         <Typography color="text.secondary" variant="caption">
-          {t('scan.status.shortcutsHint')}
+          {formatMessage('scan.status.shortcutsHint')}
         </Typography>
         <Typography variant="caption">
-          {t('scan.status.found', { count: networksFound })}
+          {formatMessage('scan.status.found', { count: networksFound })}
         </Typography>
         {displayedCount != null ? (
           <Typography variant="caption">
-            {t('scan.status.displayed', { count: displayedCount })}
+            {formatMessage('scan.status.displayed', { count: displayedCount })}
           </Typography>
         ) : null}
         <Typography variant="caption">
-          {t('scan.status.selected', { count: selectedCount })}
+          {formatMessage('scan.status.selected', { count: selectedCount })}
         </Typography>
         {annotationCount != null ? (
           <Typography variant="caption">
-            {t('scan.status.annotations', { count: annotationCount })}
+            {formatMessage('scan.status.annotations', { count: annotationCount })}
           </Typography>
         ) : null}
         {signalQuality ? (
           <Typography variant="caption">
-            {t('scan.status.quality', { quality: t(qualityMessageKey(signalQuality)) })}
+            {formatMessage('scan.status.quality', {
+              quality: formatMessage(qualityMessageKey(signalQuality)),
+            })}
           </Typography>
         ) : null}
       </Stack>
@@ -75,9 +91,11 @@ export function StatusBar({
         <Typography variant="caption">{scanCoreText}</Typography>
         <Typography variant="caption">{locationText}</Typography>
         <Typography variant="caption">
-          {t('scan.status.lastScan', { time: lastScanLabel })}
+          {formatMessage('scan.status.lastScan', { time: lastScanLabel })}
         </Typography>
-        <Typography variant="caption">{t('scan.status.version', { version })}</Typography>
+        <Typography variant="caption">
+          {formatMessage('scan.status.version', { version })}
+        </Typography>
         <Link
           component="button"
           sx={statusAboutLinkSx}
@@ -85,7 +103,7 @@ export function StatusBar({
           variant="caption"
           onClick={onAbout}
         >
-          {t('scan.status.about')}
+          {formatMessage('scan.status.about')}
         </Link>
       </Stack>
     </Stack>

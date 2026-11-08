@@ -1821,6 +1821,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete \"{name}\"'**
   String workbenchFilterPresetsDelete(String name);
+
+  /// Flutter annotations: note field label
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get annotationNoteLabel;
+
+  /// Flutter annotations: pin color field label
+  ///
+  /// In en, this message translates to:
+  /// **'Pin color'**
+  String get annotationPinColorLabel;
+
+  /// Flutter annotations: automatic pin color option
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get annotationPinColorAuto;
+
+  /// Flutter annotations: note field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Note for this network…'**
+  String get annotationNoteHint;
+
+  /// Flutter annotations: import CSV action
+  ///
+  /// In en, this message translates to:
+  /// **'Import CSV'**
+  String get annotationImportCsv;
+
+  /// Flutter annotations: export CSV action
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get annotationExportCsv;
+
+  /// Flutter annotations: import dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Import annotations'**
+  String get annotationImportCsvTitle;
+
+  /// Flutter annotations: export dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Export annotations'**
+  String get annotationExportCsvTitle;
+
+  /// Flutter annotations: import dialog confirm button
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get annotationImportCsvAction;
+
+  /// Flutter annotations: import dialog hint
+  ///
+  /// In en, this message translates to:
+  /// **'Replaces all annotation rules. Format: bssid_pattern,text'**
+  String get annotationImportCsvHint;
+
+  /// Flutter annotations: CSV file path field label
+  ///
+  /// In en, this message translates to:
+  /// **'File path (.csv)'**
+  String get annotationCsvFilePathLabel;
+
+  /// Flutter annotations: optional CSV file path field label
+  ///
+  /// In en, this message translates to:
+  /// **'Path to .csv (optional)'**
+  String get annotationCsvOptionalPathLabel;
+
+  /// Flutter annotations: CSV text field label
+  ///
+  /// In en, this message translates to:
+  /// **'CSV'**
+  String get annotationCsvTextLabel;
+
+  /// Flutter annotations: paste CSV field label
+  ///
+  /// In en, this message translates to:
+  /// **'Or paste CSV'**
+  String get annotationPasteCsvLabel;
+
+  /// Flutter annotations: copy CSV to clipboard action
+  ///
+  /// In en, this message translates to:
+  /// **'Copy CSV'**
+  String get annotationCopyCsv;
+
+  /// Flutter annotations: write CSV file action
+  ///
+  /// In en, this message translates to:
+  /// **'Write file'**
+  String get annotationWriteFile;
+
+  /// Flutter annotations: load CSV from disk action
+  ///
+  /// In en, this message translates to:
+  /// **'Load from disk'**
+  String get annotationLoadFromDisk;
+
+  /// Flutter annotations: dialog close button
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get annotationDialogClose;
+
+  /// Flutter annotations: copy confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'CSV copied to clipboard.'**
+  String get annotationCsvCopiedMessage;
+
+  /// Flutter annotations: write confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'File written.'**
+  String get annotationCsvWrittenMessage;
+
+  /// Flutter annotations: write error
+  ///
+  /// In en, this message translates to:
+  /// **'Could not write file (check path or copy CSV manually).'**
+  String get annotationCsvWriteErrorMessage;
+
+  /// Flutter annotations: annotation rule count
+  ///
+  /// In en, this message translates to:
+  /// **'Rules: {count}'**
+  String annotationCsvRuleCount(int count);
 }
 
 class _AppLocalizationsDelegate

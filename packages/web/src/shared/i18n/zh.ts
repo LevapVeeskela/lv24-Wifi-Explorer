@@ -2,6 +2,13 @@ import type { MessageKey } from './types';
 
 /** Simplified Chinese message catalog. */
 export const zhMessages: Record<MessageKey, string> = {
+  'scan.a11y.theme': '主题',
+  'scan.a11y.scanToggle': '开始或暂停扫描',
+  'scan.grid.empty': '未发现网络',
+  'scan.grid.demo': '演示模式：表格中没有网络',
+  'scan.grid.locationDenied': '需要位置权限才能显示网络名称',
+  'scan.grid.openLocationSettings': '打开设置',
+
   'scan.title.scanning': '扫描中',
   'scan.title.paused': '已暂停',
   'scan.title.demo': '演示',

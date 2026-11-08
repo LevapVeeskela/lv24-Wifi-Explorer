@@ -39,6 +39,9 @@ jobs:
       - name: Format check
         run: yarn format:check
 
+      - name: FSD boundaries
+        run: yarn check:boundaries
+
       - name: Tests (includes scan suite)
         run: yarn test
 

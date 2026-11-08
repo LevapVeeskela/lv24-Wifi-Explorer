@@ -123,15 +123,31 @@ Electron wiring today: **E** via `demoMode` / argv (`--live` opts out), helper e
 
 ## 6. Repo map (implementation)
 
-| Path                                   | Role                                                      |
-| -------------------------------------- | --------------------------------------------------------- |
-| `packages/desktop/`                    | Main, preload, CSP, provider lifecycle; renderer owns OUI |
-| `native/ScanCore/`                     | Swift helper + entitlements                               |
-| `packages/core/src/domain/`            | Shared types (contract with ScanCore JSON)                |
-| `packages/core/src/scan/`              | Map raw → `ObservedBss`, merge, tests                     |
-| `packages/web/src/features/scan-live/` | IPC ingest                                                |
-| `src/vendor/`                          | OUI registry                                              |
-| `data/oui/`                            | Bundled IEEE snapshot                                     |
+| Path                         | Role                                                            |
+| ---------------------------- | --------------------------------------------------------------- |
+| `packages/desktop/`          | Main, preload, CSP, provider lifecycle; renderer owns OUI       |
+| `native/ScanCore/`           | Swift helper + entitlements                                     |
+| `packages/core/src/domain/`  | Shared types (contract with ScanCore JSON)                      |
+| `packages/core/src/scan/`    | Map raw → `ObservedBss`, merge, tests                           |
+| `packages/web/src/entities/` | Domain models + pure math (bss, scan, channel, signal, columns) |
+| `packages/web/src/features/` | User-facing capabilities (search, filters, profiles, export)    |
+| `packages/web/src/widgets/`  | Composite UI blocks (grid, charts, sidebar, dialogs)            |
+| `packages/web/src/pages/`    | Route-level composition (`ScanWorkbenchPage` + hooks)           |
+| `packages/web/src/shared/`   | UI kit, i18n, IPC contracts, persistence, pure libs             |
+| `packages/web/src/vendor/`   | OUI registry                                                    |
+| `data/oui/`                  | Bundled IEEE snapshot                                           |
+
+### Feature-Sliced Design rules (enforced)
+
+- Layer order is one-way: `shared → entities → features → widgets → pages → app`.
+  A lower layer never imports a higher one.
+- Every slice exposes a public API via its `index.ts`; other slices import only
+  that barrel, never internal files.
+- `entities/*` contains pure models and math (no React, no i18n catalogs);
+  `features/*` owns user capabilities; `widgets/*` composes UI; `pages/*` wires
+  state and side effects.
+- `yarn check:boundaries` (`scripts/check-boundaries.mjs`) fails on layer-order
+  or deep-import violations; it runs before release.
 
 ---
 

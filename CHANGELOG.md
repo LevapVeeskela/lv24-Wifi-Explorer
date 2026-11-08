@@ -2,6 +2,25 @@
 
 All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
+## [Unreleased]
+
+### Architecture
+
+- Feature-Sliced Design enforced: `shared → entities → features → widgets → pages`,
+  one public barrel per slice, cross-slice imports only through `index.ts`.
+  `yarn check:boundaries` fails the build on layer-order or deep-import violations.
+- Domain math extracted into entities: `entities/signal` (series, rolling stats,
+  axes, sparkline), `entities/channel` (UNII, overlap, occupancy, utilization),
+  `entities/columns` (grid catalog), `entities/bss` (row model + formatting).
+- `ScanWorkbenchPage` split into `useScanSession`, `useWorkbenchRows`,
+  `useWorkbenchIo`; theme, filter sidebar and grid columns split into focused modules.
+
+### Internationalization
+
+- Simplified Chinese added: web catalog, MUI DataGrid locale, Flutter ARB catalog,
+  language picker in Settings, persisted `lv24.locale` preference.
+- Hardcoded two-language Flutter workbench strings moved into ARB.
+
 ## [1.0.0] — 2026-11-08
 
 First production release.
@@ -16,7 +35,7 @@ First production release.
   open/save (`.lv24scan`), CSV export and print.
 - Permission and diagnostics flow: TCC prompt guidance, one-click jump to
   System Settings, visible demo badge.
-- Russian/English UI (i18n), MUI X Pro data grid (license key from
+- Russian/English/Simplified Chinese UI (i18n), MUI X Pro data grid (license key from
   `VITE_MUI_LICENSE_KEY`; watermark without a key).
 
 - **Workbench parity**: extended IE-derived columns (incl. AP name from WPS IE), Issues inspector and

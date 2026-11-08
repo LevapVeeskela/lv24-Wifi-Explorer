@@ -1,4 +1,4 @@
-import { scanIssueMessageKey } from './i18n/messages';
+import { scanIssueMessageKey } from './scanIssueKey';
 import { SCAN_ISSUE_IDS, SCAN_ISSUE_SEVERITY } from './types';
 import type { IssueSeverity, ScanIssueId, ScanIssueMessageKey } from './types';
 
