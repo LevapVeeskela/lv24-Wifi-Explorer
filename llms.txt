@@ -1,0 +1,92 @@
+# LV24 WiFi Explorer
+
+> Cross-platform Wi-Fi scanner for humans and AI agents. Live CoreWLAN scans on
+> macOS, NetworkManager on Linux, `netsh` on Windows, deterministic demo
+> fixtures everywhere. MIT packages, a CLI and a stdio MCP server share one
+> domain model.
+
+Repository: https://github.com/LevapVeeskela/lv24-Wifi-Explorer
+Releases: https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases
+License: MIT (app code); optional MUI X Pro in the desktop UI.
+
+## Packages (npm 1.0.0)
+
+- `@lv24/wifi-core` — domain, IE decoding, filters, issues, utilization
+- `@lv24/wifi-backend` — scan providers: `macos-scancore`, `linux-nmcli`, `windows-netsh`, `demo`
+- `@lv24/wifi-cli` — `lv24-wifi` CLI
+- `@lv24/wifi-mcp` — MCP stdio server with six Wi-Fi tools
+
+## Install
+
+```bash
+npm i -g @lv24/wifi-cli
+npx -y @lv24/wifi-mcp
+```
+
+macOS desktop app: download the DMG from Releases. Public builds are
+watermarked (no MUI key) and not notarized; first launch needs right-click →
+Open. Grant Location once to `ScanCore` for real SSID/BSSID.
+
+## MCP server
+
+Command: `npx -y @lv24/wifi-mcp` (stdio). Tools:
+
+- `wifi_providers` — available providers and capability gaps
+- `wifi_scan` — active scan; args `provider?`, `ssid?`, `includeHidden?`, `intervalMs?`, `timeoutMs?`, `limit?`, `fields?`
+- `wifi_network` — one BSS by `bssid`; `refresh?`
+- `wifi_summary` — counts by band/security/vendor, busiest channels, strongest/weakest
+- `wifi_channels` — per-channel utilization + beacon-overhead estimate (`estimate: true`)
+- `wifi_issues` — heuristic flags (`lowSignal`, `lowSnr`, `weakSecurity`, `hiddenSsid`, `overlap24`, `crowdedChannel`, `dfs`, ...)
+
+Results are cached for 30 s; pass `refresh: true` to rescan. Concurrent calls
+are serialized. Demo fixtures: `{"provider": "demo"}`.
+
+Client config (OpenCode):
+
+```json
+{
+  "mcp": {
+    "lv24-wifi": {
+      "type": "local",
+      "command": ["npx", "-y", "@lv24/wifi-mcp"],
+      "enabled": true
+    }
+  }
+}
+```
+
+Claude Desktop / Cursor use the same `mcpServers` shape with
+`"command": "npx", "args": ["-y", "@lv24/wifi-mcp"]`.
+
+macOS live data needs the signed `ScanCore.app`; resolve it with
+`LV24_SCANCORE_PATH` or `LV24_RESOURCES_PATH`, or run from the repository where
+`native/ScanCore/.build/ScanCore.app` exists.
+
+## CLI
+
+```bash
+lv24-wifi providers
+lv24-wifi scan --format json
+lv24-wifi scan --provider demo --format json
+lv24-wifi scan --ssid "Cafe" --format table
+```
+
+## Data honesty
+
+- macOS: real SSID/BSSID/channel width/PHY/IEs with Location permission.
+- Linux/Windows: RSSI derived from signal quality; channel width, noise and IEs
+  are unavailable and reported as unknown.
+- Beacon airtime is an estimate, never a measurement.
+- Vendor comes from the IEEE MA-L registry when `data/oui/ieee-mal.csv` is
+  present; randomized MACs report `null`.
+- No telemetry, no cloud upload; scan data stays in process memory.
+
+## Docs
+
+- MCP setup and caveats: docs/MCP.md
+- Architecture: docs/ARCHITECTURE.md
+- Packages: docs/PACKAGES.md
+- Product spec: docs/SPEC.md
+- Permissions: docs/PERMISSIONS.md
+- Parity gaps: docs/PARITY-GAP.md
+- Release/signing: docs/RELEASE.md

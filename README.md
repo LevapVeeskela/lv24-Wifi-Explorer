@@ -1,264 +1,221 @@
 # LV24 WiFi Explorer
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-22c55e.svg)](#license)
-[![Platforms](https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20Windows-38bdf8.svg)](#cross-platform-scan-sources)
-[![Node](https://img.shields.io/badge/node-%E2%89%A520-339933.svg)](#requirements)
-[![Packages](https://img.shields.io/badge/publishable-core%20%C2%B7%20backend%20%C2%B7%20cli-f97316.svg)](docs/PACKAGES.md)
+[![npm core](https://img.shields.io/npm/v/@lv24/wifi-core?label=%40lv24%2Fwifi-core&color=cb3837&logo=npm)](https://www.npmjs.com/package/@lv24/wifi-core)
+[![npm mcp](https://img.shields.io/npm/v/@lv24/wifi-mcp?label=%40lv24%2Fwifi-mcp&color=cb3837&logo=npm)](https://www.npmjs.com/package/@lv24/wifi-mcp)
+[![release](https://img.shields.io/github/v/release/LevapVeeskela/lv24-Wifi-Explorer?color=0b6b5f&logo=github)](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases)
+[![license](https://img.shields.io/badge/license-MIT-22c55e)](LICENSE)
+[![platforms](https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20Windows-38bdf8)](#cross-platform-scan-sources)
 
-A fast, honest Wi‑Fi scanner for macOS, Linux and Windows — plus reusable
-packages for anyone building their own Wi‑Fi tooling. Live CoreWLAN scans on
-macOS, NetworkManager on Linux, `netsh` on Windows, and a deterministic demo
-provider everywhere. Desktop, web UI, Flutter client and a headless CLI share
-one domain model.
+**A fast, honest Wi‑Fi scanner — for people and for AI agents.** Live CoreWLAN
+scans on macOS, NetworkManager on Linux, `netsh` on Windows, deterministic demo
+fixtures everywhere. The same domain model powers the desktop app, the CLI and
+an MCP server that agents can query.
+
+> **Кратко по-русски.** Честный сканер Wi‑Fi: живой эфир на macOS (CoreWLAN),
+> Linux и Windows, без выдуманных данных. Есть десктопное приложение, CLI и
+> MCP-сервер для ИИ-агентов — агент видит те же сети, каналы и проблемы, что и
+> человек в приложении. Интерфейс на русском, английском и китайском.
+> Установка: [DMG из Releases](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/latest),
+> `npm i -g @lv24/wifi-cli` или `npx -y @lv24/wifi-mcp`.
+
+| 🚀 Start                                                                   | 🧠 Use                                                    | 🤖 Agents                                            |
+| -------------------------------------------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------- |
+| [Download](#desktop-app-macos) · [CLI](#cli) · [Build](#build-from-source) | [Features](#why-it-is-nice) · [Screenshots](#screenshots) | [MCP server](#mcp-for-agents) · [llms.txt](llms.txt) |
 
 <p align="center">
-  <img src="docs/assets/screenshot-main.png" alt="LV24 WiFi Explorer main window with live networks, signal bars and channel occupancy" width="920">
+  <img src="docs/assets/screenshot-main.png" alt="LV24 WiFi Explorer workbench: live networks, signal bars, channel occupancy and signal history" width="960">
 </p>
-
-|               |                                                                                                                                                 |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **GitHub**    | [LevapVeeskela/lv24-Wifi-Explorer](https://github.com/LevapVeeskela/lv24-Wifi-Explorer)                                                         |
-| **License**   | MIT for core/backend/CLI and app code; desktop/web optionally use commercial MUI X Pro — see `CONTRIBUTING.md`.                                 |
-| **Bundle ID** | `by.lv24.wifi.explorer`                                                                                                                         |
-| **Stack**     | Electron 33, Vite 8, React 19, MUI 9, MUI X Pro 8.11, Swift ScanCore, Flutter                                                                   |
-| **Also**      | Flutter client in [`flutter/`](flutter/), Dart packages in [`packages/`](packages/), live macOS scanner in [`native/ScanCore`](native/ScanCore) |
 
 ## Screenshots
 
-| Live scan                                          | Network details                                        |
+Screenshots use the deterministic demo provider — no real networks are exposed.
+
+| Workbench (RU)                                     | Network details                                        |
 | -------------------------------------------------- | ------------------------------------------------------ |
-| ![Live scan](docs/assets/screenshot-main.png)      | ![Network details](docs/assets/screenshot-details.png) |
+| ![Workbench](docs/assets/screenshot-main.png)      | ![Network details](docs/assets/screenshot-details.png) |
 | **BSS compare**                                    | **Issues inspector**                                   |
 | ![BSS compare](docs/assets/screenshot-compare.png) | ![Issues inspector](docs/assets/screenshot-issues.png) |
-| **Settings**                                       |                                                        |
-| ![Settings](docs/assets/screenshot-settings.png)   |                                                        |
+| **Settings (language, signal units, scanning)**    | **Simplified Chinese UI**                              |
+| ![Settings](docs/assets/screenshot-settings.png)   | ![Chinese UI](docs/assets/screenshot-main-zh.png)      |
 
 ## Why it is nice
 
-- **Real data, no stubs**: live SSID/BSSID/vendor on macOS once the signed helper is granted Location; RF-only redaction is explicit, never fake “hidden” names.
-- **Targeted scans**: directed SSID mode on macOS, full scans everywhere, honest Linux/Windows limitations.
-- **Fast table**: sortable signal/channel/PHY columns, stable per-network colors, per-row RSSI sparkline, grouping by SSID/AP/vendor.
-- **Answers “why is my Wi‑Fi bad?”**: signal/noise/SNR history, same-SSID and same-channel occupancy, issue heuristics, BSS compare with IE diff, IE tree.
-- **Workbench, not a black box**: filter presets, saved workbench profiles, annotations, named coloring rules, column profiles, CSV/print/snapshot export.
-- **One model everywhere**: the same `@lv24/wifi-core` powers the desktop UI and the CLI; Linux/Windows providers degrade honestly (RSSI derived from quality, unknown widths/IE).
-- **Offline analysis**: import pcap/pcapng captures (radiotap + 802.11 beacon/probe) with explicit warnings for unsupported frames.
-- **Three UI languages**: Russian, English and Simplified Chinese, switchable live in Settings (desktop and Flutter).
-- **Open and reusable**: MIT core/backend/CLI packages, typed provider API, demo provider for CI, no private APIs in the core.
+- **Real data, no stubs.** Live SSID/BSSID/vendor on macOS once the signed
+  helper has Location; RF-only redaction is explicit, never fake “hidden” names.
+- **Answers “why is my Wi‑Fi bad?”** Signal/noise/SNR history, same-SSID and
+  same-channel occupancy, issue heuristics, BSS compare with IE diff, IE tree.
+- **Workbench, not a black box.** Filter presets, saved workbench profiles,
+  annotations, named coloring rules, column profiles, CSV/print/snapshot export,
+  pcap/pcapng import.
+- **Agents get the same picture.** `@lv24/wifi-mcp` exposes scan, summary,
+  channels and issues over MCP — no screen scraping, no duplicated logic.
+- **Three UI languages.** Russian, English and Simplified Chinese, switchable
+  live in Settings (desktop and Flutter).
+- **One model everywhere.** `@lv24/wifi-core` powers the app, CLI, MCP and
+  Flutter client; Linux/Windows providers degrade honestly.
+- **Open and reusable.** MIT core/backend/CLI/MCP packages, typed provider API,
+  demo provider for CI, no private APIs in the core.
 
-## Packages
+## Desktop app (macOS)
 
-| Package                                  | Purpose                                                       | Publish        |
-| ---------------------------------------- | ------------------------------------------------------------- | -------------- |
-| [`@lv24/wifi-core`](packages/core)       | platform-agnostic domain, IE decode, merge, filters, issues   | npm 1.0.0      |
-| [`@lv24/wifi-backend`](packages/backend) | macOS ScanCore / Linux nmcli / Windows netsh / demo providers | npm 1.0.0      |
-| [`@lv24/wifi-cli`](packages/cli)         | `lv24-wifi scan` CLI on every OS                              | npm 1.0.0      |
-| [`@lv24/wifi-mcp`](packages/mcp)         | MCP server: Wi-Fi scan data for AI agents                     | npm (MIT)      |
-| [`@lv24/wifi-web`](packages/web)         | React + MUI UI                                                | app (MIT code) |
-| [`@lv24/wifi-desktop`](packages/desktop) | Electron host (Windows/Linux/macOS)                           | app (MIT code) |
-| `flutter/` + `packages/scan_*`           | mobile/desktop Flutter client and Dart packages               | pub.dev-ready  |
+1. Download `LV24 WiFi Explorer-1.0.0-arm64-public.dmg` from
+   [Releases](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/latest).
+2. Open it and drag the app to **Applications**.
+3. First launch: **right-click → Open** (the build is signed but not yet
+   notarized — see [Known limitations](#known-limitations)).
+4. Grant **Location** once to `ScanCore` — macOS treats Wi‑Fi names as location
+   data. Without it the app shows the demo badge instead of inventing names.
 
-```
-packages/core      ← no DOM/Node/Electron
-packages/backend   ← depends on core
-packages/cli       ← depends on backend
-packages/web       ← depends on core
-packages/desktop   ← depends on backend + core
-```
+The public DMG is built **without** the commercial MUI key, so the data grid
+shows a small MUI watermark. A private, watermark-free build is documented in
+[`docs/RELEASE.md`](docs/RELEASE.md).
 
-## MCP for agents
+### Linux / Windows desktop
 
-[`@lv24/wifi-mcp`](packages/mcp) exposes live scan data over MCP (stdio):
-`wifi_scan`, `wifi_network`, `wifi_summary`, `wifi_channels` (utilization +
-beacon estimate), `wifi_issues` and `wifi_providers`. It reuses the same
-`@lv24/wifi-backend` + `@lv24/wifi-core` stack as the app, so agents see the
-same networks, channels and issue heuristics. See [`docs/MCP.md`](docs/MCP.md)
-for client configs (Claude Desktop, Cursor, OpenCode) and data-honesty notes.
+`yarn dist:linux` / `yarn dist:win` produce installers from source. Live
+scanning on Linux uses NetworkManager (`nmcli`), on Windows `netsh`; both expose
+fewer fields than macOS (see the table below). Windows/Linux packages are not
+signed.
 
-```bash
-npx -y @lv24/wifi-mcp          # published package
-yarn build:mcp && node packages/mcp/dist/main.js   # local dev
-```
-
-The CLI is on npm too:
+## CLI
 
 ```bash
 npm i -g @lv24/wifi-cli
-lv24-wifi scan --format json
+
+lv24-wifi providers                  # what this machine can scan
+lv24-wifi scan --format table        # live scan
+lv24-wifi scan --ssid "Cafe" --format json
+lv24-wifi scan --provider demo --format json --out scan.json
 ```
+
+The CLI is the same engine as the app: providers, display names, bands,
+security and IE decoding. `--format json` is agent-friendly; `--count` and
+`--interval` control pacing.
+
+## MCP for agents
+
+```bash
+npx -y @lv24/wifi-mcp
+```
+
+`@lv24/wifi-mcp` is a stdio MCP server with six tools:
+
+| Tool             | What an agent gets                                                      |
+| ---------------- | ----------------------------------------------------------------------- |
+| `wifi_providers` | providers available here + honest capability gaps                       |
+| `wifi_scan`      | active scan → compact BSS rows (`limit`, `fields`)                      |
+| `wifi_network`   | one BSS by BSSID (cache or fresh scan)                                  |
+| `wifi_summary`   | band/security/vendor counts, busiest channels, strongest/weakest        |
+| `wifi_channels`  | per-channel utilization + beacon-overhead **estimate**                  |
+| `wifi_issues`    | issue heuristics: low signal, overlap, open security, DFS, hidden SSID… |
+
+OpenCode (`opencode.json`):
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "lv24-wifi": {
+      "type": "local",
+      "command": ["npx", "-y", "@lv24/wifi-mcp"],
+      "enabled": true
+    }
+  }
+}
+```
+
+Claude Desktop (`claude_desktop_config.json`) and Cursor use the same
+`mcpServers` shape. Full setup, macOS helper env vars and data-honesty notes:
+[`docs/MCP.md`](docs/MCP.md). Machine-readable project summary for agents:
+[`llms.txt`](llms.txt).
 
 ## Cross-platform scan sources
 
-| OS          | Provider         | What you get                                                                                   |
-| ----------- | ---------------- | ---------------------------------------------------------------------------------------------- |
-| macOS 13.5+ | `macos-scancore` | CoreWLAN active scan, real SSID/BSSID when signed helper has Location, channel width, PHY, IEs |
-| Linux       | `linux-nmcli`    | NetworkManager scan; RSSI derived from signal quality, widths/IEs unknown by design            |
-| Windows     | `windows-netsh`  | `netsh` BSS scan (English output); widths/IEs unknown by design                                |
-| anywhere    | `demo`           | deterministic fixtures for CI, screenshots and unsupported hardware                            |
+| OS          | Provider         | What you get                                                                 |
+| ----------- | ---------------- | ---------------------------------------------------------------------------- |
+| macOS 13.5+ | `macos-scancore` | CoreWLAN active scan, real SSID/BSSID with Location, channel width, PHY, IEs |
+| Linux       | `linux-nmcli`    | NetworkManager scan; RSSI from signal quality; widths/IEs unknown by design  |
+| Windows     | `windows-netsh`  | `netsh` BSS scan (English output); widths/IEs unknown by design              |
+| anywhere    | `demo`           | deterministic fixtures for CI, screenshots and unsupported hardware          |
 
-```bash
-yarn cli scan --provider auto --count 2 --format table
-yarn cli scan --provider demo --format json --out scan.json
+Missing data is reported as missing (`—`, `unknown`, capability flags), never
+guessed. See [`docs/SPEC.md`](docs/SPEC.md) and
+[`docs/PARITY-GAP.md`](docs/PARITY-GAP.md).
+
+## Packages
+
+| Package                                                          | Purpose                                                       | npm     |
+| ---------------------------------------------------------------- | ------------------------------------------------------------- | ------- |
+| [`@lv24/wifi-core`](packages/core)                               | domain, IE decode, merge, filters, issues, utilization        | `1.0.0` |
+| [`@lv24/wifi-backend`](packages/backend)                         | macOS ScanCore / Linux nmcli / Windows netsh / demo providers | `1.0.0` |
+| [`@lv24/wifi-cli`](packages/cli)                                 | `lv24-wifi` CLI on every OS                                   | `1.0.0` |
+| [`@lv24/wifi-mcp`](packages/mcp)                                 | MCP server for AI agents                                      | `1.0.0` |
+| [`@lv24/wifi-web`](packages/web) / [`desktop`](packages/desktop) | Electron + React hosts (not published)                        | source  |
+| `flutter/` + [`packages/scan_*`](packages)                       | Flutter client and Dart packages                              | source  |
+
+```
+core ← backend ← cli
+core ← web / desktop
+backend + core ← mcp
 ```
 
-Product docs: [`docs/SPEC.md`](docs/SPEC.md) · [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · [`docs/FLUTTER.md`](docs/FLUTTER.md) · [`docs/PERMISSIONS.md`](docs/PERMISSIONS.md) · [`docs/PARITY-GAP.md`](docs/PARITY-GAP.md)
+## Build from source
 
----
-
-## Requirements
-
-- macOS **13.5+** for the native CoreWLAN helper; Linux with NetworkManager (`nmcli`) or Windows (`netsh`) for live CLI/desktop scans
-- Node **≥ 20**
-- **Yarn 1.22** (`packageManager` in `package.json`)
-
-## Install & run (60 seconds)
+Requirements: Node **≥ 20**, Yarn **1.22**, macOS 13.5+ for the Swift helper.
 
 ```bash
 git clone https://github.com/LevapVeeskela/lv24-Wifi-Explorer.git
 cd lv24-Wifi-Explorer
 yarn install
-yarn build:scancore      # macOS live helper (signed automatically when a cert exists)
-yarn dev                 # desktop app: live scan by default
+yarn build:scancore     # macOS live helper (universal arm64 + x86_64)
+yarn dev                # Vite + Electron
 ```
 
-First macOS launch asks for **Location** once for `ScanCore` (Apple treats
-SSID/BSSID as location data). Approve it and real network names appear. No
-helper, no permission, or `--demo` shows deterministic fixtures with a visible
-demo badge.
+Useful gates: `yarn typecheck`, `yarn lint`, `yarn check:boundaries`,
+`yarn test` (400+ tests), `yarn build`, `yarn smoke:dist`.
 
-Prefer the terminal?
+Flutter: `cd flutter && flutter pub get && flutter run -d macos` (see
+[`docs/FLUTTER.md`](docs/FLUTTER.md)).
 
-```bash
-yarn cli scan --provider auto --format table
-```
+## Documentation
 
-**Git on macOS / Git на Mac:** if `/usr/bin/git` fails on the Xcode license, prepend CLT to `PATH`:
+| Doc                                            | Contents                                           |
+| ---------------------------------------------- | -------------------------------------------------- |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | process model, IPC, data flow, FSD layout          |
+| [`docs/MCP.md`](docs/MCP.md)                   | MCP tools, client configs, macOS helper, caveats   |
+| [`docs/PACKAGES.md`](docs/PACKAGES.md)         | package layout and publishing                      |
+| [`docs/SPEC.md`](docs/SPEC.md)                 | product spec, field availability, issue heuristics |
+| [`docs/PERMISSIONS.md`](docs/PERMISSIONS.md)   | macOS Location/TCC behaviour                       |
+| [`docs/FLUTTER.md`](docs/FLUTTER.md)           | Flutter client and platform limits                 |
+| [`docs/PARITY-GAP.md`](docs/PARITY-GAP.md)     | what v1 deliberately does not do                   |
+| [`docs/RELEASE.md`](docs/RELEASE.md)           | signing, notarization, public vs private artifacts |
+| [`CHANGELOG.md`](CHANGELOG.md)                 | release history                                    |
 
-```bash
-export PATH="/Library/Developer/CommandLineTools/usr/bin:$PATH"
-```
+## Known limitations
 
----
+- **Not notarized yet.** The 1.0.0 macOS build is signed with an Apple
+  Development certificate, so Gatekeeper asks for a manual open. Notarization
+  requires a Developer ID Application certificate (Apple Developer Program).
+- **Public DMG watermark.** Built without the commercial MUI X key; the data
+  grid shows the MUI watermark. Private builds are documented in
+  [`docs/RELEASE.md`](docs/RELEASE.md).
+- **No auto-update.** Releases are manual downloads.
+- **Windows/Linux installers** are built from source and not hardware-verified
+  by the maintainers yet.
+- **Monitor mode, spectrum FFT, client lists, remote sensors** are out of scope;
+  see [`docs/PARITY-GAP.md`](docs/PARITY-GAP.md).
 
-## How to run / Запуск
+## License and MUI
 
-```bash
-yarn install
-cp .env.example .env.local
-yarn dev
-```
+Core, backend, CLI, MCP and app code are **MIT**. The desktop/web UI depends on
+commercial **MUI X Pro**; `VITE_MUI_LICENSE_KEY` is supplied at build time from
+`.env.local` and is never committed. Without it the grid is watermarked but the
+app still works. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-- **`yarn dev`** — Vite (**5173**) + Electron.
-- **`yarn dev:renderer`** — Vite only (UI in browser; no Electron shell).
-- Copy **`VITE_MUI_LICENSE_KEY`** into **`.env.local`** only (from lv24 city frontend `.env.local`). **Do not commit, log, or paste the key.** / Ключ только в `.env.local`, не коммитить и не печатать.
-- **Live scan is the default.** If ScanCore is missing/fails or Location is denied, the app falls back to **demo fixtures** with an explicit demo badge ([`docs/PERMISSIONS.md`](docs/PERMISSIONS.md)). Opt into demo with `--demo` or `WIFI_EXPLORER_DEMO=1`.
+## Contributing
 
-Live scan locally (all OS):
+Issues and PRs are welcome. Read [`CONTRIBUTING.md`](CONTRIBUTING.md); run
+`yarn typecheck && yarn lint && yarn check:boundaries && yarn test` before
+opening a PR. Commit style: `[Wifi](<area>) Short description`.
 
-```bash
-yarn build:scancore   # macOS helper (universal arm64+x86_64)
-yarn dev:electron     # live by default; --demo for fixtures
-
-yarn cli scan --provider auto --format table   # headless, all OS
-```
-
-**Flutter** ([`flutter/`](flutter/), details in [`docs/FLUTTER.md`](docs/FLUTTER.md)) — uses path packages `scan_domain`, `scan_core_client`, `scan_l10n`, `lv24_sunset_theme`:
-
-Dart packages use a root **pub workspace** ([`pubspec.yaml`](pubspec.yaml) at repo root). From the repository root, run **`dart pub get`** to resolve `packages/*` and [`flutter/`](flutter/).
-
-```bash
-cd flutter && flutter pub get && flutter run -d macos
-flutter run -d android
-flutter run -d ios
-```
-
-Demo fixtures by default. **Android:** live `WifiManager` via [`flutter/lib/features/android_scan`](flutter/lib/features/android_scan) (public APIs; location / nearby Wi‑Fi; OS throttling; demo fallback). **Linux:** NetworkManager D-Bus `GetAccessPoints`, connected-network fallback, demo fallback; no `iw`/monitor. **Windows:** Native Wifi associated link (`WlanQueryInterface`; documented quality→RSSI); `WlanGetAvailableNetworkList` is not a BSS survey (no BSSID/channel/IEs); no association → demo fixtures; no WinRT/MSIX `wifiControl`, monitor, or NDIS. **iOS:** connected-network only. **Live scan (macOS):** `yarn run build:scancore`, then `cd flutter && flutter run -d macos --dart-define=LIVE_SCAN=true`, or **Settings → Live** (`preferDemo: false`). Helper missing → fixtures. Live macOS ScanCore still needs Location ([`docs/PERMISSIONS.md`](docs/PERMISSIONS.md)). If `/usr/bin/git` or Xcode tooling fails on the license prompt, use the `PATH` export above before `flutter run`. Workbench **File** open/save: **`.lv24scan`** only (`lv24.wifi-explorer.scan` v1); rejects **`.wifiexplorer`**. **Export CSV** (visible/selected/all) follows the visible column set; the Flutter client uses `file_picker` for open/save.
-
----
-
-## Scripts
-
-| Script                       | Purpose                                             |
-| ---------------------------- | --------------------------------------------------- |
-| `yarn dev`                   | Vite + Electron                                     |
-| `yarn dev:renderer`          | Vite only                                           |
-| `yarn dev:electron`          | Electron only (after Vite up)                       |
-| `yarn build`                 | Packages + main/preload + renderer production build |
-| `yarn build:packages`        | Build `core`, `backend`, `cli`, `mcp`               |
-| `yarn build:mcp`             | Build the MCP server                                |
-| `yarn mcp`                   | Run the MCP server (stdio)                          |
-| `yarn cli`                   | Run the cross-platform CLI (`lv24-wifi`)            |
-| `yarn typecheck`             | TypeScript (app + electron)                         |
-| `yarn build:scancore`        | Build `native/ScanCore` Swift helper                |
-| `yarn check:scancore`        | Fail unless ScanCore is universal (arm64 + x86_64)  |
-| `yarn test`                  | Vitest (includes scan suite)                        |
-| `yarn test:scan`             | Same scan suite through compiled `node:test`        |
-| `yarn format:check`          | oxfmt verification                                  |
-| `yarn smoke:dist`            | Verify built renderer CSP, bundles and preload      |
-| `yarn dist:mac` / `dist:win` | electron-builder installers                         |
-| `yarn dist:mac:dir`          | Unpacked local macOS `.app` smoke package           |
-| `yarn dist:mac:public`       | Key-free watermarked macOS DMG (redistributable)    |
-| `yarn check:public-bundle`   | Fail if the MUI key leaked into `dist/`             |
-
-Env overrides: `WIFI_EXPLORER_DEMO=1` (opt-in demo), `WIFI_RENDERER_DEV_URL`.
-
----
-
-## Release / distribution
-
-Checklist: [`docs/RELEASE.md`](docs/RELEASE.md); history:
-[`CHANGELOG.md`](CHANGELOG.md).
-
-- **macOS** is the only fully signed path: `yarn build:scancore` +
-  `yarn dist:mac` require a universal ScanCore helper (`yarn check:scancore`
-  guards it) and a **Developer ID Application** identity. Distribution builds
-  are hardened-runtime signed; notarization is enabled and runs only when
-  `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD` and `APPLE_TEAM_ID` are exported.
-  Unsigned local builds still work (Gatekeeper will warn).
-- **Private vs public artifacts**: `dist:mac` / `dist:mac:dir` inline
-  `VITE_MUI_LICENSE_KEY` from `.env.local` and must **not** be redistributed.
-  `dist:mac:public` builds with an empty key, fails if the key is found in the
-  bundle, and produces a watermarked DMG that is safe to publish.
-- **Windows/Linux** installers are built on their own platform
-  (`yarn dist:win`, `yarn dist:linux`); Windows builds are unsigned unless a
-  certificate is configured.
-- **No auto-updater yet** — releases are manual downloads from GitHub Releases.
-- **Versions** live in the root `package.json` (and `flutter/pubspec.yaml` for
-  the Flutter client); document user-visible changes in `CHANGELOG.md`.
-
----
-
-## MUI X license
-
-Paid: `@mui/x-data-grid-pro`, `@mui/x-license` **8.11.x**.
-
-- **`VITE_MUI_LICENSE_KEY`** lives in **`.env.local`** only; wired via `applyMuiXLicense()` — never log or print it.
-- Do not bump paid MUI X to 9.x without a new org license.
-- Without a key the web/desktop grid shows the MUI watermark; `core`, `backend`, and `cli` build and run without any MUI dependency.
-
----
-
-## Architecture (short)
-
-- **Renderer:** `packages/web/src` (FSD), bridge `window.wifiExplorer` from `packages/desktop/src/preload.ts`
-- **Main:** `packages/desktop/src` — IPC, provider lifecycle, demo fallback
-- **Backend:** `packages/backend` — cross-platform scan providers
-- **OUI:** resolved in the renderer from `resources/oui/registry.json`
-- **Helper:** `native/ScanCore/` — Swift CoreWLAN scan + JSON Lines
-
-Details: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
-
----
-
-## Commit message style
-
-```
-[Wifi](<area>) Short description
-```
-
-Examples: `[Wifi](docs) Add v1 spec`, `[Wifi](scancore) Fix scan pacing`.
-
----
-
-## Clean room
-
-Do not use competitor app bundles, proprietary formats, or decompiled assets. Domain types under `packages/core/src/domain/` describe the LV24 model only.
+Clean-room project: no competitor bundles, private APIs or trademarked assets.
