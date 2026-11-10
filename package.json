@@ -1,6 +1,6 @@
 {
   "name": "lv24-wifi-explorer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Cross-platform Wi-Fi scanner toolkit: core domain, cross-OS backend, CLI, web UI, Electron desktop host, Flutter client.",
   "license": "MIT",

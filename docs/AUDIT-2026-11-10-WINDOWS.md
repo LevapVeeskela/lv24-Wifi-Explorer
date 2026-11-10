@@ -90,15 +90,15 @@ viewport the footer is 58 px tall, `footer.scrollWidth == footer.clientWidth`, a
 `document.scrollWidth == 1366` (no page scrollbar). The extracted exe icon is the
 LV24 tile, not the Electron default.
 
-The installer was built with `upload=false`, so the public v1.0.0 release assets
-are still the old build; a new release is required to distribute this fix.
+The installer was built with `upload=false`; the v1.0.1 release is the first
+public build that ships this fix (the v1.0.0 assets keep the old parser and are
+left in place for reproducibility).
 
 ## Residual findings
 
-1. **The public v1.0.0 release still contains the old parser.** The verified
-   installer from CI run 42795953257 was built with `upload=false`; a new release
-   (or replacing the release asset, which breaks the immutable URL) is required
-   before installed users get the fix.
+1. ~~The public v1.0.0 release still contains the old parser.~~ Fixed by v1.0.1
+   (release workflow run 42798744194). The v1.0.0 assets are intentionally not
+   replaced: `gh release upload` to another tag keeps the old URLs valid.
 2. `interfaceName` and `associated` are still `null` for netsh (the provider does
    not parse `netsh wlan show interfaces`).
 3. `ibss` is always `false`; Ad-Hoc networks are not distinguished.

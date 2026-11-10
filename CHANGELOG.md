@@ -60,8 +60,8 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Packaging
 
-- Publishable packages and the desktop app are versioned `1.0.1`; the Flutter
-  app is `1.0.1+2`. Same source tree, independent release tracks.
+- Publishable packages are versioned `1.0.1`; the desktop app is `1.0.2` and the
+  Flutter app `1.0.2+3`. Same source tree, independent release tracks.
 - `dist:mac:public` builds a redistributable, watermarked macOS DMG without the
   commercial MUI key; `check:public-bundle` fails the build if the key leaks
   into `dist/`.
@@ -71,6 +71,19 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Simplified Chinese added: web catalog, MUI DataGrid locale, Flutter ARB catalog,
   language picker in Settings, persisted `lv24.locale` preference.
 - Hardcoded two-language Flutter workbench strings moved into ARB.
+
+## [1.0.2] — 2026-11-10
+
+The version shown in the app is now read from the root `package.json` at build
+time. v1.0.1 reported `1.0.0` in the status bar, the About dialog and snapshot
+metadata because `APP_VERSION` was a hardcoded constant.
+
+### Fixed
+
+- `APP_VERSION` is injected by Vite (`__APP_VERSION__`) from the root manifest;
+  a unit test fails if the constant is hardcoded again. The status bar, About
+  dialog and exported snapshots now report `1.0.2`.
+- Flutter `pubspec.yaml` moves to `1.0.2+3` to match the desktop track.
 
 ## [1.0.1] — 2026-11-10
 

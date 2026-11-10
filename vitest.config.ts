@@ -1,10 +1,18 @@
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 
+const appVersion = (
+  JSON.parse(readFileSync(path.join(rootDir, 'package.json'), 'utf8')) as { version: string }
+).version;
+
 export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(appVersion),
+  },
   resolve: {
     alias: [
       {
