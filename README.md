@@ -77,6 +77,12 @@ scanning on Linux uses NetworkManager (`nmcli`), on Windows `netsh`; both expose
 fewer fields than macOS (see the table below). Windows/Linux packages are not
 signed.
 
+The free channels (winget, Scoop, Chocolatey, AppImageHub, Snap/Flathub status,
+Microsoft Store) and their exact prerequisites are tracked in
+[`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md). Nothing there is auto-published:
+Windows/Linux assets are built by the manual
+[`release-desktop.yml`](.github/workflows/release-desktop.yml) workflow.
+
 ## CLI
 
 ```bash
@@ -129,6 +135,23 @@ Claude Desktop (`claude_desktop_config.json`) and Cursor use the same
 [`docs/MCP.md`](docs/MCP.md). Machine-readable project summary for agents:
 [`llms.txt`](llms.txt).
 
+## Container image (GHCR)
+
+A headless image with the CLI and the MCP server (no Electron/Flutter UI) is
+published manually to GitHub Container Registry:
+
+```bash
+docker run --rm ghcr.io/levapveeskela/lv24-wifi-explorer providers
+docker run --rm ghcr.io/levapveeskela/lv24-wifi-explorer scan --provider demo
+docker run -i --rm ghcr.io/levapveeskela/lv24-wifi-explorer mcp
+```
+
+`--provider demo` works everywhere. Live Linux scans are **not** available in
+the image: `linux-nmcli` needs NetworkManager and D-Bus on the host. Build it
+locally with `docker build -f docker/Dockerfile -t lv24-wifi-explorer .`; publish
+with the manual [`ghcr-publish.yml`](.github/workflows/ghcr-publish.yml)
+workflow. Details: [`docs/PACKAGES.md`](docs/PACKAGES.md#github-native-distribution).
+
 ## Python / PyPI launcher
 
 A thin Python launcher, [`lv24-wifi-explorer`](python), exposes the same CLI
@@ -176,6 +199,12 @@ core ← web / desktop
 backend + core ← mcp
 ```
 
+GitHub-native mirrors (manual, not a replacement for npmjs): the
+`ghcr.io/levapveeskela/lv24-wifi-explorer` container image and the
+`@levapveeskela/lv24-wifi-explorer` bundle on GitHub Packages. GitHub Packages
+requires a token even for public packages; see
+[`docs/PACKAGES.md`](docs/PACKAGES.md#github-native-distribution).
+
 ## Build from source
 
 Requirements: Node **≥ 20**, Yarn **1.22**, macOS 13.5+ for the Swift helper.
@@ -196,18 +225,20 @@ Flutter: `cd flutter && flutter pub get && flutter run -d macos` (see
 
 ## Documentation
 
-| Doc                                            | Contents                                           |
-| ---------------------------------------------- | -------------------------------------------------- |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | process model, IPC, data flow, FSD layout          |
-| [`docs/MCP.md`](docs/MCP.md)                   | MCP tools, client configs, macOS helper, caveats   |
-| [`docs/pypi.md`](docs/pypi.md)                 | Python launcher, PyPI Trusted Publishing, versions |
-| [`docs/PACKAGES.md`](docs/PACKAGES.md)         | package layout and publishing                      |
-| [`docs/SPEC.md`](docs/SPEC.md)                 | product spec, field availability, issue heuristics |
-| [`docs/PERMISSIONS.md`](docs/PERMISSIONS.md)   | macOS Location/TCC behaviour                       |
-| [`docs/FLUTTER.md`](docs/FLUTTER.md)           | Flutter client and platform limits                 |
-| [`docs/PARITY-GAP.md`](docs/PARITY-GAP.md)     | what v1 deliberately does not do                   |
-| [`docs/RELEASE.md`](docs/RELEASE.md)           | signing, notarization, public vs private artifacts |
-| [`CHANGELOG.md`](CHANGELOG.md)                 | release history                                    |
+| Doc                                                                            | Contents                                             |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)                                 | process model, IPC, data flow, FSD layout            |
+| [`docs/MCP.md`](docs/MCP.md)                                                   | MCP tools, client configs, macOS helper, caveats     |
+| [`docs/pypi.md`](docs/pypi.md)                                                 | Python launcher, PyPI Trusted Publishing, versions   |
+| [`docs/PACKAGES.md`](docs/PACKAGES.md)                                         | package layout and publishing                        |
+| [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md)                                 | free publishers: winget, Scoop, Chocolatey, AppImage |
+| [`docs/DISTRIBUTION-MICROSOFT-STORE.md`](docs/DISTRIBUTION-MICROSOFT-STORE.md) | Microsoft Store, MSIX vs MSI/EXE, signing, licences  |
+| [`docs/SPEC.md`](docs/SPEC.md)                                                 | product spec, field availability, issue heuristics   |
+| [`docs/PERMISSIONS.md`](docs/PERMISSIONS.md)                                   | macOS Location/TCC behaviour                         |
+| [`docs/FLUTTER.md`](docs/FLUTTER.md)                                           | Flutter client and platform limits                   |
+| [`docs/PARITY-GAP.md`](docs/PARITY-GAP.md)                                     | what v1 deliberately does not do                     |
+| [`docs/RELEASE.md`](docs/RELEASE.md)                                           | signing, notarization, public vs private artifacts   |
+| [`CHANGELOG.md`](CHANGELOG.md)                                                 | release history                                      |
 
 ## Known limitations
 

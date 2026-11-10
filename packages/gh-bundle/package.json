@@ -1,0 +1,38 @@
+{
+  "name": "@levapveeskela/lv24-wifi-explorer",
+  "version": "1.0.0",
+  "private": false,
+  "description": "GitHub-native convenience bundle that installs the LV24 WiFi Explorer CLI (@lv24/wifi-cli) and MCP server (@lv24/wifi-mcp) from npm.",
+  "keywords": [
+    "cli",
+    "github-packages",
+    "mcp",
+    "model-context-protocol",
+    "wifi",
+    "wifi-scanner"
+  ],
+  "homepage": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer#readme",
+  "bugs": {
+    "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues"
+  },
+  "license": "MIT",
+  "author": "LV24",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer.git",
+    "directory": "packages/gh-bundle"
+  },
+  "files": [
+    "README.md"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@lv24/wifi-cli": "1.0.0",
+    "@lv24/wifi-mcp": "1.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

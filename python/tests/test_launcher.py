@@ -8,6 +8,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -17,7 +18,7 @@ if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
 from lv24_wifi_explorer import __version__, cli, mcp
-from lv24_wifi_explorer._npx import npm_spec
+from lv24_wifi_explorer._npx import _node_launcher, npm_spec
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -185,6 +186,75 @@ class LauncherTests(unittest.TestCase):
                     npm_spec(package, env_name),
                     "{0}@{1}".format(package, __version__),
                 )
+
+
+class WindowsShimTests(unittest.TestCase):
+    def _layout(self, tmp: str) -> tuple:
+        root = Path(tmp)
+        npx = root / "npx.cmd"
+        script = root / "node_modules" / "npm" / "bin" / "npx-cli.js"
+        node = root / "node.exe"
+        npx.touch()
+        script.parent.mkdir(parents=True)
+        script.touch()
+        node.touch()
+        return npx, script, node
+
+    def test_non_windows_platform_keeps_the_shim_command(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            npx, _, _ = self._layout(tmp)
+
+            self.assertIsNone(_node_launcher(str(npx), platform="posix"))
+
+    def test_windows_cmd_shim_is_replaced_with_node_and_npx_cli(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            npx, script, node = self._layout(tmp)
+
+            self.assertEqual(
+                _node_launcher(str(npx), platform="nt"),
+                [str(node), str(script)],
+            )
+
+    def test_windows_shim_without_npx_cli_falls_back_to_the_shim(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            npx, script, _ = self._layout(tmp)
+            script.unlink()
+
+            self.assertIsNone(_node_launcher(str(npx), platform="nt"))
+
+    def test_windows_exe_shim_is_not_rewritten(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            npx, _, _ = self._layout(tmp)
+            exe = npx.with_suffix(".exe")
+            npx.replace(exe)
+
+            self.assertIsNone(_node_launcher(str(exe), platform="nt"))
+
+    def test_windows_metacharacters_survive_argument_forwarding(self):
+        args = ["scan", "--ssid", "Cafe&Bar %PATH% a^b|c", "--format", "json"]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            npx, script, node = self._layout(tmp)
+
+            with mock.patch.dict(os.environ, {}, clear=False):
+                with mock.patch(
+                    "lv24_wifi_explorer._npx.shutil.which", return_value=str(npx)
+                ):
+                    with mock.patch(
+                        "lv24_wifi_explorer._npx.subprocess.run",
+                        return_value=mock.Mock(returncode=0),
+                    ) as run:
+                        with contextlib.redirect_stdout(io.StringIO()):
+                            with contextlib.redirect_stderr(io.StringIO()):
+                                code = cli.main(list(args))
+
+            self.assertEqual(code, 0)
+            command = run.call_args.args[0]
+            self.assertEqual(command[:2], [str(node), str(script)])
+            self.assertEqual(
+                command[2:],
+                ["--yes", "@lv24/wifi-cli@{0}".format(__version__), *args],
+            )
 
 
 class VersionTests(unittest.TestCase):

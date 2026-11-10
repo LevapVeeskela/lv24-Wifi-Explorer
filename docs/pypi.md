@@ -75,6 +75,11 @@ The child exit code is propagated unchanged. The launcher returns `127` when
 `npx` is missing or cannot be started (with an installation hint on stderr) and
 `130` when interrupted with `Ctrl+C`.
 
+On Windows the launcher starts npm's `npx-cli.js` with Node.js directly instead
+of the `npx.cmd` shim. `cmd.exe` would re-parse the command line, so an SSID such
+as `Cafe&Bar`, a `%PATH%`-like value or `a^b` would be altered before it reaches
+the CLI; the direct Node invocation keeps every argument intact.
+
 ## Release process
 
 Publishing uses PyPI Trusted Publishing (OIDC). No API token, password or PyPI

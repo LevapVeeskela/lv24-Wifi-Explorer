@@ -1,0 +1,79 @@
+# Manual publish of the GitHub-native npm bundle to GitHub Packages.
+#
+# Only `packages/gh-bundle` is published. The canonical packages stay on npmjs
+# as `@lv24/*`: that scope resolves to a different GitHub account (github.com/lv24),
+# so this repository's GITHUB_TOKEN cannot publish or host it in GitHub Packages.
+# See docs/PACKAGES.md.
+#
+# Zero-spend policy: workflow_dispatch only, public repository on ubuntu-latest,
+# a few seconds of runtime, and no automatic triggers.
+name: Publish npm bundle (GitHub Packages)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Pack and validate without publishing'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: gh-packages-publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: packages/gh-bundle
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@levapveeskela'
+
+      - name: Check the bundle points at published npm versions
+        run: |
+          set -euo pipefail
+          node -e "
+            const deps = require('./package.json').dependencies;
+            for (const name of Object.keys(deps)) console.log(name + '@' + deps[name]);
+          "
+          # The dependencies are npmjs packages; query npmjs explicitly because
+          # setup-node made GitHub Packages the default registry for npm.
+          for dependency in $(node -p "Object.entries(require('./package.json').dependencies).map(([n, v]) => n + '@' + v).join(' ')"); do
+            npm view "$dependency" version --registry=https://registry.npmjs.org
+          done
+
+      - name: Pack (dry run)
+        if: ${{ inputs.dry_run }}
+        run: npm pack --dry-run
+
+      - name: Publish to GitHub Packages
+        if: ${{ !inputs.dry_run }}
+        run: npm publish --registry https://npm.pkg.github.com
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        if: ${{ !inputs.dry_run }}
+        run: |
+          {
+            echo '### Published `@levapveeskela/lv24-wifi-explorer`'
+            echo
+            echo 'First publish creates a **private** package; set visibility to public in the package settings if it should be installable by everyone.'
+            echo
+            echo '```'
+            echo 'npm install -g @levapveeskela/lv24-wifi-explorer'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

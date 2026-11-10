@@ -24,6 +24,20 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Verified from a clean install: `lv24-wifi providers`, demo scan, and the MCP
   server over stdio with all six tools.
 
+### Distribution
+
+- PyPI launcher `lv24-wifi-explorer` (`pip install lv24-wifi-explorer`) with
+  Trusted Publishing, no API tokens; see `docs/pypi.md`.
+- Headless container image `ghcr.io/levapveeskela/lv24-wifi-explorer` (CLI + MCP)
+  and the `@levapveeskela/lv24-wifi-explorer` GitHub Packages bundle; both are
+  published by manual, zero-spend workflows.
+- Free publisher manifests and a manual release workflow: winget, Scoop,
+  Chocolatey, AppImageHub, self-hosted Homebrew tap; Snap/Flathub/Store paths
+  are documented with their blockers in `docs/DISTRIBUTION.md` and
+  `docs/DISTRIBUTION-MICROSOFT-STORE.md`.
+- `release-desktop.yml` builds unsigned Windows NSIS and Linux AppImage assets on
+  free public-repo runners and can attach them to an existing release.
+
 ### MCP server
 
 - New `@lv24/wifi-mcp` package: stdio MCP server with `wifi_providers`,

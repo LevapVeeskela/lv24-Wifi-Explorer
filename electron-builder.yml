@@ -2,16 +2,19 @@ appId: by.lv24.wifi.explorer
 productName: LV24 WiFi Explorer
 directories:
   output: release
-extraResources:
-  - from: native/ScanCore/.build/ScanCore.app
-    to: ScanCore.app
-    filter:
-      - '**/*'
 files:
   - dist/**
   - dist-electron/**
   - package.json
 mac:
+  # ScanCore is a macOS-only Swift helper. Keeping the extra resource under
+  # `mac` keeps Windows/Linux packaging from looking for native/ScanCore/.build,
+  # which only exists after `yarn build:scancore` on macOS.
+  extraResources:
+    - from: native/ScanCore/.build/ScanCore.app
+      to: ScanCore.app
+      filter:
+        - '**/*'
   icon: resources/icons/icon.icns
   minimumSystemVersion: '13.5'
   target:

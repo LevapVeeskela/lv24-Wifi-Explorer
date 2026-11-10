@@ -1,0 +1,141 @@
+# Manual publish of the headless CLI/MCP container image to GitHub Container Registry.
+#
+# Zero-spend policy:
+#   * workflow_dispatch only — no push, tag, schedule or PR triggers;
+#   * public repository on ubuntu-latest, linux/amd64 only (no QEMU/arm64);
+#   * no cache-to: gha, so the Actions cache/storage quota is never consumed;
+#   * the image is built and smoke-tested before anything is pushed.
+#
+# First publish creates the package with PRIVATE visibility; switch it to public
+# once in the package settings (see docs/PACKAGES.md).
+name: Publish container image (GHCR)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Image tag (semver). Leave empty to use packages/cli version.'
+        required: false
+        type: string
+      push_latest:
+        description: 'Also tag the image as latest'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: ghcr-publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only used to read versions and validate the smoke-test JSON; the image
+      # builds its own Node toolchain inside Docker.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Resolve image name and tags
+        id: meta
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          PUSH_LATEST: ${{ inputs.push_latest }}
+        run: |
+          set -euo pipefail
+          # GHCR requires a lowercase repository path.
+          image="ghcr.io/${GITHUB_REPOSITORY,,}"
+          package_version="$(node -p "require('./packages/cli/package.json').version")"
+          version="${INPUT_VERSION:-$package_version}"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::'$version' is not a semver image tag"
+            exit 1
+          fi
+          tags="${image}:${version}"
+          if [[ "$PUSH_LATEST" == "true" ]]; then
+            tags="${tags}"$'\n'"${image}:latest"
+          fi
+          {
+            echo "image=${image}"
+            echo "version=${version}"
+            echo "tags<<EOF"
+            echo "$tags"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "Publishing ${tags//$'\n'/ }"
+
+      - uses: docker/setup-buildx-action@v3
+
+      # Build locally first (runner arch is amd64): the image is verified before
+      # any tag exists in the registry.
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            VERSION=${{ steps.meta.outputs.version }}
+            REVISION=${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+
+      - name: Smoke test image
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          set -euo pipefail
+          image="${{ steps.meta.outputs.image }}:${VERSION}"
+          docker run --rm "$image" providers
+          docker run --rm "$image" scan --provider demo --format json > /tmp/lv24-demo.json
+          test -s /tmp/lv24-demo.json
+          node -e "const d = require('/tmp/lv24-demo.json'); if (!Array.isArray(d.snapshots) || d.snapshots.length === 0) process.exit(1)"
+          # MCP entrypoint: one initialize handshake over stdio, then EOF.
+          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"smoke","version":"1.0.0"}}}' \
+            | timeout 30 docker run -i --rm "$image" mcp > /tmp/lv24-mcp.jsonl || true
+          grep -q '"serverInfo"' /tmp/lv24-mcp.jsonl
+          # The image must not run as root.
+          docker run --rm --entrypoint id "$image" -u | grep -qv '^0$'
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push tags
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          set -euo pipefail
+          while IFS= read -r tag; do
+            [ -n "$tag" ] || continue
+            docker push "$tag"
+          done <<< "$TAGS"
+
+      - name: Summary
+        env:
+          IMAGE: ${{ steps.meta.outputs.image }}
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          {
+            echo "### Published \`${IMAGE}:${VERSION}\`"
+            echo
+            echo '```'
+            echo "docker run --rm ${IMAGE}:${VERSION} providers"
+            echo "docker run --rm ${IMAGE}:${VERSION} scan --provider demo"
+            echo '```'
+            echo
+            echo 'If this was the first publish, set the package visibility to public in the package settings.'
+          } >> "$GITHUB_STEP_SUMMARY"

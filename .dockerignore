@@ -1,0 +1,31 @@
+# Build context for docker/Dockerfile — keep it to sources + manifests only.
+# Build output is produced inside the image; host artifacts would only shadow it.
+.git
+.github
+.vscode
+node_modules
+**/node_modules
+dist
+**/dist
+dist-electron
+release
+out
+coverage
+.tmp
+tmp
+*.log
+
+# Not needed by the headless CLI/MCP build (Electron, Flutter, Python, docs).
+flutter
+native
+python
+docs
+data
+resources
+
+# Secrets and machine-local config never enter the image.
+.env
+.env.*
+!.env.example
+*.pem
+.DS_Store

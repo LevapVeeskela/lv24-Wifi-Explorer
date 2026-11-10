@@ -1,0 +1,219 @@
+# Builds unsigned Windows/Linux desktop artifacts for an existing release tag.
+#
+# Zero-spend policy:
+#   - `workflow_dispatch` only: nothing runs on push/PR/tag, so no minutes are
+#     spent without an explicit click.
+#   - Standard GitHub-hosted runners on a public repository are free; no larger
+#     runners, no paid runners, no matrix fan-out.
+#   - No signing secrets. Artifacts are unsigned on purpose: Windows shows a
+#     SmartScreen prompt, Linux has no signature at all. See docs/DISTRIBUTION.md.
+#   - This workflow never creates a release or a tag. With `upload=true` it only
+#     attaches files to a release the owner already published.
+#
+# Artifact names are normalized here (instead of in electron-builder.yml) so the
+# macOS DMG naming and the existing `dist:mac:public` flow stay untouched, and so
+# the winget/Scoop/Chocolatey manifests can point at a stable, URL-safe filename.
+name: Release desktop artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to build and attach to (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+        type: string
+      upload:
+        description: 'Attach the built artifacts to that GitHub Release'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-desktop-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  windows:
+    name: Windows NSIS x64
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout the release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+
+      - name: Enable Yarn 1.22
+        run: npm install -g yarn@1.22.22
+
+      - name: Install (frozen lockfile)
+        run: yarn install --frozen-lockfile --non-interactive
+
+      - name: Build renderer + desktop
+        run: yarn build
+        env:
+          CI: true
+
+      # Without .env.local there is no MUI key, so the artifact is the public
+      # (watermarked) redistribution build. The guard is a no-op on CI but keeps
+      # a self-hosted runner from leaking a commercial key into a release.
+      - name: Guard against a commercial MUI key
+        run: yarn check:public-bundle
+
+      - name: Package NSIS x64
+        run: yarn dist:win
+        env:
+          CI: true
+
+      - name: Normalize filename and write checksum
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $version = node -p "require('./package.json').version"
+          $name = "LV24-WiFi-Explorer-$version-win-x64.exe"
+          $installer = Get-ChildItem -Path release -Filter *.exe -File |
+            Where-Object { $_.Name -notlike '*Uninstall*' } |
+            Select-Object -First 1
+          if (-not $installer) { throw 'No NSIS installer found in release/' }
+          Copy-Item -Path $installer.FullName -Destination "release/$name" -Force
+          Remove-Item -Path $installer.FullName -Force
+          $hash = (Get-FileHash -Path "release/$name" -Algorithm SHA256).Hash.ToLower()
+          # LF endings so `sha256sum --check` can read it on Linux later.
+          [IO.File]::WriteAllText(
+            (Join-Path (Get-Location) 'release/SHA256SUMS-windows.txt'),
+            "$hash  $name`n"
+          )
+          Get-Content "release/SHA256SUMS-windows.txt"
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-windows
+          path: |
+            release/*.exe
+            release/SHA256SUMS-windows.txt
+          if-no-files-found: error
+          retention-days: 14
+
+  linux:
+    name: Linux AppImage x64
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout the release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+
+      - name: Enable Yarn 1.22
+        run: npm install -g yarn@1.22.22
+
+      - name: Install (frozen lockfile)
+        run: yarn install --frozen-lockfile --non-interactive
+
+      - name: Build renderer + desktop
+        run: yarn build
+        env:
+          CI: true
+
+      - name: Guard against a commercial MUI key
+        run: yarn check:public-bundle
+
+      # --x64 keeps the job to one architecture: electron-builder.yml also lists
+      # arm64, and cross-building it here would double the artifact set.
+      - name: Package AppImage x64
+        run: yarn dist:linux --x64
+        env:
+          CI: true
+
+      - name: Normalize filename and write checksum
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          # AppImageHub recognises `x86_64`; `x64` is a Windows-ism and would make
+          # the catalog test skip the file.
+          name="LV24-WiFi-Explorer-${version}-linux-x86_64.AppImage"
+          appimage="$(find release -maxdepth 1 -name '*.AppImage' -type f | head -n 1)"
+          if [ -z "$appimage" ]; then echo '::error::No AppImage found in release/'; exit 1; fi
+          mv "$appimage" "release/$name"
+          chmod +x "release/$name"
+          ( cd release && sha256sum "$name" > SHA256SUMS-linux.txt )
+          cat release/SHA256SUMS-linux.txt
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-linux
+          path: |
+            release/*.AppImage
+            release/SHA256SUMS-linux.txt
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: Merge checksums and attach to release
+    needs: [windows, linux]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Only this job needs write access; the build jobs stay read-only.
+    permissions:
+      contents: write
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: bundle
+          merge-multiple: true
+
+      - name: Merge and verify SHA256SUMS.txt
+        run: |
+          set -euo pipefail
+          cd bundle
+          find . -maxdepth 1 -name 'SHA256SUMS-*.txt' -print0 | xargs -0 cat > SHA256SUMS.txt
+          sort -k2 SHA256SUMS.txt -o SHA256SUMS.txt
+          rm -f SHA256SUMS-*.txt
+          ls -l
+          cat SHA256SUMS.txt
+          sha256sum --check SHA256SUMS.txt
+
+      - name: Upload the combined bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-release-bundle
+          path: bundle
+          if-no-files-found: error
+          retention-days: 14
+
+      # Attaches to an existing release only; `gh` fails loudly if the tag has no
+      # release yet. --clobber makes a re-run idempotent for identical bytes.
+      - name: Attach artifacts to the GitHub Release
+        if: ${{ inputs.upload }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          gh release upload "$TAG" \
+            bundle/*.exe \
+            bundle/*.AppImage \
+            bundle/SHA256SUMS.txt \
+            --clobber \
+            --repo "$GITHUB_REPOSITORY"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets \
+            --jq '.assets[].name'

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ScoopInstaller/Scoop/master/schema.json",
+  "version": "1.0.0",
+  "description": "Wi-Fi scanner with channel, signal and security analysis.",
+  "homepage": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer",
+  "license": "MIT",
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/download/v1.0.0/LV24-WiFi-Explorer-1.0.0-win-x64.exe#/dl.7z",
+      "hash": "REPLACE_WITH_SHA256",
+      "pre_install": "Expand-7zipArchive \"$dir\\`$PLUGINSDIR\\app-64.7z\" \"$dir\""
+    }
+  },
+  "bin": [["LV24 WiFi Explorer.exe", "lv24-wifi-explorer"]],
+  "shortcuts": [["LV24 WiFi Explorer.exe", "LV24 WiFi Explorer"]],
+  "checkver": {
+    "github": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer"
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/download/v$version/LV24-WiFi-Explorer-$version-win-x64.exe#/dl.7z"
+      }
+    },
+    "hash": {
+      "url": "$baseurl/SHA256SUMS.txt",
+      "regex": "$sha256\\s+LV24-WiFi-Explorer-$version-win-x64\\.exe"
+    }
+  }
+}

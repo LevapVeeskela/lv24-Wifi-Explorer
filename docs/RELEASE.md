@@ -70,6 +70,12 @@ packaging; the build fails if the commercial key is present anywhere in `dist/`.
 The public DMG is named `…-public.dmg` and stays unsigned until a Developer ID
 Application identity and notarization are available.
 
+Windows/Linux have no separate `:public` script: CI builds without `.env.local`
+and still runs `yarn check:public-bundle`, so an artifact produced by
+`release-desktop.yml` is the keyless, redistributable variant by construction.
+Never attach a locally built installer that used `VITE_MUI_LICENSE_KEY` to a
+public release.
+
 ---
 
 ## 2. Build all packages and artifacts
@@ -129,9 +135,14 @@ yarn dist:mac                                  # DMG for x64 + arm64
 Other targets:
 
 ```bash
-yarn dist:win     # NSIS x64, run on Windows; unsigned works, no cert = no signature
-yarn dist:linux   # AppImage x64 + arm64
+yarn dist:win     # NSIS x64, run on Windows; unsigned works for direct downloads and winget,
+                  # but a Microsoft Store MSI/EXE submission must be CA-signed
+yarn dist:linux   # AppImage x64 + arm64 (`--x64` for one architecture)
 ```
+
+The free distribution channels and their prerequisites are in
+[`DISTRIBUTION.md`](DISTRIBUTION.md); the Microsoft Store specifics are in
+[`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md).
 
 ---
 
@@ -173,20 +184,32 @@ or documented demo fallback on real hardware.
 
 `.github/workflows/ci.yml` is **manual-only** (`workflow_dispatch`) on a
 standard GitHub-hosted runner: install, typecheck, lint, format check, tests,
-CLI smoke, `yarn build`. It does not publish artifacts, sign, or notarize —
-releases are produced on a trusted local machine. Do not add paid runners,
-larger runners, or automatic push/PR triggers (zero-spend policy).
+CLI smoke, `yarn build`. It does not publish artifacts, sign, or notarize.
+
+Two more workflows are manual-only and also use standard free public-repo
+runners: `release-desktop.yml` builds unsigned Windows NSIS + Linux AppImage
+assets (optionally attaches them to an existing release) and `pypi-publish.yml`
+publishes the Python launcher. Do not add paid runners, larger runners, or
+automatic push/PR triggers (zero-spend policy).
 
 ---
 
 ## 6. Publish
 
-1. Tag: `git tag vX.Y.Z && git push origin vX.Y.Z` (no CI cost — the workflow
-   is manual and uploads nothing).
-2. Attach `release/*.dmg` (and `*.exe`/`*.AppImage`) to the GitHub Release,
-   with the `CHANGELOG.md` section as notes.
-3. Note the absence of an auto-updater: users re-download manually.
-4. Record a `brain handoff` with the shipped version and hashes.
+1. Tag: `git tag vX.Y.Z && git push origin vX.Y.Z` (the tag alone triggers no
+   workflow; the release does).
+2. Attach `release/*.dmg` (and `*.exe`/`*.AppImage`) to the GitHub Release, with
+   the `CHANGELOG.md` section as notes. Windows/Linux assets can be built by the
+   manual [`release-desktop.yml`](../.github/workflows/release-desktop.yml)
+   workflow (`upload=true` attaches them to an existing release).
+3. Publishing the GitHub Release also runs `pypi-publish.yml`
+   (`lv24-wifi-explorer`); that workflow skips a version already on PyPI. Both
+   workflows use standard free runners of this public repository.
+4. Note the absence of an auto-updater: users re-download manually.
+5. Free third-party channels (winget, Scoop, Chocolatey, AppImageHub, Flathub,
+   Snap) are prepared in [`packaging/`](../packaging); submission is manual and
+   tracked in [`DISTRIBUTION.md`](DISTRIBUTION.md).
+6. Record a `brain handoff` with the shipped version and hashes.
 
 ---
 

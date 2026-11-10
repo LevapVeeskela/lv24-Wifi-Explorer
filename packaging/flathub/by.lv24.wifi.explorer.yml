@@ -1,0 +1,47 @@
+# REFERENCE SKELETON — NOT SUBMITTABLE AS-IS.
+#
+# Flathub requires the submitted manifest to be written and reviewed by a human:
+# https://docs.flathub.org/docs/for-app-authors/requirements#generative-ai-policy
+# ("Flathub manifests must not contain AI-generated or AI-assisted content").
+# Use this file to understand the shape, then author the real manifest yourself.
+#
+# Everything below is the *intended* structure; the build commands are a no-op
+# placeholder until the offline build exists. See README.md for the full gap list.
+app-id: by.lv24.wifi.explorer
+runtime: org.freedesktop.Platform
+runtime-version: '25.08' # TODO: must be the current Flathub branch at submission time
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '25.08' # TODO: must match the runtime branch
+command: lv24-wifi-explorer
+separate-locales: false
+finish-args:
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --talk-name=org.freedesktop.Notifications
+  # Only useful once the Linux provider talks to NetworkManager over D-Bus
+  # instead of shelling out to nmcli (see README.md).
+  - --system-talk-name=org.freedesktop.NetworkManager
+modules:
+  - name: lv24-wifi-explorer
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/node20/bin
+      env:
+        ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+    build-commands:
+      # TODO: replace with the real offline build:
+      #   yarn install --frozen-lockfile --offline
+      #   VITE_MUI_LICENSE_KEY= yarn build
+      #   electron-builder --linux dir --x64
+      #   install -Dm755 dist/linux-unpacked/lv24-wifi-explorer /app/bin/lv24-wifi-explorer
+      - 'true'
+    sources:
+      - type: git
+        url: https://github.com/LevapVeeskela/lv24-Wifi-Explorer.git
+        tag: v1.0.0
+        commit: 0000000000000000000000000000000000000000 # TODO: real 40-char commit
+      # TODO: generated-sources.json from flatpak-node-generator (yarn, no network
+      # at build time). Not generated yet — see README.md.

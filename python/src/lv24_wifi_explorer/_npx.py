@@ -19,6 +19,38 @@ NODE_INSTALL_HINT = (
     "  - Windows: netsh\n"
 )
 
+# The npm-generated npx.cmd shim runs this script with the bundled Node.js.
+_NPX_CLI_RELATIVE_PATH = os.path.join("node_modules", "npm", "bin", "npx-cli.js")
+
+
+def _node_launcher(
+    npx: str, platform: Optional[str] = None
+) -> Optional[list]:
+    """Return ``[node, npx-cli.js]`` for npm's Windows batch shim.
+
+    Windows runs ``.cmd``/``.bat`` shims through ``cmd.exe``, which re-parses
+    the command line: ``&`` splits the command, ``^`` is swallowed and
+    ``%NAME%`` expands environment variables. An SSID such as ``Cafe&Bar``
+    would arrive truncated or altered. Starting the npm script with Node.js
+    directly keeps every argument intact.
+    """
+    platform = os.name if platform is None else platform
+    if platform != "nt" or not npx.lower().endswith((".cmd", ".bat")):
+        return None
+
+    directory = os.path.dirname(npx)
+    script = os.path.join(directory, _NPX_CLI_RELATIVE_PATH)
+    if not os.path.isfile(script):
+        return None
+
+    node = os.path.join(directory, "node.exe")
+    if not os.path.isfile(node):
+        node = shutil.which("node") or ""
+        if not node or node.lower().endswith((".cmd", ".bat")):
+            return None
+    return [node, script]
+
+
 
 def missing_npx_message(command_name: str, package: str) -> str:
     """Build the install hint shown when ``npx`` is not on PATH."""
@@ -55,7 +87,8 @@ def run_npm_package(
         sys.stderr.write(missing_npx_message(command_name, package))
         return 127
 
-    command = [npx, "--yes", npm_spec(package, version_env), *args]
+    launcher = _node_launcher(npx) or [npx]
+    command = [*launcher, "--yes", npm_spec(package, version_env), *args]
 
     try:
         completed = subprocess.run(command, check=False)
@@ -64,6 +97,6 @@ def run_npm_package(
         return 130
     except OSError as exc:
         sys.stderr.write(
-            "{0}: failed to start {1}: {2}\n".format(command_name, npx, exc)
+            "{0}: failed to start {1}: {2}\n".format(command_name, command[0], exc)
         )
         return 127

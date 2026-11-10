@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Chocolatey package for the community repository (community.chocolatey.org).
+  Pack with:  choco pack packaging/chocolatey/lv24-wifi-explorer.nuspec
+  The version and the checksum placeholder are kept in sync with
+  packaging/winget and packaging/scoop by scripts/packaging/fill-checksums.mjs.
+-->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>lv24-wifi-explorer</id>
+    <version>1.0.0</version>
+    <title>LV24 WiFi Explorer</title>
+    <authors>LV24</authors>
+    <owners>LV24</owners>
+    <projectUrl>https://github.com/LevapVeeskela/lv24-Wifi-Explorer</projectUrl>
+    <projectSourceUrl>https://github.com/LevapVeeskela/lv24-Wifi-Explorer</projectSourceUrl>
+    <packageSourceUrl>https://github.com/LevapVeeskela/lv24-Wifi-Explorer/tree/master/packaging/chocolatey</packageSourceUrl>
+    <!-- CPMR0076 forbids raw.githubusercontent.com icon URLs; jsDelivr is a CDN. -->
+    <iconUrl>https://cdn.jsdelivr.net/gh/LevapVeeskela/lv24-Wifi-Explorer@v1.0.0/resources/icons/icon.png</iconUrl>
+    <licenseUrl>https://github.com/LevapVeeskela/lv24-Wifi-Explorer/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright (c) LV24</copyright>
+    <tags>wifi network scanner diagnostics channels security</tags>
+    <summary>Wi-Fi scanner with channel, signal and security analysis.</summary>
+    <description>LV24 WiFi Explorer scans nearby Wi-Fi networks and explains what they mean: per-channel occupancy, signal history, overlapping BSSes, security mix and actionable diagnostics. Snapshots can be saved, compared and exported. The desktop app runs on macOS, Windows and Linux; the core, backend and CLI are published as MIT-licensed npm packages.</description>
+    <releaseNotes>https://github.com/LevapVeeskela/lv24-Wifi-Explorer/blob/master/CHANGELOG.md</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
