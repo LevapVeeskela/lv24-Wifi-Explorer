@@ -266,7 +266,8 @@ Flutter: `cd flutter && flutter pub get && flutter run -d macos` (see
 Core, backend, CLI, MCP and app code are **MIT**. The desktop/web UI depends on
 commercial **MUI X Pro**; `VITE_MUI_LICENSE_KEY` is supplied at build time from
 `.env.local` and is never committed. Without it the grid is watermarked but the
-app still works. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+app still works. See [`CONTRIBUTING.md`](CONTRIBUTING.md). Windows code signing
+policy: [`docs/CODE-SIGNING.md`](docs/CODE-SIGNING.md).
 
 ## Contributing
 

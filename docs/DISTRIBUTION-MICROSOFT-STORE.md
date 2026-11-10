@@ -245,6 +245,8 @@ re-download flow (`docs/RELEASE.md` §6). Do not add an auto-updater for this.
 SignPath Foundation conditions that bind us (`signpath.org/terms`): OSI-approved
 license, **no commercial dual-licensing**, **no proprietary components** — so
 the signed artifact must be the keyless public build, same constraint as §4.
+The project's signing policy is in
+[`CODE-SIGNING.md`](CODE-SIGNING.md).
 The certificate is issued to **SignPath Foundation**, so Windows "Publisher"
 reads _SignPath Foundation_, not _LV24_ (the Store listing publisher name comes
 from Partner Center, so this is cosmetic but visible). Manual approval per
