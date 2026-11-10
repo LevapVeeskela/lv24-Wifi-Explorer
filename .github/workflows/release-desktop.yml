@@ -96,25 +96,22 @@ jobs:
       - name: Install (frozen lockfile)
         run: yarn install --frozen-lockfile --non-interactive
 
-      - name: Build renderer + desktop
-        run: yarn build
-        env:
-          CI: true
-          VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
-
-      # The key is injected from the secret and encoded by the Vite plugin;
-      # this fails if the plaintext key is still greppable in dist/.
-      - name: Guard against a plaintext MUI key
-        run: yarn check:public-bundle
-        env:
-          VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
-
       - name: Package NSIS x64
+        # `yarn dist:win` runs `yarn build` again, so the secret must be present
+        # here too; otherwise this second build overwrites the keyed renderer.
         # --publish never: electron-builder must not try to upload anything;
         # the publish job below attaches the files with `gh release upload`.
         run: yarn dist:win --publish never
         env:
           CI: true
+          VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
+
+      # Runs after packaging, on the `dist/` that actually went into the exe;
+      # fails if the codec did not replace the plaintext key.
+      - name: Guard against a plaintext MUI key
+        run: yarn check:public-bundle
+        env:
+          VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
 
       - name: Normalize filename and write checksum
         shell: pwsh
@@ -169,8 +166,12 @@ jobs:
       - name: Install (frozen lockfile)
         run: yarn install --frozen-lockfile --non-interactive
 
-      - name: Build renderer + desktop
-        run: yarn build
+      # --x64 keeps the job to one architecture: electron-builder.yml also lists
+      # arm64, and cross-building it here would double the artifact set.
+      # `yarn dist:linux` runs `yarn build` itself, so the secret must be here.
+      # --publish never: uploading is the publish job's job, not electron-builder's.
+      - name: Package AppImage x64
+        run: yarn dist:linux --x64 --publish never
         env:
           CI: true
           VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
@@ -179,14 +180,6 @@ jobs:
         run: yarn check:public-bundle
         env:
           VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
-
-      # --x64 keeps the job to one architecture: electron-builder.yml also lists
-      # arm64, and cross-building it here would double the artifact set.
-      # --publish never: uploading is the publish job's job, not electron-builder's.
-      - name: Package AppImage x64
-        run: yarn dist:linux --x64 --publish never
-        env:
-          CI: true
 
       - name: Normalize filename and write checksum
         run: |
