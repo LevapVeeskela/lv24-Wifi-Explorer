@@ -259,7 +259,7 @@ before the `on_intel` block can be filled.
 2. Optionally upload the x64 macOS DMG if Intel Macs should be supported.
 3. ~~Fill checksums~~ — done for `v1.0.4`; re-run
    `scripts/packaging/fill-checksums.mjs <exe> --write` for every new version.
-4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. Installation Validation is blocked by `shellExecute`; the PR still carries 1.0.0. Retry with a signed `v1.0.4` or a different installer type, do not change the manifest blindly.
+4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. The PR now carries 1.0.4; Installation Validation is still blocked by `shellExecute`. Retry with a signed build or a different installer type, do not change the manifest blindly.
 5. ~~Create `<owner>/scoop-bucket` and push the manifest~~ — live at
    [LevapVeeskela/scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket).
 6. Create a free Chocolatey account, pack and push.
