@@ -5,8 +5,8 @@ actually ready today. Companion documents:
 
 - [`RELEASE.md`](RELEASE.md) — how to build and verify the artifacts.
 - [`PACKAGES.md`](PACKAGES.md) — npm/CLI package publishing.
-- [`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md) — MSIX /
-  Partner Center specifics.
+- [`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md) — MSI/EXE
+  vs MSIX, Partner Center, signing, licences.
 
 Everything below is free: no paid account, certificate or runner is needed for the
 channels this repository can actually use. The one exception is `homebrew/cask`,
@@ -15,18 +15,19 @@ stays blocked under the zero-spend policy.
 
 ## Current state (2026-11-10)
 
-| Artifact                                                | Exists? | Notes                                                           |
-| ------------------------------------------------------- | ------- | --------------------------------------------------------------- |
-| `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg`             | yes     | In the v1.0.0 GitHub Release; unsigned, unnotarized, arm64 only |
-| `LV24-WiFi-Explorer-1.0.0-x64-public.dmg`               | no      | `dist:mac:public` builds it; it was never uploaded              |
-| `LV24-WiFi-Explorer-1.0.0-win-x64.exe`                  | no      | Build with the release workflow                                 |
-| `LV24-WiFi-Explorer-1.0.0-linux-x86_64.AppImage`        | no      | Build with the release workflow                                 |
-| `checksums.txt` (release) / `SHA256SUMS.txt` (workflow) | partial | `checksums.txt` covers the arm64 DMG only                       |
+| Artifact                                                | Exists? | Notes                                                                       |
+| ------------------------------------------------------- | ------- | --------------------------------------------------------------------------- |
+| `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg`             | yes     | In the v1.0.0 GitHub Release; unsigned, unnotarized, arm64 only             |
+| `LV24-WiFi-Explorer-1.0.0-x64-public.dmg`               | no      | `dist:mac:public` builds it; it was never uploaded                          |
+| `LV24-WiFi-Explorer-1.0.0-win-x64.exe`                  | yes     | v1.0.0 Release, built 2026-11-10; SHA-256 `d660b696…a20a`                   |
+| `LV24-WiFi-Explorer-1.0.0-linux-x86_64.AppImage`        | yes     | v1.0.0 Release, built 2026-11-10; SHA-256 `0d19b228…5800`                   |
+| `checksums.txt` (release) / `SHA256SUMS.txt` (workflow) | yes     | `checksums.txt` covers the arm64 DMG; `SHA256SUMS.txt` covers Windows+Linux |
 
-Consequences: **winget, Scoop and Chocolatey cannot be submitted yet** (no Windows
-asset), **AppImageHub cannot be submitted yet** (no AppImage), and **Homebrew
-`homebrew/cask` is not eligible** while the DMG is unnotarized. The macOS DMG can
-still be distributed directly from GitHub Releases with a Gatekeeper warning.
+Consequences: **winget, Scoop, Chocolatey and AppImageHub can be submitted now**
+with the v1.0.0 asset and hash above. **Homebrew `homebrew/cask` is not eligible**
+while the DMG is unnotarized; the self-hosted tap works but the x64 DMG and its
+hash are still missing. The macOS DMG can be distributed directly from GitHub
+Releases with a Gatekeeper warning.
 
 > Naming gotcha: `dist:mac:public` in `package.json` still emits
 > `LV24 WiFi Explorer-<version>-<arch>-public.dmg` (spaces), while the v1.0.0
@@ -40,17 +41,17 @@ still be distributed directly from GitHub Releases with a Gatekeeper warning.
 
 | Publisher                        | Platform      | Artifact                        | Cost                                                                  | Account needed                    | Automation                                     | Blocker                                                                                                |
 | -------------------------------- | ------------- | ------------------------------- | --------------------------------------------------------------------- | --------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| GitHub Releases                  | win/mac/linux | `.exe` `.dmg` `.AppImage`       | $0                                                                    | repo write                        | `release-desktop.yml` (manual, opt-in upload)  | Windows/Linux assets not built yet                                                                     |
-| winget (`microsoft/winget-pkgs`) | Windows       | `.exe` (NSIS)                   | $0                                                                    | GitHub + Microsoft CLA            | manifests in `packaging/winget/`, PR is manual | Windows asset + real SHA-256                                                                           |
-| Scoop (self-hosted bucket)       | Windows       | `.exe`                          | $0                                                                    | GitHub                            | manifest in `packaging/scoop/`, push is manual | bucket repo + real SHA-256                                                                             |
-| Chocolatey (community repo)      | Windows       | `.nupkg`                        | $0                                                                    | free Chocolatey account + API key | `choco pack` / `choco push`, manual            | Windows asset + SHA-256 + moderation                                                                   |
+| GitHub Releases                  | win/mac/linux | `.exe` `.dmg` `.AppImage`       | $0                                                                    | repo write                        | `release-desktop.yml` (manual, opt-in upload)  | none — Windows/Linux assets attached 2026-11-10                                                        |
+| winget (`microsoft/winget-pkgs`) | Windows       | `.exe` (NSIS)                   | $0                                                                    | GitHub + Microsoft CLA            | manifests in `packaging/winget/`, PR is manual | submit one PR; hash already filled                                                                     |
+| Scoop (self-hosted bucket)       | Windows       | `.exe`                          | $0                                                                    | GitHub                            | manifest in `packaging/scoop/`, push is manual | create `<owner>/scoop-bucket`, then push                                                               |
+| Chocolatey (community repo)      | Windows       | `.nupkg`                        | $0                                                                    | free Chocolatey account + API key | `choco pack` / `choco push`, manual            | free account + moderation                                                                              |
 | Snap Store                       | Linux         | `.snap`                         | $0                                                                    | Ubuntu One                        | not wired up                                   | `nmcli` cannot run in a confined snap                                                                  |
 | Flathub                          | Linux         | Flatpak                         | $0                                                                    | GitHub                            | reference skeleton only                        | offline source build, `nmcli`, metainfo, MUI licensing, human-authored manifest                        |
-| AppImageHub                      | Linux         | `.AppImage`                     | $0                                                                    | GitHub                            | one-line data file + PR                        | AppImage must exist; glibc of the build host                                                           |
+| AppImageHub                      | Linux         | `.AppImage`                     | $0                                                                    | GitHub                            | one-line data file + PR                        | AppImage exists; built on 24.04, so switch to 22.04 before the PR                                      |
 | Homebrew Cask                    | macOS         | `.dmg`                          | $0 in a tap; $99/yr for `homebrew/cask`                               | GitHub                            | cask in `packaging/homebrew/`                  | notarization required by Homebrew policy                                                               |
 | Microsoft Store                  | Windows       | signed MSI/EXE (NSIS), not MSIX | $0 registration + $0 via SignPath Foundation (publisher name changes) | Partner Center                    | see linked doc                                 | certificate + privacy policy; see [`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md) |
 
-## Building the missing assets
+## Building the assets
 
 `.github/workflows/release-desktop.yml` is `workflow_dispatch`-only and never
 creates a release. Standard GitHub-hosted runners on a public repository are free,
@@ -66,7 +67,7 @@ gh run watch
 gh run download --name desktop-release-bundle
 ```
 
-It produces, with stable URL-safe names:
+It produces, with stable URL-safe names (run on 2026-11-10 for `v1.0.0`):
 
 | File                                             | Built by                                                    |
 | ------------------------------------------------ | ----------------------------------------------------------- |
@@ -251,13 +252,15 @@ before the `on_intel` block can be filled.
 
 ## What the owner must do
 
-1. Run the release workflow (or build locally on Windows and Linux) for `v1.0.0`.
-2. Upload the x64 macOS DMG if Intel Macs should be supported.
-3. Fill checksums with `scripts/packaging/fill-checksums.mjs`.
-4. Sign the Microsoft CLA, then open the winget PR.
+1. ~~Run the release workflow for `v1.0.0`~~ — done on 2026-11-10; assets and
+   `SHA256SUMS.txt` are attached to the release.
+2. Optionally upload the x64 macOS DMG if Intel Macs should be supported.
+3. ~~Fill checksums~~ — done for `v1.0.0`; re-run
+   `scripts/packaging/fill-checksums.mjs <exe> --write` for every new version.
+4. Sign the Microsoft CLA, then open the winget PR with the manifests as-is.
 5. Create `<owner>/scoop-bucket` and push the manifest.
 6. Create a free Chocolatey account, pack and push.
-7. Optionally: AppImageHub PR (after the glibc decision).
+7. Optionally: AppImageHub PR (rebuild on `ubuntu-22.04` first).
 8. Decide on Apple notarization ($99/yr) — it unblocks `homebrew/cask` and removes
    the Gatekeeper warning.
 9. Fix the Linux provider if Snap/Flathub matter; until then those two channels

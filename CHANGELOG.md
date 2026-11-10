@@ -36,7 +36,9 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
   are documented with their blockers in `docs/DISTRIBUTION.md` and
   `docs/DISTRIBUTION-MICROSOFT-STORE.md`.
 - `release-desktop.yml` builds unsigned Windows NSIS and Linux AppImage assets on
-  free public-repo runners and can attach them to an existing release.
+  free public-repo runners and can attach them to an existing release; the
+  `v1.0.0` release now carries `LV24-WiFi-Explorer-1.0.0-win-x64.exe`,
+  `LV24-WiFi-Explorer-1.0.0-linux-x86_64.AppImage` and `SHA256SUMS.txt`.
 
 ### MCP server
 
