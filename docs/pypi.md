@@ -45,7 +45,7 @@ Live scanning depends on the platform provider:
 | ----------- | ---------------- | ------------------------------------------------------------------------------------------ |
 | macOS 13.5+ | `macos-scancore` | Signed ScanCore helper with Location Services; full SSID/BSSID, width, PHY, IEs            |
 | Linux       | `linux-nmcli`    | NetworkManager (`nmcli`); RSSI from signal quality, channel width/IEs unknown              |
-| Windows     | `windows-netsh`  | `netsh` BSS scan with English output; channel width/IEs unknown                            |
+| Windows     | `windows-netsh`  | `netsh` BSS scan with localized output; channel width/IEs unknown                          |
 | Any         | `demo`           | Deterministic fixtures, no radio access; use `--provider demo` or MCP `"provider": "demo"` |
 
 The first run may download the npm package through `npx`; later runs reuse the

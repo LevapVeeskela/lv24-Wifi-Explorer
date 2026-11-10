@@ -50,6 +50,11 @@ const SECURITY_PATTERNS: ReadonlyArray<[RegExp, SecurityKind]> = [
 export function securityFromLabel(label: string): SecurityKind[] {
   const value = label.trim();
   if (!value || value === '--') return ['open'];
+  // Open/none is localized by netsh: English `Open`, Russian `Открыть`,
+  // Chinese `打开`/`无`. Only treat it as open when no stronger marker exists.
+  if (!/(wpa|wep|owe|sae)/i.test(value) && /(open|none|--|открыт|打开|无|нет)/i.test(value)) {
+    return ['open'];
+  }
   for (const [pattern, kind] of SECURITY_PATTERNS) {
     if (pattern.test(value)) return [kind];
   }
@@ -82,12 +87,12 @@ export function parseNmcliWifiList(stdout: string): CoreWlanNetworkRecord[] {
       ssidData: ssid.length > 0 ? [...Buffer.from(ssid, 'utf8')] : null,
       bssid: bssid.toLowerCase(),
       rssiDbm: rssiFromQualityPercent(Number.isFinite(signal) ? signal : 0),
-      noiseDbm: 0,
+      noiseDbm: Number.NaN,
       channelNumber: channel,
       channelBand: band === '2.4' ? '2ghz' : band === '6' ? '6ghz' : '5ghz',
       channelWidth: 'unknown',
       countryCode: null,
-      beaconIntervalMs: 100,
+      beaconIntervalMs: Number.NaN,
       ibss: false,
       informationElementData: null,
       supportedSecurity: securityFromLabel(security),

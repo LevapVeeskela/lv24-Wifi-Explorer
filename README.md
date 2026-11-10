@@ -178,12 +178,12 @@ release status and Trusted Publishing notes: [`docs/pypi.md`](docs/pypi.md).
 
 ## Cross-platform scan sources
 
-| OS          | Provider         | What you get                                                                 |
-| ----------- | ---------------- | ---------------------------------------------------------------------------- |
-| macOS 13.5+ | `macos-scancore` | CoreWLAN active scan, real SSID/BSSID with Location, channel width, PHY, IEs |
-| Linux       | `linux-nmcli`    | NetworkManager scan; RSSI from signal quality; widths/IEs unknown by design  |
-| Windows     | `windows-netsh`  | `netsh` BSS scan (English output); widths/IEs unknown by design              |
-| anywhere    | `demo`           | deterministic fixtures for CI, screenshots and unsupported hardware          |
+| OS          | Provider         | What you get                                                                                  |
+| ----------- | ---------------- | --------------------------------------------------------------------------------------------- |
+| macOS 13.5+ | `macos-scancore` | CoreWLAN active scan, real SSID/BSSID with Location, channel width, PHY, IEs                  |
+| Linux       | `linux-nmcli`    | NetworkManager scan; RSSI from signal quality; widths/IEs unknown by design                   |
+| Windows     | `windows-netsh`  | `netsh` BSS scan (localized output, values parsed structurally); widths/IEs unknown by design |
+| anywhere    | `demo`           | deterministic fixtures for CI, screenshots and unsupported hardware                           |
 
 Missing data is reported as missing (`—`, `unknown`, capability flags), never
 guessed. See [`docs/SPEC.md`](docs/SPEC.md) and

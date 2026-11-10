@@ -11,35 +11,47 @@ import { securityFromLabel } from './linux';
 
 type PendingBss = {
   bssid: string;
-  signal: number;
+  signal: number | null;
   channel: number | null;
   radio: string;
-  authentication: string;
-  encryption: string;
+  securityText: string;
 };
 
 const BSSID_RE = /bssid\s+\d+\s*:\s*([0-9a-f]{2}(?::[0-9a-f]{2}){5})/i;
-const SIGNAL_RE = /signal\s*:\s*(\d+)%/i;
-const CHANNEL_RE = /channel\s*:\s*(\d+)/i;
-const RADIO_RE = /radio\s+type\s*:\s*802\.11(\w+)/i;
-const AUTH_RE = /authentication\s*:\s*(.+)$/i;
-const ENCRYPTION_RE = /encryption\s*:\s*(.+)$/i;
+// `netsh` labels are localized; values are not. Match by shape, not by label.
+const SIGNAL_RE = /:\s*(\d{1,3})%\s*$/;
+const CHANNEL_RE = /:\s*(\d{1,4})\s*$/;
+const RADIO_RE = /802\.11([a-z]+)/i;
 
 /**
- * Parse `netsh wlan show networks mode=bssid` (English output).
- * Localized Windows installations return no records; the provider then reports
- * an explicit error rather than inventing data.
+ * Parse `netsh wlan show networks mode=bssid`.
+ *
+ * `SSID n:` and `BSSID n :` stay English on localized Windows, but the field
+ * labels (`Signal`, `Channel`, `Authentication`, ...) do not. The parser therefore
+ * reads values by shape (percentage, bare integer, 802.11 token) and builds the
+ * security label from the whole SSID block, so Russian/Chinese output still
+ * yields real signal, channel and security instead of defaults.
+ *
+ * A BSS entry without a parsable signal is dropped: `rssiDbm` has no "unknown"
+ * representation in `CoreWlanNetworkRecord`, and emitting -100 dBm would be a
+ * lie. If every entry is dropped, the provider reports an explicit error and the
+ * desktop falls back to a clearly labelled demo snapshot.
  */
 export function parseNetshNetworks(stdout: string): CoreWlanNetworkRecord[] {
   const records: CoreWlanNetworkRecord[] = [];
   let currentSsid: string | null = null;
   let pending: PendingBss | null = null;
-  let authentication = '';
-  let encryption = '';
+  let ssidBlock: string[] = [];
 
   const flush = () => {
     if (!pending) return;
-    const security = securityFromLabel(`${pending.authentication} ${pending.encryption}`);
+    if (pending.signal == null) {
+      pending = null;
+      return;
+    }
+    const security = pending.securityText.trim()
+      ? securityFromLabel(pending.securityText)
+      : (['unknown'] as CoreWlanNetworkRecord['supportedSecurity']);
     const channel = pending.channel;
     const band: CoreWlanNetworkRecord['channelBand'] =
       channel == null ? 'unknown' : channel <= 14 ? '2ghz' : channel >= 233 ? '6ghz' : '5ghz';
@@ -48,12 +60,14 @@ export function parseNetshNetworks(stdout: string): CoreWlanNetworkRecord[] {
       ssidData: currentSsid ? [...Buffer.from(currentSsid, 'utf8')] : null,
       bssid: pending.bssid.toLowerCase(),
       rssiDbm: rssiFromQualityPercent(pending.signal),
-      noiseDbm: 0,
+      // netsh does not expose noise or beacon interval; use NaN so JSON/UI
+      // serializes them as unknown instead of inventing 0 dBm / 100 ms.
+      noiseDbm: Number.NaN,
       channelNumber: channel,
       channelBand: band,
       channelWidth: 'unknown',
       countryCode: null,
-      beaconIntervalMs: 100,
+      beaconIntervalMs: Number.NaN,
       ibss: false,
       informationElementData: null,
       supportedSecurity: security,
@@ -68,34 +82,35 @@ export function parseNetshNetworks(stdout: string): CoreWlanNetworkRecord[] {
     if (ssidMatch) {
       flush();
       currentSsid = ssidMatch[1]?.trim() || null;
-      authentication = '';
-      encryption = '';
+      ssidBlock = [];
       continue;
     }
-    const authMatch = line.match(AUTH_RE);
-    if (authMatch) authentication = authMatch[1]!.trim();
-    const encMatch = line.match(ENCRYPTION_RE);
-    if (encMatch) encryption = encMatch[1]!.trim();
     const bssidMatch = line.match(BSSID_RE);
     if (bssidMatch) {
       flush();
       pending = {
         bssid: bssidMatch[1]!,
-        signal: 0,
+        signal: null,
         channel: null,
         radio: '',
-        authentication,
-        encryption,
+        securityText: ssidBlock.join(' '),
       };
       continue;
     }
-    if (!pending) continue;
-    const signal = line.match(SIGNAL_RE);
-    if (signal) pending.signal = Number.parseInt(signal[1]!, 10);
-    const channel = line.match(CHANNEL_RE);
-    if (channel) pending.channel = Number.parseInt(channel[1]!, 10);
-    const radio = line.match(RADIO_RE);
-    if (radio) pending.radio = `802.11${radio[1]}`;
+    if (pending) {
+      const signal = line.match(SIGNAL_RE);
+      if (signal) pending.signal = Number.parseInt(signal[1]!, 10);
+      const radio = line.match(RADIO_RE);
+      if (radio) pending.radio = `802.11${radio[1]!.toLowerCase()}`;
+      const channel = line.match(CHANNEL_RE);
+      if (channel) {
+        const value = Number.parseInt(channel[1]!, 10);
+        // QoS lines also end in a bare integer, but their value is 0.
+        if (value > 0 && pending.channel == null) pending.channel = value;
+      }
+    } else if (line) {
+      ssidBlock.push(line);
+    }
   }
   flush();
 
@@ -161,7 +176,7 @@ export class WindowsNetshProvider extends BaseScanProvider {
           this.emitError({
             code: 'NETSH_PARSE_EMPTY',
             message:
-              'netsh returned no parsable BSS entries. Localized Windows output is not supported yet.',
+              'netsh returned no BSS entries with a parsable signal. Localized output is parsed structurally; this variant may be unsupported.',
             recoverable: true,
             demoFallback: true,
           });

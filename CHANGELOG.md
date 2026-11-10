@@ -4,6 +4,14 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ## [Unreleased]
 
+### Fixed
+
+- Windows `netsh` parsing is locale-tolerant: real RSSI, channel, security and
+  PHY are read from Russian/English output by value shape instead of English
+  labels. Entries without a parsable signal are dropped rather than reported as
+  -100 dBm, and `netsh`/`nmcli` no longer invent noise or beacon-interval values.
+  See `docs/AUDIT-2026-11-10-WINDOWS.md`.
+
 ### Architecture
 
 - Feature-Sliced Design enforced: `shared → entities → features → widgets → pages`,

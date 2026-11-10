@@ -1,0 +1,112 @@
+# Windows live-scan audit — 2026-11-10
+
+Scope: does an installed/packaged Windows build show **real** Wi-Fi networks and
+real parameters, or silently fall back to fixtures/defaults?
+
+Environment: Windows 11 24H2, Russian locale, Intel Wi-Fi 7 BE200. The interface
+was disabled in Windows, but `netsh wlan show networks` still listed 11 visible
+BSSes, so the provider path could be exercised.
+
+## Verdict
+
+**The live path is real, but until this audit the Windows parser silently
+fabricated parameters on localized Windows.** SSID/BSSID were real; RSSI,
+channel, security and PHY were defaults because the parser only matched English
+field labels. The desktop reported `demo: false`, so the UI presented those
+defaults as live data.
+
+## Evidence before the fix
+
+`netsh wlan show networks mode=bssid` on this machine:
+
+```text
+SSID 1: ZTE-ac9888
+    Проверка подлинности:     WPA2-Personal
+    Шифрование:               CCMP
+    BSSID 1                 : 30:0c:23:ac:98:88
+         Сигнал             : 57%
+         Тип радио         : 802.11n
+         Канал            : 1
+```
+
+`node packages/cli/dist/main.js scan --provider windows-netsh --format json`
+returned:
+
+```json
+{
+  "ssid": "ZTE-ac9888",
+  "bssid": "30:0c:23:ac:98:88",
+  "rssiDbm": -100,
+  "channelNumber": null,
+  "channelBand": "unknown",
+  "supportedSecurity": ["open"],
+  "supportedPhyModes": []
+}
+```
+
+Cause: `packages/backend/src/providers/windows.ts` used English-only regexes
+(`signal:`, `channel:`, `radio type:`, `authentication:`, `encryption:`). On
+Russian Windows only `SSID`/`BSSID` match, so:
+
+- signal stayed `0` → `rssiFromQualityPercent(0)` = **-100 dBm**;
+- channel stayed `null`;
+- empty security label → `securityFromLabel('')` = **open** (false security);
+- radio stayed empty → no PHY.
+
+`noiseDbm: 0` and `beaconIntervalMs: 100` were also hard-coded, although
+`netsh` provides neither.
+
+## Fix
+
+- Parse values by shape, not by localized labels: percentage line, bare integer
+  channel line, `802.11x` token, and the whole SSID block for security.
+- Open/none detection now covers English, Russian and Chinese labels.
+- A BSS entry without a parsable signal is **dropped**; if none remain, the
+  provider emits `NETSH_PARSE_EMPTY` with `demoFallback: true`, so the desktop
+  shows the labelled demo fallback instead of fake -100 dBm rows.
+- Missing noise/beacon are `NaN` in the raw record (serialized as `null`), not
+  invented `0`/`100`.
+- Added a Russian `netsh` fixture and regression tests.
+
+## Evidence after the fix
+
+```text
+provider=windows-netsh
+ZTE-ac9888 | 30:0c:23:ac:98:88 | -67dBm | ch=1 | 2ghz | wpa2-personal | n
+byfly WIFI | 62:0c:23:ac:98:89 | -66dBm | ch=1 | 2ghz | open | n
+byfly WIFI | 72:0c:23:ad:8d:db | -65dBm | ch=11 | 2ghz | open | n
+WLAN_5G_1C18 | 3c:46:45:49:1c:1d | -57dBm | ch=52 | 5ghz | wpa2-personal | ac
+```
+
+Checks: `yarn test` 431 passed / 1 skipped; `yarn typecheck` passed;
+`winget validate` unaffected.
+
+## Residual findings
+
+1. **Published v1.0.0 still contains the old parser.** The fix is in source; a new
+   Windows build/release is required before installed users get it.
+2. `interfaceName` and `associated` are still `null` for netsh (the provider does
+   not parse `netsh wlan show interfaces`).
+3. `ibss` is always `false`; Ad-Hoc networks are not distinguished.
+4. `channelWidth`, IEs, country code and 6 GHz edge cases are unknown by design
+   on Windows; the UI shows them as unavailable.
+5. `ingestScanPayload` returns a demo view for a malformed payload without
+   setting the demo state, so a malformed live payload could show unlabelled
+   fixture rows. Not triggered by the current netsh payload; separate fix.
+6. `normalizeScanCoreSnapshot`/`snapshotNormalize` still default missing RSSI to
+   `0` and missing security to `open` for ScanCore-shaped rows (macOS path).
+7. Other Windows locales (French/German/Japanese) parse signal/channel/radio
+   structurally, but their open-network wording is not covered; secured WPA2/WPA3
+   labels are language-neutral, so they remain correct.
+
+## How to re-verify after a new build
+
+```powershell
+netsh wlan show networks mode=bssid
+node packages/cli/dist/main.js scan --provider windows-netsh --format json
+node packages/cli/dist/main.js scan --provider demo --format json   # fixture contrast
+```
+
+Compare SSID/BSSID/RSSI/channel/security with the `netsh` output. A live result
+must have `provider: "windows-netsh"`, `source: "netsh"`, `demo: false`, and real
+`rssiDbm`/`channelNumber`/`supportedSecurity` values.
