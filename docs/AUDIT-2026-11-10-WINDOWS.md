@@ -121,6 +121,22 @@ later sticks. The footer still fits: 58 px at 1366×768 with
 `document.scrollWidth == 1366`, 77 px at 960 px with no page scrollbar; the app
 reports `v1.0.3`, `ScanCore: ок`, `Геолокация: разрешена`, and no demo rows.
 
+## Public release verification (v1.0.4, CI run 42814673497)
+
+`LV24-WiFi-Explorer-1.0.4-win-x64.exe` (SHA-256 `8465bfc1…ba35`, matching the
+GitHub asset digest) installed over 1.0.3 (exit 0). The packaged renderer
+contains the XOR decoder (`new TextDecoder().decode(a)`), no
+`__LV24_MUI_KEY_` placeholder and no `const e="".trim()` empty-key path. The
+MUI X console errors are gone and the grid shows **no watermark**; the
+**Проблемы** column, live scan (`Сетей: 8`, `ScanCore: ок`,
+`Геолокация: разрешена`), footer `v1.0.4` at 58 px/1366 and 77 px/960 were
+verified on the installed build.
+
+The first 1.0.4 attempt (run 42813524964) was rejected before upload: the
+workflow built with the key and then `yarn dist:win` rebuilt the renderer
+without it, so the exe fell back to `""` and showed the watermark. The package
+steps now receive the secret and the plaintext guard runs after packaging.
+
 ## Residual findings
 
 1. ~~The public release still contains the old parser.~~ Fixed by v1.0.1

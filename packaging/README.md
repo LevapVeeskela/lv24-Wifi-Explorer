@@ -15,7 +15,7 @@ submission steps in [`docs/DISTRIBUTION.md`](../docs/DISTRIBUTION.md).
 | `homebrew/`    | Homebrew (self-hosted tap) | blocked for `homebrew/cask` by notarization; x64 DMG and hash still missing                                               |
 
 All manifests are pinned to version `1.0.0` except Scoop, which is live at
-`1.0.3`. The 1.0.0 checksums are filled from
+`1.0.4`. The 1.0.0 checksums are filled from
 the published asset; future versions use the shared placeholder
 `REPLACE_WITH_SHA256`, which one command replaces:
 
