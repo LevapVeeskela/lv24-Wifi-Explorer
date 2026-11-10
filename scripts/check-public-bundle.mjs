@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * Fails if a commercial MUI X license key leaked into the built renderer.
- *
- * The key lives only in `.env.local` (gitignored) and is inlined into `dist/`
- * by Vite for private builds. Public artifacts must be built with an empty
- * `VITE_MUI_LICENSE_KEY`; this check makes the difference enforceable.
+ * Fails if the commercial MUI X license key is present in plaintext in the
+ * built renderer. Release builds receive the key from the
+ * `MUI_X_LICENSE_KEY` secret; the Vite plugin in `vite.config.ts` replaces it
+ * with a coded decoder, so this check proves the obfuscation ran. Public
+ * keyless builds (`dist:mac:public`) must not contain the key at all.
  *
  * Usage: node scripts/check-public-bundle.mjs [--dist dist]
  */
@@ -42,9 +42,9 @@ function walk(dir, out = []) {
   return out;
 }
 
-const key = readLocalKey();
+const key = (process.env.VITE_MUI_LICENSE_KEY || readLocalKey()).trim();
 if (!key) {
-  console.log('[check-public-bundle] no local MUI key configured — OK');
+  console.log('[check-public-bundle] no MUI key configured — OK');
   process.exit(0);
 }
 
@@ -58,9 +58,9 @@ try {
 
 const leaked = files.filter((file) => readFileSync(file, 'utf8').includes(key));
 if (leaked.length > 0) {
-  console.error('[check-public-bundle] commercial MUI key found in the public bundle:');
+  console.error('[check-public-bundle] plaintext MUI key found in the public bundle:');
   for (const file of leaked) console.error(`  ${file}`);
-  console.error('Rebuild with VITE_MUI_LICENSE_KEY= (see dist:mac:public).');
+  console.error('The MUI key codec in vite.config.ts did not run; rebuild before shipping.');
   process.exit(1);
 }
 

@@ -60,24 +60,34 @@ security find-identity -v -p codesigning
 
 ---
 
-## 1a. Private vs public macOS artifacts
+## 1a. MUI key in private and release builds
 
-| Command                | MUI key           | Watermark | Redistributable |
-| ---------------------- | ----------------- | --------- | --------------- |
-| `yarn dist:mac`        | from `.env.local` | no        | **no**          |
-| `yarn dist:mac:dir`    | from `.env.local` | no        | **no**          |
-| `yarn dist:mac:public` | forced empty      | yes       | yes             |
+The key is never stored in source. Local builds read it from `.env.local`
+(gitignored); release builds read `MUI_X_LICENSE_KEY` from GitHub Actions
+secrets. `vite.config.ts` replaces the env access with a random placeholder and
+injects a XOR-coded decoder after minification, so the plaintext key is not
+greppable in `dist/` or `app.asar`. This is obfuscation, not encryption: the
+decoder ships in the bundle and a debugger can still recover the key.
 
-`dist:mac:public` runs `yarn check:public-bundle` between the renderer build and
-packaging; the build fails if the commercial key is present anywhere in `dist/`.
-The public DMG is named `…-public.dmg` and stays unsigned until a Developer ID
-Application identity and notarization are available.
+| Command                | MUI key                    | Watermark | Redistributable       |
+| ---------------------- | -------------------------- | --------- | --------------------- |
+| `yarn dist:mac`        | `.env.local`, coded        | no        | private               |
+| `yarn dist:mac:dir`    | `.env.local`, coded        | no        | private               |
+| `yarn dist:mac:public` | forced empty               | yes       | yes                   |
+| `release-desktop.yml`  | `MUI_X_LICENSE_KEY` secret | no        | yes (key recoverable) |
 
-Windows/Linux have no separate `:public` script: CI builds without `.env.local`
-and still runs `yarn check:public-bundle`, so an artifact produced by
-`release-desktop.yml` is the keyless, redistributable variant by construction.
-Never attach a locally built installer that used `VITE_MUI_LICENSE_KEY` to a
-public release.
+`check:public-bundle` fails if the **plaintext** key appears anywhere in `dist/`;
+it is the guard that proves the codec ran. `dist:mac:public` sets
+`VITE_MUI_LICENSE_KEY=` and still runs the guard, so the public DMG is keyless
+and watermarked. The public DMG stays unsigned until a Developer ID Application
+identity and notarization are available.
+
+The release workflow requires the `MUI_X_LICENSE_KEY` secret in its preflight
+job and aborts if it is missing, so a release cannot silently ship a watermarked
+UI. The key is still present in the final artifact (encoded); publishing the
+installer means publishing the key to anyone who runs a decoder. Do not attach a
+locally built installer to a public release: use the workflow, which is
+reproducible and records the secret source.
 
 ---
 

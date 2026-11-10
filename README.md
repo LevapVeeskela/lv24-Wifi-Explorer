@@ -263,9 +263,9 @@ Flutter: `cd flutter && flutter pub get && flutter run -d macos` (see
 - **Not notarized yet.** The 1.0.0 macOS build is signed with an Apple
   Development certificate, so Gatekeeper asks for a manual open. Notarization
   requires a Developer ID Application certificate (Apple Developer Program).
-- **Public DMG watermark.** Built without the commercial MUI X key; the data
-  grid shows the MUI watermark. Private builds are documented in
-  [`docs/RELEASE.md`](docs/RELEASE.md).
+- **MUI watermark without a license.** Builds made without a valid MUI X key
+  show the watermark. Release CI injects `MUI_X_LICENSE_KEY` from a repository
+  secret and encodes it in the bundle; builds without it stay watermarked.
 - **No auto-update.** Releases are manual downloads.
 - **Windows/Linux installers** are built from source. The Windows NSIS build is
   hardware-verified (live `netsh` scan, footer, icon); the Linux AppImage is

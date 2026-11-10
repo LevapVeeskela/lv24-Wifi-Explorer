@@ -52,6 +52,7 @@ export default defineConfig({
       'packages/backend/src/**/*.test.ts',
       'packages/cli/src/**/*.test.ts',
       'packages/mcp/src/**/*.test.ts',
+      'scripts/**/*.test.ts',
     ],
     css: true,
     server: {

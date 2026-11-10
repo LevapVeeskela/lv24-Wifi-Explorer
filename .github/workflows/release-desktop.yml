@@ -63,6 +63,16 @@ jobs:
           fi
           echo "Building version $version for release $TAG from ${GITHUB_SHA}."
 
+      - name: Require the MUI X license secret
+        env:
+          MUI_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$MUI_KEY" ]; then
+            echo "::error::Set the MUI_X_LICENSE_KEY repository secret (MUI X Pro key); releasing without it would ship a watermarked UI."
+            exit 1
+          fi
+
   windows:
     name: Windows NSIS x64
     needs: preflight
@@ -90,12 +100,14 @@ jobs:
         run: yarn build
         env:
           CI: true
+          VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
 
-      # Without .env.local there is no MUI key, so the artifact is the public
-      # (watermarked) redistribution build. The guard is a no-op on CI but keeps
-      # a self-hosted runner from leaking a commercial key into a release.
-      - name: Guard against a commercial MUI key
+      # The key is injected from the secret and encoded by the Vite plugin;
+      # this fails if the plaintext key is still greppable in dist/.
+      - name: Guard against a plaintext MUI key
         run: yarn check:public-bundle
+        env:
+          VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
 
       - name: Package NSIS x64
         # --publish never: electron-builder must not try to upload anything;
@@ -161,9 +173,12 @@ jobs:
         run: yarn build
         env:
           CI: true
+          VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
 
-      - name: Guard against a commercial MUI key
+      - name: Guard against a plaintext MUI key
         run: yarn check:public-bundle
+        env:
+          VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
 
       # --x64 keeps the job to one architecture: electron-builder.yml also lists
       # arm64, and cross-building it here would double the artifact set.

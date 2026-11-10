@@ -33,4 +33,6 @@ cd flutter && flutter analyze --no-pub && flutter test --no-pub
 
 `web`/`desktop` use MUI X **Data Grid Pro** (commercial). The core, backend,
 and CLI packages are MIT and do not depend on it. Building the full desktop UI
-requires a valid MUI X license; the code itself is MIT.
+requires a valid MUI X license; the code itself is MIT. Local builds read
+`VITE_MUI_LICENSE_KEY` from `.env.local`; release builds read it from the
+`MUI_X_LICENSE_KEY` GitHub Actions secret. Never commit either file or value.
