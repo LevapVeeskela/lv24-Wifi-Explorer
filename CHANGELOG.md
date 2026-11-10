@@ -34,6 +34,9 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Distribution
 
+- Windows builds and the NSIS installer now use the LV24 `icon.ico` (transparent
+  corners, 16–256 px) instead of the default Electron icon.
+
 - PyPI launcher `lv24-wifi-explorer` **1.0.0 published** on 2026-11-10
   (`pip install lv24-wifi-explorer`) with Trusted Publishing, no API tokens; see
   `docs/pypi.md`.
