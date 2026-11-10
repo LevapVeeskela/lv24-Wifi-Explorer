@@ -34,13 +34,41 @@ an explicit badge, the CLI prints the error and exits non-zero.
 
 ```bash
 yarn build:packages            # core → backend → cli → mcp
-cd packages/core && npm publish --access public
-cd packages/backend && npm publish --access public
-cd packages/cli && npm publish --access public
-cd packages/mcp && npm publish --access public
 ```
 
-Published at **1.0.0** on npm: `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli`, `@lv24/wifi-mcp`.
+Publishing is done by
+[`.github/workflows/npm-publish.yml`](../.github/workflows/npm-publish.yml) with
+npm Trusted Publishing (OIDC): no `NPM_TOKEN`, no one-time password. It runs on
+a published GitHub release or manual `workflow_dispatch` (`version` input),
+validates that all four `package.json` versions and the internal dependency pins
+equal the requested version, builds, checks `lv24-wifi --version`, then publishes
+in dependency order — `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli`,
+`@lv24/wifi-mcp` — with `--access public --provenance`. A package version that
+already exists on npm is skipped individually.
+
+One-time setup (owner, on npmjs.com → package → **Settings → Trusted
+publishing**) for **each** of the four packages:
+
+| Field                | Value                |
+| -------------------- | -------------------- |
+| Publisher            | GitHub Actions       |
+| Organization or user | `LevapVeeskela`      |
+| Repository           | `lv24-Wifi-Explorer` |
+| Workflow filename    | `npm-publish.yml`    |
+| Environment          | _(empty)_            |
+
+Release order:
+
+1. Dispatch `npm-publish.yml` and wait until all four packages are live:
+   `npm view @lv24/wifi-cli@1.0.1 version`.
+2. Dispatch `pypi-publish.yml` with the same version. The Python launcher pins
+   the matching npm versions, so publishing it first would point users at
+   packages that do not exist yet. A published GitHub release starts both
+   workflows at once; use manual dispatch when the order matters.
+
+Published at **1.0.1** on npm: `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli`, `@lv24/wifi-mcp`.
+The desktop app and the Windows installer are also `1.0.1`; the packages and
+the app share the version but ship as separate artifacts.
 Each package has `files: ["dist"]`, `license: MIT`, `engines.node >= 20`, and
 CJS output for maximum consumer compatibility (`packages/mcp` is ESM because the MCP SDK is ESM-only). The web/desktop apps are MIT
 code but the desktop UI depends on commercial MUI X Pro (see `CONTRIBUTING.md`).
@@ -145,8 +173,8 @@ Scopes and package names must be lowercase, so the bundle uses the lowercase
 form of the owner login (`LevapVeeskela` → `@levapveeskela`).
 
 Instead, `packages/gh-bundle` publishes the no-code meta-package
-`@levapveeskela/lv24-wifi-explorer@1.0.0`, which depends on the published npmjs
-packages `@lv24/wifi-cli@1.0.0` and `@lv24/wifi-mcp@1.0.0` and therefore
+`@levapveeskela/lv24-wifi-explorer@1.0.1`, which depends on the published npmjs
+packages `@lv24/wifi-cli@1.0.1` and `@lv24/wifi-mcp@1.0.1` and therefore
 provides the same `lv24-wifi` / `lv24-wifi-mcp` binaries. It is not a second
 implementation and not a replacement for the canonical npmjs installs:
 

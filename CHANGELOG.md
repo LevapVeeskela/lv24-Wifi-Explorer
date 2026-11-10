@@ -4,14 +4,6 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ## [Unreleased]
 
-### Fixed
-
-- Windows `netsh` parsing is locale-tolerant: real RSSI, channel, security and
-  PHY are read from Russian/English output by value shape instead of English
-  labels. Entries without a parsable signal are dropped rather than reported as
-  -100 dBm, and `netsh`/`nmcli` no longer invent noise or beacon-interval values.
-  See `docs/AUDIT-2026-11-10-WINDOWS.md`.
-
 ### Architecture
 
 - Feature-Sliced Design enforced: `shared → entities → features → widgets → pages`,
@@ -33,15 +25,6 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
   server over stdio with all six tools.
 
 ### Distribution
-
-- The status bar wraps its clusters instead of clipping values at narrow window
-  sizes, and the chart accessibility table no longer creates a horizontal page
-  scrollbar.
-- Packaged Windows builds no longer reject renderer IPC as `untrusted-sender`:
-  `fileURLToPath()` now converts `file:///C:/...` correctly, so the installed app
-  can start a live scan instead of falling back to an empty demo.
-- Windows builds and the NSIS installer now use the LV24 `icon.ico` (transparent
-  corners, 16–256 px) instead of the default Electron icon.
 
 - PyPI launcher `lv24-wifi-explorer` **1.0.0 published** on 2026-11-10
   (`pip install lv24-wifi-explorer`) with Trusted Publishing, no API tokens; see
@@ -77,7 +60,8 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Packaging
 
-- Publishable packages are versioned `1.0.1`; the desktop app stays at `1.0.0`.
+- Publishable packages and the desktop app are versioned `1.0.1`; the Flutter
+  app is `1.0.1+2`. Same source tree, independent release tracks.
 - `dist:mac:public` builds a redistributable, watermarked macOS DMG without the
   commercial MUI key; `check:public-bundle` fails the build if the key leaks
   into `dist/`.
@@ -90,7 +74,25 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ## [1.0.1] — 2026-11-10
 
-Package-only patch. The desktop app remains at 1.0.0.
+Desktop and package patch. The Windows installer, which previously showed no
+live networks at all, now ships the working `netsh` parser and the packaged-IPC
+fix.
+
+### Desktop
+
+- Windows `netsh` parsing is locale-tolerant: real RSSI, channel, security and
+  PHY are read from Russian/English output by value shape instead of English
+  labels. Entries without a parsable signal are dropped rather than reported as
+  -100 dBm, and `netsh`/`nmcli` no longer invent noise or beacon-interval values.
+  See `docs/AUDIT-2026-11-10-WINDOWS.md`.
+- Packaged Windows builds no longer reject renderer IPC as `untrusted-sender`:
+  `fileURLToPath()` now converts `file:///C:/...` correctly, so the installed app
+  can start a live scan instead of falling back to an empty demo.
+- The status bar wraps its clusters instead of clipping values at narrow window
+  sizes, and the chart accessibility table no longer creates a horizontal page
+  scrollbar.
+- Windows builds and the NSIS installer now use the LV24 `icon.ico` (transparent
+  corners, 16–256 px) instead of the default Electron icon.
 
 ### Fixed
 
