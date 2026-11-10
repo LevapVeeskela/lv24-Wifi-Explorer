@@ -94,11 +94,28 @@ The installer was built with `upload=false`; the v1.0.1 release is the first
 public build that ships this fix (the v1.0.0 assets keep the old parser and are
 left in place for reproducibility).
 
+## Public release verification (v1.0.2, CI run 42800540386)
+
+`LV24-WiFi-Explorer-1.0.2-win-x64.exe` (SHA-256 `5099cf70…a702`, matching
+`SHA256SUMS.txt` and the GitHub asset digest) installed over 1.0.1 with
+`/S /currentuser` (exit 0). The packaged app reported `v1.0.2` in the status bar
+and the About dialog, found live networks (`live_ssids=true`,
+`demo_markers=false`, `ScanCore: ок`, `Геолокация: разрешена`), and kept the
+footer at 58 px with `footer.scrollWidth == footer.clientWidth` and
+`document.scrollWidth == 1366`. At 960 px the footer is 77 px and the document
+still has no horizontal scrollbar.
+
+v1.0.1 showed `1.0.0` in the UI because `APP_VERSION` was hardcoded; v1.0.2
+injects it from the root `package.json` through Vite (`__APP_VERSION__`) and
+guards it with `constants.test.ts`. The v1.0.1 assets stay published but are
+superseded.
+
 ## Residual findings
 
-1. ~~The public v1.0.0 release still contains the old parser.~~ Fixed by v1.0.1
-   (release workflow run 42798744194). The v1.0.0 assets are intentionally not
-   replaced: `gh release upload` to another tag keeps the old URLs valid.
+1. ~~The public release still contains the old parser.~~ Fixed by v1.0.1
+   (release workflow run 42798744194) and shipped again in v1.0.2. The v1.0.0
+   assets are intentionally not replaced: uploading to another tag keeps the old
+   URLs and hashes valid.
 2. `interfaceName` and `associated` are still `null` for netsh (the provider does
    not parse `netsh wlan show interfaces`).
 3. `ibss` is always `false`; Ad-Hoc networks are not distinguished.

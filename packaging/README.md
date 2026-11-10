@@ -14,7 +14,8 @@ submission steps in [`docs/DISTRIBUTION.md`](../docs/DISTRIBUTION.md).
 | `appimagehub/` | AppImageHub catalogue      | AppImage exists; rebuild on 22.04 before the PR (glibc caveat)                                                            |
 | `homebrew/`    | Homebrew (self-hosted tap) | blocked for `homebrew/cask` by notarization; x64 DMG and hash still missing                                               |
 
-All manifests are pinned to version `1.0.0`. The 1.0.0 checksums are filled from
+All manifests are pinned to version `1.0.0` except Scoop, which is live at
+`1.0.2`. The 1.0.0 checksums are filled from
 the published asset; future versions use the shared placeholder
 `REPLACE_WITH_SHA256`, which one command replaces:
 

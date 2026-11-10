@@ -17,20 +17,21 @@ stays blocked under the zero-spend policy.
 
 | Artifact                                                | Exists? | Notes                                                                       |
 | ------------------------------------------------------- | ------- | --------------------------------------------------------------------------- |
+| `LV24-WiFi-Explorer-1.0.2-win-x64.exe`                  | yes     | v1.0.2 Release, built 2026-11-10; SHA-256 `5099cf70…a702`                   |
+| `LV24-WiFi-Explorer-1.0.2-linux-x86_64.AppImage`        | yes     | v1.0.2 Release, built 2026-11-10; SHA-256 `69cbec12…7233`                   |
 | `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg`             | yes     | In the v1.0.0 GitHub Release; unsigned, unnotarized, arm64 only             |
 | `LV24-WiFi-Explorer-1.0.0-x64-public.dmg`               | no      | `dist:mac:public` builds it; it was never uploaded                          |
-| `LV24-WiFi-Explorer-1.0.0-win-x64.exe`                  | yes     | v1.0.0 Release, built 2026-11-10; SHA-256 `d660b696…a20a`                   |
-| `LV24-WiFi-Explorer-1.0.0-linux-x86_64.AppImage`        | yes     | v1.0.0 Release, built 2026-11-10; SHA-256 `0d19b228…5800`                   |
+| `LV24-WiFi-Explorer-1.0.1-*` (Windows/Linux)            | yes     | Superseded: its UI still displayed `1.0.0`; use v1.0.2                      |
 | `checksums.txt` (release) / `SHA256SUMS.txt` (workflow) | yes     | `checksums.txt` covers the arm64 DMG; `SHA256SUMS.txt` covers Windows+Linux |
 
-Consequences: **Scoop is live**, winget is submitted but its Installation
-Validation currently fails with `shellExecute` (CLA is signed), Chocolatey and
-AppImageHub can follow with the same v1.0.0 asset and hash. **Microsoft Store is
-on hold**: the listing draft is ready, but no free trusted Authenticode
-certificate exists (SignPath Foundation declined; Certum is paid). **Homebrew
-`homebrew/cask` is not eligible** while the DMG is unnotarized; the self-hosted
-tap works but the x64 DMG and its hash are still missing. The macOS DMG can be
-distributed directly from GitHub Releases with a Gatekeeper warning.
+Consequences: **Scoop is live at 1.0.2**, winget is submitted for 1.0.0 but its
+Installation Validation currently fails with `shellExecute` (CLA is signed),
+Chocolatey and AppImageHub can follow with the same v1.0.2 asset and hash.
+**Microsoft Store is on hold**: the listing draft is ready, but no free trusted
+Authenticode certificate exists (SignPath Foundation declined; Certum is paid).
+**Homebrew `homebrew/cask` is not eligible** while the DMG is unnotarized; the
+self-hosted tap works but the x64 DMG and its hash are still missing. The macOS
+DMG can be distributed directly from GitHub Releases with a Gatekeeper warning.
 
 > Naming gotcha: `dist:mac:public` in `package.json` still emits
 > `LV24 WiFi Explorer-<version>-<arch>-public.dmg` (spaces), while the v1.0.0
@@ -65,17 +66,17 @@ matches the tag — the tag only selects which release receives the assets.
 ```bash
 # UI: Actions -> "Release desktop artifacts" -> Run workflow
 # CLI equivalent:
-gh workflow run release-desktop.yml -f tag=v1.0.0 -f upload=false
+gh workflow run release-desktop.yml -f tag=v1.0.2 -f upload=false
 gh run watch
 gh run download --name desktop-release-bundle
 ```
 
-It produces, with stable URL-safe names (run on 2026-11-10 for `v1.0.0`):
+It produces, with stable URL-safe names (run on 2026-11-10 for `v1.0.2`):
 
 | File                                             | Built by                                                    |
 | ------------------------------------------------ | ----------------------------------------------------------- |
-| `LV24-WiFi-Explorer-1.0.0-win-x64.exe`           | `windows-latest`, `yarn dist:win`                           |
-| `LV24-WiFi-Explorer-1.0.0-linux-x86_64.AppImage` | `ubuntu-latest`, `yarn dist:linux --x64`                    |
+| `LV24-WiFi-Explorer-1.0.2-win-x64.exe`           | `windows-latest`, `yarn dist:win`                           |
+| `LV24-WiFi-Explorer-1.0.2-linux-x86_64.AppImage` | `ubuntu-latest`, `yarn dist:linux --x64`                    |
 | `SHA256SUMS.txt`                                 | merged from both jobs and verified with `sha256sum --check` |
 
 The macOS DMG keeps its existing hyphenated name
@@ -92,9 +93,9 @@ no signature at all. Say so in release notes instead of hiding it.
 ### Checksum handoff
 
 ```bash
-node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.0.0-win-x64.exe
+node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.0.2-win-x64.exe
 # prints the hash + the three exact lines; --write applies them:
-node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.0.0-win-x64.exe --write
+node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.0.2-win-x64.exe --write
 ```
 
 ## winget
@@ -253,12 +254,12 @@ before the `on_intel` block can be filled.
 
 ## What the owner must do
 
-1. ~~Run the release workflow for `v1.0.0`~~ — done on 2026-11-10; assets and
-   `SHA256SUMS.txt` are attached to the release.
+1. ~~Run the release workflow for `v1.0.0`~~ — done on 2026-11-10; `v1.0.2` is
+   the current release of record with `SHA256SUMS.txt` attached.
 2. Optionally upload the x64 macOS DMG if Intel Macs should be supported.
-3. ~~Fill checksums~~ — done for `v1.0.0`; re-run
+3. ~~Fill checksums~~ — done for `v1.0.2`; re-run
    `scripts/packaging/fill-checksums.mjs <exe> --write` for every new version.
-4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. Installation Validation is blocked by `shellExecute`; retry with a signed `v1.0.1` or a different installer type, do not change the manifest blindly.
+4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. Installation Validation is blocked by `shellExecute`; the PR still carries 1.0.0. Retry with a signed `v1.0.2` or a different installer type, do not change the manifest blindly.
 5. ~~Create `<owner>/scoop-bucket` and push the manifest~~ — live at
    [LevapVeeskela/scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket).
 6. Create a free Chocolatey account, pack and push.

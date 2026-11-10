@@ -203,7 +203,7 @@ a **keyless public build** (build with `VITE_MUI_LICENSE_KEY=` and run
 `electron-builder --win nsis`); a public **privacy policy URL** (mandatory for
 Win32); **support URL + email**; **screenshots** ≥1 (4+ recommended) and 1:1 box
 art (2:3 poster recommended); an **immutable versioned URL** such as
-`https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/download/v1.0.0/LV24-WiFi-Explorer-1.0.0-win-x64.exe`
+`https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/download/v1.0.2/LV24-WiFi-Explorer-1.0.2-win-x64.exe`
 (never re-upload an asset in place); the **IARC age-rating questionnaire**; and
 a clean Windows 10/11 VM for the silent-install and uninstall test.
 
