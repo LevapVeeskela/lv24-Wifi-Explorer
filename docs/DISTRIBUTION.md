@@ -15,15 +15,15 @@ stays blocked under the zero-spend policy.
 
 ## Current state (2026-11-10)
 
-| Artifact                                                | Exists? | Notes                                                                       |
-| ------------------------------------------------------- | ------- | --------------------------------------------------------------------------- |
-| `LV24-WiFi-Explorer-1.0.4-win-x64.exe`                  | yes     | v1.0.4 Release, built 2026-11-10; SHA-256 `8465bfc1…ba35`                   |
-| `LV24-WiFi-Explorer-1.0.4-win-x64.zip`                  | yes     | v1.0.4 portable ZIP for winget; SHA-256 `55497720…e3a`                      |
-| `LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage`        | yes     | v1.0.4 Release, built 2026-11-10; SHA-256 `9814881d…72f6`                   |
-| `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg`             | yes     | In the v1.0.0 GitHub Release; unsigned, unnotarized, arm64 only             |
-| `LV24-WiFi-Explorer-1.0.0-x64-public.dmg`               | no      | `dist:mac:public` builds it; it was never uploaded                          |
-| `LV24-WiFi-Explorer-1.0.1…1.0.3-*`                      | yes     | Superseded; use v1.0.4 (watermark-free, coded MUI key)                      |
-| `checksums.txt` (release) / `SHA256SUMS.txt` (workflow) | yes     | `checksums.txt` covers the arm64 DMG; `SHA256SUMS.txt` covers Windows+Linux |
+| Artifact                                                | Exists? | Notes                                                                                   |
+| ------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------- |
+| `LV24-WiFi-Explorer-1.0.4-win-x64.exe`                  | yes     | v1.0.4 Release, built 2026-11-10; SHA-256 `8465bfc1…ba35`                               |
+| `LV24-WiFi-Explorer-1.0.4-win-x64.zip`                  | yes     | v1.0.4 portable ZIP for winget; SHA-256 `55497720…e3a`                                  |
+| `LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage`        | yes     | v1.0.4 Release, built 2026-11-10; SHA-256 `9814881d…72f6`                               |
+| `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg`             | yes     | In the v1.0.0 GitHub Release; unsigned, unnotarized, arm64 only                         |
+| `LV24-WiFi-Explorer-1.0.0-x64-public.dmg`               | no      | `dist:mac:public` builds it; it was never uploaded                                      |
+| `LV24-WiFi-Explorer-1.0.1…1.0.3-*`                      | yes     | Superseded; use v1.0.4 (watermark-free, coded MUI key)                                  |
+| `checksums.txt` (release) / `SHA256SUMS.txt` (workflow) | yes     | `checksums.txt` covers the arm64 DMG; `SHA256SUMS.txt` covers Windows exe+zip and Linux |
 
 Consequences: **Scoop is live at 1.0.4**, winget is submitted for 1.0.0 but its
 Installation Validation currently fails with `shellExecute` (CLA is signed),

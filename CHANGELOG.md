@@ -91,6 +91,13 @@ Actions secret in CI, and is coded into the bundle after minification.
   and can be recovered with a debugger. The license key remains a compliance
   token, not a DRM secret.
 
+### Distribution
+
+- Windows releases now ship both the NSIS installer and a portable ZIP. winget
+  uses the ZIP (`InstallerType: zip`, `NestedInstallerType: portable`) because
+  the unsigned NSIS installer is rejected by the validation VM's `shellExecute`
+  step; the NSIS variant remains for direct download and Scoop.
+
 ## [1.0.3] — 2026-11-10
 
 The issue counter is visible without opening the column picker. v1.0.2 and
