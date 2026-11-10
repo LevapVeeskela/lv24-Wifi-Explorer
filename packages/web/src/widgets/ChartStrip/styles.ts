@@ -45,12 +45,17 @@ export const chartEmptySx: SxProps<Theme> = {
 
 export const chartVisuallyHiddenSx: SxProps<Theme> = {
   position: 'absolute',
+  left: 0,
+  top: 0,
   width: 1,
+  maxWidth: 1,
   height: 1,
+  maxHeight: 1,
   padding: 0,
   margin: -1,
   overflow: 'hidden',
   clip: 'rect(0, 0, 0, 0)',
+  clipPath: 'inset(50%)',
   whiteSpace: 'nowrap',
   border: 0,
 };

@@ -131,6 +131,16 @@ The rendered rows included `WLAN_2.4G_1C18` (92%, channel 5), `BELTELECOM_public
 values. No `LV24-Demo` rows or demo badge were present
 (`live_ssids=true demo_markers=false`).
 
+## Footer and page overflow
+
+The footer was clipped because `StatusBar` had `maxHeight: 32` and
+`overflow: hidden`. It now wraps its two clusters (`flexWrap`, no max height);
+at 1366×768 the footer is 58 px tall with all values visible, and at the 960 px
+minimum width it is 77 px tall. The page no longer gets a horizontal scrollbar:
+the chart's visually hidden accessibility table (`position: absolute`, unset
+width) was 1349 px wide and pushed `document.scrollWidth` to 2314. It now has
+`left/top: 0`, `maxWidth/maxHeight: 1`, `clip` and `clipPath: inset(50%)`.
+
 ## How to re-verify after a new build
 
 ```powershell

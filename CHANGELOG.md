@@ -34,6 +34,9 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Distribution
 
+- The status bar wraps its clusters instead of clipping values at narrow window
+  sizes, and the chart accessibility table no longer creates a horizontal page
+  scrollbar.
 - Packaged Windows builds no longer reject renderer IPC as `untrusted-sender`:
   `fileURLToPath()` now converts `file:///C:/...` correctly, so the installed app
   can start a live scan instead of falling back to an empty demo.
