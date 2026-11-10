@@ -60,8 +60,8 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Packaging
 
-- Publishable packages are versioned `1.0.1`; the desktop app is `1.0.3` and the
-  Flutter app `1.0.3+4`. Same source tree, independent release tracks.
+- Publishable packages are versioned `1.0.1`; the desktop app is `1.0.4` and the
+  Flutter app `1.0.4+5`. Same source tree, independent release tracks.
 - `dist:mac:public` builds a redistributable, watermarked macOS DMG without the
   commercial MUI key; `check:public-bundle` fails the build if the key leaks
   into `dist/`.
@@ -71,6 +71,25 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Simplified Chinese added: web catalog, MUI DataGrid locale, Flutter ARB catalog,
   language picker in Settings, persisted `lv24.locale` preference.
 - Hardcoded two-language Flutter workbench strings moved into ARB.
+
+## [1.0.4] — 2026-11-10
+
+Watermark-free Windows and Linux builds. The MUI X Pro key is no longer stored
+in source: it comes from `.env.local` locally or the `MUI_X_LICENSE_KEY` GitHub
+Actions secret in CI, and is coded into the bundle after minification.
+
+### Build
+
+- Vite swaps `import.meta.env.VITE_MUI_LICENSE_KEY` for a random placeholder
+  before inlining, then replaces it with a XOR-coded decoder after minification.
+  The plaintext key does not appear in `dist/`, `app.asar` or `strings`.
+- Source maps are disabled and `debugger` statements are stripped in production.
+- `check:public-bundle` fails when the plaintext key is present; the release
+  preflight fails when the secret is missing, so a watermarked build cannot be
+  published by accident.
+- This is obfuscation, not encryption: the key is decoded in memory at runtime
+  and can be recovered with a debugger. The license key remains a compliance
+  token, not a DRM secret.
 
 ## [1.0.3] — 2026-11-10
 
