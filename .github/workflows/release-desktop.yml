@@ -98,7 +98,9 @@ jobs:
         run: yarn check:public-bundle
 
       - name: Package NSIS x64
-        run: yarn dist:win
+        # --publish never: electron-builder must not try to upload anything;
+        # the publish job below attaches the files with `gh release upload`.
+        run: yarn dist:win --publish never
         env:
           CI: true
 
@@ -165,8 +167,9 @@ jobs:
 
       # --x64 keeps the job to one architecture: electron-builder.yml also lists
       # arm64, and cross-building it here would double the artifact set.
+      # --publish never: uploading is the publish job's job, not electron-builder's.
       - name: Package AppImage x64
-        run: yarn dist:linux --x64
+        run: yarn dist:linux --x64 --publish never
         env:
           CI: true
 
