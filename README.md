@@ -15,7 +15,8 @@ an MCP server that agents can query.
 > Linux и Windows, без выдуманных данных. Есть десктопное приложение, CLI и
 > MCP-сервер для ИИ-агентов — агент видит те же сети, каналы и проблемы, что и
 > человек в приложении. Интерфейс на русском, английском и китайском.
-> Установка: [DMG из Releases](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/latest),
+> Установка: [Releases](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases)
+> (Windows/Linux) или [DMG для macOS](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/tag/v1.0.0),
 > `npm i -g @lv24/wifi-cli` или `npx -y @lv24/wifi-mcp`.
 
 | 🚀 Start                                                                   | 🧠 Use                                                    | 🤖 Agents                                            |
@@ -58,8 +59,9 @@ Screenshots use the deterministic demo provider — no real networks are exposed
 
 ## Desktop app (macOS)
 
-1. Download `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg` from
-   [Releases](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/latest).
+1. Download `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg` from the
+   [v1.0.0 release](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/tag/v1.0.0)
+   (the macOS artifact is not rebuilt for every desktop patch).
 2. Open it and drag the app to **Applications**.
 3. First launch: **right-click → Open** (the build is signed but not yet
    notarized — see [Known limitations](#known-limitations)).
@@ -72,10 +74,13 @@ shows a small MUI watermark. A private, watermark-free build is documented in
 
 ### Linux / Windows desktop
 
-`yarn dist:linux` / `yarn dist:win` produce installers from source. Live
-scanning on Linux uses NetworkManager (`nmcli`), on Windows `netsh`; both expose
-fewer fields than macOS (see the table below). Windows/Linux packages are not
-signed.
+Ready-made installers are attached to the latest
+[release](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases):
+`LV24-WiFi-Explorer-1.0.2-win-x64.exe` (NSIS) and
+`LV24-WiFi-Explorer-1.0.2-linux-x86_64.AppImage`. `yarn dist:linux` /
+`yarn dist:win` produce the same installers from source. Live scanning on Linux
+uses NetworkManager (`nmcli`), on Windows `netsh`; both expose fewer fields than
+macOS (see the table below). Windows/Linux packages are not signed.
 
 On Windows, the Scoop bucket is live:
 
@@ -262,8 +267,9 @@ Flutter: `cd flutter && flutter pub get && flutter run -d macos` (see
   grid shows the MUI watermark. Private builds are documented in
   [`docs/RELEASE.md`](docs/RELEASE.md).
 - **No auto-update.** Releases are manual downloads.
-- **Windows/Linux installers** are built from source and not hardware-verified
-  by the maintainers yet.
+- **Windows/Linux installers** are built from source. The Windows NSIS build is
+  hardware-verified (live `netsh` scan, footer, icon); the Linux AppImage is
+  CI-built and not hardware-verified by the maintainers yet.
 - **Monitor mode, spectrum FFT, client lists, remote sensors** are out of scope;
   see [`docs/PARITY-GAP.md`](docs/PARITY-GAP.md).
 

@@ -23,7 +23,9 @@ npm i -g @lv24/wifi-cli
 npx -y @lv24/wifi-mcp
 ```
 
-macOS desktop app: download the DMG from Releases. Public builds are
+macOS desktop app: download `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg` from
+the v1.0.0 release (the macOS artifact is not rebuilt for every desktop patch).
+Windows/Linux installers live on the latest release. Public builds are
 watermarked (no MUI key) and not notarized; first launch needs right-click →
 Open. Grant Location once to `ScanCore` for real SSID/BSSID.
 
