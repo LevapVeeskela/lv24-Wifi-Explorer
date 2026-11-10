@@ -38,7 +38,7 @@ mac:
       LV24 WiFi Explorer uses location authorization to identify Wi‑Fi networks
       scanned on this Mac (Apple requirement for Wi‑Fi scan APIs).
 win:
-  icon: resources/icons/icon.png
+  icon: resources/icons/icon.ico
   target:
     - target: nsis
       arch: [x64]
@@ -58,3 +58,6 @@ nsis:
   perMachine: false
   allowToChangeInstallationDirectory: true
   createDesktopShortcut: true
+  installerIcon: resources/icons/icon.ico
+  uninstallerIcon: resources/icons/icon.ico
+  installerHeaderIcon: resources/icons/icon.ico
