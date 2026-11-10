@@ -4,15 +4,15 @@ Publisher manifests and notes for the free distribution channels. Nothing in
 this directory builds or publishes anything by itself; it is input for the manual
 submission steps in [`docs/DISTRIBUTION.md`](../docs/DISTRIBUTION.md).
 
-| Directory      | Target                     | State                                                                       |
-| -------------- | -------------------------- | --------------------------------------------------------------------------- |
-| `winget/`      | Windows Package Manager    | ready to submit: asset exists, hash filled ([notes](winget.md))             |
-| `scoop/`       | self-hosted Scoop bucket   | ready: hash filled; create the bucket repo and push                         |
-| `chocolatey/`  | community.chocolatey.org   | ready to pack: hash filled; free account and moderation                     |
-| `snap/`        | Snap Store                 | blocked: `nmcli` cannot run in a confined snap                              |
-| `flathub/`     | Flathub                    | blocked: offline source build + `nmcli` + metainfo missing                  |
-| `appimagehub/` | AppImageHub catalogue      | AppImage exists; rebuild on 22.04 before the PR (glibc caveat)              |
-| `homebrew/`    | Homebrew (self-hosted tap) | blocked for `homebrew/cask` by notarization; x64 DMG and hash still missing |
+| Directory      | Target                     | State                                                                                |
+| -------------- | -------------------------- | ------------------------------------------------------------------------------------ |
+| `winget/`      | Windows Package Manager    | PR [#475989](https://github.com/microsoft/winget-pkgs/pull/475989) open; CLA pending |
+| `scoop/`       | self-hosted Scoop bucket   | live: [LevapVeeskela/scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket)    |
+| `chocolatey/`  | community.chocolatey.org   | ready to pack: hash filled; free account and moderation                              |
+| `snap/`        | Snap Store                 | blocked: `nmcli` cannot run in a confined snap                                       |
+| `flathub/`     | Flathub                    | blocked: offline source build + `nmcli` + metainfo missing                           |
+| `appimagehub/` | AppImageHub catalogue      | AppImage exists; rebuild on 22.04 before the PR (glibc caveat)                       |
+| `homebrew/`    | Homebrew (self-hosted tap) | blocked for `homebrew/cask` by notarization; x64 DMG and hash still missing          |
 
 All manifests are pinned to version `1.0.0`. The 1.0.0 checksums are filled from
 the published asset; future versions use the shared placeholder

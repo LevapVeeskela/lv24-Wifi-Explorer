@@ -32,10 +32,11 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Headless container image `ghcr.io/levapveeskela/lv24-wifi-explorer` (CLI + MCP)
   and the `@levapveeskela/lv24-wifi-explorer` GitHub Packages bundle; both are
   published by manual, zero-spend workflows.
-- Free publisher manifests and a manual release workflow: winget, Scoop,
-  Chocolatey, AppImageHub, self-hosted Homebrew tap; Snap/Flathub/Store paths
-  are documented with their blockers in `docs/DISTRIBUTION.md` and
-  `docs/DISTRIBUTION-MICROSOFT-STORE.md`.
+- Free publisher manifests and a manual release workflow: winget (PR
+  [#475989](https://github.com/microsoft/winget-pkgs/pull/475989), CLA pending),
+  Scoop (live bucket), Chocolatey, AppImageHub, self-hosted Homebrew tap;
+  Snap/Flathub/Store paths are documented with their blockers in
+  `docs/DISTRIBUTION.md` and `docs/DISTRIBUTION-MICROSOFT-STORE.md`.
 - `release-desktop.yml` builds unsigned Windows NSIS and Linux AppImage assets on
   free public-repo runners and can attach them to an existing release; the
   `v1.0.0` release now carries `LV24-WiFi-Explorer-1.0.0-win-x64.exe`,

@@ -77,8 +77,15 @@ scanning on Linux uses NetworkManager (`nmcli`), on Windows `netsh`; both expose
 fewer fields than macOS (see the table below). Windows/Linux packages are not
 signed.
 
-The free channels (winget, Scoop, Chocolatey, AppImageHub, Snap/Flathub status,
-Microsoft Store) and their exact prerequisites are tracked in
+On Windows, the Scoop bucket is live:
+
+```powershell
+scoop bucket add lv24 https://github.com/LevapVeeskela/scoop-bucket
+scoop install lv24/lv24-wifi-explorer
+```
+
+The winget manifest is in review (`microsoft/winget-pkgs` PR #475989). The free
+channels and their exact prerequisites are tracked in
 [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md). Nothing there is auto-published:
 Windows/Linux assets are built by the manual
 [`release-desktop.yml`](.github/workflows/release-desktop.yml) workflow.

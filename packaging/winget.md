@@ -13,10 +13,10 @@ parses every file in the directory it is given, whatever the extension, so a
 | `LV24.WiFiExplorer.installer.yaml`    | installer      |
 | `LV24.WiFiExplorer.locale.en-US.yaml` | default locale |
 
-Schema: `ManifestVersion 1.12.0`, referenced through the `aka.ms` URLs in each
-file's `yaml-language-server` header. That is the version current manifests use;
-the repository also publishes a 1.28.0 schema for newer clients and 1.12.0 keeps
-older clients working.
+Schema: `ManifestVersion 1.28.0`, referenced through the `aka.ms` URLs in each
+file's `yaml-language-server` header. That is what the winget-pkgs PR template
+asks new submissions to use; 1.12.0 is the older schema still found in existing
+manifests.
 
 Installer facts that matter for validation:
 

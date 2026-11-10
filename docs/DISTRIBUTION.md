@@ -23,11 +23,11 @@ stays blocked under the zero-spend policy.
 | `LV24-WiFi-Explorer-1.0.0-linux-x86_64.AppImage`        | yes     | v1.0.0 Release, built 2026-11-10; SHA-256 `0d19b228…5800`                   |
 | `checksums.txt` (release) / `SHA256SUMS.txt` (workflow) | yes     | `checksums.txt` covers the arm64 DMG; `SHA256SUMS.txt` covers Windows+Linux |
 
-Consequences: **winget, Scoop, Chocolatey and AppImageHub can be submitted now**
-with the v1.0.0 asset and hash above. **Homebrew `homebrew/cask` is not eligible**
-while the DMG is unnotarized; the self-hosted tap works but the x64 DMG and its
-hash are still missing. The macOS DMG can be distributed directly from GitHub
-Releases with a Gatekeeper warning.
+Consequences: **winget and Scoop are now published/submitted**, Chocolatey and
+AppImageHub can follow with the same v1.0.0 asset and hash. **Homebrew
+`homebrew/cask` is not eligible** while the DMG is unnotarized; the self-hosted
+tap works but the x64 DMG and its hash are still missing. The macOS DMG can be
+distributed directly from GitHub Releases with a Gatekeeper warning.
 
 > Naming gotcha: `dist:mac:public` in `package.json` still emits
 > `LV24 WiFi Explorer-<version>-<arch>-public.dmg` (spaces), while the v1.0.0
@@ -39,17 +39,17 @@ Releases with a Gatekeeper warning.
 
 ## Matrix
 
-| Publisher                        | Platform      | Artifact                        | Cost                                                                  | Account needed                    | Automation                                     | Blocker                                                                                                |
-| -------------------------------- | ------------- | ------------------------------- | --------------------------------------------------------------------- | --------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| GitHub Releases                  | win/mac/linux | `.exe` `.dmg` `.AppImage`       | $0                                                                    | repo write                        | `release-desktop.yml` (manual, opt-in upload)  | none — Windows/Linux assets attached 2026-11-10                                                        |
-| winget (`microsoft/winget-pkgs`) | Windows       | `.exe` (NSIS)                   | $0                                                                    | GitHub + Microsoft CLA            | manifests in `packaging/winget/`, PR is manual | submit one PR; hash already filled                                                                     |
-| Scoop (self-hosted bucket)       | Windows       | `.exe`                          | $0                                                                    | GitHub                            | manifest in `packaging/scoop/`, push is manual | create `<owner>/scoop-bucket`, then push                                                               |
-| Chocolatey (community repo)      | Windows       | `.nupkg`                        | $0                                                                    | free Chocolatey account + API key | `choco pack` / `choco push`, manual            | free account + moderation                                                                              |
-| Snap Store                       | Linux         | `.snap`                         | $0                                                                    | Ubuntu One                        | not wired up                                   | `nmcli` cannot run in a confined snap                                                                  |
-| Flathub                          | Linux         | Flatpak                         | $0                                                                    | GitHub                            | reference skeleton only                        | offline source build, `nmcli`, metainfo, MUI licensing, human-authored manifest                        |
-| AppImageHub                      | Linux         | `.AppImage`                     | $0                                                                    | GitHub                            | one-line data file + PR                        | AppImage exists; built on 24.04, so switch to 22.04 before the PR                                      |
-| Homebrew Cask                    | macOS         | `.dmg`                          | $0 in a tap; $99/yr for `homebrew/cask`                               | GitHub                            | cask in `packaging/homebrew/`                  | notarization required by Homebrew policy                                                               |
-| Microsoft Store                  | Windows       | signed MSI/EXE (NSIS), not MSIX | $0 registration + $0 via SignPath Foundation (publisher name changes) | Partner Center                    | see linked doc                                 | certificate + privacy policy; see [`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md) |
+| Publisher                        | Platform      | Artifact                        | Cost                                                                  | Account needed                    | Automation                                                                 | Blocker                                                                                                |
+| -------------------------------- | ------------- | ------------------------------- | --------------------------------------------------------------------- | --------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| GitHub Releases                  | win/mac/linux | `.exe` `.dmg` `.AppImage`       | $0                                                                    | repo write                        | `release-desktop.yml` (manual, opt-in upload)                              | none — Windows/Linux assets attached 2026-11-10                                                        |
+| winget (`microsoft/winget-pkgs`) | Windows       | `.exe` (NSIS)                   | $0                                                                    | GitHub + Microsoft CLA            | PR [#475989](https://github.com/microsoft/winget-pkgs/pull/475989), manual | CLA signature, then review/merge                                                                       |
+| Scoop (self-hosted bucket)       | Windows       | `.exe`                          | $0                                                                    | GitHub                            | live: [scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket)        | none                                                                                                   |
+| Chocolatey (community repo)      | Windows       | `.nupkg`                        | $0                                                                    | free Chocolatey account + API key | `choco pack` / `choco push`, manual                                        | free account + moderation                                                                              |
+| Snap Store                       | Linux         | `.snap`                         | $0                                                                    | Ubuntu One                        | not wired up                                                               | `nmcli` cannot run in a confined snap                                                                  |
+| Flathub                          | Linux         | Flatpak                         | $0                                                                    | GitHub                            | reference skeleton only                                                    | offline source build, `nmcli`, metainfo, MUI licensing, human-authored manifest                        |
+| AppImageHub                      | Linux         | `.AppImage`                     | $0                                                                    | GitHub                            | one-line data file + PR                                                    | AppImage exists; built on 24.04, so switch to 22.04 before the PR                                      |
+| Homebrew Cask                    | macOS         | `.dmg`                          | $0 in a tap; $99/yr for `homebrew/cask`                               | GitHub                            | cask in `packaging/homebrew/`                                              | notarization required by Homebrew policy                                                               |
+| Microsoft Store                  | Windows       | signed MSI/EXE (NSIS), not MSIX | $0 registration + $0 via SignPath Foundation (publisher name changes) | Partner Center                    | see linked doc                                                             | certificate + privacy policy; see [`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md) |
 
 ## Building the assets
 
@@ -96,16 +96,16 @@ node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.0.0-win-x
 
 ## winget
 
-Manifests: [`packaging/winget/`](../packaging/winget), `ManifestVersion 1.12.0`,
+Manifests: [`packaging/winget/`](../packaging/winget), `ManifestVersion 1.28.0`,
 `InstallerType: nullsoft`, `Scope: user`, `UpgradeBehavior: install`. Notes and
 the PR layout are in [`packaging/winget.md`](../packaging/winget.md); keep that
 file **outside** `packaging/winget/`, because `winget validate` parses every file
 in the directory it is given.
 
-Current schema facts (verified 2026-11-10): the community repository documents
-schema **1.12.0** on Microsoft Learn and uses it in freshly generated manifests
-(`aka.ms/winget-manifest.*.1.12.0.schema.json`); a 1.28.0 schema folder also exists
-for newer clients. 1.12.0 is the safe, widely supported choice. `nullsoft` makes
+Current schema facts (verified 2026-11-10): the winget-pkgs PR template asks new
+submissions to conform to the **1.28** schema
+(`aka.ms/winget-manifest.*.1.28.0.schema.json`); 1.12.0 appears in older merged
+manifests but is not the right choice for a new package. `nullsoft` makes
 winget pass `/S` itself; `Scope: user` matches electron-builder's
 `perMachine: false`. The validation pipeline installs as a standard user, so a
 per-user installer is required, and it verifies the SHA-256 and silent install.
@@ -238,7 +238,7 @@ before the `on_intel` block can be filled.
 
 | Topic                                                      | Source                                                                                                                                                                                            |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| winget manifest schema, fields, switches                   | <https://learn.microsoft.com/en-us/windows/package-manager/package/manifest> (updated 2026-09-14), <https://github.com/microsoft/winget-pkgs/blob/master/doc/manifest/schema/1.12.0/installer.md> |
+| winget manifest schema, fields, switches                   | <https://learn.microsoft.com/en-us/windows/package-manager/package/manifest> (updated 2026-09-14), <https://github.com/microsoft/winget-pkgs/blob/master/doc/manifest/schema/1.28.0/installer.md> |
 | winget validation pipeline                                 | <https://github.com/microsoft/winget-pkgs/blob/master/doc/Validation.md>                                                                                                                          |
 | winget repository policies                                 | <https://github.com/microsoft/winget-pkgs/blob/master/doc/Policies.md>                                                                                                                            |
 | Scoop manifest fields                                      | <https://github.com/ScoopInstaller/Scoop/wiki/App-Manifests>                                                                                                                                      |
@@ -257,8 +257,9 @@ before the `on_intel` block can be filled.
 2. Optionally upload the x64 macOS DMG if Intel Macs should be supported.
 3. ~~Fill checksums~~ — done for `v1.0.0`; re-run
    `scripts/packaging/fill-checksums.mjs <exe> --write` for every new version.
-4. Sign the Microsoft CLA, then open the winget PR with the manifests as-is.
-5. Create `<owner>/scoop-bucket` and push the manifest.
+4. Sign the Microsoft CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989); the bot blocks merge until then.
+5. ~~Create `<owner>/scoop-bucket` and push the manifest~~ — live at
+   [LevapVeeskela/scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket).
 6. Create a free Chocolatey account, pack and push.
 7. Optionally: AppImageHub PR (rebuild on `ubuntu-22.04` first).
 8. Decide on Apple notarization ($99/yr) — it unblocks `homebrew/cask` and removes
