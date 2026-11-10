@@ -20,18 +20,24 @@ manifests.
 
 Installer facts that matter for validation:
 
-- `InstallerType: nullsoft` — electron-builder's NSIS installer, so winget passes
-  `/S` itself. `InstallerSwitches` spells it out anyway.
-- `Scope: user` — `nsis.perMachine: false`, installs under `%LOCALAPPDATA%`.
-- `InstallModes: silent, silentWithProgress` — required by the repository.
-- `UpgradeBehavior: install` — in-place upgrade, no uninstall-first.
+- `InstallerType: zip` + `NestedInstallerType: portable` — winget extracts the
+  archive with the system `tar` and creates a portable shim; it does not launch
+  the unsigned NSIS installer, which the validation VM rejects with
+  `shellExecute`.
+- `NestedInstallerFiles` names `LV24 WiFi Explorer.exe` with the
+  `lv24-wifi-explorer` alias.
+- Portable packages are per-user; `Scope` is not allowed and must be omitted.
+- `UpgradeBehavior: install` — winget replaces the portable payload in place.
 - `ReleaseDate: 2026-11-10` — date of the current 1.0.4 release.
+
+The NSIS `LV24-WiFi-Explorer-1.0.4-win-x64.exe` stays on the release for direct
+downloads and Scoop; winget uses the ZIP only.
 
 ## Before submitting
 
 ```powershell
-# 1. The asset must exist on the release and the hash must be real.
-node scripts/packaging/fill-checksums.mjs release\LV24-WiFi-Explorer-1.0.4-win-x64.exe --write
+# 1. The ZIP must exist on the release and the hash must be real.
+(Get-FileHash release\LV24-WiFi-Explorer-1.0.4-win-x64.zip -Algorithm SHA256).Hash.ToLower()
 
 # 2. Local validation (winget is part of App Installer on Windows 10/11).
 winget validate --manifest packaging\winget

@@ -76,7 +76,8 @@ shows a small MUI watermark. A private, watermark-free build is documented in
 
 Ready-made installers are attached to the latest
 [release](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases):
-`LV24-WiFi-Explorer-1.0.4-win-x64.exe` (NSIS) and
+`LV24-WiFi-Explorer-1.0.4-win-x64.exe` (NSIS), `LV24-WiFi-Explorer-1.0.4-win-x64.zip`
+(portable, no installer) and
 `LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage`. `yarn dist:linux` /
 `yarn dist:win` produce the same installers from source. Live scanning on Linux
 uses NetworkManager (`nmcli`), on Windows `netsh`; both expose fewer fields than

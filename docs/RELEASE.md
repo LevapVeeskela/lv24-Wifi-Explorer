@@ -148,7 +148,7 @@ yarn dist:mac                                  # DMG for x64 + arm64
 Other targets:
 
 ```bash
-yarn dist:win     # NSIS x64, run on Windows; unsigned works for direct downloads and winget,
+yarn dist:win     # NSIS + portable ZIP x64, run on Windows; unsigned works for direct downloads and winget,
                   # but a Microsoft Store MSI/EXE submission must be CA-signed
 yarn dist:linux   # AppImage x64 + arm64 (`--x64` for one architecture)
 ```
@@ -200,7 +200,7 @@ standard GitHub-hosted runner: install, typecheck, lint, format check, tests,
 CLI smoke, `yarn build`. It does not publish artifacts, sign, or notarize.
 
 Two more workflows are manual-only and also use standard free public-repo
-runners: `release-desktop.yml` builds unsigned Windows NSIS + Linux AppImage
+runners: `release-desktop.yml` builds unsigned Windows NSIS + portable ZIP + Linux AppImage
 assets (optionally attaches them to an existing release) and `pypi-publish.yml`
 publishes the Python launcher. Do not add paid runners, larger runners, or
 automatic push/PR triggers (zero-spend policy).

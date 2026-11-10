@@ -35,7 +35,7 @@
     "test:oui": "node --test packages/web/src/vendor/lookup.test.mjs",
     "oui:refresh": "node packages/web/src/vendor/refresh-oui.mjs",
     "dist:mac": "yarn build:scancore && yarn check:scancore && yarn build && electron-builder --mac dmg --config electron-builder.yml",
-    "dist:win": "yarn build && electron-builder --win nsis --config electron-builder.yml",
+    "dist:win": "yarn build && electron-builder --win nsis zip --x64 --config electron-builder.yml",
     "build:core": "yarn workspace @lv24/wifi-core build",
     "build:backend": "yarn workspace @lv24/wifi-backend build",
     "build:cli": "yarn workspace @lv24/wifi-cli build",

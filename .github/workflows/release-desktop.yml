@@ -74,7 +74,7 @@ jobs:
           fi
 
   windows:
-    name: Windows NSIS x64
+    name: Windows NSIS + portable ZIP x64
     needs: preflight
     runs-on: windows-latest
     timeout-minutes: 45
@@ -113,23 +113,30 @@ jobs:
         env:
           VITE_MUI_LICENSE_KEY: ${{ secrets.MUI_X_LICENSE_KEY }}
 
-      - name: Normalize filename and write checksum
+      - name: Normalize filenames and write checksums
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
           $version = node -p "require('./package.json').version"
           $name = "LV24-WiFi-Explorer-$version-win-x64.exe"
+          $zipName = "LV24-WiFi-Explorer-$version-win-x64.zip"
           $installer = Get-ChildItem -Path release -Filter *.exe -File |
             Where-Object { $_.Name -notlike '*Uninstall*' } |
             Select-Object -First 1
           if (-not $installer) { throw 'No NSIS installer found in release/' }
           Copy-Item -Path $installer.FullName -Destination "release/$name" -Force
           Remove-Item -Path $installer.FullName -Force
+          $zip = Get-ChildItem -Path release -Filter *.zip -File |
+            Where-Object { $_.Name -ne $zipName } |
+            Select-Object -First 1
+          if ($zip) { Move-Item -Path $zip.FullName -Destination "release/$zipName" -Force }
+          if (-not (Test-Path "release/$zipName")) { throw 'No portable ZIP found in release/' }
           $hash = (Get-FileHash -Path "release/$name" -Algorithm SHA256).Hash.ToLower()
+          $zipHash = (Get-FileHash -Path "release/$zipName" -Algorithm SHA256).Hash.ToLower()
           # LF endings so `sha256sum --check` can read it on Linux later.
           [IO.File]::WriteAllText(
             (Join-Path (Get-Location) 'release/SHA256SUMS-windows.txt'),
-            "$hash  $name`n"
+            "$hash  $name`n$zipHash  $zipName`n"
           )
           Get-Content "release/SHA256SUMS-windows.txt"
 
@@ -139,6 +146,7 @@ jobs:
           name: desktop-windows
           path: |
             release/*.exe
+            release/*.zip
             release/SHA256SUMS-windows.txt
           if-no-files-found: error
           retention-days: 14
@@ -250,6 +258,7 @@ jobs:
           set -euo pipefail
           gh release upload "$TAG" \
             bundle/*.exe \
+            bundle/*.zip \
             bundle/*.AppImage \
             bundle/SHA256SUMS.txt \
             --clobber \

@@ -18,6 +18,7 @@ stays blocked under the zero-spend policy.
 | Artifact                                                | Exists? | Notes                                                                       |
 | ------------------------------------------------------- | ------- | --------------------------------------------------------------------------- |
 | `LV24-WiFi-Explorer-1.0.4-win-x64.exe`                  | yes     | v1.0.4 Release, built 2026-11-10; SHA-256 `8465bfc1…ba35`                   |
+| `LV24-WiFi-Explorer-1.0.4-win-x64.zip`                  | yes     | v1.0.4 portable ZIP for winget; SHA-256 `55497720…e3a`                      |
 | `LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage`        | yes     | v1.0.4 Release, built 2026-11-10; SHA-256 `9814881d…72f6`                   |
 | `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg`             | yes     | In the v1.0.0 GitHub Release; unsigned, unnotarized, arm64 only             |
 | `LV24-WiFi-Explorer-1.0.0-x64-public.dmg`               | no      | `dist:mac:public` builds it; it was never uploaded                          |
@@ -46,7 +47,7 @@ DMG can be distributed directly from GitHub Releases with a Gatekeeper warning.
 | Publisher                        | Platform      | Artifact                        | Cost                                                                  | Account needed                    | Automation                                                                 | Blocker                                                                                                                             |
 | -------------------------------- | ------------- | ------------------------------- | --------------------------------------------------------------------- | --------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | GitHub Releases                  | win/mac/linux | `.exe` `.dmg` `.AppImage`       | $0                                                                    | repo write                        | `release-desktop.yml` (manual, opt-in upload)                              | none — Windows/Linux assets attached 2026-11-10                                                                                     |
-| winget (`microsoft/winget-pkgs`) | Windows       | `.exe` (NSIS)                   | $0                                                                    | GitHub + Microsoft CLA            | PR [#475989](https://github.com/microsoft/winget-pkgs/pull/475989), manual | CLA signed; Installation Validation fails (`shellExecute`)                                                                          |
+| winget (`microsoft/winget-pkgs`) | Windows       | `.zip` (portable)               | $0                                                                    | GitHub + Microsoft CLA            | PR [#475989](https://github.com/microsoft/winget-pkgs/pull/475989), manual | portable ZIP selected after unsigned NSIS failed `shellExecute`; validation pending                                                 |
 | Scoop (self-hosted bucket)       | Windows       | `.exe`                          | $0                                                                    | GitHub                            | live: [scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket)        | none                                                                                                                                |
 | Chocolatey (community repo)      | Windows       | `.nupkg`                        | $0                                                                    | free Chocolatey account + API key | `choco pack` / `choco push`, manual                                        | free account + moderation                                                                                                           |
 | Snap Store                       | Linux         | `.snap`                         | $0                                                                    | Ubuntu One                        | not wired up                                                               | `nmcli` cannot run in a confined snap                                                                                               |
@@ -76,6 +77,7 @@ It produces, with stable URL-safe names (run on 2026-11-10 for `v1.0.4`):
 | File                                             | Built by                                                    |
 | ------------------------------------------------ | ----------------------------------------------------------- |
 | `LV24-WiFi-Explorer-1.0.4-win-x64.exe`           | `windows-latest`, `yarn dist:win`                           |
+| `LV24-WiFi-Explorer-1.0.4-win-x64.zip`           | `windows-latest`, `yarn dist:win` (portable ZIP)            |
 | `LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage` | `ubuntu-latest`, `yarn dist:linux --x64`                    |
 | `SHA256SUMS.txt`                                 | merged from both jobs and verified with `sha256sum --check` |
 
@@ -101,35 +103,35 @@ node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.0.4-win-x
 ## winget
 
 Manifests: [`packaging/winget/`](../packaging/winget), `ManifestVersion 1.28.0`,
-`InstallerType: nullsoft`, `Scope: user`, `UpgradeBehavior: install`. Notes and
-the PR layout are in [`packaging/winget.md`](../packaging/winget.md); keep that
-file **outside** `packaging/winget/`, because `winget validate` parses every file
-in the directory it is given.
+`InstallerType: zip`, `NestedInstallerType: portable`,
+`UpgradeBehavior: install`. Notes and the PR layout are in
+[`packaging/winget.md`](../packaging/winget.md); keep that file **outside**
+`packaging/winget/`, because `winget validate` parses every file in the
+directory it is given.
 
-Current schema facts (verified 2026-11-10): the winget-pkgs PR template asks new
-submissions to conform to the **1.28** schema
-(`aka.ms/winget-manifest.*.1.28.0.schema.json`); 1.12.0 appears in older merged
-manifests but is not the right choice for a new package. `nullsoft` makes
-winget pass `/S` itself; `Scope: user` matches electron-builder's
-`perMachine: false`. The validation pipeline installs as a standard user, so a
-per-user installer is required, and it verifies the SHA-256 and silent install.
+The release ships both Windows variants: the NSIS installer for direct
+download/Scoop, and a portable ZIP for winget. winget uses the ZIP because the
+unsigned NSIS installer is rejected by **08. Installation Validation** with the
+`shellExecute` template on the clean VM; winget extracts the ZIP with the system
+`tar` and creates a portable shim, so no unsigned installer is launched.
+Portable packages are per-user by default, so `Scope` must be omitted (winget
+rejects `Scope` for `InstallerType: portable`).
 
 ```powershell
-# 1. Windows asset must be attached to the release first.
-# 2. Fill the hash and validate locally.
-node scripts/packaging/fill-checksums.mjs release\LV24-WiFi-Explorer-1.0.0-win-x64.exe --write
+# 1. Attach the ZIP to the release, then hash it.
+(Get-FileHash release\LV24-WiFi-Explorer-1.0.4-win-x64.zip -Algorithm SHA256).Hash.ToLower()
+# Put the hash in packaging/winget/LV24.WiFiExplorer.installer.yaml.
 winget validate --manifest packaging\winget
 winget settings --enable LocalManifestFiles
 winget install --manifest packaging\winget
 
-# 3. Copy into a fork of microsoft/winget-pkgs at
-#    manifests/l/LV24/WiFiExplorer/1.0.0/ and open one PR for that version.
+# 2. Copy into a fork of microsoft/winget-pkgs at
+#    manifests/l/LV24/WiFiExplorer/1.0.4/ and open one PR for that version.
 ```
 
-Acceptance notes: unsigned installers are allowed (there is no signing policy in
-`winget-pkgs`); the URL must be HTTPS, version-specific and come from the
-publisher, and the installer must not be flagged by the security scan. A
-Microsoft CLA signature is required once, free.
+Acceptance notes: unsigned archives are allowed; the URL must be HTTPS,
+version-specific and come from the publisher, and the archive must not be
+flagged by the security scan. A Microsoft CLA signature is required once, free.
 
 ## Scoop
 
@@ -259,7 +261,7 @@ before the `on_intel` block can be filled.
 2. Optionally upload the x64 macOS DMG if Intel Macs should be supported.
 3. ~~Fill checksums~~ — done for `v1.0.4`; re-run
    `scripts/packaging/fill-checksums.mjs <exe> --write` for every new version.
-4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. The PR now carries 1.0.4; Installation Validation is still blocked by `shellExecute`. Retry with a signed build or a different installer type, do not change the manifest blindly.
+4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. The PR now carries 1.0.4 as a **portable ZIP** (`InstallerType: zip`, `NestedInstallerType: portable`); the NSIS variant is blocked by `shellExecute` in the validation VM. Installation Validation is pending on the ZIP.
 5. ~~Create `<owner>/scoop-bucket` and push the manifest~~ — live at
    [LevapVeeskela/scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket).
 6. Create a free Chocolatey account, pack and push.
