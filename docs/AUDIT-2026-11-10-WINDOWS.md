@@ -81,10 +81,24 @@ WLAN_5G_1C18 | 3c:46:45:49:1c:1d | -57dBm | ch=52 | 5ghz | wpa2-personal | ac
 Checks: `yarn test` 431 passed / 1 skipped; `yarn typecheck` passed;
 `winget validate` unaffected.
 
+## Final installer verification (CI run 42795953257)
+
+The Windows NSIS installer built from `83ea72f` was installed over the old build
+(`/S /currentuser`, exit 0) and launched with remote debugging. Result: **10 real
+networks**, `ScanCore: ок`, `Геолокация: разрешена`, no demo rows. At a 1366×768
+viewport the footer is 58 px tall, `footer.scrollWidth == footer.clientWidth`, and
+`document.scrollWidth == 1366` (no page scrollbar). The extracted exe icon is the
+LV24 tile, not the Electron default.
+
+The installer was built with `upload=false`, so the public v1.0.0 release assets
+are still the old build; a new release is required to distribute this fix.
+
 ## Residual findings
 
-1. **Published v1.0.0 still contains the old parser.** The fix is in source; a new
-   Windows build/release is required before installed users get it.
+1. **The public v1.0.0 release still contains the old parser.** The verified
+   installer from CI run 42795953257 was built with `upload=false`; a new release
+   (or replacing the release asset, which breaks the immutable URL) is required
+   before installed users get the fix.
 2. `interfaceName` and `associated` are still `null` for netsh (the provider does
    not parse `netsh wlan show interfaces`).
 3. `ibss` is always `false`; Ad-Hoc networks are not distinguished.
