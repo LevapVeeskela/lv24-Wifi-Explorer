@@ -25,6 +25,15 @@ build/
 *.iml
 pubspec_overrides.yaml
 
+# Python launcher build artifacts and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+python/build/
+python/dist/
+*.egg-info/
+python/.venv/
+
 # Local agent / MCP config (machine-specific, not for the repo)
 .mcp.json
 .mcp.json.bak-ctx7

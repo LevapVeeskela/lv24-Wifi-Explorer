@@ -129,6 +129,23 @@ Claude Desktop (`claude_desktop_config.json`) and Cursor use the same
 [`docs/MCP.md`](docs/MCP.md). Machine-readable project summary for agents:
 [`llms.txt`](llms.txt).
 
+## Python / PyPI launcher
+
+A thin Python launcher, [`lv24-wifi-explorer`](python), exposes the same CLI
+and MCP server through `pip`:
+
+```bash
+pip install lv24-wifi-explorer
+
+lv24-wifi providers
+lv24-wifi-mcp          # stdio MCP server
+```
+
+It delegates to the canonical npm packages through `npx` (Node.js 20+ is still
+required) and adds no scanner logic. Version overrides:
+`WIFI_CLI_NPM_VERSION`, `WIFI_MCP_NPM_VERSION`. Native scan prerequisites,
+release status and Trusted Publishing notes: [`docs/pypi.md`](docs/pypi.md).
+
 ## Cross-platform scan sources
 
 | OS          | Provider         | What you get                                                                 |
@@ -183,6 +200,7 @@ Flutter: `cd flutter && flutter pub get && flutter run -d macos` (see
 | ---------------------------------------------- | -------------------------------------------------- |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | process model, IPC, data flow, FSD layout          |
 | [`docs/MCP.md`](docs/MCP.md)                   | MCP tools, client configs, macOS helper, caveats   |
+| [`docs/pypi.md`](docs/pypi.md)                 | Python launcher, PyPI Trusted Publishing, versions |
 | [`docs/PACKAGES.md`](docs/PACKAGES.md)         | package layout and publishing                      |
 | [`docs/SPEC.md`](docs/SPEC.md)                 | product spec, field availability, issue heuristics |
 | [`docs/PERMISSIONS.md`](docs/PERMISSIONS.md)   | macOS Location/TCC behaviour                       |

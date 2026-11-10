@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lv24-wifi-explorer"
+version = "1.0.0"
+description = "Python launcher for the LV24 WiFi Explorer CLI and MCP server"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "LV24" },
+]
+keywords = ["wifi", "wifi-scanner", "cli", "mcp", "lv24"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: System :: Networking",
+]
+
+[project.urls]
+Homepage = "https://github.com/LevapVeeskela/lv24-Wifi-Explorer"
+Repository = "https://github.com/LevapVeeskela/lv24-Wifi-Explorer"
+Issues = "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues"
+Documentation = "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/tree/master/docs"
+Changelog = "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/blob/master/CHANGELOG.md"
+
+[project.scripts]
+lv24-wifi = "lv24_wifi_explorer.cli:main"
+lv24-wifi-mcp = "lv24_wifi_explorer.mcp:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
