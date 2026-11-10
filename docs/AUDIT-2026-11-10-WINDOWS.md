@@ -99,6 +99,38 @@ Checks: `yarn test` 431 passed / 1 skipped; `yarn typecheck` passed;
    structurally, but their open-network wording is not covered; secured WPA2/WPA3
    labels are language-neutral, so they remain correct.
 
+## Packaged IPC trust (found during installer verification)
+
+The first CI installer contained the parser fix, but the installed app stayed in
+demo mode: every `window.wifiExplorer` call returned
+`{ ok: false, error: "untrusted-sender" }`. `isTrustedRendererUrl` used
+`path.resolve(parsed.pathname)`; on Windows a file URL pathname is `/C:/...`, so
+it became `C:\C:\...` and never matched the asar `dist` directory. Fixed with
+`fileURLToPath()` in `packages/desktop/src/main.ts`.
+
+After replacing the installed `app.asar` with a pack of the current
+`dist`/`dist-electron`, the same installed exe showed **8 real networks**,
+`ScanCore: ок`, no demo rows. A final installer containing this fix is required.
+
+## GUI verification (development build)
+
+Before the installer run, the renderer was loaded from `vite preview` with the
+current `dist-electron/main.js` and inspected over the Chrome DevTools Protocol.
+After `scanStart()` the page showed:
+
+```text
+Все (13) · 2,4 ГГц (12) · 5 ГГц (1)
+Каналы: 1 (5), 2 (1), 5 (2), 6 (1), 11 (3), 52 (1)
+Защита: Открытые (4), Защищённые (9)
+ScanCore: ок
+Сетей: 13
+```
+
+The rendered rows included `WLAN_2.4G_1C18` (92%, channel 5), `BELTELECOM_public`
+(90%, channel 5), `WLAN_5G_1C18` (5 GHz, channel 52) and live RSSI/channel
+values. No `LV24-Demo` rows or demo badge were present
+(`live_ssids=true demo_markers=false`).
+
 ## How to re-verify after a new build
 
 ```powershell

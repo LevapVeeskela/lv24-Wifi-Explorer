@@ -34,6 +34,9 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Distribution
 
+- Packaged Windows builds no longer reject renderer IPC as `untrusted-sender`:
+  `fileURLToPath()` now converts `file:///C:/...` correctly, so the installed app
+  can start a live scan instead of falling back to an empty demo.
 - Windows builds and the NSIS installer now use the LV24 `icon.ico` (transparent
   corners, 16–256 px) instead of the default Electron icon.
 

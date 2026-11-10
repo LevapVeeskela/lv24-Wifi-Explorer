@@ -1,5 +1,6 @@
 import { appendFileSync, mkdirSync } from 'node:fs';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { app, BrowserWindow, session, shell } from 'electron';
 import { buildRendererCsp } from './csp';
 import {
@@ -57,7 +58,11 @@ function isTrustedRendererUrl(url: string): boolean {
     if (parsed.protocol === 'file:') {
       if (!app.isPackaged) return true;
       const distDir = path.resolve(rendererDistDir());
-      const filePath = path.resolve(decodeURIComponent(parsed.pathname));
+      // `new URL(file:///C:/...).pathname` is `/C:/...`; on Windows
+      // `path.resolve('/C:/...')` produces `C:\C:\...`, which never matches
+      // the packaged asar path. `fileURLToPath` performs the platform-correct
+      // conversion, so IPC from the packaged renderer is trusted.
+      const filePath = path.resolve(fileURLToPath(parsed));
       return filePath === distDir || filePath.startsWith(`${distDir}${path.sep}`);
     }
     if (!app.isPackaged && parsed.origin === DEV_RENDERER_ORIGIN) return true;
