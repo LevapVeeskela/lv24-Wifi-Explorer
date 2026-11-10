@@ -54,7 +54,9 @@ still be distributed directly from GitHub Releases with a Gatekeeper warning.
 
 `.github/workflows/release-desktop.yml` is `workflow_dispatch`-only and never
 creates a release. Standard GitHub-hosted runners on a public repository are free,
-so a run costs nothing.
+so a run costs nothing. It builds the ref you dispatch from (normally `master`),
+not the old release tag, and a preflight job fails when `package.json` no longer
+matches the tag — the tag only selects which release receives the assets.
 
 ```bash
 # UI: Actions -> "Release desktop artifacts" -> Run workflow

@@ -13,6 +13,11 @@
 # Artifact names are normalized here (instead of in electron-builder.yml) so the
 # macOS DMG naming and the existing `dist:mac:public` flow stay untouched, and so
 # the winget/Scoop/Chocolatey manifests can point at a stable, URL-safe filename.
+#
+# The build checks out the dispatched ref (normally master), not the release tag:
+# the tag only selects the release to attach to, while the packaging config must
+# be the current one. A preflight job fails if the package.json version does not
+# match the tag (v1.0.0 -> 1.0.0).
 name: Release desktop artifacts
 
 on:
@@ -37,15 +42,37 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  preflight:
+    name: Check version matches tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Compare package.json with the release tag
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          if [ "v$version" != "$TAG" ]; then
+            echo "::error::Tag '$TAG' does not match package.json version '$version'."
+            exit 1
+          fi
+          echo "Building version $version for release $TAG from ${GITHUB_SHA}."
+
   windows:
     name: Windows NSIS x64
+    needs: preflight
     runs-on: windows-latest
     timeout-minutes: 45
     steps:
-      - name: Checkout the release tag
+      - name: Checkout the build ref
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag }}
+          ref: ${{ github.ref }}
 
       - name: Set up Node 22
         uses: actions/setup-node@v4
@@ -107,13 +134,14 @@ jobs:
 
   linux:
     name: Linux AppImage x64
+    needs: preflight
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - name: Checkout the release tag
+      - name: Checkout the build ref
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag }}
+          ref: ${{ github.ref }}
 
       - name: Set up Node 22
         uses: actions/setup-node@v4
@@ -168,7 +196,7 @@ jobs:
 
   publish:
     name: Merge checksums and attach to release
-    needs: [windows, linux]
+    needs: [preflight, windows, linux]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     # Only this job needs write access; the build jobs stay read-only.
