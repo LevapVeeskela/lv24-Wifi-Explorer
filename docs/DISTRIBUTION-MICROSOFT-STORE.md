@@ -81,6 +81,8 @@ passing.
 | Item                             | Fact (2026-11-10)                                                           | Marker   |
 | -------------------------------- | --------------------------------------------------------------------------- | -------- |
 | Account types                    | Individual or Company; converting Individual → Company is **not supported** | verified |
+| Publisher display name           | Cannot be changed after registration                                        | verified |
+| Policy 10.14                     | Company account is required when a consumer would read the **app name or publisher name** as a business | verified |
 | New onboarding fee               | **$0** for both, if you start at `storedeveloper.microsoft.com`             | verified |
 | Individual, legacy flow          | **$19** one-time (direct Partner Center / Visual Studio / Xbox entry)       | verified |
 | Company, legacy flow             | **$99** one-time, same condition                                            | verified |
@@ -91,6 +93,14 @@ passing.
 Start at `storedeveloper.microsoft.com` and the fee is $0. Individual =
 government ID + selfie; Company = DUNS or business documents plus a
 domain-matching work email (and it cannot be downgraded later).
+
+**LV24 implication.** With only `lv24.by` and no legal entity, an Individual
+account cannot carry the LV24 brand: Policy 10.14 requires a Company account
+when a reasonable consumer would read the app or publisher name as a business,
+and `LV24` / `LV24 WiFi Explorer` can be read that way. Publisher display name
+and account type are locked after registration. The brand-safe path is therefore
+to wait for ИП/ООО and open a **Company** account; until then ship through
+winget, Scoop and GitHub Releases, which need no Store account.
 
 ## 4. License compatibility
 
@@ -289,8 +299,10 @@ Still true / informational:
 
 ## 10. Open questions for the owner
 
-1. **Account type** — Individual (free, ID + selfie, publisher = your name) or
-   Company (free, DUNS/documents, publisher = legal entity, not downgradable)?
+1. **Account type** — **Company once ИП/ООО exists** (publisher `LV24`, no
+   conversion later). Individual only if the owner accepts a personal publisher
+   (`Pavel Aliakseyeu`) and drops the LV24 branding from the Store app name,
+   because Policy 10.14 treats LV24 as a business name.
 2. **Signer identity** — accept "SignPath Foundation" for $0, or pay €49+/yr for
    a Certum OSS certificate under LV24?
 3. **Privacy policy URL** — where will it live? Must describe Wi-Fi/BSSID
@@ -316,6 +328,8 @@ MSI/EXE fields https://learn.microsoft.com/en-us/windows/apps/publish/publish-yo
 MSIX requirements https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements ·
 code signing https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/code-signing-options ·
 Store Policies 7.20 (effective 2026-10-22) https://learn.microsoft.com/en-us/windows/apps/publish/store-policies ·
+Policy 10.14 https://learn.microsoft.com/en-us/windows/apps/publish/store-policies#1014-account-type ·
+account FAQ (publisher name/account type locked) https://learn.microsoft.com/en-us/windows/apps/publish/faq/manage-your-account ·
 developer account https://learn.microsoft.com/en-us/windows/apps/publish/partner-center/open-a-developer-account ·
 legacy fees https://learn.microsoft.com/en-us/windows/apps/publish/partner-center/account-types-locations-and-fees ·
 MSIX runtime https://learn.microsoft.com/en-us/windows/msix/desktop/desktop-to-uwp-behind-the-scenes ·
