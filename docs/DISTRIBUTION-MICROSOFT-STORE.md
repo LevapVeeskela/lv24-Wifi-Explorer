@@ -7,13 +7,14 @@ license rows are analysis, not an opinion.
 
 ## 0. Verdict
 
-**Go — phased, and not via MSIX.**
+**On hold as of 2026-11-10. The MSI/EXE path is still the right one, but no free
+trusted certificate is available; the Store submission is paused at `PackageSet`.**
 
-| Phase | What                                      | Cost   | Blocker                  |
-| ----- | ----------------------------------------- | ------ | ------------------------ |
-| 1     | winget manifest (`microsoft/winget-pkgs`) | $0     | none — no account needed |
-| 2     | Store submission as **MSI/EXE (NSIS)**    | $0 fee | code-signing certificate |
-| 3     | MSIX — **not recommended** (§5)           | $0     | AppData virtualization   |
+| Phase | What                                      | Cost   | Blocker                                  |
+| ----- | ----------------------------------------- | ------ | ---------------------------------------- |
+| 1     | winget manifest (`microsoft/winget-pkgs`) | $0     | installation validation (`shellExecute`) |
+| 2     | Store submission as **MSI/EXE (NSIS)**    | $0 fee | code-signing certificate                 |
+| 3     | MSIX — **not recommended** (§5)           | $0     | AppData virtualization                   |
 
 The Store has accepted unpackaged installers since June 2021 and the MSI/EXE
 path is first-class today. It avoids the MSIX AppData virtualization that
@@ -21,8 +22,23 @@ already bit `lv24-brain`, and lets us publish our own license terms (MIT)
 instead of Microsoft's SALT.
 
 **The one hard prerequisite is a CA-chained Authenticode certificate.** The
-Store never re-signs MSI/EXE. That is the only real blocker, and it is $0 only
-through SignPath Foundation (publisher becomes "SignPath Foundation").
+Store never re-signs MSI/EXE. SignPath Foundation **declined** the application on
+2026-11-10 for lack of public visibility; the remaining options are Certum
+(EUR 49+) or MSIX (Store-signed, with the AppData caveats in §5).
+
+## 0.1 Current submission state (2026-11-10)
+
+- Partner Center: Individual account, publisher `Pavel Aliakseyeu`; draft product
+  created, Properties, age ratings and Store listings for ru-RU/en-US/zh-CN are
+  filled.
+- `PackageSet` is the only invalid module: there is no signed installer.
+- SignPath Foundation: **declined** (not enough public visibility).
+- Certum Open Source (EUR 49 cloud): **not approved** - paid, conflicts with the
+  zero-spend policy.
+- MSIX: **not implemented** - electron-builder 25 has no MSIX target and the
+  AppData virtualization risk is documented in §5.
+- To resume: obtain Certum or build/validate MSIX, attach the signed package, then
+  submit.
 
 ## 1. What the brain actually contains
 
@@ -78,17 +94,17 @@ passing.
 
 ## 3. Developer account and fees
 
-| Item                             | Fact (2026-11-10)                                                           | Marker   |
-| -------------------------------- | --------------------------------------------------------------------------- | -------- |
-| Account types                    | Individual or Company; converting Individual → Company is **not supported** | verified |
-| Publisher display name           | Cannot be changed after registration                                        | verified |
+| Item                             | Fact (2026-11-10)                                                                                       | Marker   |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------- | -------- |
+| Account types                    | Individual or Company; converting Individual → Company is **not supported**                             | verified |
+| Publisher display name           | Cannot be changed after registration                                                                    | verified |
 | Policy 10.14                     | Company account is required when a consumer would read the **app name or publisher name** as a business | verified |
-| New onboarding fee               | **$0** for both, if you start at `storedeveloper.microsoft.com`             | verified |
-| Individual, legacy flow          | **$19** one-time (direct Partner Center / Visual Studio / Xbox entry)       | verified |
-| Company, legacy flow             | **$99** one-time, same condition                                            | verified |
-| Renewal                          | none                                                                        | verified |
-| Account needed for winget        | **No**                                                                      | verified |
-| Account needed for MSIX sideload | **No** — but you sign the MSIX yourself with a trusted cert                 | verified |
+| New onboarding fee               | **$0** for both, if you start at `storedeveloper.microsoft.com`                                         | verified |
+| Individual, legacy flow          | **$19** one-time (direct Partner Center / Visual Studio / Xbox entry)                                   | verified |
+| Company, legacy flow             | **$99** one-time, same condition                                                                        | verified |
+| Renewal                          | none                                                                                                    | verified |
+| Account needed for winget        | **No**                                                                                                  | verified |
+| Account needed for MSIX sideload | **No** — but you sign the MSIX yourself with a trusted cert                                             | verified |
 
 Start at `storedeveloper.microsoft.com` and the fee is $0. Individual =
 government ID + selfie; Company = DUNS or business documents plus a
@@ -242,6 +258,12 @@ re-download flow (`docs/RELEASE.md` §6). Do not add an auto-updater for this.
 | OV certificate (DigiCert/Sectigo/GlobalSign) | **$150–300/yr**            | yes                                      | unverified (vendor quotes)                                                                   |
 | EV certificate                               | **$400+/yr**               | yes, no longer bypasses SmartScreen      | verified (Learn)                                                                             |
 
+**SignPath Foundation declined this project on 2026-11-10** for lack of public
+visibility; the row above is retained as the historical option. Certum is the
+only practical paid CA route. Azure Artifact Signing is not available here:
+individual validation is limited to the USA and Canada, and organisation
+validation covers the USA, Canada, EU and UK - Belarus is in neither list.
+
 SignPath Foundation conditions that bind us (`signpath.org/terms`): OSI-approved
 license, **no commercial dual-licensing**, **no proprietary components** — so
 the signed artifact must be the keyless public build, same constraint as §4.
@@ -269,11 +291,10 @@ unsigned means a SmartScreen block.
 - **Code-signing certificate: $0 via SignPath Foundation**, else €49+/yr (Certum OSS)
 - SignPath approval: free, but weeks of waiting and reputation-gated
 
-**The Store path can be done at $0**: new-flow account + SignPath Foundation +
-GitHub-hosted installer. The $0 is paid in time (Foundation approval, manual
-signing per release) and in the publisher name on the signature. If the owner
-wants _LV24_ as the signer, the cheapest verified option is Certum Open Source
-cloud at €49 net.
+**The Store path is paused.** It was planned at $0 through SignPath Foundation,
+but the Foundation declined the application on 2026-11-10. Under the current
+zero-spend policy the remaining routes are Certum (EUR 49+, paid) or MSIX
+(Store-signed, but a separate packaging project with the AppData risk in §5).
 
 Nothing here requires a paid service. Releases stay manual; the optional
 `release-desktop.yml` and `pypi-publish.yml` workflows run on standard free
@@ -301,12 +322,11 @@ Still true / informational:
 
 ## 10. Open questions for the owner
 
-1. **Account type** — **Company once ИП/ООО exists** (publisher `LV24`, no
-   conversion later). Individual only if the owner accepts a personal publisher
-   (`Pavel Aliakseyeu`) and drops the LV24 branding from the Store app name,
-   because Policy 10.14 treats LV24 as a business name.
-2. **Signer identity** — accept "SignPath Foundation" for $0, or pay €49+/yr for
-   a Certum OSS certificate under LV24?
+1. **Account type** — **resolved 2026-11-10: Individual, publisher
+   `Pavel Aliakseyeu`.** The LV24 brand would need a future Company account and
+   a new listing/transfer; this Individual account stays personal.
+2. **Signer identity** — SignPath Foundation declined on 2026-11-10. Certum OSS
+   (EUR 49+) is the paid route; MSIX is the $0 Store-only alternative.
 3. **Privacy policy URL** — where will it live? Must describe Wi-Fi/BSSID
    processing honestly (the app has no telemetry today).
 4. **Support URL + email** — required for Company, recommended otherwise.
@@ -316,8 +336,9 @@ Still true / informational:
 7. **Markets** — all markets, or a subset (EU/US/RU)?
 8. **MUI X Pro** — ship the watermarked keyless build, or buy a redistribution
    license so the Store build matches the local build?
-9. **winget first?** — a manifest PR costs nothing and can ship before any
-   certificate exists. Recommended as phase 1.
+9. **winget first?** — submitted as PR #475989; Installation Validation is
+   blocked by `shellExecute`. Retry with a signed build or an alternative
+   installer type.
 
 ## 11. Sources (accessed 2026-11-10)
 

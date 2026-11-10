@@ -23,8 +23,11 @@ stays blocked under the zero-spend policy.
 | `LV24-WiFi-Explorer-1.0.0-linux-x86_64.AppImage`        | yes     | v1.0.0 Release, built 2026-11-10; SHA-256 `0d19b228…5800`                   |
 | `checksums.txt` (release) / `SHA256SUMS.txt` (workflow) | yes     | `checksums.txt` covers the arm64 DMG; `SHA256SUMS.txt` covers Windows+Linux |
 
-Consequences: **winget and Scoop are now published/submitted**, Chocolatey and
-AppImageHub can follow with the same v1.0.0 asset and hash. **Homebrew
+Consequences: **Scoop is live**, winget is submitted but its Installation
+Validation currently fails with `shellExecute` (CLA is signed), Chocolatey and
+AppImageHub can follow with the same v1.0.0 asset and hash. **Microsoft Store is
+on hold**: the listing draft is ready, but no free trusted Authenticode
+certificate exists (SignPath Foundation declined; Certum is paid). **Homebrew
 `homebrew/cask` is not eligible** while the DMG is unnotarized; the self-hosted
 tap works but the x64 DMG and its hash are still missing. The macOS DMG can be
 distributed directly from GitHub Releases with a Gatekeeper warning.
@@ -39,17 +42,17 @@ distributed directly from GitHub Releases with a Gatekeeper warning.
 
 ## Matrix
 
-| Publisher                        | Platform      | Artifact                        | Cost                                                                  | Account needed                    | Automation                                                                 | Blocker                                                                                                |
-| -------------------------------- | ------------- | ------------------------------- | --------------------------------------------------------------------- | --------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| GitHub Releases                  | win/mac/linux | `.exe` `.dmg` `.AppImage`       | $0                                                                    | repo write                        | `release-desktop.yml` (manual, opt-in upload)                              | none — Windows/Linux assets attached 2026-11-10                                                        |
-| winget (`microsoft/winget-pkgs`) | Windows       | `.exe` (NSIS)                   | $0                                                                    | GitHub + Microsoft CLA            | PR [#475989](https://github.com/microsoft/winget-pkgs/pull/475989), manual | CLA signature, then review/merge                                                                       |
-| Scoop (self-hosted bucket)       | Windows       | `.exe`                          | $0                                                                    | GitHub                            | live: [scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket)        | none                                                                                                   |
-| Chocolatey (community repo)      | Windows       | `.nupkg`                        | $0                                                                    | free Chocolatey account + API key | `choco pack` / `choco push`, manual                                        | free account + moderation                                                                              |
-| Snap Store                       | Linux         | `.snap`                         | $0                                                                    | Ubuntu One                        | not wired up                                                               | `nmcli` cannot run in a confined snap                                                                  |
-| Flathub                          | Linux         | Flatpak                         | $0                                                                    | GitHub                            | reference skeleton only                                                    | offline source build, `nmcli`, metainfo, MUI licensing, human-authored manifest                        |
-| AppImageHub                      | Linux         | `.AppImage`                     | $0                                                                    | GitHub                            | one-line data file + PR                                                    | AppImage exists; built on 24.04, so switch to 22.04 before the PR                                      |
-| Homebrew Cask                    | macOS         | `.dmg`                          | $0 in a tap; $99/yr for `homebrew/cask`                               | GitHub                            | cask in `packaging/homebrew/`                                              | notarization required by Homebrew policy                                                               |
-| Microsoft Store                  | Windows       | signed MSI/EXE (NSIS), not MSIX | $0 registration + $0 via SignPath Foundation (publisher name changes) | Partner Center                    | see linked doc                                                             | certificate + privacy policy; see [`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md) |
+| Publisher                        | Platform      | Artifact                        | Cost                                                                  | Account needed                    | Automation                                                                 | Blocker                                                                                                                             |
+| -------------------------------- | ------------- | ------------------------------- | --------------------------------------------------------------------- | --------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| GitHub Releases                  | win/mac/linux | `.exe` `.dmg` `.AppImage`       | $0                                                                    | repo write                        | `release-desktop.yml` (manual, opt-in upload)                              | none — Windows/Linux assets attached 2026-11-10                                                                                     |
+| winget (`microsoft/winget-pkgs`) | Windows       | `.exe` (NSIS)                   | $0                                                                    | GitHub + Microsoft CLA            | PR [#475989](https://github.com/microsoft/winget-pkgs/pull/475989), manual | CLA signed; Installation Validation fails (`shellExecute`)                                                                          |
+| Scoop (self-hosted bucket)       | Windows       | `.exe`                          | $0                                                                    | GitHub                            | live: [scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket)        | none                                                                                                                                |
+| Chocolatey (community repo)      | Windows       | `.nupkg`                        | $0                                                                    | free Chocolatey account + API key | `choco pack` / `choco push`, manual                                        | free account + moderation                                                                                                           |
+| Snap Store                       | Linux         | `.snap`                         | $0                                                                    | Ubuntu One                        | not wired up                                                               | `nmcli` cannot run in a confined snap                                                                                               |
+| Flathub                          | Linux         | Flatpak                         | $0                                                                    | GitHub                            | reference skeleton only                                                    | offline source build, `nmcli`, metainfo, MUI licensing, human-authored manifest                                                     |
+| AppImageHub                      | Linux         | `.AppImage`                     | $0                                                                    | GitHub                            | one-line data file + PR                                                    | AppImage exists; built on 24.04, so switch to 22.04 before the PR                                                                   |
+| Homebrew Cask                    | macOS         | `.dmg`                          | $0 in a tap; $99/yr for `homebrew/cask`                               | GitHub                            | cask in `packaging/homebrew/`                                              | notarization required by Homebrew policy                                                                                            |
+| Microsoft Store                  | Windows       | signed MSI/EXE (NSIS), not MSIX | $0 registration + $0 via SignPath Foundation (publisher name changes) | Partner Center                    | see linked doc                                                             | on hold: no free trusted certificate; listing draft ready; see [`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md) |
 
 ## Building the assets
 
@@ -257,14 +260,17 @@ before the `on_intel` block can be filled.
 2. Optionally upload the x64 macOS DMG if Intel Macs should be supported.
 3. ~~Fill checksums~~ — done for `v1.0.0`; re-run
    `scripts/packaging/fill-checksums.mjs <exe> --write` for every new version.
-4. Sign the Microsoft CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989); the bot blocks merge until then.
+4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. Installation Validation is blocked by `shellExecute`; retry with a signed `v1.0.1` or a different installer type, do not change the manifest blindly.
 5. ~~Create `<owner>/scoop-bucket` and push the manifest~~ — live at
    [LevapVeeskela/scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket).
 6. Create a free Chocolatey account, pack and push.
 7. Optionally: AppImageHub PR (rebuild on `ubuntu-22.04` first).
-8. Decide on Apple notarization ($99/yr) — it unblocks `homebrew/cask` and removes
+8. Microsoft Store: choose Certum OSS (EUR 49, paid) or an MSIX build ($0 but a
+   separate packaging project); the listing draft is ready, submission is on hold.
+9. Decide on Apple notarization ($99/yr) - it unblocks `homebrew/cask` and removes
    the Gatekeeper warning.
-9. Fix the Linux provider if Snap/Flathub matter; until then those two channels
-   stay documented as blocked.
+10. Fix the Linux provider if Snap/Flathub matter; until then those two channels
+    stay documented as blocked.
 
-Expected cost for steps 1–7: **$0**.
+Expected cost for steps 1–7 and 9–10: **$0**. Store is the only paid branch
+(Certum EUR 49+), unless the MSIX path is taken.

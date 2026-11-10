@@ -1,8 +1,22 @@
 # Code signing policy
 
-LV24 WiFi Explorer uses the [SignPath Foundation](https://signpath.org/) program
-for free code signing of its open-source Windows builds, once the project is
-accepted into the program.
+## Status (2026-11-10)
+
+The SignPath Foundation application was reviewed and **declined**: the project
+does not yet show enough public visibility (stars, forks, articles, independent
+discussions) for a Foundation-issued certificate. The current Windows release
+artifacts are therefore **unsigned** and trigger a SmartScreen warning.
+
+Options if signing becomes a priority:
+
+- reapply to SignPath Foundation after the project gains public visibility;
+- buy Certum Open Source (EUR 49 cloud, EUR 69 set, EUR 25 code-only) - paid,
+  not approved under the current zero-spend policy;
+- ship through Microsoft Store as MSIX, where Microsoft signs the package
+  (Store-only; MSIX AppData caveats apply).
+
+The rest of this document describes the intended SignPath process if the
+project is accepted in a future application.
 
 ## What is signed
 
