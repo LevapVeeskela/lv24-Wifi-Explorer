@@ -17,6 +17,6 @@
     "build": "vite build --config ../../vite.config.ts"
   },
   "dependencies": {
-    "@lv24/wifi-core": "1.0.0"
+    "@lv24/wifi-core": "1.0.1"
   }
 }

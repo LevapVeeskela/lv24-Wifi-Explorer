@@ -11,6 +11,9 @@ name: pypi-publish
 #     packages/mcp, python/pyproject.toml and python __init__.py).
 # If the version already exists on PyPI, the publish step is skipped.
 #
+# Release order: publish the npm packages with npm-publish.yml first, then run
+# this workflow, so the launcher never points at npm versions that do not exist.
+#
 # Free for a public repository; no paid runners or services are used.
 
 on:
@@ -19,7 +22,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to publish (must match both npm packages and python/pyproject.toml, e.g. 1.0.0)"
+        description: "Version to publish (must match both npm packages and python/pyproject.toml, e.g. 1.0.1)"
         required: true
 
 permissions:

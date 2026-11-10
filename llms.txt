@@ -9,7 +9,7 @@ Repository: https://github.com/LevapVeeskela/lv24-Wifi-Explorer
 Releases: https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases
 License: MIT (app code); optional MUI X Pro in the desktop UI.
 
-## Packages (npm 1.0.0)
+## Packages (npm 1.0.1)
 
 - `@lv24/wifi-core` — domain, IE decoding, filters, issues, utilization
 - `@lv24/wifi-backend` — scan providers: `macos-scancore`, `linux-nmcli`, `windows-netsh`, `demo`

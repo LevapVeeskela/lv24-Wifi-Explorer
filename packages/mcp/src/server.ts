@@ -12,7 +12,7 @@ import { registerWifiScanTool } from './tools/scan.js';
 import { registerWifiSummaryTool } from './tools/summary.js';
 
 export const WIFI_MCP_SERVER_NAME = 'lv24-wifi';
-export const WIFI_MCP_SERVER_VERSION = '1.0.0';
+export const WIFI_MCP_SERVER_VERSION = '1.0.1';
 
 export function createWifiMcpServer(service: ScanService = new ScanService()): McpServer {
   const server = new McpServer({

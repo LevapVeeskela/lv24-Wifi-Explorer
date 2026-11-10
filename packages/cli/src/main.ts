@@ -8,6 +8,7 @@ import {
 import type { ObservedBss } from '@lv24/wifi-core';
 import { asIsoTime } from '@lv24/wifi-core';
 import { mapCoreWlanRecordsToObservedBss, STUB_OUI_LOOKUP } from '@lv24/wifi-core/scan';
+import { formatVersion } from './version';
 
 type OutputFormat = 'table' | 'json' | 'jsonl' | 'csv';
 
@@ -273,7 +274,7 @@ async function main(): Promise<void> {
     return;
   }
   if (options.command === 'version') {
-    process.stdout.write('0.1.0\n');
+    process.stdout.write(formatVersion());
     return;
   }
   if (options.command === 'providers') {

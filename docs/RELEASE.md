@@ -5,7 +5,10 @@ Flutter/Dart side artifacts. Nothing here spends money: CI stays manual-only
 and releases are manual uploads.
 
 Canonical version lives in the root `package.json` (`version`). The Flutter app
-has its own `flutter/pubspec.yaml` version (`1.0.0+1`).
+has its own `flutter/pubspec.yaml` version (`1.0.0+1`). The npm packages and the
+PyPI launcher have independent patch versions (`packages/*/package.json`,
+`python/pyproject.toml`): `1.0.1` is a package-only patch and keeps the desktop
+app at `1.0.0`.
 
 ---
 

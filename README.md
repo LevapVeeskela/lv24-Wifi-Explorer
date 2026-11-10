@@ -193,10 +193,10 @@ guessed. See [`docs/SPEC.md`](docs/SPEC.md) and
 
 | Package                                                          | Purpose                                                       | npm     |
 | ---------------------------------------------------------------- | ------------------------------------------------------------- | ------- |
-| [`@lv24/wifi-core`](packages/core)                               | domain, IE decode, merge, filters, issues, utilization        | `1.0.0` |
-| [`@lv24/wifi-backend`](packages/backend)                         | macOS ScanCore / Linux nmcli / Windows netsh / demo providers | `1.0.0` |
-| [`@lv24/wifi-cli`](packages/cli)                                 | `lv24-wifi` CLI on every OS                                   | `1.0.0` |
-| [`@lv24/wifi-mcp`](packages/mcp)                                 | MCP server for AI agents                                      | `1.0.0` |
+| [`@lv24/wifi-core`](packages/core)                               | domain, IE decode, merge, filters, issues, utilization        | `1.0.1` |
+| [`@lv24/wifi-backend`](packages/backend)                         | macOS ScanCore / Linux nmcli / Windows netsh / demo providers | `1.0.1` |
+| [`@lv24/wifi-cli`](packages/cli)                                 | `lv24-wifi` CLI on every OS                                   | `1.0.1` |
+| [`@lv24/wifi-mcp`](packages/mcp)                                 | MCP server for AI agents                                      | `1.0.1` |
 | [`@lv24/wifi-web`](packages/web) / [`desktop`](packages/desktop) | Electron + React hosts (not published)                        | source  |
 | `flutter/` + [`packages/scan_*`](packages)                       | Flutter client and Dart packages                              | source  |
 
@@ -205,6 +205,12 @@ core ← backend ← cli
 core ← web / desktop
 backend + core ← mcp
 ```
+
+npm and PyPI are published with Trusted Publishing (OIDC) — no tokens. Release
+order: dispatch `npm-publish.yml` first (core → backend → cli → mcp), then
+dispatch `pypi-publish.yml` once the npm versions are live. Every npm package
+needs its own trusted-publisher entry; see
+[`docs/PACKAGES.md`](docs/PACKAGES.md#build--publish).
 
 GitHub-native mirrors (manual, not a replacement for npmjs): the
 `ghcr.io/levapveeskela/lv24-wifi-explorer` container image and the

@@ -18,5 +18,6 @@
       "@lv24/wifi-backend": ["../backend/dist/index.d.ts"]
     }
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"]
 }

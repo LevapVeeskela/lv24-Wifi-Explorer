@@ -99,7 +99,7 @@ path to the installed script. Tool reference and macOS helper setup:
 ## Version pinning
 
 By default each script runs the npm version matching the installed Python
-package (currently `1.0.0`). Override the npm version or dist-tag per command:
+package (currently `1.0.1`). Override the npm version or dist-tag per command:
 
 | Command         | Environment variable   | Default npm package |
 | --------------- | ---------------------- | ------------------- |
@@ -110,14 +110,14 @@ Bash / zsh:
 
 ```bash
 WIFI_CLI_NPM_VERSION=latest lv24-wifi --help
-WIFI_MCP_NPM_VERSION=1.0.0 lv24-wifi-mcp
+WIFI_MCP_NPM_VERSION=1.0.1 lv24-wifi-mcp
 ```
 
 PowerShell:
 
 ```powershell
 $env:WIFI_CLI_NPM_VERSION = "latest"; lv24-wifi --help
-$env:WIFI_MCP_NPM_VERSION = "1.0.0"; lv24-wifi-mcp
+$env:WIFI_MCP_NPM_VERSION = "1.0.1"; lv24-wifi-mcp
 ```
 
 ## Exit codes

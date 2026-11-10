@@ -260,10 +260,12 @@ class WindowsShimTests(unittest.TestCase):
 
 class VersionTests(unittest.TestCase):
     def test_version_matches_expected_release(self):
-        self.assertEqual(__version__, "1.0.0")
+        self.assertEqual(__version__, "1.0.1")
 
     def test_version_matches_canonical_npm_packages(self):
         expected = {
+            "packages/core/package.json": "@lv24/wifi-core",
+            "packages/backend/package.json": "@lv24/wifi-backend",
             "packages/cli/package.json": "@lv24/wifi-cli",
             "packages/mcp/package.json": "@lv24/wifi-mcp",
         }
@@ -275,6 +277,24 @@ class VersionTests(unittest.TestCase):
                 )
                 self.assertEqual(payload["name"], package)
                 self.assertEqual(payload["version"], __version__)
+
+    def test_version_matches_cli_generated_constant(self):
+        text = (
+            PROJECT_ROOT / "packages" / "cli" / "src" / "generated" / "version.ts"
+        ).read_text(encoding="utf-8")
+        match = re.search(r"(?m)^export const CLI_VERSION = '([^']+)';", text)
+
+        self.assertIsNotNone(match)
+        self.assertEqual(match.group(1), __version__)
+
+    def test_version_matches_mcp_server_constant(self):
+        text = (PROJECT_ROOT / "packages" / "mcp" / "src" / "server.ts").read_text(
+            encoding="utf-8"
+        )
+        match = re.search(r"(?m)^export const WIFI_MCP_SERVER_VERSION = '([^']+)';", text)
+
+        self.assertIsNotNone(match)
+        self.assertEqual(match.group(1), __version__)
 
     def test_version_matches_pyproject(self):
         text = (PROJECT_ROOT / "python" / "pyproject.toml").read_text(

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lv24-wifi-explorer"
-version = "1.0.0"
+version = "1.0.1"
 description = "Python launcher for the LV24 WiFi Explorer CLI and MCP server"
 readme = "README.md"
 requires-python = ">=3.9"

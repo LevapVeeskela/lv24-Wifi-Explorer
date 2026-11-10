@@ -14,11 +14,10 @@ and [`@lv24/wifi-mcp`](https://www.npmjs.com/package/@lv24/wifi-mcp) remain the
 canonical distribution. The PyPI package is only a launcher; it does not bundle
 Node.js, the Swift ScanCore helper or any native scanner.
 
-> **Status:** `lv24-wifi-explorer` **1.0.0 is live on PyPI** (2026-11-10).
-> Publishing uses Trusted Publishing (OIDC) and needs no API token; the first
-> dispatch succeeded after the one-time trusted-publisher setup described below.
-> Future releases bump the four version files and publish a GitHub release (or
-> dispatch the workflow manually).
+> **Status:** **1.0.1** is the current launcher and npm package version;
+> `1.0.0` was the first live release on PyPI (2026-11-10). Publishing uses
+> Trusted Publishing (OIDC) and needs no API token. Release order is npm first,
+> then PyPI (see [Release process](#release-process)).
 
 ## Install and run
 
@@ -62,13 +61,13 @@ must stay equal. Override the npm side without upgrading the launcher:
 | Command         | Variable               | Example                                    |
 | --------------- | ---------------------- | ------------------------------------------ |
 | `lv24-wifi`     | `WIFI_CLI_NPM_VERSION` | `WIFI_CLI_NPM_VERSION=latest lv24-wifi`    |
-| `lv24-wifi-mcp` | `WIFI_MCP_NPM_VERSION` | `WIFI_MCP_NPM_VERSION=1.0.0 lv24-wifi-mcp` |
+| `lv24-wifi-mcp` | `WIFI_MCP_NPM_VERSION` | `WIFI_MCP_NPM_VERSION=1.0.1 lv24-wifi-mcp` |
 
 PowerShell:
 
 ```powershell
 $env:WIFI_CLI_NPM_VERSION = "latest"; lv24-wifi --help
-$env:WIFI_MCP_NPM_VERSION = "1.0.0"; lv24-wifi-mcp
+$env:WIFI_MCP_NPM_VERSION = "1.0.1"; lv24-wifi-mcp
 ```
 
 ## Exit codes
@@ -98,6 +97,10 @@ One-time setup on PyPI, done by the maintainer before the first release:
    - Environment: leave empty
 3. Do not create an API token for CI.
 
+The four npm packages have separate trusted-publisher entries on npmjs.com
+(`npm-publish.yml`); see
+[`PACKAGES.md`](PACKAGES.md#build--publish) for that one-time setup.
+
 The workflow [`.github/workflows/pypi-publish.yml`](../.github/workflows/pypi-publish.yml)
 runs on a published GitHub release or manual dispatch. It:
 
@@ -110,19 +113,21 @@ runs on a published GitHub release or manual dispatch. It:
 5. skips the upload if that version already exists on PyPI;
 6. publishes with `pypa/gh-action-pypi-publish` using the GitHub OIDC token.
 
+The release order is fixed: npm packages first, Python launcher second. The
+launcher defaults to `@lv24/wifi-cli@1.0.1` / `@lv24/wifi-mcp@1.0.1`, so a
+launcher published before those npm versions exists would fail on first run.
+
 To release a new version:
 
 ```bash
-# 1. Bump the same version in all four places.
-#    packages/cli/package.json
-#    packages/mcp/package.json
-#    python/pyproject.toml
-#    python/src/lv24_wifi_explorer/__init__.py
-
-# 2. Publish the npm packages first (canonical distribution).
-
-# 3. Publish a GitHub release tagged vX.Y.Z, or run the workflow manually:
-#    Actions -> pypi-publish -> Run workflow -> version = X.Y.Z
+# 1. Bump the same version in every package manifest and version guard:
+#    packages/core, packages/backend, packages/cli, packages/mcp
+#    (versions + internal dependency pins), python/pyproject.toml and
+#    python/src/lv24_wifi_explorer/__init__.py.
+# 2. Dispatch npm-publish.yml (Trusted Publishing/OIDC) and wait until all
+#    four npm packages are live.
+# 3. Dispatch pypi-publish.yml with version = X.Y.Z (or publish the GitHub
+#    release only after npm is live, since a release triggers both workflows).
 ```
 
 The workflow only runs on an explicit release or manual dispatch, uses

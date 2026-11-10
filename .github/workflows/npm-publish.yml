@@ -1,0 +1,164 @@
+name: npm-publish
+
+# Publishes the four public @lv24/* packages to npm with Trusted Publishing
+# (OIDC): there is no NPM_TOKEN secret and no one-time password. npm validates
+# the calling workflow against the package's trusted publisher and issues a
+# short-lived publish credential.
+#
+# One-time setup per package on npmjs.com (package -> Settings -> Trusted
+# publishing) — all four need an entry:
+#   @lv24/wifi-core, @lv24/wifi-backend, @lv24/wifi-cli, @lv24/wifi-mcp
+#     Publisher: GitHub Actions
+#     Organization or user: LevapVeeskela
+#     Repository: lv24-Wifi-Explorer
+#     Workflow filename: npm-publish.yml
+#     Environment: leave empty
+#
+# Triggers:
+#   - publishing a GitHub release (tag vX.Y.Z) publishes that version;
+#   - manual dispatch with an explicit version (must match packages/core,
+#     packages/backend, packages/cli and packages/mcp).
+# Publish order is dependency order: core -> backend -> cli -> mcp.
+# If a package version already exists on npm, that package is skipped.
+#
+# Release order: run this workflow first, then dispatch pypi-publish.yml, so
+# the Python launcher never points at npm versions that do not exist yet.
+#
+# Free for a public repository on ubuntu-latest; no paid runners or services.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (must equal all four packages/*/package.json versions, e.g. 1.0.1)'
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish-${{ github.event.release.tag_name || inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Enable Yarn 1.22
+        run: npm install -g yarn@1.22.22
+
+      - name: Resolve and validate versions
+        id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          raw="${RELEASE_TAG:-$INPUT_VERSION}"
+          version="${raw#v}"
+
+          if [ -z "$version" ]; then
+            echo "::error::No version provided (release tag or workflow input)."
+            exit 1
+          fi
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$'; then
+            echo "::error::Invalid version '$version'."
+            exit 1
+          fi
+
+          node - "$version" <<'JS'
+          const fs = require('node:fs');
+          const version = process.argv[2];
+          const packages = [
+            ['packages/core', '@lv24/wifi-core'],
+            ['packages/backend', '@lv24/wifi-backend'],
+            ['packages/cli', '@lv24/wifi-cli'],
+            ['packages/mcp', '@lv24/wifi-mcp'],
+          ];
+          let failed = false;
+
+          for (const [dir, expectedName] of packages) {
+            const manifest = JSON.parse(fs.readFileSync(`${dir}/package.json`, 'utf8'));
+            if (manifest.name !== expectedName) {
+              console.error(`::error::${dir}/package.json must be named ${expectedName}, found ${manifest.name}.`);
+              failed = true;
+            }
+            if (manifest.version !== version) {
+              console.error(`::error::Version '${version}' does not match ${dir}/package.json '${manifest.version}'.`);
+              failed = true;
+            }
+          }
+
+          const pinned = [
+            ['packages/backend/package.json', '@lv24/wifi-core'],
+            ['packages/cli/package.json', '@lv24/wifi-backend'],
+            ['packages/cli/package.json', '@lv24/wifi-core'],
+            ['packages/mcp/package.json', '@lv24/wifi-backend'],
+            ['packages/mcp/package.json', '@lv24/wifi-core'],
+          ];
+
+          for (const [manifestPath, dependency] of pinned) {
+            const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+            const found = manifest.dependencies?.[dependency];
+            if (found !== version) {
+              console.error(`::error::${manifestPath} pins ${dependency} '${found}', expected '${version}'.`);
+              failed = true;
+            }
+          }
+
+          if (failed) process.exit(1);
+          console.log(`Validated ${packages.map(([dir]) => dir).join(', ')} at version ${version}.`);
+          JS
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Install (frozen lockfile)
+        run: yarn install --frozen-lockfile --non-interactive
+
+      - name: Build packages (core -> backend -> cli -> mcp)
+        run: yarn build:packages
+
+      - name: Verify CLI reports the release version
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          reported="$(node packages/cli/dist/main.js --version)"
+          if [ "$reported" != "$VERSION" ]; then
+            echo "::error::lv24-wifi --version reports '$reported', expected '$VERSION'."
+            exit 1
+          fi
+          echo "lv24-wifi --version -> $reported"
+
+      - name: Test the CLI version guard
+        run: yarn vitest run packages/cli/src/version.test.ts
+
+      # Trusted Publishing: npm exchanges the GitHub OIDC token for a
+      # short-lived publish credential. No NODE_AUTH_TOKEN is set.
+      - name: Publish in dependency order
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          for dir in core backend cli mcp; do
+            name="$(node -p "require('./packages/${dir}/package.json').name")"
+            if npm view "${name}@${VERSION}" version >/dev/null 2>&1; then
+              echo "::notice::${name}@${VERSION} is already published; skipping."
+              continue
+            fi
+            echo "Publishing ${name}@${VERSION}"
+            (cd "packages/${dir}" && npm publish --access public --provenance)
+          done

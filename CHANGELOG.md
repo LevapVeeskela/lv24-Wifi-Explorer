@@ -54,7 +54,7 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Packaging
 
-- All publishable packages are versioned `1.0.0` (matching the app).
+- Publishable packages are versioned `1.0.1`; the desktop app stays at `1.0.0`.
 - `dist:mac:public` builds a redistributable, watermarked macOS DMG without the
   commercial MUI key; `check:public-bundle` fails the build if the key leaks
   into `dist/`.
@@ -64,6 +64,25 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Simplified Chinese added: web catalog, MUI DataGrid locale, Flutter ARB catalog,
   language picker in Settings, persisted `lv24.locale` preference.
 - Hardcoded two-language Flutter workbench strings moved into ARB.
+
+## [1.0.1] — 2026-11-10
+
+Package-only patch. The desktop app remains at 1.0.0.
+
+### Fixed
+
+- `lv24-wifi --version` now prints the real CLI package version. It was
+  hardcoded to `0.1.0`; the value is generated from
+  `packages/cli/package.json` at build time and guarded by a test.
+- `@lv24/wifi-mcp` reports the matching `1.0.1` server version.
+
+### Publishing
+
+- **1.0.1** of `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli`,
+  `@lv24/wifi-mcp` and the `lv24-wifi-explorer` PyPI launcher.
+- New `.github/workflows/npm-publish.yml` publishes the four npm packages in
+  dependency order with npm Trusted Publishing (OIDC) and provenance: no
+  `NPM_TOKEN`. Release order is npm first, then the `pypi-publish.yml` dispatch.
 
 ## [1.0.0] — 2026-11-08
 
