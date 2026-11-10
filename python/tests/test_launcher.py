@@ -236,17 +236,18 @@ class WindowsShimTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             npx, script, node = self._layout(tmp)
 
-            with mock.patch.dict(os.environ, {}, clear=False):
-                with mock.patch(
-                    "lv24_wifi_explorer._npx.shutil.which", return_value=str(npx)
-                ):
+            with mock.patch("lv24_wifi_explorer._npx.os.name", "nt"):
+                with mock.patch.dict(os.environ, {}, clear=False):
                     with mock.patch(
-                        "lv24_wifi_explorer._npx.subprocess.run",
-                        return_value=mock.Mock(returncode=0),
-                    ) as run:
-                        with contextlib.redirect_stdout(io.StringIO()):
-                            with contextlib.redirect_stderr(io.StringIO()):
-                                code = cli.main(list(args))
+                        "lv24_wifi_explorer._npx.shutil.which", return_value=str(npx)
+                    ):
+                        with mock.patch(
+                            "lv24_wifi_explorer._npx.subprocess.run",
+                            return_value=mock.Mock(returncode=0),
+                        ) as run:
+                            with contextlib.redirect_stdout(io.StringIO()):
+                                with contextlib.redirect_stderr(io.StringIO()):
+                                    code = cli.main(list(args))
 
             self.assertEqual(code, 0)
             command = run.call_args.args[0]
