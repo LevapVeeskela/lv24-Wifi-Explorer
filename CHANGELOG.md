@@ -26,8 +26,9 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Distribution
 
-- PyPI launcher `lv24-wifi-explorer` (`pip install lv24-wifi-explorer`) with
-  Trusted Publishing, no API tokens; see `docs/pypi.md`.
+- PyPI launcher `lv24-wifi-explorer` **1.0.0 published** on 2026-11-10
+  (`pip install lv24-wifi-explorer`) with Trusted Publishing, no API tokens; see
+  `docs/pypi.md`.
 - Headless container image `ghcr.io/levapveeskela/lv24-wifi-explorer` (CLI + MCP)
   and the `@levapveeskela/lv24-wifi-explorer` GitHub Packages bundle; both are
   published by manual, zero-spend workflows.
