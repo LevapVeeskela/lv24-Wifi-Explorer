@@ -42,12 +42,12 @@ python -m lv24_wifi_explorer.mcp
 The launcher itself runs anywhere Python 3.9+ and Node.js 20+ are available.
 Live scanning depends on the platform provider:
 
-| Platform      | Provider         | Requirements and data quality                                                        |
-| ------------- | ---------------- | ------------------------------------------------------------------------------------ |
-| macOS 13.5+   | `macos-scancore` | Signed ScanCore helper with Location Services; full SSID/BSSID, width, PHY, IEs      |
-| Linux         | `linux-nmcli`    | NetworkManager (`nmcli`); RSSI from signal quality, channel width/IEs unknown         |
-| Windows       | `windows-netsh`  | `netsh` BSS scan with English output; channel width/IEs unknown                     |
-| Any           | `demo`           | Deterministic fixtures, no radio access; use `--provider demo` or MCP `"provider": "demo"` |
+| Platform    | Provider         | Requirements and data quality                                                              |
+| ----------- | ---------------- | ------------------------------------------------------------------------------------------ |
+| macOS 13.5+ | `macos-scancore` | Signed ScanCore helper with Location Services; full SSID/BSSID, width, PHY, IEs            |
+| Linux       | `linux-nmcli`    | NetworkManager (`nmcli`); RSSI from signal quality, channel width/IEs unknown              |
+| Windows     | `windows-netsh`  | `netsh` BSS scan with English output; channel width/IEs unknown                            |
+| Any         | `demo`           | Deterministic fixtures, no radio access; use `--provider demo` or MCP `"provider": "demo"` |
 
 The first run may download the npm package through `npx`; later runs reuse the
 npm cache. Set `LV24_SCANCORE_PATH` when the macOS helper is not resolvable
@@ -59,9 +59,9 @@ details.
 The launcher version, both npm package versions and the Python package version
 must stay equal. Override the npm side without upgrading the launcher:
 
-| Command         | Variable               | Example                                  |
-| --------------- | ---------------------- | ---------------------------------------- |
-| `lv24-wifi`     | `WIFI_CLI_NPM_VERSION` | `WIFI_CLI_NPM_VERSION=latest lv24-wifi`  |
+| Command         | Variable               | Example                                    |
+| --------------- | ---------------------- | ------------------------------------------ |
+| `lv24-wifi`     | `WIFI_CLI_NPM_VERSION` | `WIFI_CLI_NPM_VERSION=latest lv24-wifi`    |
 | `lv24-wifi-mcp` | `WIFI_MCP_NPM_VERSION` | `WIFI_MCP_NPM_VERSION=1.0.0 lv24-wifi-mcp` |
 
 PowerShell:

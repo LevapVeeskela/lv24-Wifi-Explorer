@@ -63,6 +63,15 @@ private Unix socket. TCC only grants Location to a **stably signed** helper;
 identity (override `CODESIGN_IDENTITY=...`). Without it, macOS redacts
 SSID/BSSID and the UI shows RF-only rows (not “hidden” networks).
 
+### Redistributable builds
+
+The UI depends on commercial MUI X Pro. A build that contains
+`VITE_MUI_LICENSE_KEY` is **not redistributable**. Use `dist:mac:public` for
+macOS or `release-desktop.yml` for Windows/Linux; both force a keyless build and
+run `check:public-bundle`. The rule and the Store consequences are in
+[`RELEASE.md`](RELEASE.md#1a-private-vs-public-macos-artifacts) and
+[`DISTRIBUTION-MICROSOFT-STORE.md`](DISTRIBUTION-MICROSOFT-STORE.md).
+
 ## GitHub-native distribution
 
 Two additional channels live in this repository. Both are published by

@@ -137,9 +137,10 @@ Store policies that bind an OSS scanner:
 `packages/web` / `packages/desktop` use **commercial MUI X Data Grid Pro**. The
 code is MIT but a build containing the commercial key is **not redistributable**
 (`docs/RELEASE.md` §1a). `dist:mac:public` forces `VITE_MUI_LICENSE_KEY=` and
-runs `check:public-bundle`. There is **no `dist:win:public`** (§9), so a Store
-build must be the keyless, watermarked variant — or the owner buys a
-redistribution license from MUI.
+runs `check:public-bundle`. There is **no `dist:win:public` script**; the
+`release-desktop.yml` workflow builds from a checkout without `.env.local` and
+runs `check:public-bundle`, so its Windows artifact is keyless. A local Store
+build must do the same — or the owner buys a redistribution license from MUI.
 
 ## 5. MSIX virtualization risk, and why MSI/EXE avoids it
 
@@ -171,12 +172,12 @@ manifest, no package identity, no redirection.
 ## 6. Submission outline for this app (MSI/EXE)
 
 Prerequisites: certificate (§7) exported for `CSC_LINK` / `CSC_KEY_PASSWORD`;
-a **keyless public build** (`dist:win:public` mirroring `dist:mac:public`: build
-with `VITE_MUI_LICENSE_KEY=`, run `check:public-bundle`, then
+a **keyless public build** (build with `VITE_MUI_LICENSE_KEY=` and run
+`check:public-bundle`, or use `release-desktop.yml`, then
 `electron-builder --win nsis`); a public **privacy policy URL** (mandatory for
 Win32); **support URL + email**; **screenshots** ≥1 (4+ recommended) and 1:1 box
 art (2:3 poster recommended); an **immutable versioned URL** such as
-`https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/download/v1.0.0/LV24-WiFi-Explorer-1.0.0-x64.exe`
+`https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/download/v1.0.0/LV24-WiFi-Explorer-1.0.0-win-x64.exe`
 (never re-upload an asset in place); the **IARC age-rating questionnaire**; and
 a clean Windows 10/11 VM for the silent-install and uninstall test.
 
@@ -213,7 +214,7 @@ looks for that path. Keep it that way; verify `dist:win` on a machine without a
 ScanCore build before submitting.
 
 Updates: the Store will **not** update MSI/EXE installs, so keep the manual
-re-download flow (`docs/RELEASE.md` §6.3). Do not add an auto-updater for this.
+re-download flow (`docs/RELEASE.md` §6). Do not add an auto-updater for this.
 
 ## 7. Signing options and costs
 
@@ -262,21 +263,24 @@ signing per release) and in the publisher name on the signature. If the owner
 wants _LV24_ as the signer, the cheapest verified option is Certum Open Source
 cloud at €49 net.
 
-Nothing here consumes GitHub Actions minutes: releasing stays local/manual, as
-`docs/RELEASE.md` §5 already mandates.
+Nothing here requires a paid service. Releases stay manual; the optional
+`release-desktop.yml` and `pypi-publish.yml` workflows run on standard free
+runners of this public repository.
 
-## 9. Contradictions with existing docs (reported, not edited)
+## 9. Contradictions with existing docs
 
-1. **`docs/RELEASE.md` §3** — "unsigned works, no cert = no signature". True for
-   plain downloads, **false for Store MSI/EXE**: unsigned is rejected by
-   certification (policy 10.2.9).
-2. **`docs/RELEASE.md` §1a** — the public/private artifact split is macOS-only.
-   No `dist:win:public`, no Windows equivalent of `check:public-bundle`, so a
-   Windows public build is currently undefined.
-3. **`docs/PACKAGES.md`** — says the desktop UI "depends on commercial MUI X
-   Pro" but not that a redistributable build must omit the key; that distinction
-   lives only in `RELEASE.md` §1a, and Store distribution depends on it.
-4. **`docs/RELEASE.md` §6.3** — no auto-updater. Consistent with MSI/EXE (the
+Fixed in this change:
+
+1. **`docs/RELEASE.md` §3** now says an unsigned installer is fine for direct
+   downloads/winget but a Store MSI/EXE must be CA-signed (policy 10.2.9).
+2. **`docs/RELEASE.md` §1a** now states that Windows/Linux CI builds are keyless
+   by construction (no `.env.local` + `check:public-bundle`); no `dist:win:public`
+   script is needed.
+3. **`docs/PACKAGES.md`** now points at the keyless-build rule.
+
+Still true / informational:
+
+4. **`docs/RELEASE.md` §6** — no auto-updater. Consistent with MSI/EXE (the
    Store does not update them), **inconsistent with MSIX** (Store updates
    automatically). Another reason to stay on MSI/EXE.
 5. Brain §6.2 lists Certum "from €49" — still correct, but Certum now caps a
