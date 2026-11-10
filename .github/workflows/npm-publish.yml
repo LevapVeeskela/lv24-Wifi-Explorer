@@ -14,10 +14,10 @@ name: npm-publish
 #     Workflow filename: npm-publish.yml
 #     Environment: leave empty
 #
-# Triggers:
-#   - publishing a GitHub release (tag vX.Y.Z) publishes that version;
-#   - manual dispatch with an explicit version (must match packages/core,
-#     packages/backend, packages/cli and packages/mcp).
+# Trigger: manual `workflow_dispatch` with an explicit version (must match
+# packages/core, packages/backend, packages/cli and packages/mcp). It is not
+# tied to GitHub releases on purpose: the desktop app has its own version, so
+# most releases do not publish packages and would fail validation.
 # Publish order is dependency order: core -> backend -> cli -> mcp.
 # If a package version already exists on npm, that package is skipped.
 #
@@ -27,8 +27,6 @@ name: npm-publish
 # Free for a public repository on ubuntu-latest; no paid runners or services.
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       version:

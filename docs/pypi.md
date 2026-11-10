@@ -102,11 +102,11 @@ The four npm packages have separate trusted-publisher entries on npmjs.com
 [`PACKAGES.md`](PACKAGES.md#build--publish) for that one-time setup.
 
 The workflow [`.github/workflows/pypi-publish.yml`](../.github/workflows/pypi-publish.yml)
-runs on a published GitHub release or manual dispatch. It:
+runs on manual dispatch. It:
 
-1. validates the requested version (release tag without `v`, or manual input)
-   against `packages/cli/package.json`, `packages/mcp/package.json`,
-   `python/pyproject.toml` and `python/src/lv24_wifi_explorer/__init__.py`;
+1. validates the requested version against `packages/cli/package.json`,
+   `packages/mcp/package.json`, `python/pyproject.toml` and
+   `python/src/lv24_wifi_explorer/__init__.py`;
 2. runs the launcher unit tests;
 3. builds the sdist and wheel with `python -m build`;
 4. checks metadata with `twine check`;
@@ -126,12 +126,11 @@ To release a new version:
 #    python/src/lv24_wifi_explorer/__init__.py.
 # 2. Dispatch npm-publish.yml (Trusted Publishing/OIDC) and wait until all
 #    four npm packages are live.
-# 3. Dispatch pypi-publish.yml with version = X.Y.Z (or publish the GitHub
-#    release only after npm is live, since a release triggers both workflows).
+# 3. Dispatch pypi-publish.yml with version = X.Y.Z after npm is live.
 ```
 
-The workflow only runs on an explicit release or manual dispatch, uses
-`ubuntu-latest`, and uses no paid runners or services (public repository).
+The workflow only runs on manual dispatch, uses `ubuntu-latest`, and uses no
+paid runners or services (public repository).
 
 ## Local validation
 

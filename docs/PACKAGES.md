@@ -39,8 +39,8 @@ yarn build:packages            # core → backend → cli → mcp
 Publishing is done by
 [`.github/workflows/npm-publish.yml`](../.github/workflows/npm-publish.yml) with
 npm Trusted Publishing (OIDC): no `NPM_TOKEN`, no one-time password. It runs on
-a published GitHub release or manual `workflow_dispatch` (`version` input),
-validates that all four `package.json` versions and the internal dependency pins
+manual `workflow_dispatch` (`version` input) and validates that all four
+`package.json` versions and the internal dependency pins
 equal the requested version, builds, checks `lv24-wifi --version`, then publishes
 in dependency order — `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli`,
 `@lv24/wifi-mcp` — with `--access public --provenance`. A package version that
@@ -63,8 +63,8 @@ Release order:
    `npm view @lv24/wifi-cli@1.0.1 version`.
 2. Dispatch `pypi-publish.yml` with the same version. The Python launcher pins
    the matching npm versions, so publishing it first would point users at
-   packages that do not exist yet. A published GitHub release starts both
-   workflows at once; use manual dispatch when the order matters.
+   packages that do not exist yet. Both workflows are manual, so the operator
+   controls the order.
 
 Published at **1.0.1** on npm: `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli`, `@lv24/wifi-mcp`.
 The desktop app and the Windows installer are at `1.0.2`; the packages, the app

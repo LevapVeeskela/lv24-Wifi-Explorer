@@ -85,6 +85,12 @@ metadata because `APP_VERSION` was a hardcoded constant.
   dialog and exported snapshots now report `1.0.2`.
 - Flutter `pubspec.yaml` moves to `1.0.2+3` to match the desktop track.
 
+### CI
+
+- `npm-publish.yml` and `pypi-publish.yml` are manual-dispatch only. A desktop
+  release tag no longer starts them: the app and the packages have independent
+  versions, so a desktop release would fail their version validation.
+
 ## [1.0.1] — 2026-11-10
 
 Desktop and package patch. The Windows installer, which previously showed no

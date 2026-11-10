@@ -223,10 +223,8 @@ before the `on_intel` block can be filled.
 
 ## Zero-spend rules for this area
 
-- Workflows stay `workflow_dispatch`-only. No `push`, `pull_request` or
-  `schedule` triggers; a tag push starts nothing. The one non-manual trigger in
-  this repository is `pypi-publish.yml` on a published GitHub release, which
-  uses free standard minutes of this public repository.
+- Workflows stay `workflow_dispatch`-only. No `push`, `pull_request`, `schedule`
+  or `release` triggers; a tag push or a published release starts nothing.
 - Standard `ubuntu-*` / `windows-*` / `macos-*` hosted runners only. No larger
   runners, no matrices that multiply jobs without a reason.
 - No paid certificates or accounts. Artifacts ship unsigned by default; the

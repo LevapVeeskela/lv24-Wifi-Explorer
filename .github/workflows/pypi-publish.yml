@@ -5,10 +5,10 @@ name: pypi-publish
 # GitHub workflow against the project's trusted publisher and issues a
 # short-lived upload credential.
 #
-# Triggers:
-#   - publishing a GitHub release (tag vX.Y.Z) publishes that version;
-#   - manual dispatch with an explicit version (must match packages/cli,
-#     packages/mcp, python/pyproject.toml and python __init__.py).
+# Trigger: manual dispatch with an explicit version (must match packages/cli,
+# packages/mcp, python/pyproject.toml and python __init__.py). It is not tied to
+# GitHub releases on purpose: the desktop app has its own version, so most
+# releases do not publish the launcher and would fail validation.
 # If the version already exists on PyPI, the publish step is skipped.
 #
 # Release order: publish the npm packages with npm-publish.yml first, then run
@@ -17,8 +17,6 @@ name: pypi-publish
 # Free for a public repository; no paid runners or services are used.
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       version:
