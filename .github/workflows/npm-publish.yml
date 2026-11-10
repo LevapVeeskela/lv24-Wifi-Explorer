@@ -55,7 +55,6 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Enable Yarn 1.22
         run: npm install -g yarn@1.22.22
@@ -155,10 +154,10 @@ jobs:
           set -euo pipefail
           for dir in core backend cli mcp; do
             name="$(node -p "require('./packages/${dir}/package.json').name")"
-            if npm view "${name}@${VERSION}" version >/dev/null 2>&1; then
+            if npm view "${name}@${VERSION}" version --registry https://registry.npmjs.org >/dev/null 2>&1; then
               echo "::notice::${name}@${VERSION} is already published; skipping."
               continue
             fi
             echo "Publishing ${name}@${VERSION}"
-            (cd "packages/${dir}" && npm publish --access public --provenance)
+            (cd "packages/${dir}" && npm publish --access public --provenance --registry https://registry.npmjs.org)
           done
