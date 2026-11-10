@@ -1,5 +1,6 @@
 export const STORAGE_THEME = 'lv24.wifi-explorer.theme';
 export const STORAGE_COLUMNS = 'lv24.wifi-explorer.columns';
+export const STORAGE_COLUMNS_ISSUES_REVEALED = 'lv24.wifi-explorer.columns.issues-revealed';
 export const STORAGE_COLUMN_PROFILES = 'lv24.wifi-explorer.column-profiles';
 export const STORAGE_PANES = 'lv24.wifi-explorer.panes';
 export const STORAGE_ANNOTATIONS = 'lv24.wifi-explorer.annotations';

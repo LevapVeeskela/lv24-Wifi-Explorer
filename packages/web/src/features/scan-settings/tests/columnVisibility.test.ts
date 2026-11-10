@@ -69,6 +69,21 @@ describe('column visibility persist', () => {
     }
   });
 
+  it('shows the issue counter by default', () => {
+    expect(DEFAULT_COLUMN_VISIBILITY.issueFlags).toBe(true);
+    expect(DEFAULT_HIDDEN_FIELDS).not.toContain('issueFlags');
+  });
+
+  it('reveals the issue counter once for states saved by older builds', () => {
+    const storage = memoryStorage();
+    storage.setItem(STORAGE_COLUMNS, JSON.stringify({ issueFlags: false }));
+
+    expect(loadColumnVisibility(storage).issueFlags).toBe(true);
+
+    saveColumnVisibility({ ...DEFAULT_COLUMN_VISIBILITY, issueFlags: false }, storage);
+    expect(loadColumnVisibility(storage).issueFlags).toBe(false);
+  });
+
   it('returns defaults when storage is empty', () => {
     expect(loadColumnVisibility(memoryStorage())).toEqual(DEFAULT_COLUMN_VISIBILITY);
   });

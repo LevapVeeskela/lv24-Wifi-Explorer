@@ -60,8 +60,8 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Packaging
 
-- Publishable packages are versioned `1.0.1`; the desktop app is `1.0.2` and the
-  Flutter app `1.0.2+3`. Same source tree, independent release tracks.
+- Publishable packages are versioned `1.0.1`; the desktop app is `1.0.3` and the
+  Flutter app `1.0.3+4`. Same source tree, independent release tracks.
 - `dist:mac:public` builds a redistributable, watermarked macOS DMG without the
   commercial MUI key; `check:public-bundle` fails the build if the key leaks
   into `dist/`.
@@ -71,6 +71,21 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Simplified Chinese added: web catalog, MUI DataGrid locale, Flutter ARB catalog,
   language picker in Settings, persisted `lv24.locale` preference.
 - Hardcoded two-language Flutter workbench strings moved into ARB.
+
+## [1.0.3] — 2026-11-10
+
+The issue counter is visible without opening the column picker. v1.0.2 and
+earlier hid it by default.
+
+### Fixed
+
+- The `issueFlags` column ("Проблемы") is part of the default grid and shows the
+  warning chip with the issue count for every network.
+- A one-time migration reveals it for existing installs whose saved column
+  visibility predates this release
+  (`lv24.wifi-explorer.columns.issues-revealed`); hiding it afterwards sticks.
+- Column visibility now has a single persisted implementation; the duplicated
+  page-level defaults file is gone.
 
 ## [1.0.2] — 2026-11-10
 

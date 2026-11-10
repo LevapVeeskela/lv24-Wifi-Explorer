@@ -67,7 +67,7 @@ Release order:
    controls the order.
 
 Published at **1.0.1** on npm: `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli`, `@lv24/wifi-mcp`.
-The desktop app and the Windows installer are at `1.0.2`; the packages, the app
+The desktop app and the Windows installer are at `1.0.3`; the packages, the app
 and the Flutter client share the source tree but ship as separate artifacts
 with independent versions.
 Each package has `files: ["dist"]`, `license: MIT`, `engines.node >= 20`, and

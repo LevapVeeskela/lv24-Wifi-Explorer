@@ -63,7 +63,7 @@ import { WorkbenchProfilesMenu } from '@/features/workbench-profiles';
 import { StatusBar } from '@/widgets/StatusBar';
 import { AboutDialog } from '@/widgets/AboutDialog';
 import { LocationBanner } from '@/widgets/LocationBanner';
-import { DEFAULT_COLUMN_VISIBILITY } from './columnVisibility';
+import { DEFAULT_COLUMN_VISIBILITY } from '@/entities/columns';
 import {
   scanDockRegionSx,
   scanGridRegionSx,
@@ -105,8 +105,7 @@ function ScanWorkbenchInner({
   const gridContainerRef = useRef<HTMLDivElement | null>(null);
   const shellHeight = useShellHeight();
   const [paneLayout, setPaneLayout] = usePersistedPaneLayout();
-  const [columnVisibility, setColumnVisibility] =
-    usePersistedColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
+  const [columnVisibility, setColumnVisibility] = usePersistedColumnVisibility();
 
   const { formatMessage } = useScanIntl();
   const scanSettings = useScanSettings();

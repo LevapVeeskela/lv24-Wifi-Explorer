@@ -1,31 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   PANE_LAYOUT_DEFAULT,
-  STORAGE_COLUMNS,
   STORAGE_PANES,
   type StoredPaneLayout,
 } from '@/shared/lib/persistence/keys';
+import { loadColumnVisibility, saveColumnVisibility } from '@/features/scan-settings';
 
-export function usePersistedColumnVisibility(
-  defaultModel: Record<string, boolean>
-): [Record<string, boolean>, (model: Record<string, boolean>) => void] {
-  const [model, setModel] = useState<Record<string, boolean>>(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_COLUMNS);
-      if (raw) return { ...defaultModel, ...JSON.parse(raw) };
-    } catch {
-      // ignore
-    }
-    return defaultModel;
-  });
+export function usePersistedColumnVisibility(): [
+  Record<string, boolean>,
+  (model: Record<string, boolean>) => void,
+] {
+  const [model, setModel] = useState<Record<string, boolean>>(() => loadColumnVisibility());
 
   const update = useCallback((next: Record<string, boolean>) => {
     setModel(next);
-    try {
-      localStorage.setItem(STORAGE_COLUMNS, JSON.stringify(next));
-    } catch {
-      // ignore
-    }
+    saveColumnVisibility(next);
   }, []);
 
   return [model, update];

@@ -91,7 +91,7 @@ export const SCAN_GRID_COLUMNS: readonly ScanGridColumnDef[] = [
   { field: 'ft', labelKey: 'scan.col.ft', hideable: true },
 ] as const;
 
-/** Default-visible screenshot set (SPEC §3). */
+/** Default-visible screenshot set (SPEC §3) plus the issue counter. */
 export const DEFAULT_VISIBLE_FIELDS: readonly ScanGridColumnField[] = [
   'seriesColor',
   'bssid',
@@ -99,6 +99,7 @@ export const DEFAULT_VISIBLE_FIELDS: readonly ScanGridColumnField[] = [
   'securityLock',
   'vendor',
   'annotation',
+  'issueFlags',
   'signal',
   'channel',
   'channelWidth',
@@ -108,7 +109,6 @@ export const DEFAULT_VISIBLE_FIELDS: readonly ScanGridColumnField[] = [
 
 export const DEFAULT_HIDDEN_FIELDS: readonly ScanGridColumnField[] = [
   'signalTrend',
-  'issueFlags',
   'security',
   'rssiDbm',
   'noiseDbm',
