@@ -14,9 +14,11 @@ and [`@lv24/wifi-mcp`](https://www.npmjs.com/package/@lv24/wifi-mcp) remain the
 canonical distribution. The PyPI package is only a launcher; it does not bundle
 Node.js, the Swift ScanCore helper or any native scanner.
 
-> **Status:** the package, tests and workflow are ready, but this repository
-> change does not create or publish the PyPI project. The maintainer configures
-> the Trusted Publisher (below), then publishes through the workflow.
+> **Status:** the package, tests and workflow are ready. On 2026-11-10 a manual
+> dispatch reached the PyPI upload step and was rejected with
+> `invalid-publisher` — the trusted publisher below has not been configured yet.
+> Configure it once, then re-run the workflow; no code change is needed. The
+> workflow never creates the PyPI project or the trusted publisher itself.
 
 ## Install and run
 

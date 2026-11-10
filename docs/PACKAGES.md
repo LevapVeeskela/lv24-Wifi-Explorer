@@ -102,10 +102,12 @@ docker run -i --rm ghcr.io/levapveeskela/lv24-wifi-explorer mcp
 - Workflow: `.github/workflows/ghcr-publish.yml` (inputs: `version`,
   `push_latest`). Build locally with:
   `docker build -f docker/Dockerfile -t ghcr.io/levapveeskela/lv24-wifi-explorer:dev .`
-- GitHub creates the package with **private** visibility on first publish. Open
-  the package settings once and change it to public if anonymous `docker pull`
-  should work. The image carries the `org.opencontainers.image.source` label,
-  which links the package to this repository.
+- GitHub may create a package with **private** visibility on first publish.
+  `lv24-wifi-explorer:1.0.0` is public — an anonymous `docker pull` was verified
+  on 2026-11-10. If a future package is created private, open its settings and
+  change visibility to public. The image carries the
+  `org.opencontainers.image.source` label, which links the package to this
+  repository.
 
 ### npm bundle (GitHub Packages) — convenience alias
 
@@ -151,5 +153,6 @@ The token is a personal access token (classic) with `read:packages`; publishing
 uses the workflow's `GITHUB_TOKEN` with `packages: write`. `@lv24/*`
 dependencies still resolve from the public npm registry. Workflow:
 `.github/workflows/gh-packages-publish.yml` (manual only, publishes just
-`packages/gh-bundle`, optional `dry_run`). Its first publish is private as well;
-set visibility to public in the package settings.
+`packages/gh-bundle`, optional `dry_run`). The package page is public, but
+GitHub Packages still requires a token to install any npm package, public or
+private — that is a registry rule, not a visibility setting.
