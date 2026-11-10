@@ -110,6 +110,17 @@ injects it from the root `package.json` through Vite (`__APP_VERSION__`) and
 guards it with `constants.test.ts`. The v1.0.1 assets stay published but are
 superseded.
 
+## Public release verification (v1.0.3, CI run 42803474108)
+
+`LV24-WiFi-Explorer-1.0.3-win-x64.exe` (SHA-256 `8c0d9c85…f8d4`) installed over
+1.0.2 (exit 0). The grid now shows the **Проблемы** column without opening the
+column picker: header at index 6, 72 px wide, warning chips with counts (4, 1, 3,
+1, 2 in the sampled rows). The one-time migration rewrote the persisted model
+and set `lv24.wifi-explorer.columns.issues-revealed=1`, so hiding the column
+later sticks. The footer still fits: 58 px at 1366×768 with
+`document.scrollWidth == 1366`, 77 px at 960 px with no page scrollbar; the app
+reports `v1.0.3`, `ScanCore: ок`, `Геолокация: разрешена`, and no demo rows.
+
 ## Residual findings
 
 1. ~~The public release still contains the old parser.~~ Fixed by v1.0.1
