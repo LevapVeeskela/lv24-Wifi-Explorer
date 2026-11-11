@@ -17,6 +17,19 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Workbench profiles and column profiles can be exported/imported as JSON; coloring rules already supported it.
 - Filter sidebar has locale render tests (ru/en/zh) and the empty-state copy is covered.
 
+### UI polish
+
+- Chart card headers wrap instead of spilling into the neighbouring panel;
+  metric, trace, unit and timescale toggles stay inside their card at narrow
+  widths.
+- Small toggle buttons are compact and never wrap their labels ("2,4 ГГц"
+  stays on one line); dense focus rings are inset so they do not cross
+  container borders.
+- Data-grid sort and column-menu icon buttons fit the 36 px header and no
+  longer overlap the next column on hover/focus.
+- The scan toolbar wraps on narrow windows and keeps the vendor filter
+  readable; the settings dialog has an explicit close button (ru/en/zh).
+
 ### Published
 
 - `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli` and `@lv24/wifi-mcp`

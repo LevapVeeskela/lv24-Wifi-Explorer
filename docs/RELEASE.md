@@ -12,6 +12,39 @@ at `1.1.0`.
 
 ---
 
+## Pending release — do not cut before the winget PR is accepted
+
+`v1.1.0` is the current release. The next desktop release (1.1.1 or later)
+contains the UI polish from commit `cdc0cd8` (chart headers, dense controls,
+grid header menus, settings close button) plus any follow-up fixes.
+
+**Gate:** wait until winget PR
+[#475989](https://github.com/microsoft/winget-pkgs/pull/475989) is accepted or
+merged. Publishing a newer desktop version earlier would invalidate the
+version/SHA-256 that PR validates and leave the package review on a superseded
+build.
+
+When the gate opens:
+
+1. Bump root `package.json` and `flutter/pubspec.yaml`; add the `CHANGELOG.md`
+   section for the release.
+2. Run the manual `release-desktop.yml` workflow for the new tag; build Windows
+   NSIS + portable ZIP, Linux AppImage, `latest.yml`, `latest-linux.yml` and
+   `SHA256SUMS.txt`.
+3. Attach the artifacts and metadata to the GitHub Release; verify the generic
+   update feed resolves and the installed previous version reports
+   **up-to-date**.
+4. Update the Scoop bucket manifest (`version` + SHA-256) and push it.
+5. Only after the current winget PR lands, submit the new version manifest so
+   the queue does not validate two versions at once.
+6. Re-check Settings → Updates on an installed build and record the release in
+   the project brain.
+
+Do not release, bump versions, or update package-manager manifests before the
+gate; the UI fix is already on `master` and can ship with the next release.
+
+---
+
 ## 0. Preconditions (one-time per machine)
 
 > No Apple Developer account yet? Build a signed local artifact with

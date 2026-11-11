@@ -49,3 +49,9 @@
 | UI       | `src/pages/**`, `src/widgets/**`, `src/features/**`, `src/entities/**`, `src/shared/ui/**`                                                                                                                                                             |
 
 Не переписывать `packages/core/src/domain/*.ts` без согласования. Добавлять реализации рядом.
+
+## Очередь релиза
+
+- Текущий релиз: **1.1.0**; следующий (1.1.1+) содержит UI-полировку из `cdc0cd8`.
+- **Не выпускать до accepted/merged winget PR [#475989](https://github.com/microsoft/winget-pkgs/pull/475989).**
+- Полный чек-лист и порядок шагов — `docs/RELEASE.md`, раздел «Pending release».
