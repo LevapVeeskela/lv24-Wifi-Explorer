@@ -49,6 +49,7 @@ export const enMessages = {
 
   'scan.settings.title': 'Scan settings',
   'scan.settings.windowTitle': 'LV24 WiFi Explorer settings',
+  'scan.settings.close': 'Close settings',
   'scan.settings.open': 'Scan settings',
   'scan.settings.tab.general': 'General',
   'scan.settings.tab.columns': 'Columns',

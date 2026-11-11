@@ -7,7 +7,7 @@ import type { GraphLabelMode } from '@/features/scan-settings';
 import { createFormatMessage } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n';
 import { ChartA11yTable } from './ChartA11yTable';
-import { chartCaptionSx, chartEmptySx, chartPaperSx } from './styles';
+import { chartCaptionSx, chartEmptySx, chartPaperSx, chartTitleSx } from './styles';
 
 export type SelectedChannelChartProps = {
   row: ScanGridRow | null;
@@ -26,7 +26,9 @@ export function SelectedChannelChart({
 
   return (
     <Paper aria-label={formatMessage('scan.chart.selected')} sx={chartPaperSx} variant="outlined">
-      <Typography variant="subtitle2">{formatMessage('scan.chart.selected')}</Typography>
+      <Typography sx={chartTitleSx} variant="subtitle2">
+        {formatMessage('scan.chart.selected')}
+      </Typography>
       {!row ? (
         <Typography sx={chartEmptySx} variant="caption">
           {formatMessage('scan.details.empty')}

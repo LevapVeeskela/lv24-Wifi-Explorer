@@ -48,6 +48,7 @@ export const zhMessages: Record<MessageKey, string> = {
 
   'scan.settings.title': '扫描设置',
   'scan.settings.windowTitle': 'LV24 WiFi Explorer 设置',
+  'scan.settings.close': '关闭设置',
   'scan.settings.open': '扫描设置',
   'scan.settings.tab.general': '常规',
   'scan.settings.tab.columns': '列',

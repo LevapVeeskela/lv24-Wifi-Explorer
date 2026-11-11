@@ -25,8 +25,17 @@ export const chartPaperSx: SxProps<Theme> = {
 export const chartHeaderSx: SxProps<Theme> = {
   alignItems: 'center',
   justifyContent: 'space-between',
+  flexWrap: 'wrap',
+  columnGap: 1,
+  rowGap: 0.5,
   mb: 0.5,
-  gap: 1,
+};
+
+export const chartTitleSx: SxProps<Theme> = {
+  minWidth: 0,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 };
 
 export const chartCaptionSx: SxProps<Theme> = {
@@ -62,7 +71,10 @@ export const chartVisuallyHiddenSx: SxProps<Theme> = {
 
 export const chartToolbarSx: SxProps<Theme> = {
   alignItems: 'center',
-  gap: 0.5,
+  flexWrap: 'wrap',
+  columnGap: 0.5,
+  rowGap: 0.5,
+  minWidth: 0,
 };
 
 export const signalChartAverageColor = '#94a3b8';

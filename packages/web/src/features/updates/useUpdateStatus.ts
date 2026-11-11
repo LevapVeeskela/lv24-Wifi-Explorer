@@ -76,22 +76,24 @@ export function useUpdateStatus(): {
   useEffect(() => {
     let cancelled = false;
     const bridge = typeof window !== 'undefined' ? window.wifiExplorer : undefined;
-    if (!bridge?.updatesGetStatus) {
+    const getStatus = bridge?.updatesGetStatus;
+    if (!getStatus) {
       setLoading(false);
       return () => {
         cancelled = true;
       };
     }
-    void bridge
-      .updatesGetStatus()
-      .then((result) => {
+    const load = async () => {
+      try {
+        const result = await getStatus();
         if (cancelled) return;
         const next = normalize(result.status);
         if (next) setStatus(next);
-      })
-      .finally(() => {
+      } finally {
         if (!cancelled) setLoading(false);
-      });
+      }
+    };
+    void load();
     const unsubscribe = bridge.onUpdateStatus?.((raw) => {
       const next = normalize(raw);
       if (next) setStatus(next);

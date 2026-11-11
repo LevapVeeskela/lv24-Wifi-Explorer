@@ -1,5 +1,5 @@
 import type { ObservedBss } from './bss';
-import type { BandGhz, ChannelWidthMhz } from './channel';
+import type { BandGhz } from './channel';
 import { inferDfsChannel } from './issues/dfs';
 import type { PhyLetter } from './phy';
 import type { SecurityKind } from './security';

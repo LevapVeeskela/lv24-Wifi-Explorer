@@ -3,11 +3,13 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  IconButton,
   List,
   ListItemButton,
   ListItemText,
   Typography,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useMemo, useState } from 'react';
 import { ScanSettingsAdvancedPanel } from './ScanSettingsAdvancedPanel';
 import { ScanSettingsAnnotationsPanel } from './ScanSettingsAnnotationsPanel';
@@ -119,7 +121,17 @@ export function ScanSettingsWindow({
 
   return (
     <Dialog fullWidth maxWidth="md" open={open} onClose={onClose}>
-      <DialogTitle>{msg('scan.settings.windowTitle')}</DialogTitle>
+      <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1, pr: 1 }}>
+        {msg('scan.settings.windowTitle')}
+        <IconButton
+          aria-label={msg('scan.settings.close')}
+          onClick={onClose}
+          size="small"
+          sx={{ ml: 'auto', width: 32, height: 32, minWidth: 32, minHeight: 32 }}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </DialogTitle>
       <DialogContent sx={{ pb: 3, pt: 0 }}>
         <Box sx={{ display: 'flex', minHeight: 360, gap: 0 }}>
           <List

@@ -23,10 +23,17 @@ function senderIsTrusted(event: IpcMainInvokeEvent, isTrusted: (url: string) => 
   return url.length > 0 && isTrusted(url);
 }
 
+function hasControlChars(value: string): boolean {
+  for (const char of value) {
+    if (char.charCodeAt(0) < 0x20) return true;
+  }
+  return false;
+}
+
 function validSsid(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const ssid = value.trim();
-  if (!ssid || ssid.length > 128 || /[\u0000-\u001f]/.test(ssid)) return null;
+  if (!ssid || ssid.length > 128 || hasControlChars(ssid)) return null;
   return ssid;
 }
 

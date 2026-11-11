@@ -26,6 +26,7 @@ import {
   chartHeaderSx,
   chartPaperSx,
   chartStatsSx,
+  chartTitleSx,
   chartToolbarSx,
   signalChartAverageColor,
   signalChartMaxColor,
@@ -156,7 +157,9 @@ export function SignalHistoryChart({
       onKeyDown={onKeyDown}
     >
       <Stack direction="row" sx={chartHeaderSx}>
-        <Typography variant="subtitle2">{formatMessage('scan.chart.signal')}</Typography>
+        <Typography sx={chartTitleSx} variant="subtitle2">
+          {formatMessage('scan.chart.signal')}
+        </Typography>
         <Stack direction="row" sx={chartToolbarSx}>
           <ToggleButtonGroup
             aria-label={formatMessage('scan.chart.metric')}
@@ -203,19 +206,21 @@ export function SignalHistoryChart({
           ))}
         </ToggleButtonGroup>
       </Stack>
-      <ToggleButtonGroup
-        aria-label={formatMessage('scan.chart.timescale')}
-        exclusive
-        size="small"
-        value={timescale}
-        onChange={(_, value: ChartTimescale | null) => value && setTimescale(value)}
-      >
-        {TIMESCALE_ORDER.map((id) => (
-          <ToggleButton key={id} value={id}>
-            {id}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
+      <Stack direction="row" sx={chartToolbarSx}>
+        <ToggleButtonGroup
+          aria-label={formatMessage('scan.chart.timescale')}
+          exclusive
+          size="small"
+          value={timescale}
+          onChange={(_, value: ChartTimescale | null) => value && setTimescale(value)}
+        >
+          {TIMESCALE_ORDER.map((id) => (
+            <ToggleButton key={id} value={id}>
+              {id}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+      </Stack>
       {series.length === 0 ? (
         <Typography sx={chartEmptySx} variant="caption">
           {formatMessage('scan.chart.empty')}

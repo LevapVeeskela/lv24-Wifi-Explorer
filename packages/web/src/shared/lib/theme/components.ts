@@ -116,6 +116,10 @@ export const components: ThemeOptions['components'] = {
       root: ({ theme }) => ({
         borderRadius: 999,
         fontWeight: 600,
+        '&.Mui-focusVisible': {
+          outlineWidth: 2,
+          outlineOffset: -2,
+        },
         // Default filled/outlined chips bake grey[100] under cssVariables — light
         // plates in dark mode (section filters, reason chips). Keep primary/etc.
         // filled colors from palette; only restyle default + outlined shells.
@@ -242,12 +246,42 @@ export const components: ThemeOptions['components'] = {
       }),
     },
   },
+  MuiToggleButton: {
+    styleOverrides: {
+      root: {
+        textTransform: 'none',
+        whiteSpace: 'nowrap',
+      },
+      sizeSmall: {
+        minHeight: 28,
+        padding: '3px 8px',
+        fontSize: '0.75rem',
+        lineHeight: 1.5,
+      },
+    },
+  },
+  MuiToggleButtonGroup: {
+    styleOverrides: {
+      root: {
+        // A focus ring drawn outside a segmented control spills over the
+        // neighbouring panel; keep it inside the button edges.
+        '& .MuiToggleButton-root.Mui-focusVisible': {
+          outlineWidth: 2,
+          outlineOffset: -2,
+        },
+      },
+    },
+  },
   MuiTab: {
     styleOverrides: {
       root: {
         textTransform: 'none',
         fontWeight: 600,
         minHeight: 44,
+        '&.Mui-focusVisible': {
+          outlineWidth: 2,
+          outlineOffset: -2,
+        },
       },
     },
   },
@@ -263,6 +297,20 @@ export const components: ThemeOptions['components'] = {
     styleOverrides: {
       root: {
         borderRadius: 10,
+        '&.Mui-focusVisible': {
+          outlineWidth: 2,
+          outlineOffset: -2,
+        },
+      },
+    },
+  },
+  MuiMenuItem: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': {
+          outlineWidth: 2,
+          outlineOffset: -2,
+        },
       },
     },
   },
@@ -302,6 +350,24 @@ export const components: ThemeOptions['components'] = {
           '--DataGrid-rowBorderColor': theme.vars.palette.divider,
           '& .MuiDataGrid-columnHeaderTitle': {
             fontWeight: 700,
+          },
+          // The global IconButton minimum is 44px (touch target). Inside a
+          // 36px data-grid header that makes the sort and column-menu buttons
+          // overflow into the next column, especially on hover/focus.
+          '& .MuiDataGrid-columnHeader .MuiIconButton-root': {
+            width: 24,
+            height: 24,
+            minWidth: 24,
+            minHeight: 24,
+            padding: 2,
+            borderRadius: 4,
+          },
+          '& .MuiDataGrid-columnHeader .MuiIconButton-root.Mui-focusVisible': {
+            outlineOffset: -2,
+            outlineWidth: 2,
+          },
+          '& .MuiDataGrid-menuIcon': {
+            marginRight: 0,
           },
           '& .MuiDataGrid-row:hover': {
             backgroundColor: theme.vars.palette.action.hover,

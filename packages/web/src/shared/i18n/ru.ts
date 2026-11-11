@@ -48,6 +48,7 @@ export const ruMessages: Record<MessageKey, string> = {
 
   'scan.settings.title': 'Настройки сканирования',
   'scan.settings.windowTitle': 'Настройки LV24 WiFi Explorer',
+  'scan.settings.close': 'Закрыть настройки',
   'scan.settings.open': 'Настройки сканирования',
   'scan.settings.tab.general': 'Основные',
   'scan.settings.tab.columns': 'Колонки',

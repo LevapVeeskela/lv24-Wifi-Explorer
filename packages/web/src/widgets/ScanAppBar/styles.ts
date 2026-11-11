@@ -9,25 +9,29 @@ export const scanAppBarSx: SxProps<Theme> = {
 export const scanToolbarSx: SxProps<Theme> = {
   minHeight: 40,
   px: 1,
-  gap: 1,
+  flexWrap: 'wrap',
+  columnGap: 0.75,
+  rowGap: 0.5,
 };
 
 export const rssiSliderSx: SxProps<Theme> = {
-  width: 120,
+  width: 96,
   mx: 1,
 };
 
 export const searchFieldSx: SxProps<Theme> = {
-  minWidth: 200,
+  minWidth: 160,
   flex: 1,
   maxWidth: 360,
 };
 
 export const vendorFieldSx: SxProps<Theme> = {
   width: 140,
+  minWidth: 140,
+  flexShrink: 0,
 };
 
 export const rssiFilterSx: SxProps<Theme> = {
   alignItems: 'center',
-  minWidth: 180,
+  minWidth: 150,
 };

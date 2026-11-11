@@ -7,7 +7,7 @@ import { computeBandOccupancy } from '@/entities/channel';
 import { createFormatMessage } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n';
 import { ChartA11yTable } from './ChartA11yTable';
-import { chartCaptionSx, chartPaperSx } from './styles';
+import { chartCaptionSx, chartPaperSx, chartTitleSx } from './styles';
 
 export type OccupancyChartProps = {
   bssList: readonly ObservedBss[];
@@ -45,7 +45,9 @@ export function OccupancyChart({
 
   return (
     <Paper aria-label={formatMessage('scan.chart.occupancy')} sx={chartPaperSx} variant="outlined">
-      <Typography variant="subtitle2">{title}</Typography>
+      <Typography sx={chartTitleSx} variant="subtitle2">
+        {title}
+      </Typography>
       <BarChart
         height={Math.max(80, height - 56)}
         hideLegend
