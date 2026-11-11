@@ -13,21 +13,23 @@ channels this repository can actually use. The one exception is `homebrew/cask`,
 which requires a paid Apple Developer membership for notarization and therefore
 stays blocked under the zero-spend policy.
 
-## Current state (2026-11-10)
+## Current state (2026-11-11)
 
 | Artifact                                                | Exists? | Notes                                                                                   |
 | ------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------- |
-| `LV24-WiFi-Explorer-1.0.4-win-x64.exe`                  | yes     | v1.0.4 Release, built 2026-11-10; SHA-256 `8465bfc1…ba35`                               |
-| `LV24-WiFi-Explorer-1.0.4-win-x64.zip`                  | yes     | v1.0.4 portable ZIP for winget; SHA-256 `cb4cbe70…718b`                                 |
-| `LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage`        | yes     | v1.0.4 Release, built 2026-11-10; SHA-256 `9814881d…72f6`                               |
+| `LV24-WiFi-Explorer-1.1.0-win-x64.exe`                  | yes     | v1.1.0 Release, built 2026-11-11; SHA-256 `3665b036…1dd6`                               |
+| `LV24-WiFi-Explorer-1.1.0-win-x64.zip`                  | yes     | v1.1.0 portable ZIP for winget; SHA-256 `b8b1f5c8…f078`                                 |
+| `LV24-WiFi-Explorer-1.1.0-linux-x86_64.AppImage`        | yes     | v1.1.0 Release, built 2026-11-11; SHA-256 `28f14e11…732f`                               |
 | `LV24-WiFi-Explorer-1.0.0-arm64-public.dmg`             | yes     | In the v1.0.0 GitHub Release; unsigned, unnotarized, arm64 only                         |
 | `LV24-WiFi-Explorer-1.0.0-x64-public.dmg`               | no      | `dist:mac:public` builds it; it was never uploaded                                      |
-| `LV24-WiFi-Explorer-1.0.1…1.0.3-*`                      | yes     | Superseded; use v1.0.4 (watermark-free, coded MUI key)                                  |
+| `LV24-WiFi-Explorer-1.0.1…1.0.4-*`                      | yes     | Superseded; use v1.1.0 (watermark-free, coded MUI key)                                  |
+| `latest.yml` / `latest-linux.yml`                       | yes     | electron-updater metadata for v1.1.0                                                    |
 | `checksums.txt` (release) / `SHA256SUMS.txt` (workflow) | yes     | `checksums.txt` covers the arm64 DMG; `SHA256SUMS.txt` covers Windows exe+zip and Linux |
 
-Consequences: **Scoop is live at 1.0.4**, winget is submitted for 1.0.0 but its
-Installation Validation currently fails with `shellExecute` (CLA is signed),
-Chocolatey and AppImageHub can follow with the same v1.0.4 asset and hash.
+Consequences: **Scoop is live at 1.1.0**, winget is submitted for 1.1.0 as a
+portable ZIP; its 1.1.0 validation is running, while the earlier 1.0.4 ZIP passed
+all checks and is waiting for moderator approval. The NSIS variant is not used by
+winget. Chocolatey and AppImageHub can follow with the same v1.1.0 asset and hash.
 **Microsoft Store is on hold**: the listing draft is ready, but no free trusted
 Authenticode certificate exists (SignPath Foundation declined; Certum is paid).
 **Homebrew `homebrew/cask` is not eligible** while the DMG is unnotarized; the
@@ -67,18 +69,18 @@ matches the tag — the tag only selects which release receives the assets.
 ```bash
 # UI: Actions -> "Release desktop artifacts" -> Run workflow
 # CLI equivalent:
-gh workflow run release-desktop.yml -f tag=v1.0.4 -f upload=false
+gh workflow run release-desktop.yml -f tag=v1.1.0 -f upload=false
 gh run watch
 gh run download --name desktop-release-bundle
 ```
 
-It produces, with stable URL-safe names (run on 2026-11-10 for `v1.0.4`):
+It produces, with stable URL-safe names (run on 2026-11-11 for `v1.1.0`):
 
 | File                                             | Built by                                                    |
 | ------------------------------------------------ | ----------------------------------------------------------- |
-| `LV24-WiFi-Explorer-1.0.4-win-x64.exe`           | `windows-latest`, `yarn dist:win`                           |
-| `LV24-WiFi-Explorer-1.0.4-win-x64.zip`           | `windows-latest`, `yarn dist:win` (portable ZIP)            |
-| `LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage` | `ubuntu-latest`, `yarn dist:linux --x64`                    |
+| `LV24-WiFi-Explorer-1.1.0-win-x64.exe`           | `windows-latest`, `yarn dist:win`                           |
+| `LV24-WiFi-Explorer-1.1.0-win-x64.zip`           | `windows-latest`, `yarn dist:win` (portable ZIP)            |
+| `LV24-WiFi-Explorer-1.1.0-linux-x86_64.AppImage` | `ubuntu-latest`, `yarn dist:linux --x64`                    |
 | `SHA256SUMS.txt`                                 | merged from both jobs and verified with `sha256sum --check` |
 | `latest.yml` / `latest-linux.yml`                | electron-updater metadata for the normalized artifacts      |
 
@@ -96,9 +98,9 @@ no signature at all. Say so in release notes instead of hiding it.
 ### Checksum handoff
 
 ```bash
-node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.0.4-win-x64.exe
+node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.1.0-win-x64.exe
 # prints the hash + the three exact lines; --write applies them:
-node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.0.4-win-x64.exe --write
+node scripts/packaging/fill-checksums.mjs release/LV24-WiFi-Explorer-1.1.0-win-x64.exe --write
 ```
 
 ## winget
@@ -120,14 +122,14 @@ rejects `Scope` for `InstallerType: portable`).
 
 ```powershell
 # 1. Attach the ZIP to the release, then hash it.
-(Get-FileHash release\LV24-WiFi-Explorer-1.0.4-win-x64.zip -Algorithm SHA256).Hash.ToLower()
+(Get-FileHash release\LV24-WiFi-Explorer-1.1.0-win-x64.zip -Algorithm SHA256).Hash.ToLower()
 # Put the hash in packaging/winget/LV24.WiFiExplorer.installer.yaml.
 winget validate --manifest packaging\winget
 winget settings --enable LocalManifestFiles
 winget install --manifest packaging\winget
 
 # 2. Copy into a fork of microsoft/winget-pkgs at
-#    manifests/l/LV24/WiFiExplorer/1.0.4/ and open one PR for that version.
+#    manifests/l/LV24/WiFiExplorer/1.1.0/ and open one PR for that version.
 ```
 
 Acceptance notes: unsigned archives are allowed; the URL must be HTTPS,
@@ -257,12 +259,12 @@ before the `on_intel` block can be filled.
 
 ## What the owner must do
 
-1. ~~Run the release workflow for `v1.0.0`~~ — done on 2026-11-10; `v1.0.4` is
+1. ~~Run the release workflow for `v1.0.0`~~ — done on 2026-11-10; `v1.1.0` is
    the current release of record with `SHA256SUMS.txt` attached.
 2. Optionally upload the x64 macOS DMG if Intel Macs should be supported.
-3. ~~Fill checksums~~ — done for `v1.0.4`; re-run
+3. ~~Fill checksums~~ — done for `v1.1.0`; re-run
    `scripts/packaging/fill-checksums.mjs <exe> --write` for every new version.
-4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. The PR now carries 1.0.4 as a **portable ZIP** (`InstallerType: zip`, `NestedInstallerType: portable`); the NSIS variant is blocked by `shellExecute` in the validation VM. Installation Validation is pending on the ZIP.
+4. CLA on [PR #475989](https://github.com/microsoft/winget-pkgs/pull/475989) is signed. The PR now carries 1.1.0 as a **portable ZIP** (`InstallerType: zip`, `NestedInstallerType: portable`) and 1.1.0 validation is running; the earlier 1.0.4 ZIP passed all checks and is waiting for moderator approval. The NSIS variant remains on the release but is not used by winget.
 5. ~~Create `<owner>/scoop-bucket` and push the manifest~~ — live at
    [LevapVeeskela/scoop-bucket](https://github.com/LevapVeeskela/scoop-bucket).
 6. Create a free Chocolatey account, pack and push.

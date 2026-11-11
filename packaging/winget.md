@@ -28,16 +28,16 @@ Installer facts that matter for validation:
   `lv24-wifi-explorer` alias.
 - Portable packages are per-user; `Scope` is not allowed and must be omitted.
 - `UpgradeBehavior: install` — winget replaces the portable payload in place.
-- `ReleaseDate: 2026-11-10` — date of the current 1.0.4 release.
+- `ReleaseDate: 2026-11-11` — date of the current 1.1.0 release.
 
-The NSIS `LV24-WiFi-Explorer-1.0.4-win-x64.exe` stays on the release for direct
+The NSIS `LV24-WiFi-Explorer-1.1.0-win-x64.exe` stays on the release for direct
 downloads and Scoop; winget uses the ZIP only.
 
 ## Before submitting
 
 ```powershell
 # 1. The ZIP must exist on the release and the hash must be real.
-(Get-FileHash release\LV24-WiFi-Explorer-1.0.4-win-x64.zip -Algorithm SHA256).Hash.ToLower()
+(Get-FileHash release\LV24-WiFi-Explorer-1.1.0-win-x64.zip -Algorithm SHA256).Hash.ToLower()
 
 # 2. Local validation (winget is part of App Installer on Windows 10/11).
 winget validate --manifest packaging\winget
@@ -51,7 +51,7 @@ winget install --manifest packaging\winget
 
 1. Fork `microsoft/winget-pkgs` and sign the Microsoft CLA (free, one time).
 2. Copy the three files to
-   `manifests/l/LV24/WiFiExplorer/1.0.4/` (first letter of the publisher id,
+   `manifests/l/LV24/WiFiExplorer/1.1.0/` (first letter of the publisher id,
    case-sensitive publisher and package folders, version folder).
 3. Open **one** PR for that single version. The validation app runs ten checks:
    schema, URL reachability, URL ownership, policy, catalog consistency, malware
