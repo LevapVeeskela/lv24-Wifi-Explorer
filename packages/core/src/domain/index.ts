@@ -19,6 +19,17 @@ export { FIELD_AVAILABILITY } from './availability';
 export type { AssociatedLink, CoreWlanNetworkRecord, ObservedBss } from './bss';
 
 export type {
+  AdapterCapabilities,
+  CompatibilityFactor,
+  CompatibilityFactorId,
+  CompatibilityFactorStatus,
+  CompatibilityFinding,
+  CompatibilityFindingId,
+  CompatibilityResult,
+} from './compatibility';
+export { evaluateCompatibility } from './compatibility';
+
+export type {
   BandGhz,
   ChannelCenterConfidence,
   ChannelView,

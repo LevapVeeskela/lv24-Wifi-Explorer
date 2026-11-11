@@ -1,4 +1,11 @@
-export const SETTINGS_TABS = ['general', 'columns', 'annotations', 'vendor', 'advanced'] as const;
+export const SETTINGS_TABS = [
+  'general',
+  'updates',
+  'columns',
+  'annotations',
+  'vendor',
+  'advanced',
+] as const;
 
 export type SettingsTabId = (typeof SETTINGS_TABS)[number];
 

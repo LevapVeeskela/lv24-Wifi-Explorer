@@ -1,5 +1,11 @@
 appId: by.lv24.wifi.explorer
 productName: LV24 WiFi Explorer
+# Update feed. electron-builder embeds this into resources/app-update.yml;
+# electron-updater reads it at runtime. `latest/download` always resolves to the
+# newest public release and avoids the GitHub Atom/API rate limits.
+publish:
+  provider: generic
+  url: https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/latest/download
 directories:
   output: release
 files:

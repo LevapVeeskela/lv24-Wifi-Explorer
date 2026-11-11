@@ -80,6 +80,7 @@ It produces, with stable URL-safe names (run on 2026-11-10 for `v1.0.4`):
 | `LV24-WiFi-Explorer-1.0.4-win-x64.zip`           | `windows-latest`, `yarn dist:win` (portable ZIP)            |
 | `LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage` | `ubuntu-latest`, `yarn dist:linux --x64`                    |
 | `SHA256SUMS.txt`                                 | merged from both jobs and verified with `sha256sum --check` |
+| `latest.yml` / `latest-linux.yml`                | electron-updater metadata for the normalized artifacts      |
 
 The macOS DMG keeps its existing hyphenated name
 (`LV24-WiFi-Explorer-<version>-<arch>-public.dmg`) because `dist:mac:public` is

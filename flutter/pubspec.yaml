@@ -1,7 +1,7 @@
 name: lv24_wifi_explorer
 description: LV24 WiFi Explorer Flutter client (mobile + desktop) — demo workbench until live ScanCore adapters land.
 publish_to: 'none'
-version: 1.0.4+5
+version: 1.1.0+6
 
 environment:
   sdk: ^3.13.3

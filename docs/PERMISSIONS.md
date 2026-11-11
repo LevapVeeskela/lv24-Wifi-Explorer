@@ -142,6 +142,27 @@ Windows Flutter v1 is **connected-network + demo fixtures**, not a nearby-BSS su
 
 Factory: `createScanWorkbenchSession` routes `Platform.isWindows` to [`flutter/lib/features/windows_scan/`](../flutter/lib/features/windows_scan/).
 
+## 8. Saved Wi-Fi password, adapter capabilities and updates
+
+- **Saved Wi-Fi password** is read only after an explicit user click in Network
+  details. It is never written to localStorage, snapshots, exports or logs, and
+  the UI clears it after 30 seconds. Windows uses
+  `netsh wlan show profile name=... key=clear` for the current user; macOS asks
+  Keychain (`security find-generic-password`), which may show a system prompt;
+  Linux uses NetworkManager (`nmcli`) and may require polkit authorization.
+  Open networks, enterprise profiles and profiles without a stored PSK return a
+  clear explanation instead of a value.
+- **Adapter capabilities** are read-only: `netsh wlan show drivers` on Windows,
+  `system_profiler SPAirPortDataType` on macOS and `iw list` on Linux. No elevation
+  is required; inferred values are marked as estimated in the compatibility
+  panel.
+- **Auto-update** contacts GitHub Releases
+  (`releases/latest/download/latest.yml`) and verifies the SHA-512 from that
+  metadata before installing. The setting can be disabled; macOS remains manual
+  until the app is signed and notarized. No telemetry is sent.
+
+---
+
 ## macOS helper signing (real SSID/BSSID)
 
 `ScanCore.app` must be signed with a stable Apple Development or Developer ID

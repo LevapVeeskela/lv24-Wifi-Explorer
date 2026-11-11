@@ -18,5 +18,6 @@ export const SCAN_SETTINGS_DEFAULTS: ScanSettings = {
   hideEmptySpectrumBand: true,
   graphLabelMode: 'ssid',
   appearanceFollowSystem: true,
+  autoUpdateEnabled: true,
   directedSsid: '',
 };

@@ -5,10 +5,10 @@ Flutter/Dart side artifacts. Nothing here spends money: CI stays manual-only
 and releases are manual uploads.
 
 Canonical version lives in the root `package.json` (`version`). The Flutter app
-has its own `flutter/pubspec.yaml` version (`1.0.4+5`). The npm packages and the
+has its own `flutter/pubspec.yaml` version (`1.1.0+6`). The npm packages and the
 PyPI launcher have independent patch versions (`packages/*/package.json`,
 `python/pyproject.toml`): the packages stay at `1.0.1` while the desktop app is
-at `1.0.4`.
+at `1.1.0`.
 
 ---
 
@@ -218,7 +218,12 @@ automatic push/PR triggers (zero-spend policy).
 3. Publishing the GitHub Release also runs `pypi-publish.yml`
    (`lv24-wifi-explorer`); that workflow skips a version already on PyPI. Both
    workflows use standard free runners of this public repository.
-4. Note the absence of an auto-updater: users re-download manually.
+4. Auto-update metadata: `release-desktop.yml` writes `latest.yml` (Windows) and
+   `latest-linux.yml` (AppImage) next to the artifacts. Attach them to the same
+   release; `electron-updater` uses the generic feed
+   `https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases/latest/download`.
+   The app verifies the SHA-512 from that file. macOS auto-update is disabled
+   until the build is signed and notarized; users update manually.
 5. Free third-party channels (winget, Scoop, Chocolatey, AppImageHub, Flathub,
    Snap) are prepared in [`packaging/`](../packaging); submission is manual and
    tracked in [`DISTRIBUTION.md`](DISTRIBUTION.md).

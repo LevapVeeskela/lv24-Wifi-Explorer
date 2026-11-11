@@ -26,6 +26,7 @@ export { chartUnitToSignalDisplay, signalDisplayToChartUnit } from './signalUnit
 export { ScanSettingsDialog } from './ScanSettingsDialog';
 export { ScanSettingsWindow } from './ScanSettingsWindow';
 export { ScanSettingsGeneralPanel } from './ScanSettingsGeneralPanel';
+export { ScanSettingsUpdatesPanel } from './ScanSettingsUpdatesPanel';
 export { ScanSettingsColumnsPanel } from './ScanSettingsColumnsPanel';
 export { ScanSettingsAnnotationsPanel } from './ScanSettingsAnnotationsPanel';
 export { ScanSettingsVendorPanel } from './ScanSettingsVendorPanel';

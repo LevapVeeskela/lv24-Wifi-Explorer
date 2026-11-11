@@ -7,6 +7,7 @@ import { PIN_COLOR_PALETTE } from '@/features/annotations';
 import { createFormatMessage } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n';
 import { DetailsField } from './DetailsField';
+import { WifiPasswordSection } from './WifiPasswordSection';
 import {
   formatBandField,
   formatCountry,
@@ -272,6 +273,11 @@ export function NetworkDetailsPane({
           />
         </Grid>
       </Grid>
+      <WifiPasswordSection
+        hidden={row.ssidHidden}
+        openNetwork={row.source.security.isOpen}
+        ssid={row.ssid || null}
+      />
       <Snackbar
         autoHideDuration={2000}
         message={formatMessage('scan.copied')}

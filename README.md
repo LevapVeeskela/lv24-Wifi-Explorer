@@ -45,6 +45,14 @@ Screenshots use the deterministic demo provider — no real networks are exposed
   helper has Location; RF-only redaction is explicit, never fake “hidden” names.
 - **Answers “why is my Wi‑Fi bad?”** Signal/noise/SNR history, same-SSID and
   same-channel occupancy, issue heuristics, BSS compare with IE diff, IE tree.
+- **Knows your device.** A 1–10 compatibility score compares the local adapter
+  with the selected router: band, PHY, channel width, security and signal, with
+  concrete fixes for the router and the device.
+- **Saved password on request.** Reveals a stored Wi‑Fi password only for a
+  saved network, only after an explicit click, and clears it after 30 seconds.
+- **Keeps itself current.** Windows and Linux AppImage builds check GitHub
+  Releases, download and verify updates from Settings; macOS stays manual until
+  the build is signed.
 - **Workbench, not a black box.** Filter presets, saved workbench profiles,
   annotations, named coloring rules, column profiles, CSV/print/snapshot export,
   pcap/pcapng import.
@@ -76,9 +84,9 @@ shows a small MUI watermark. A private, watermark-free build is documented in
 
 Ready-made installers are attached to the latest
 [release](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases):
-`LV24-WiFi-Explorer-1.0.4-win-x64.exe` (NSIS), `LV24-WiFi-Explorer-1.0.4-win-x64.zip`
+`LV24-WiFi-Explorer-1.1.0-win-x64.exe` (NSIS), `LV24-WiFi-Explorer-1.1.0-win-x64.zip`
 (portable, no installer) and
-`LV24-WiFi-Explorer-1.0.4-linux-x86_64.AppImage`. `yarn dist:linux` /
+`LV24-WiFi-Explorer-1.1.0-linux-x86_64.AppImage`. `yarn dist:linux` /
 `yarn dist:win` produce the same installers from source. Live scanning on Linux
 uses NetworkManager (`nmcli`), on Windows `netsh`; both expose fewer fields than
 macOS (see the table below). Windows/Linux packages are not signed.

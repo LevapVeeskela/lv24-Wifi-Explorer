@@ -1,6 +1,6 @@
 {
   "name": "lv24-wifi-explorer",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "private": true,
   "description": "Cross-platform Wi-Fi scanner toolkit: core domain, cross-OS backend, CLI, web UI, Electron desktop host, Flutter client.",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "test:oui": "node --test packages/web/src/vendor/lookup.test.mjs",
     "oui:refresh": "node packages/web/src/vendor/refresh-oui.mjs",
     "dist:mac": "yarn build:scancore && yarn check:scancore && yarn build && electron-builder --mac dmg --config electron-builder.yml",
-    "dist:win": "yarn build && electron-builder --win nsis zip --x64 --config electron-builder.yml",
+    "dist:win": "yarn build && electron-builder --win nsis zip --x64 --config electron-builder.yml --publish never",
     "build:core": "yarn workspace @lv24/wifi-core build",
     "build:backend": "yarn workspace @lv24/wifi-backend build",
     "build:cli": "yarn workspace @lv24/wifi-cli build",
@@ -66,6 +66,7 @@
     "@mui/x-data-grid-pro": "8.11.0",
     "@mui/x-date-pickers": "8.11.0",
     "@mui/x-license": "8.11.0",
+    "electron-updater": "6.8.12",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

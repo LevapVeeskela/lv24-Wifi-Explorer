@@ -12,6 +12,7 @@ export type ScanSettings = {
   hideEmptySpectrumBand: boolean;
   graphLabelMode: GraphLabelMode;
   appearanceFollowSystem: boolean;
+  autoUpdateEnabled: boolean;
   directedSsid: string;
 };
 

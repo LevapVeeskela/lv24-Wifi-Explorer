@@ -14,6 +14,9 @@ import {
 } from './scan/registerIpc';
 import { installApplicationMenu } from './menu';
 import { registerFileIpc } from './fileIpc';
+import { registerWifiToolsIpc } from './wifiToolsIpc';
+import { UpdateService } from './updates/UpdateService';
+import { registerUpdatesIpc } from './updates/updatesIpc';
 import { createMainWindowConfig } from './window';
 
 const RENDERER_DEV_URL = process.env.WIFI_RENDERER_DEV_URL ?? 'http://localhost:5173';
@@ -43,6 +46,7 @@ process.on('unhandledRejection', (reason) => logCrash('unhandledRejection', reas
 
 let mainWindow: BrowserWindow | null = null;
 let scanState: ScanRuntimeState = createInitialScanState(bootDemoModeFromArgv());
+const updateService = new UpdateService(() => mainWindow);
 
 function rendererDistDir(): string {
   return path.join(__dirname, '../dist');
@@ -129,6 +133,15 @@ app.whenReady().then(() => {
     getMainWindow: () => mainWindow,
     isTrustedSender: isTrustedRendererUrl,
   });
+  registerWifiToolsIpc({
+    isTrustedSender: isTrustedRendererUrl,
+    isDemo: () => scanState.demoMode,
+  });
+  registerUpdatesIpc({
+    service: updateService,
+    isTrustedSender: isTrustedRendererUrl,
+  });
+  updateService.init();
   installApplicationMenu({
     getMainWindow: () => mainWindow,
     productTitle: PRODUCT_TITLE,
@@ -165,5 +178,6 @@ app.on('window-all-closed', () => {
 });
 
 app.on('before-quit', () => {
+  updateService.dispose();
   stopScanTimer(scanState);
 });

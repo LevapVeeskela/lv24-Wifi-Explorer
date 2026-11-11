@@ -8,6 +8,7 @@ import { createFormatMessage, type MessageKey } from '@/shared/i18n';
 import { useScanIntl } from '@/shared/i18n';
 import { BssComparePane } from '@/features/bss-compare';
 import { AdvancedDetailsPane } from '@/widgets/AdvancedDetailsPane';
+import { CompatibilityPane } from '@/widgets/CompatibilityPane';
 import { IssuesInspectorPanel } from '@/widgets/IssuesInspector';
 import { AdvancedIeTree } from './AdvancedIeTree';
 import { ChartStrip, OccupancyBandStrip, SignalHistoryChart } from '@/widgets/ChartStrip';
@@ -16,6 +17,7 @@ import { detailsTabPanelHiddenSx, detailsTabPanelSx, detailsTabsRootSx } from '.
 
 export const DETAILS_TAB_IDS = [
   'details',
+  'compatibility',
   'signal',
   'occupancy',
   'compare',
@@ -27,6 +29,7 @@ export type DetailsTabId = (typeof DETAILS_TAB_IDS)[number];
 
 const TAB_MESSAGE: Record<DetailsTabId, MessageKey> = {
   details: 'scan.tab.details',
+  compatibility: 'scan.tab.compatibility',
   signal: 'scan.tab.signal',
   occupancy: 'scan.tab.occupancy',
   compare: 'scan.tab.compare',
@@ -128,6 +131,9 @@ export function DetailsTabs({
           onChartUnitChange={onChartUnitChange}
           onTimescaleChange={setTimescale}
         />
+      </TabPanel>
+      <TabPanel current={tab} id="compatibility">
+        <CompatibilityPane row={selectedRow} />
       </TabPanel>
       <TabPanel current={tab} id="signal">
         <SignalHistoryChart

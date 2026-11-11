@@ -60,8 +60,8 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 
 ### Packaging
 
-- Publishable packages are versioned `1.0.1`; the desktop app is `1.0.4` and the
-  Flutter app `1.0.4+5`. Same source tree, independent release tracks.
+- Publishable packages are versioned `1.0.1`; the desktop app is `1.1.0` and the
+  Flutter app `1.1.0+6`. Same source tree, independent release tracks.
 - `dist:mac:public` builds a redistributable, watermarked macOS DMG without the
   commercial MUI key; `check:public-bundle` fails the build if the key leaks
   into `dist/`.
@@ -71,6 +71,51 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Simplified Chinese added: web catalog, MUI DataGrid locale, Flutter ARB catalog,
   language picker in Settings, persisted `lv24.locale` preference.
 - Hardcoded two-language Flutter workbench strings moved into ARB.
+
+## [1.1.0] — 2026-11-11
+
+Feature release: auto-update, saved Wi-Fi password reveal, and a device/router
+compatibility score.
+
+### Auto-update
+
+- `electron-updater` with a generic GitHub Releases feed
+  (`releases/latest/download`); the release workflow now writes and attaches
+  `latest.yml` and `latest-linux.yml`. Settings has an **Updates** tab with an
+  automatic-check toggle, current version, status, progress, check-now and
+  restart-and-install.
+- Windows and Linux AppImage are supported. macOS stays manual until the build
+  is signed and notarized; the settings panel says so instead of failing.
+- Updates keep the existing SHA-512 verification from the metadata file. The
+  installer is unsigned, so the OS may still ask for confirmation.
+
+### Wi-Fi password
+
+- A saved-network password can be revealed explicitly from Network details:
+  `netsh wlan show profile ... key=clear` on Windows, Keychain on macOS, and
+  NetworkManager/nmcli on Linux.
+- The value is never written to storage, snapshots, exports or logs; it is
+  cleared after 30 seconds and has a copy button. Open networks and profiles
+  without a stored key show a clear explanation.
+- Windows profiles are listed first, so the action only appears for networks the
+  user has actually saved; macOS asks Keychain on demand.
+
+### Compatibility
+
+- New **Compatibility** details tab scores the adapter against the selected BSS
+  on a 1–10 scale: band, PHY generation, channel width, security and signal,
+  with a confidence indicator.
+- Adapter capabilities come from `netsh wlan show drivers` (Windows),
+  `system_profiler` (macOS) and `iw list` (Linux); inferred values are marked as
+  estimated. The report lists what is wrong and what to change on the router or
+  on the device, including DFS, 40 MHz on 2.4 GHz, WPA2/WPA3, channel width and
+  weak signal.
+- The UI is available in Russian, English and Simplified Chinese.
+
+### Packaging
+
+- Windows releases ship both the NSIS installer and the portable ZIP used by
+  winget; the release workflow builds both in one pass.
 
 ## [1.0.4] — 2026-11-10
 

@@ -39,4 +39,22 @@ export { DemoScanProvider, LinuxNmcliProvider, MacScanCoreProvider, WindowsNetsh
 export { normalizeScanCoreSnapshot } from './normalize';
 export { parseNmcliWifiList, securityFromLabel } from './providers/linux';
 export { parseNetshNetworks } from './providers/windows';
+export {
+  demoAdapterCapabilities,
+  parseIwCapabilities,
+  parseNetshCapabilities,
+  parseSystemProfilerCapabilities,
+  readAdapterCapabilities,
+  type AdapterCapabilitiesResult,
+} from './adapterCapabilities';
+export {
+  listSavedWifiProfiles,
+  parseNetshKey,
+  parseNetshProfiles,
+  parseNmcliWifiConnections,
+  readSavedWifiPassword,
+  type SavedWifiProfilesResult,
+  type WifiPasswordCode,
+  type WifiPasswordResult,
+} from './wifiPassword';
 export * from './types';

@@ -69,6 +69,7 @@ export function normalizeScanSettings(
     partial?.appearanceFollowSystem,
     base.appearanceFollowSystem
   );
+  const autoUpdateEnabled = normalizeBool(partial?.autoUpdateEnabled, base.autoUpdateEnabled);
   const directedSsid = typeof partial?.directedSsid === 'string' ? partial.directedSsid.trim() : '';
   return {
     signalUnit,
@@ -79,6 +80,7 @@ export function normalizeScanSettings(
     hideEmptySpectrumBand,
     graphLabelMode,
     appearanceFollowSystem,
+    autoUpdateEnabled,
     directedSsid,
   };
 }

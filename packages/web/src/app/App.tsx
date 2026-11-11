@@ -1,6 +1,7 @@
 import { useEffect, useState, type ComponentType } from 'react';
 import { Alert, Box, CssBaseline, Paper, ThemeProvider, Typography } from '@mui/material';
 import { ScanWorkbenchPage } from '@/pages/ScanWorkbenchPage';
+import { loadScanSettings } from '@/features/scan-settings';
 import { theme } from '@/shared/lib/theme';
 import { readLocalePreference, subscribeLocalePreference, type AppLocale } from '@/shared/i18n';
 
@@ -41,6 +42,7 @@ export function App() {
       setDemoMode(status.demoMode);
       return undefined;
     });
+    void bridge.updatesSetEnabled?.(loadScanSettings().autoUpdateEnabled);
 
     const off = bridge.onPermissionsStatus((status) => {
       setDemoMode(status.demoMode);

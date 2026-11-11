@@ -13,6 +13,7 @@ import { ScanSettingsAdvancedPanel } from './ScanSettingsAdvancedPanel';
 import { ScanSettingsAnnotationsPanel } from './ScanSettingsAnnotationsPanel';
 import { ScanSettingsColumnsPanel } from './ScanSettingsColumnsPanel';
 import { ScanSettingsGeneralPanel } from './ScanSettingsGeneralPanel';
+import { ScanSettingsUpdatesPanel } from './ScanSettingsUpdatesPanel';
 import { ScanSettingsVendorPanel } from './ScanSettingsVendorPanel';
 import { type SettingsTabId, SETTINGS_TABS, isSettingsTabId } from './settingsTabs';
 import { useSettingsMessage } from './useSettingsMessage';
@@ -65,6 +66,8 @@ export function ScanSettingsWindow({
     switch (id) {
       case 'general':
         return msg('scan.settings.tab.general');
+      case 'updates':
+        return msg('scan.settings.tab.updates');
       case 'columns':
         return msg('scan.settings.tab.columns');
       case 'annotations':
@@ -104,6 +107,8 @@ export function ScanSettingsWindow({
         );
       case 'vendor':
         return <ScanSettingsVendorPanel />;
+      case 'updates':
+        return <ScanSettingsUpdatesPanel settings={settings} onChange={onSettingsChange} />;
       case 'advanced':
         return <ScanSettingsAdvancedPanel settings={settings} onChange={onSettingsChange} />;
       case 'general':

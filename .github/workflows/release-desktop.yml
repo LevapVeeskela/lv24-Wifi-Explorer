@@ -138,6 +138,7 @@ jobs:
             (Join-Path (Get-Location) 'release/SHA256SUMS-windows.txt'),
             "$hash  $name`n$zipHash  $zipName`n"
           )
+          node scripts/packaging/write-update-metadata.mjs --file "release/$name" --version $version --out "release/latest.yml"
           Get-Content "release/SHA256SUMS-windows.txt"
 
       - name: Upload workflow artifact
@@ -147,6 +148,7 @@ jobs:
           path: |
             release/*.exe
             release/*.zip
+            release/latest.yml
             release/SHA256SUMS-windows.txt
           if-no-files-found: error
           retention-days: 14
@@ -201,6 +203,7 @@ jobs:
           mv "$appimage" "release/$name"
           chmod +x "release/$name"
           ( cd release && sha256sum "$name" > SHA256SUMS-linux.txt )
+          node scripts/packaging/write-update-metadata.mjs --file "release/$name" --version "$version" --out release/latest-linux.yml
           cat release/SHA256SUMS-linux.txt
 
       - name: Upload workflow artifact
@@ -209,6 +212,7 @@ jobs:
           name: desktop-linux
           path: |
             release/*.AppImage
+            release/latest-linux.yml
             release/SHA256SUMS-linux.txt
           if-no-files-found: error
           retention-days: 14
@@ -260,6 +264,8 @@ jobs:
             bundle/*.exe \
             bundle/*.zip \
             bundle/*.AppImage \
+            bundle/latest.yml \
+            bundle/latest-linux.yml \
             bundle/SHA256SUMS.txt \
             --clobber \
             --repo "$GITHUB_REPOSITORY"
