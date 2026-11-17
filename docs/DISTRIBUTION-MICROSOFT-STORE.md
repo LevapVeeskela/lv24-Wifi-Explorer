@@ -1,6 +1,6 @@
 # Microsoft Store distribution (Windows)
 
-Can LV24 WiFi Explorer (Electron 33, MIT, NSIS x64) ship through the Microsoft
+Can LV24 WiFi Explorer (Electron 33, Apache-2.0, NSIS x64) ship through the Microsoft
 Store, under which license, at what cost. Research date **2026-11-10**; every
 Microsoft claim was read on learn.microsoft.com that day. Not legal advice —
 license rows are analysis, not an opinion.
@@ -18,7 +18,7 @@ trusted certificate is available; the Store submission is paused at `PackageSet`
 
 The Store has accepted unpackaged installers since June 2021 and the MSI/EXE
 path is first-class today. It avoids the MSIX AppData virtualization that
-already bit `lv24-brain`, and lets us publish our own license terms (MIT)
+already bit `lv24-brain`, and lets us publish our own license terms (Apache-2.0)
 instead of Microsoft's SALT.
 
 **The one hard prerequisite is a CA-chained Authenticode certificate.** The
@@ -54,13 +54,10 @@ Source: `lv24-brain-data/projects/lv24-brain/research-2026-11-09/C-desktop.md`.
 | 6.3 | "**MSIX: don't.**" … "For an app whose whole job is to drive a CLI and a shared data directory, MSIX is the wrong container." | applies         |
 | 7   | GitHub Actions is $0 on public repos; the public-repo condition is load-bearing                                               | release CI only |
 
-**There is no recorded decision about an open-source license for Windows Store
-distribution.** `brain open lv24-wifi-explorer` returns `Recent decisions:
-none recorded`; `brain search "store"`, `"license"` and `"MSIX"` return no
-decision record — only note/attempt/handoff hits. The single "MSIX" hit is
-`attempt/lv24-brain/...` (the v0.3.2 AppData workaround), not a license
-decision. Everything below about MIT/Store licensing is **new analysis here**,
-not recovered brain knowledge.
+**License decision (2026-11-17):** the project uses Apache-2.0 for the app and all
+internal packages. At the original research date there was no recorded decision;
+this paragraph is kept for context, and the analysis below now assumes
+Apache-2.0.
 
 Caveat on 6.3: Microsoft scopes the AppData redirection to _virtualized_ apps
 ("This section applies only to virtualized apps") and suggests full-trust apps
@@ -120,14 +117,16 @@ winget, Scoop and GitHub Releases, which need no Store account.
 
 ## 4. License compatibility
 
-The project is **MIT**: `LICENSE` line 1 (`MIT License`, © 2026 LV24) and
-`package.json` `"license": "MIT"`; all `@lv24/wifi-*` packages are MIT.
+The project is **Apache-2.0**: `LICENSE` (Apache License 2.0, © 2026 LV24) and
+`package.json` `"license": "Apache-2.0"`; all `@lv24/wifi-*` packages are
+Apache-2.0. The `NOTICE` file carries the project attribution.
 
 How the Store treats licenses: you license the app to the customer yourself.
 Per the App Developer Agreement (v8.10) you _may_ provide your own agreement
 and it is published with the listing; **only if you provide none** does the
 Standard Application License Terms (SALT) apply. For MSI/EXE the "Applicable
-license terms" field is **required** (10,000 chars), so the MIT text goes there.
+license terms" field is **required** (10,000 chars), so the Apache-2.0 text goes
+there.
 
 | License        | MSI/EXE + own terms                     | MSIX (SALT default) | Why                                                                                                                              |
 | -------------- | --------------------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -137,8 +136,8 @@ license terms" field is **required** (10,000 chars), so the MIT text goes there.
 | **GPLv3**      | same as GPLv2                           | risky               | §10 forbids additional restrictions; §7 limits added terms; SALT adds terms you cannot relicense.                                |
 | **AGPLv3**     | same as GPLv3                           | risky               | §13 triggers only on remote interaction with a modified version — a local scanner does not. Inherits the §10 problem under SALT. |
 
-For this project the answer is simple: **MIT + own terms = no conflict**, on
-either path. The copyleft rows matter only if the project relicenses; if that
+For this project the answer is simple: **Apache-2.0 + own terms = no conflict**,
+on either path. The copyleft rows matter only if the project relicenses; if that
 ever happens, stay on MSI/EXE.
 
 Store policies that bind an OSS scanner:
@@ -161,7 +160,7 @@ Store policies that bind an OSS scanner:
 ### MUI X Pro
 
 `packages/web` / `packages/desktop` use **commercial MUI X Data Grid Pro**. The
-code is MIT but a build containing the commercial key is **not redistributable**
+code is Apache-2.0 but a build containing the commercial key is **not redistributable**
 (`docs/RELEASE.md` §1a). `dist:mac:public` forces `VITE_MUI_LICENSE_KEY=` and
 runs `check:public-bundle`. There is **no `dist:win:public` script**; the
 `release-desktop.yml` workflow builds from a checkout without `.env.local` and
@@ -219,7 +218,7 @@ Steps:
    language(s), and **installer parameters**. electron-builder's NSIS is a
    Nullsoft installer; `/S` is the silent switch — **verify on the clean VM**
    and submit that exact string.
-7. Store listing: description, features, screenshots, logo, and the **MIT text**
+7. Store listing: description, features, screenshots, logo, and the **Apache-2.0 text**
    under "Applicable license terms". Use "Notes for certification" to explain
    that scanning needs no admin, that demo fixtures appear when a scan is
    unavailable, and that the app spawns `netsh wlan show networks`.

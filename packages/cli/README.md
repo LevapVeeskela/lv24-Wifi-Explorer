@@ -11,4 +11,4 @@ Options: `--interval`, `--count`, `--timeout`, `--format table|json|jsonl|csv`,
 (`1.0.1`). On macOS set `LV24_SCANCORE_PATH` to the helper binary; on
 Linux/Windows the CLI uses `nmcli` / `netsh`.
 
-MIT licensed.
+Apache-2.0 licensed.

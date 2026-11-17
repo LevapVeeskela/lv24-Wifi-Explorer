@@ -6,7 +6,7 @@
   "bugs": {
     "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "LV24",
   "repository": {
     "type": "git",
@@ -18,7 +18,9 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "NOTICE"
   ],
   "type": "module",
   "main": "./dist/index.js",

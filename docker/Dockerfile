@@ -55,6 +55,8 @@ RUN mkdir -p /runtime/pkgs \
       mkdir -p "/runtime/pkgs/${pkg}/dist"; \
       cp -R "/src/packages/${pkg}/dist/." "/runtime/pkgs/${pkg}/dist/"; \
       cp "/src/packages/${pkg}/package.json" "/runtime/pkgs/${pkg}/package.json"; \
+      cp "/src/packages/${pkg}/LICENSE" "/runtime/pkgs/${pkg}/LICENSE"; \
+      cp "/src/packages/${pkg}/NOTICE" "/runtime/pkgs/${pkg}/NOTICE"; \
     done
 
 COPY docker/runtime-manifest.mjs /runtime/runtime-manifest.mjs
@@ -78,13 +80,14 @@ LABEL org.opencontainers.image.title="LV24 WiFi Explorer CLI" \
       org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.revision="${REVISION}" \
       org.opencontainers.image.source="https://github.com/LevapVeeskela/lv24-Wifi-Explorer" \
-      org.opencontainers.image.licenses="MIT"
+      org.opencontainers.image.licenses="Apache-2.0"
 
 ENV NODE_ENV=production \
     PATH="/app/node_modules/.bin:${PATH}"
 
 WORKDIR /app
 COPY --from=deps /runtime/ /app/
+COPY LICENSE NOTICE /app/
 
 # Windows checkouts may materialize the script with CRLF, which breaks the
 # shebang; normalize and mark executable at build time.

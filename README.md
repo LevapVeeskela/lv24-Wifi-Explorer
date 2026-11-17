@@ -3,7 +3,7 @@
 [![npm core](https://img.shields.io/npm/v/@lv24/wifi-core?label=%40lv24%2Fwifi-core&color=cb3837&logo=npm)](https://www.npmjs.com/package/@lv24/wifi-core)
 [![npm mcp](https://img.shields.io/npm/v/@lv24/wifi-mcp?label=%40lv24%2Fwifi-mcp&color=cb3837&logo=npm)](https://www.npmjs.com/package/@lv24/wifi-mcp)
 [![release](https://img.shields.io/github/v/release/LevapVeeskela/lv24-Wifi-Explorer?color=0b6b5f&logo=github)](https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases)
-[![license](https://img.shields.io/badge/license-MIT-22c55e)](LICENSE)
+[![license](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 [![platforms](https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20Windows-38bdf8)](#cross-platform-scan-sources)
 
 **A fast, honest Wi‑Fi scanner — for people and for AI agents.** Live CoreWLAN
@@ -62,7 +62,7 @@ Screenshots use the deterministic demo provider — no real networks are exposed
   live in Settings (desktop and Flutter).
 - **One model everywhere.** `@lv24/wifi-core` powers the app, CLI, MCP and
   Flutter client; Linux/Windows providers degrade honestly.
-- **Open and reusable.** MIT core/backend/CLI/MCP packages, typed provider API,
+- **Open and reusable.** Apache-2.0 core/backend/CLI/MCP packages, typed provider API,
   demo provider for CI, no private APIs in the core.
 
 ## Desktop app (macOS)
@@ -284,11 +284,13 @@ Flutter: `cd flutter && flutter pub get && flutter run -d macos` (see
 
 ## License and MUI
 
-Core, backend, CLI, MCP and app code are **MIT**. The desktop/web UI depends on
-commercial **MUI X Pro**; `VITE_MUI_LICENSE_KEY` is supplied at build time from
-`.env.local` and is never committed. Without it the grid is watermarked but the
-app still works. See [`CONTRIBUTING.md`](CONTRIBUTING.md). Windows code signing
-policy: [`docs/CODE-SIGNING.md`](docs/CODE-SIGNING.md).
+Core, backend, CLI, MCP and app code are **Apache-2.0** (see [`LICENSE`](LICENSE)
+and [`NOTICE`](NOTICE)); the published 1.1.0 artifacts remain under MIT until the
+next release. The desktop/web UI depends on commercial **MUI X Pro**;
+`VITE_MUI_LICENSE_KEY` is supplied at build time from `.env.local` and is never
+committed. Without it the grid is watermarked but the app still works. See
+[`CONTRIBUTING.md`](CONTRIBUTING.md). Windows code signing policy:
+[`docs/CODE-SIGNING.md`](docs/CODE-SIGNING.md).
 
 ## Contributing
 

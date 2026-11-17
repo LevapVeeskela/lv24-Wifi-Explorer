@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "LV24",
   "repository": {
     "type": "git",
@@ -23,7 +23,9 @@
     "directory": "packages/gh-bundle"
   },
   "files": [
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "NOTICE"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"

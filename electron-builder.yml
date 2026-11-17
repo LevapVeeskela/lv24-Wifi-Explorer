@@ -12,6 +12,8 @@ files:
   - dist/**
   - dist-electron/**
   - package.json
+  - LICENSE
+  - NOTICE
 mac:
   # ScanCore is a macOS-only Swift helper. Keeping the extra resource under
   # `mac` keeps Windows/Linux packaging from looking for native/ScanCore/.build,

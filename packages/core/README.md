@@ -23,4 +23,4 @@ const bss = scan.mapCoreWlanRecordsToObservedBss(records, undefined, capturedAt,
 });
 ```
 
-MIT licensed.
+Apache-2.0 licensed.

@@ -23,7 +23,7 @@ Truthfulness: Linux/Windows do not expose IEs or BSS-level RSSI; the provider
 emits `channelWidth: 'unknown'`, `informationElementData: null` and documents
 the RSSI derivation. No private APIs, monitor mode, or client enumeration.
 
-MIT licensed.
+Apache-2.0 licensed.
 
 ## macOS real SSID/BSSID
 

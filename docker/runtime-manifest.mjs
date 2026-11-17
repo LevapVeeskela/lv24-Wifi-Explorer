@@ -58,7 +58,7 @@ const manifest = {
   version: '0.0.0',
   private: true,
   description: 'Production dependency tree for the LV24 WiFi Explorer container image.',
-  license: 'MIT',
+  license: 'Apache-2.0',
   dependencies,
 };
 

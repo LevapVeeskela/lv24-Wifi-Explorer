@@ -70,9 +70,11 @@ Published at **1.0.1** on npm: `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/w
 The desktop app and the Windows installer are at `1.1.0`; the packages, the app
 and the Flutter client share the source tree but ship as separate artifacts
 with independent versions.
-Each package has `files: ["dist"]`, `license: MIT`, `engines.node >= 20`, and
-CJS output for maximum consumer compatibility (`packages/mcp` is ESM because the MCP SDK is ESM-only). The web/desktop apps are MIT
+Each package has `files: ["dist", "LICENSE", "NOTICE"]`, `license: Apache-2.0`, `engines.node >= 20`, and
+CJS output for maximum consumer compatibility (`packages/mcp` is ESM because the MCP SDK is ESM-only). The web/desktop apps are Apache-2.0
 code but the desktop UI depends on commercial MUI X Pro (see `CONTRIBUTING.md`).
+The npm **1.0.1** tarballs were published under MIT; the next publish uses
+Apache-2.0 and includes `LICENSE` and `NOTICE`.
 
 ## Desktop packaging
 

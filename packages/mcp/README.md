@@ -157,3 +157,7 @@ yarn workspace @lv24/wifi-mcp build
 yarn workspace @lv24/wifi-mcp typecheck
 npx vitest run packages/mcp
 ```
+
+## License
+
+Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).

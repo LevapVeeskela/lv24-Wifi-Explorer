@@ -45,4 +45,4 @@ lv24-wifi scan --provider demo
 The `@lv24/*` dependencies still resolve from the public npm registry, so
 `.npmrc` only needs the `@levapveeskela` scope mapping.
 
-MIT licensed. Issues: <https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues>.
+Apache-2.0 licensed. Issues: <https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues>.

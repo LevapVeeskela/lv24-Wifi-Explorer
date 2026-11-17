@@ -126,18 +126,18 @@ Windows 版使用系统自带的 netsh，Linux 版使用 NetworkManager，macOS 
 
 ## Screenshot mapping
 
-| Language | Suggested screenshots |
-| --- | --- |
-| ru-RU | `screenshot-main.png`, `screenshot-issues.png`, `screenshot-compare.png`, `screenshot-details.png`, `screenshot-settings.png` |
-| en-US | `screenshot-main.png`, `screenshot-issues.png`, `screenshot-compare.png`, `screenshot-details.png`, `screenshot-settings.png` |
-| zh-CN | `screenshot-main-zh.png`, `screenshot-issues.png`, `screenshot-compare.png`, `screenshot-details.png`, `screenshot-settings.png` |
+| Language | Suggested screenshots                                                                                                            |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| ru-RU    | `screenshot-main.png`, `screenshot-issues.png`, `screenshot-compare.png`, `screenshot-details.png`, `screenshot-settings.png`    |
+| en-US    | `screenshot-main.png`, `screenshot-issues.png`, `screenshot-compare.png`, `screenshot-details.png`, `screenshot-settings.png`    |
+| zh-CN    | `screenshot-main-zh.png`, `screenshot-issues.png`, `screenshot-compare.png`, `screenshot-details.png`, `screenshot-settings.png` |
 
 Store logo: `resources/icons/icon.png`.
 
 ## Other fields
 
 - **Copyright:** `© 2026 LV24`
-- **License terms:** MIT — https://github.com/LevapVeeskela/lv24-Wifi-Explorer/blob/master/LICENSE
+- **License terms:** Apache-2.0 — https://github.com/LevapVeeskela/lv24-Wifi-Explorer/blob/master/LICENSE
 - **Support:** https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues
 - **Privacy policy:** https://github.com/LevapVeeskela/lv24-Wifi-Explorer/blob/master/docs/PRIVACY.md
 - **Website:** https://github.com/LevapVeeskela/lv24-Wifi-Explorer

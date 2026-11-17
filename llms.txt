@@ -2,12 +2,12 @@
 
 > Cross-platform Wi-Fi scanner for humans and AI agents. Live CoreWLAN scans on
 > macOS, NetworkManager on Linux, `netsh` on Windows, deterministic demo
-> fixtures everywhere. MIT packages, a CLI and a stdio MCP server share one
+> fixtures everywhere. Apache-2.0 packages, a CLI and a stdio MCP server share one
 > domain model.
 
 Repository: https://github.com/LevapVeeskela/lv24-Wifi-Explorer
 Releases: https://github.com/LevapVeeskela/lv24-Wifi-Explorer/releases
-License: MIT (app code); optional MUI X Pro in the desktop UI.
+License: Apache-2.0 (current source; npm 1.0.1 and v1.1.0 binaries were published under MIT); optional MUI X Pro in the desktop UI.
 
 ## Packages (npm 1.0.1)
 

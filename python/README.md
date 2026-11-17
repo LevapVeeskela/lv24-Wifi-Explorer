@@ -138,4 +138,5 @@ $env:WIFI_MCP_NPM_VERSION = "1.0.1"; lv24-wifi-mcp
 
 ## License
 
-MIT
+Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE). The 1.0.1 release was
+published under MIT; the next release uses Apache-2.0.

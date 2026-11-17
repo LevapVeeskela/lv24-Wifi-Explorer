@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "LV24 WiFi Explorer web UI (React + MUI), built by the repo-root Vite config.",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "LV24",
   "files": [
     "dist",

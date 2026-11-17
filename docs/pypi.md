@@ -144,5 +144,5 @@ python -m twine check dist/*
 
 Expected distribution names: `lv24_wifi_explorer-<version>-py3-none-any.whl`
 and `lv24_wifi_explorer-<version>.tar.gz`. The wheel contains only the launcher
-modules and the MIT license file, uses the README as its PyPI description, and
+modules and the Apache-2.0 license file, uses the README as its PyPI description, and
 has no runtime dependencies.

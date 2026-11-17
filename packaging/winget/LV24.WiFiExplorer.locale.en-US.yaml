@@ -7,6 +7,7 @@ PublisherUrl: https://github.com/LevapVeeskela
 PublisherSupportUrl: https://github.com/LevapVeeskela/lv24-Wifi-Explorer/issues
 PackageName: LV24 WiFi Explorer
 PackageUrl: https://github.com/LevapVeeskela/lv24-Wifi-Explorer
+# 1.1.0 was published under MIT; the next release switches to Apache-2.0.
 License: MIT
 LicenseUrl: https://github.com/LevapVeeskela/lv24-Wifi-Explorer/blob/master/LICENSE
 Copyright: Copyright (c) LV24

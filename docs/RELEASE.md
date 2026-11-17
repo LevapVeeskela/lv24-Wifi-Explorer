@@ -34,7 +34,9 @@ When the gate opens:
 3. Attach the artifacts and metadata to the GitHub Release; verify the generic
    update feed resolves and the installed previous version reports
    **up-to-date**.
-4. Update the Scoop bucket manifest (`version` + SHA-256) and push it.
+4. Update the Scoop bucket manifest (`version` + SHA-256) and push it. Switch
+   the winget, Scoop and Chocolatey license metadata to Apache-2.0 for the new
+   version; the published 1.1.0 artifacts stay MIT.
 5. Only after the current winget PR lands, submit the new version manifest so
    the queue does not validate two versions at once.
 6. Re-check Settings → Updates on an installed build and record the release in

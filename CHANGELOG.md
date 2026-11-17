@@ -17,6 +17,13 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 - Workbench profiles and column profiles can be exported/imported as JSON; coloring rules already supported it.
 - Filter sidebar has locale render tests (ru/en/zh) and the empty-state copy is covered.
 
+### License
+
+- The project moved from MIT to **Apache-2.0** for the desktop app, Flutter
+  client, CLI, MCP server and all `@lv24/wifi-*` packages. A `NOTICE` file was
+  added, and publishable npm/PyPI tarballs include `LICENSE` and `NOTICE`.
+  Versions published before this change remain available under MIT.
+
 ### UI polish
 
 - Chart card headers wrap instead of spilling into the neighbouring panel;
@@ -33,7 +40,7 @@ All notable changes to LV24 WiFi Explorer. Dates are UTC.
 ### Published
 
 - `@lv24/wifi-core`, `@lv24/wifi-backend`, `@lv24/wifi-cli` and `@lv24/wifi-mcp`
-  published to npm at **1.0.0** (public, MIT).
+  published to npm at **1.0.0** (public; MIT at the time).
 - Verified from a clean install: `lv24-wifi providers`, demo scan, and the MCP
   server over stdio with all six tools.
 
