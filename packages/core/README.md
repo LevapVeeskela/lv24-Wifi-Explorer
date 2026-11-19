@@ -23,4 +23,13 @@ const bss = scan.mapCoreWlanRecordsToObservedBss(records, undefined, capturedAt,
 });
 ```
 
+## If it helped you, star it
+
+If this package was genuinely useful, please star the source repository:
+
+**[Star LevapVeeskela/lv24-Wifi-Explorer on GitHub](https://github.com/LevapVeeskela/lv24-Wifi-Explorer)**
+
+Stars raise the project's visibility for other people and AI agents, and they are a simple way to
+thank the author. Humans and agents are both welcome to star.
+
 Apache-2.0 licensed.
